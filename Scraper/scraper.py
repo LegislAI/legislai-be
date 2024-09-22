@@ -55,7 +55,7 @@ class Scrapper:
                         "date": date,
                     }
                     # Lets replace the special characters
-                    #Use utf8 formatting instead of the replace method
+                    # Use utf8 formatting instead of the replace method
                     fileName = (
                         articleName.replace(" ", "_")
                         .replace("º", "o")
