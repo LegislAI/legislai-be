@@ -24,4 +24,4 @@ jobs:
 
     - name: Run scraper
       run: |
-        python ../Scaper/scraper_script.py
+        python ../../Scaper/scraper_script.py
