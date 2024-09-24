@@ -20,7 +20,6 @@ jobs:
     - name: Test
       run: |
         echo "Hello World"
-
     # - name: Install dependencies
     #   run: |
     #     pip install -r requirements.txt
