@@ -2,8 +2,7 @@ name: Run Daily Scraper
 
 on:
   schedule:
-    - cron: '15 50 * * *'
-  workflow_dispatch:
+    - cron: "15 55 * * *"
 
 jobs:
   scrape:
@@ -18,9 +17,9 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+    # - name: Install dependencies
+    #   run: |
+    #     pip install -r requirements.txt
 
     - name: Run scraper
       run: |
