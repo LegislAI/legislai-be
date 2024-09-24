@@ -2,7 +2,7 @@ name: Run Daily Scraper
 
 on:
   schedule:
-    - cron: "0 23 * * *"
+    - cron: "45 21 * * *"
 
 jobs:
   scrape:
@@ -12,15 +12,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+    # - name: Set up Python
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: '.python-version'
 
-    - name: Install dependencies
+    - name: Test
       run: |
-        pip install -r requirements.txt
+        echo "Hello World"
 
-    - name: Run scraper
-      run: |
-        python ../../Scaper/scraper_script.py
+    # - name: Install dependencies
+    #   run: |
+    #     pip install -r requirements.txt
+
+    # - name: Run scraper
+    #   run: |
+    #     python Scaper/scraper_script.py
