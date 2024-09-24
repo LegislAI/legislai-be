@@ -8,6 +8,9 @@ CURRENT_SHELL = $(notdir $(SHELL))
 all: install-python create-venv install-requirements
 
 install-pyenv:
+	@if ! command -v pyenv >/dev/null; then \
+		git clone https://github.com/pyenv/pyenv.git ~/.pyenv; \
+	fi
 ifeq ($(CURRENT_SHELL), bash)
 	@echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 	@echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
