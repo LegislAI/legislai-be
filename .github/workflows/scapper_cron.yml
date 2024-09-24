@@ -2,7 +2,7 @@ name: Run Daily Scraper
 
 on:
   schedule:
-    - cron: "15 55 * * *"
+    - cron: "0 16 * * *"
 
 jobs:
   scrape:
