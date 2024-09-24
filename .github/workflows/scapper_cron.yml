@@ -2,7 +2,7 @@ name: Run Daily Scraper
 
 on:
   schedule:
-    - cron: '23 15 * * *'
+    - cron: '15 50 * * *'
   workflow_dispatch:
 
 jobs:
