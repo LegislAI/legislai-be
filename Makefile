@@ -48,11 +48,3 @@ create-venv:
 
 install-requirements:
 	$(PIP) install -r $(REQUIREMENTS) --break-system-packages
-
-
-
-
-
-# TODO:
-# usar o nome da pasta invés de legislai-backend
-# primeiro if, verificar se exsitem pastas como versãoi e nome ambiente
