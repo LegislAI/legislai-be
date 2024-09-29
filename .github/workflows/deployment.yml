@@ -2,16 +2,14 @@ name: Run Checks
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
+  push: "*"
 
 jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Get Python Version
         id: get-python-version
