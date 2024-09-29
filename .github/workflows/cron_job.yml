@@ -1,0 +1,31 @@
+name: Run Daily Scraper
+
+on:
+schedule:
+  - cron: "0 0 * * *"
+workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '.python-version'
+
+      - name: Test
+        run: echo "Hello World"
+
+
+# - name: Install dependencies
+# run: |
+# pip install -r requirements.txt
+
+# - name: Run scraper
+# run: |
+# python Scaper/scraper_script.py
