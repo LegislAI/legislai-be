@@ -15,8 +15,11 @@ import re
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 class DailyScraper:
-    def __init__(self, URL: str = "https://diariodarepublica.pt/dr", PATH : str = "data"):
+    def __init__(
+        self, URL: str = "https://diariodarepublica.pt/dr", PATH: str = "data"
+    ):
         # Prepare a folder to store the jsons
         if not os.path.exists(PATH):
             os.mkdir(PATH)
@@ -52,30 +55,38 @@ class DailyScraper:
                     date = date_container.find_elements(By.TAG_NAME, "span")[1].text
 
                     publicacao_type_div = driver.find_element(By.ID, "b7-Publicacao2")
-                    publicacao_type = publicacao_type_div.find_elements(By.TAG_NAME, "span")[1].text
+                    publicacao_type = publicacao_type_div.find_elements(
+                        By.TAG_NAME, "span"
+                    )[1].text
 
                     publicacao_emissor_div = driver.find_element(By.ID, "b7-Emissor2")
-                    publicacao_emissor = publicacao_emissor_div.find_elements(By.TAG_NAME, "span")[1].text
-                    
+                    publicacao_emissor = publicacao_emissor_div.find_elements(
+                        By.TAG_NAME, "span"
+                    )[1].text
+
                     article_name = driver.find_element(By.CLASS_NAME, "heading1").text
 
                     articleContent = driver.find_elements(By.TAG_NAME, "p")
-                    article = "".join([p.text.encode('utf-8').decode('utf-8') + "\n" for p in articleContent])
+                    article = "".join(
+                        [
+                            p.text.encode("utf-8").decode("utf-8") + "\n"
+                            for p in articleContent
+                        ]
+                    )
 
                     payload = {
                         "article_title": article_name,
-                        "publication_type": publicacao_type, 
+                        "publication_type": publicacao_type,
                         "publisher": publicacao_emissor,
-                        ""
-                        "article_content": article,
+                        "" "article_content": article,
                         "link": link,
                         "date": date,
-                        "theme" : None
+                        "theme": None,
                     }
                     # Lets replace the special characters
                     # Use utf8 formatting instead of the replace method
                     file_name = article_name.replace(" ", "_").replace("/", "_")
-                    file_name.encode('utf-8').decode('utf-8')
+                    file_name.encode("utf-8").decode("utf-8")
 
                     payload = json.dumps(payload, ensure_ascii=False)
 
@@ -91,14 +102,15 @@ class DailyScraper:
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
 
+
 class FullScraper:
     def __init__(self):
-        TYPE=""
-        NUM=""
-        YEAR=""
-        DBID=""
-        ARTICLE_URL=f"{BASE_URL}/{TYPE}/{NUM}-{YEAR}-{DBID}"
-        BASE_PAGE_URL="https://diariodarepublica.pt/dr/screenservices/dr/Home/Serie1/DataActionGetDataAndApplicationSettings"
+        TYPE = ""
+        NUM = ""
+        YEAR = ""
+        DBID = ""
+        ARTICLE_URL = f"{BASE_URL}/{TYPE}/{NUM}-{YEAR}-{DBID}"
+        BASE_PAGE_URL = "https://diariodarepublica.pt/dr/screenservices/dr/Home/Serie1/DataActionGetDataAndApplicationSettings"
 
         try:
             # Initialize the Chrome WebDriver
@@ -133,30 +145,38 @@ class FullScraper:
                     date = date_container.find_elements(By.TAG_NAME, "span")[1].text
 
                     publicacao_type_div = driver.find_element(By.ID, "b7-Publicacao2")
-                    publicacao_type = publicacao_type_div.find_elements(By.TAG_NAME, "span")[1].text
+                    publicacao_type = publicacao_type_div.find_elements(
+                        By.TAG_NAME, "span"
+                    )[1].text
 
                     publicacao_emissor_div = driver.find_element(By.ID, "b7-Emissor2")
-                    publicacao_emissor = publicacao_emissor_div.find_elements(By.TAG_NAME, "span")[1].text
-                    
+                    publicacao_emissor = publicacao_emissor_div.find_elements(
+                        By.TAG_NAME, "span"
+                    )[1].text
+
                     article_name = driver.find_element(By.CLASS_NAME, "heading1").text
 
                     articleContent = driver.find_elements(By.TAG_NAME, "p")
-                    article = "".join([p.text.encode('utf-8').decode('utf-8') + "\n" for p in articleContent])
+                    article = "".join(
+                        [
+                            p.text.encode("utf-8").decode("utf-8") + "\n"
+                            for p in articleContent
+                        ]
+                    )
 
                     payload = {
                         "article_title": article_name,
-                        "publication_type": publicacao_type, 
+                        "publication_type": publicacao_type,
                         "publisher": publicacao_emissor,
-                        ""
-                        "article_content": article,
+                        "" "article_content": article,
                         "link": link,
                         "date": date,
-                        "theme" : None
+                        "theme": None,
                     }
                     # Lets replace the special characters
                     # Use utf8 formatting instead of the replace method
                     file_name = article_name.replace(" ", "_").replace("/", "_")
-                    file_name.encode('utf-8').decode('utf-8')
+                    file_name.encode("utf-8").decode("utf-8")
 
                     payload = json.dumps(payload, ensure_ascii=False)
 
@@ -172,9 +192,12 @@ class FullScraper:
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
 
+
 class ThemeScraper:
     def __init__(self):
-        BASE_THEME_URL= f"https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
+        BASE_THEME_URL = (
+            f"https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
+        )
         SELECT_THEME_DIV_ID = "ConteudoBotao"
         # SELECT_THEME_ID = "RegimesJuridicos2"
         THEME_BOX_ID = "b3-Conteudo"
@@ -182,7 +205,7 @@ class ThemeScraper:
         PATH = "theme_data"
 
         try:
-            
+
             if not os.path.exists(PATH):
                 os.mkdir(PATH)
 
@@ -199,17 +222,19 @@ class ThemeScraper:
             sleep(1)
 
             theme_divs = driver.find_elements(By.CLASS_NAME, "ThemeGrid_MarginGutter")
-            
-            self.scrape_page(PATH, "https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/seguranca-social")
+
+            self.scrape_page(
+                PATH,
+                "https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/seguranca-social",
+            )
 
             # Iterate through each found element
             # for element in theme_divs:
-            #     theme_name = element.get_attribute("title") 
-            #     theme_link = element.get_attribute("href")  
+            #     theme_name = element.get_attribute("title")
+            #     theme_link = element.get_attribute("href")
 
             #     LOG.info(f"Scraping theme: {theme_name}")
             #     self.scrape_page(PATH=f"{PATH}/{theme_name}",THEME_URL=theme_link)
-
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
@@ -230,13 +255,15 @@ class ThemeScraper:
             )
 
             sleep(1)
-            #Verify if there are more than one page
+            # Verify if there are more than one page
             try:
                 pagination = driver.find_element(By.ID, "b8-PaginationWrapper")
             except:
                 pagination = None
             if pagination:
-                pagination_container = pagination.find_elements(By.ID, "b8-PaginationContainer")
+                pagination_container = pagination.find_elements(
+                    By.ID, "b8-PaginationContainer"
+                )
                 if pagination_container:
                     print("There are more than one page")
                     print(len(pagination_container))
@@ -247,15 +274,19 @@ class ThemeScraper:
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
-        
+
         finally:
             driver.quit()
 
 
-
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--run_type", type=str, required=False, help="Specify the type of run: 'daily' or 'full'")
+    parser.add_argument(
+        "--run_type",
+        type=str,
+        required=False,
+        help="Specify the type of run: 'daily' or 'full'",
+    )
     args = parser.parse_args()
     if args.run_type == "daily":
         DailyScraper()
@@ -266,6 +297,7 @@ def main():
     else:
         LOG.error("Please specify the type of run: 'daily', 'full' or 'theme'")
         exit(1)
+
 
 if __name__ == "__main__":
     main()
