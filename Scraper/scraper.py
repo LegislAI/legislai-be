@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 
 import os
 from selenium import webdriver
@@ -199,8 +199,6 @@ class ThemeScraper:
             f"https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
         )
         SELECT_THEME_DIV_ID = "ConteudoBotao"
-        # SELECT_THEME_ID = "RegimesJuridicos2"
-        THEME_BOX_ID = "b3-Conteudo"
 
         PATH = "theme_data"
 
@@ -223,18 +221,14 @@ class ThemeScraper:
 
             theme_divs = driver.find_elements(By.CLASS_NAME, "ThemeGrid_MarginGutter")
 
-            self.scrape_page(
-                PATH,
-                "https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/seguranca-social",
-            )
-
             # Iterate through each found element
-            # for element in theme_divs:
-            #     theme_name = element.get_attribute("title")
-            #     theme_link = element.get_attribute("href")
+            for element in theme_divs:
+                theme_name = element.get_attribute("title")
+                theme_link = element.get_attribute("href")
 
-            #     LOG.info(f"Scraping theme: {theme_name}")
-            #     self.scrape_page(PATH=f"{PATH}/{theme_name}",THEME_URL=theme_link)
+                LOG.info(f"Scraping theme: {theme_name}")
+                self.scrape_page(PATH=f"{PATH}/{theme_name}",THEME_URL=theme_link, THEME_NAME=theme_name)
+
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
@@ -242,9 +236,8 @@ class ThemeScraper:
         finally:
             driver.quit()
 
-    def scrape_page(self, PATH: str, THEME_URL: str):
+    def scrape_page(self, PATH: str, THEME_URL: str, THEME_NAME: str):
         try:
-
             if not os.path.exists(PATH):
                 os.mkdir(PATH)
             driver = webdriver.Chrome()
@@ -255,28 +248,113 @@ class ThemeScraper:
             )
 
             sleep(1)
-            # Verify if there are more than one page
-            try:
-                pagination = driver.find_element(By.ID, "b8-PaginationWrapper")
-            except:
-                pagination = None
-            if pagination:
-                pagination_container = pagination.find_elements(
-                    By.ID, "b8-PaginationContainer"
-                )
-                if pagination_container:
-                    print("There are more than one page")
-                    print(len(pagination_container))
-                    # pages = pagination_container.find_elements(By.TAG_NAME, "a")
-                    # for page in pages:
-                    #     page_link = page.get_attribute("href")
-                    #     self.scrape_page(page_link)
+            current_page = 1
+            num_pages = 2
+            LOG.info(f"Scraping page: {THEME_URL}")
+
+            for current_page in range(1):
+                # Find elements with the specific data-block attribute
+                articles_divs = driver.find_elements(By.CSS_SELECTOR, '[data-block="LegislacaoConsolidada.ItemPesquisa"]')
+
+                # Iterate over the found elements
+                for article in articles_divs:
+                    # Scrape the content inside each element
+                    header = article.find_element(By.CLASS_NAME, "title")
+                    link_to_article = header.find_element(By.TAG_NAME, "a").get_attribute("href")
+
+                    self.scrape_article(article_url=link_to_article, theme=THEME_NAME, PATH=PATH)
+
+                if num_pages == 1:
+                    # Verify if there are more than one page
+                    try:
+                        pagination = driver.find_element(By.ID, "b8-PaginationWrapper")
+                    except:
+                        pagination = None
+                    if pagination:
+                        pagination_container = pagination.find_element(
+                            By.ID, "b8-PaginationContainer"
+                        )
+                        if pagination_container:
+                            page_divs = pagination_container.find_element(By.ID, "b8-PaginationList")
+                            buttons = page_divs.find_elements(By.TAG_NAME, "button")
+                            num_pages = len(buttons)
+
+                LOG.info(f"Scraped page: {current_page}/{num_pages-1}")
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
 
         finally:
             driver.quit()
+
+    def scrape_article(self, article_url: str, theme: str, PATH: str):
+
+        try: 
+            driver = webdriver.Chrome()
+            driver.get(article_url)
+
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+            )
+
+            sleep(1)
+
+            date_container = driver.find_element(By.ID, 'Input_Date3')
+            date = date_container.text
+
+            publicacao_type_div = driver.find_element(By.ID, "b7-Publicacao2")
+            publicacao_type = publicacao_type_div.find_elements(
+                By.TAG_NAME, "span"
+            )[1].text
+
+            publicacao_emissor_div = driver.find_element(By.ID, "b7-Emissor2")
+            publicacao_emissor = publicacao_emissor_div.find_elements(
+                By.TAG_NAME, "span"
+            )[1].text
+
+            document_name = driver.find_element(By.CLASS_NAME, "heading1").text
+
+            content_divs = driver.find_elements(By.CSS_SELECTOR, '[data-block="LegislacaoConsolidada.FragmentoDetailTextoCompleto"]')
+
+            articleContent = driver.find_elements(By.TAG_NAME, "p")
+            article = "".join(
+                [
+                    p.text.encode("utf-8").decode("utf-8") + "\n"
+                    for p in articleContent
+                ]
+            )
+
+            payload = {
+                "article_title": document_name,
+                "publication_type": publicacao_type,
+                "publisher": publicacao_emissor,
+                "article_content": article,
+                "link": article_url,
+                "date": date,
+                "theme": theme,
+            }
+
+            # Lets replace the special characters
+            # Use utf8 formatting instead of the replace method
+            file_name = article_name.replace(" ", "_").replace("/", "_")
+            file_name.encode("utf-8").decode("utf-8")
+
+            payload = json.dumps(payload, ensure_ascii=False)
+
+            with open(f"{PATH}/{file_name}.json", "w") as f:
+                f.write(payload)
+
+            driver.back()
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CLASS_NAME, "content"))
+            )
+            sleep(1)
+        except Exception as e:
+            LOG.error(f"An error occurred while scraping: {str(e)}")
+        
+        finally:
+            driver.quit()
+
 
 
 def main():
