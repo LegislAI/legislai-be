@@ -227,8 +227,11 @@ class ThemeScraper:
                 theme_link = element.get_attribute("href")
 
                 LOG.info(f"Scraping theme: {theme_name}")
-                self.scrape_page(PATH=f"{PATH}/{theme_name}",THEME_URL=theme_link, THEME_NAME=theme_name)
-
+                self.scrape_page(
+                    PATH=f"{PATH}/{theme_name}",
+                    THEME_URL=theme_link,
+                    THEME_NAME=theme_name,
+                )
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
@@ -254,15 +257,21 @@ class ThemeScraper:
 
             for current_page in range(1):
                 # Find elements with the specific data-block attribute
-                articles_divs = driver.find_elements(By.CSS_SELECTOR, '[data-block="LegislacaoConsolidada.ItemPesquisa"]')
+                articles_divs = driver.find_elements(
+                    By.CSS_SELECTOR, '[data-block="LegislacaoConsolidada.ItemPesquisa"]'
+                )
 
                 # Iterate over the found elements
                 for article in articles_divs:
                     # Scrape the content inside each element
                     header = article.find_element(By.CLASS_NAME, "title")
-                    link_to_article = header.find_element(By.TAG_NAME, "a").get_attribute("href")
+                    link_to_article = header.find_element(
+                        By.TAG_NAME, "a"
+                    ).get_attribute("href")
 
-                    self.scrape_article(article_url=link_to_article, theme=THEME_NAME, PATH=PATH)
+                    self.scrape_article(
+                        article_url=link_to_article, theme=THEME_NAME, PATH=PATH
+                    )
 
                 if num_pages == 1:
                     # Verify if there are more than one page
@@ -275,7 +284,9 @@ class ThemeScraper:
                             By.ID, "b8-PaginationContainer"
                         )
                         if pagination_container:
-                            page_divs = pagination_container.find_element(By.ID, "b8-PaginationList")
+                            page_divs = pagination_container.find_element(
+                                By.ID, "b8-PaginationList"
+                            )
                             buttons = page_divs.find_elements(By.TAG_NAME, "button")
                             num_pages = len(buttons)
 
@@ -289,7 +300,7 @@ class ThemeScraper:
 
     def scrape_article(self, article_url: str, theme: str, PATH: str):
 
-        try: 
+        try:
             driver = webdriver.Chrome()
             driver.get(article_url)
 
@@ -299,13 +310,13 @@ class ThemeScraper:
 
             sleep(1)
 
-            date_container = driver.find_element(By.ID, 'Input_Date3')
+            date_container = driver.find_element(By.ID, "Input_Date3")
             date = date_container.text
 
             publicacao_type_div = driver.find_element(By.ID, "b7-Publicacao2")
-            publicacao_type = publicacao_type_div.find_elements(
-                By.TAG_NAME, "span"
-            )[1].text
+            publicacao_type = publicacao_type_div.find_elements(By.TAG_NAME, "span")[
+                1
+            ].text
 
             publicacao_emissor_div = driver.find_element(By.ID, "b7-Emissor2")
             publicacao_emissor = publicacao_emissor_div.find_elements(
@@ -314,14 +325,14 @@ class ThemeScraper:
 
             document_name = driver.find_element(By.CLASS_NAME, "heading1").text
 
-            content_divs = driver.find_elements(By.CSS_SELECTOR, '[data-block="LegislacaoConsolidada.FragmentoDetailTextoCompleto"]')
+            content_divs = driver.find_elements(
+                By.CSS_SELECTOR,
+                '[data-block="LegislacaoConsolidada.FragmentoDetailTextoCompleto"]',
+            )
 
             articleContent = driver.find_elements(By.TAG_NAME, "p")
             article = "".join(
-                [
-                    p.text.encode("utf-8").decode("utf-8") + "\n"
-                    for p in articleContent
-                ]
+                [p.text.encode("utf-8").decode("utf-8") + "\n" for p in articleContent]
             )
 
             payload = {
@@ -351,10 +362,9 @@ class ThemeScraper:
             sleep(1)
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {str(e)}")
-        
+
         finally:
             driver.quit()
-
 
 
 def main():
