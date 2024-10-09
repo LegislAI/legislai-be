@@ -1,24 +1,27 @@
 #!/usr/bin/env python
-
-import os
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import (
-    StaleElementReferenceException,
-    NoSuchElementException,
-)
-from chromedriver_py import binary_path
-import logging
-from time import sleep
-import json
-
 import argparse
-import re
-import datetime
-from datetime import date, timedelta
 import copy
+import datetime
+import json
+import logging
+import os
+import re
+import subprocess
+import uuid
+from datetime import date
+from datetime import timedelta
+from time import sleep
+
+import boto3
+from botocore.exceptions import ClientError
+from chromedriver_py import binary_path
+from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,6 +29,9 @@ logging.basicConfig(
     handlers=[logging.FileHandler("scraper_log.log"), logging.StreamHandler()],
 )
 LOG = logging.getLogger(__name__)
+
+FULL_SCRAPER_BUCKET_NAME = "legislaifullscraperdata"
+DATA_SOURCE = "diario_da_republica"
 
 
 class DailyScraper:
@@ -130,7 +136,6 @@ class FullScraper:
     def __init__(self):
         self.BASE_PAGE_URL = "https://diariodarepublica.pt/dr/home"
         self.binary_path = binary_path
-        # self.scraper = DailyScraper(PATH="data")
         if not os.path.exists("data"):
             os.mkdir("data")
 
@@ -147,26 +152,80 @@ class FullScraper:
 
         self.navigate_calendar()
 
+    def zip_path(self, src_path: str = "data", dest_path: str = "data"):
+        subprocess.run(["zip", "-r", f"{dest_path}", src_path])
+
+    def upload_file(self, file_name, bucket_name, object_name=None):
+        """Upload a file to an S3 bucket"""
+        if not isinstance(file_name, (str, os.PathLike)):
+            raise ValueError("Filename must be a string or a path-like object")
+
+        if not os.path.isfile(file_name):
+            raise ValueError(f"The file {file_name} does not exist")
+
+        if object_name is None:
+            object_name = os.path.basename(file_name)
+
+        load_dotenv()
+        LOG.info("Uploading files to S3")
+
+        s3_client = boto3.client(
+            "s3",
+            aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+            region_name=os.environ.get("AWS_REGION"),
+        )
+
+        # Ensure bucket exists or create it
+        try:
+            s3_client.head_bucket(Bucket=bucket_name)
+        except ClientError as e:
+            if e.response["Error"]["Code"] == "404":
+                s3_client.create_bucket(
+                    Bucket=bucket_name,
+                    CreateBucketConfiguration={
+                        "LocationConstraint": os.environ.get("AWS_REGION"),
+                    },
+                )
+            else:
+                logging.error(e)
+                return False
+
+        try:
+            s3_client.upload_file(file_name, bucket_name, object_name)
+        except ClientError as e:
+            logging.error(e)
+            return False
+
+        return True
+
     def navigate_calendar(self):
         try:
             current_date = date.today()
-            LOG.info(f"Starting to scrape from current date: {current_date}")
-
             initial_date = datetime.datetime.strptime("2021-01-01", "%Y-%m-%d")
             date_to_fetch = current_date
+
+            version = uuid.uuid4()
+
+            # Use Year/Month folder structure
+            year_folder = date_to_fetch.strftime("%Y")
+            month_folder = date_to_fetch.strftime("%m")
+            path_name = f"data/{DATA_SOURCE}/{year_folder}/{month_folder}/full_scraper_v{version}"
+
+            if not os.path.exists(path_name):
+                os.makedirs(path_name)
 
             while date_to_fetch >= initial_date.date():
                 day_to_fetch = date_to_fetch.strftime("%d")
                 month_to_fetch = date_to_fetch.strftime("%m")
                 year_to_fetch = date_to_fetch.strftime("%Y")
 
-                if date_to_fetch.weekday() < 5:  # Skip weekends
+                if date_to_fetch.weekday() < 5:
                     calendar = self.driver.find_element(By.CLASS_NAME, "calendar")
                     days = calendar.find_elements(By.TAG_NAME, "a")
 
                     for day in days:
                         day_title = day.get_attribute("title")
-                        # Check if the day has the expected title format 'Ir para o dia yyyy-mm-dd'
                         if (
                             f"Ir para o dia {year_to_fetch}-{month_to_fetch}-{day_to_fetch}"
                             == day_title
@@ -175,42 +234,70 @@ class FullScraper:
                                 f"Navigating to date: {year_to_fetch}-{month_to_fetch}-{day_to_fetch}"
                             )
 
-                            # Click the link to navigate to the specific day's content
                             day.click()
                             WebDriverWait(self.driver, 10).until(
                                 EC.presence_of_element_located((By.ID, "b3-Conteudo"))
                             )
                             sleep(1)
 
-                            # Call method to scrape the articles for this date
                             driver_clone = copy.copy(self.driver)
                             try:
                                 self.scrape_articles(
-                                    driver=driver_clone, theme=None, PATH="data"
+                                    driver=driver_clone, theme=None, PATH=path_name
                                 )
                             except Exception as e:
                                 LOG.error(f"Error while scraping articles: {str(e)}")
 
                 if date_to_fetch.day == 1:
-                    # Roll back the month using the 'Mês Anterior' button
                     try:
                         previous_month_button = self.driver.find_element(
                             By.XPATH, "//a[@title='Mês Anterior']"
                         )
                         previous_month_button.click()
+
                         WebDriverWait(self.driver, 10).until(
                             EC.presence_of_element_located((By.ID, "b6-Header"))
                         )
-                        LOG.info(f"Moved to the previous month.")
-                        sleep(1)
-                    except Exception as e:
-                        LOG.error(f"Failed to navigate to the previous month: {str(e)}")
 
-                # Go to the previous day
-                date_to_fetch = date_to_fetch - timedelta(days=1)
+                        # Zip and upload previous month
+                        zip_file_name = f"{path_name}.zip"
+                        self.zip_path(src_path=path_name, dest_path=zip_file_name)
+                        bucket_path = f"full_scraper/{DATA_SOURCE}/{year_folder}/{month_folder}/full_scraper_v{version}.zip"
+                        self.upload_file(
+                            file_name=zip_file_name,
+                            bucket_name=FULL_SCRAPER_BUCKET_NAME,
+                            object_name=bucket_path,
+                        )
+
+                        subprocess.run(["rm", zip_file_name])
+
+                        # Update path for new month
+                        date_to_fetch -= timedelta(days=1)
+                        year_folder = date_to_fetch.strftime("%Y")
+                        month_folder = date_to_fetch.strftime("%m")
+                        path_name = f"data/{DATA_SOURCE}/{year_folder}/{month_folder}/full_scraper_v{version}"
+
+                        if not os.path.exists(path_name):
+                            os.makedirs(path_name)
+
+                        LOG.info(f"Moved to previous month, new path: {path_name}")
+                    except Exception as e:
+                        LOG.error(f"Failed to navigate to previous month: {str(e)}")
+
+                date_to_fetch -= timedelta(days=1)
 
         except Exception as e:
-            LOG.error(f"An error occurred while navigating the calendar: {str(e)}")
+            LOG.error(f"Error while navigating the calendar: {str(e)}")
+            back_up_path = f"data/{current_date}.zip"
+            self.zip_path(src_path="data", dest_path=back_up_path)
+            self.upload_file(
+                back_up_path,
+                FULL_SCRAPER_BUCKET_NAME,
+                object_name=f"error_backup/{DATA_SOURCE}/{back_up_path}",
+            )
+            subprocess.run(["rm", f"data/{current_date}.zip"])
+        finally:
+            self.driver.quit()
 
     def scrape_articles(self, driver: webdriver.Chrome, theme: str, PATH: str):
         try:
@@ -284,6 +371,7 @@ class FullScraper:
                         )
                         driver.refresh()
                         self.scrape_articles(driver=driver, theme=theme, PATH=PATH)
+                        continue
                     except NoSuchElementException:
                         LOG.error(f"Element not found for {link}. Skipping...")
                         continue
