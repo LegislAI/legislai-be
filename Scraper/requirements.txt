@@ -2,3 +2,6 @@ beautifulsoup4
 requests
 selenium
 chromedriver-py
+aws-cli
+boto3
+python-dotenv
