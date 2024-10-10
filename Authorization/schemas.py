@@ -1,6 +1,7 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional, List, Dict
-from datetime import datetime, date
+from typing import Optional
+
+from pydantic import BaseModel
+from pydantic import EmailStr
 
 
 class GetUser(BaseModel):
@@ -21,6 +22,7 @@ class LoginUser(BaseModel):
     class Config:
         orm_mode = True
         use_enum_values = True
+
 
 # Model for user registration
 class PostUser(BaseModel):
