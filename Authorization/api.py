@@ -103,22 +103,22 @@ def _create_user(db, user_data: CreateUser) -> bool:
 def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> bool:
     """
     Update specified fields for the user in the DynamoDB table.
-    
+
     :param db: DynamoDB client
     :param userid: User's unique ID (partition key)
     :param email: User's email (sort key)
     :param fields: A dictionary of fields to update, e.g., {"lastlogin": "new_value"}
     :return: True if the update was successful, False otherwise
     """
-    update_expression = "SET " + ", ".join(f"{k} = :{k}" for k in fields.keys())
-    expression_attribute_values = {f":{k}": {"S": v} for k, v in fields.items()}
+    update_expression = "SET " + ", ".join(f"{k} =: {k}" for k in fields.keys())
+    expression_attribute_values = {f": {k}": {"S": v} for k, v in fields.items()}
 
     try:
         db.update_item(
             TableName="users",
             Key={
-                "userid": {"S": userid},   # Partition key
-                "email": {"S": email},     # Sort key
+                "userid": {"S": userid},  # Partition key
+                "email": {"S": email},  # Sort key
             },
             UpdateExpression=update_expression,
             ExpressionAttributeValues=expression_attribute_values,
