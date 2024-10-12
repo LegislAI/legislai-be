@@ -71,3 +71,8 @@ resource "aws_dynamodb_table" "users-table" {
     Name        = "users_table"
   }
 }
+
+
+resource "aws_ecr_repository" "api_image_repository"{
+  name = "api-image"
+}
