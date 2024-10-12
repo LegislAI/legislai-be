@@ -5,12 +5,13 @@ from pydantic import EmailStr
 
 
 class GetUser(BaseModel):
+    userid: str
     email: EmailStr
     username: str
-    role: int
+    # role: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         use_enum_values = True
 
 
@@ -20,16 +21,15 @@ class LoginUser(BaseModel):
     password: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         use_enum_values = True
 
 
-# Model for user registration
-class PostUser(BaseModel):
+class CreateUser(BaseModel):
     email: EmailStr
     username: str
     password: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         use_enum_values = True

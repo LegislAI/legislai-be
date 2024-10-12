@@ -1,8 +1,1 @@
 pre-commit
-fastapi
-uvicorn 
-pydantic
-python-jose[cryptography] 
-authlib
-pydantic-settings
-passlib

@@ -1,12 +1,16 @@
-from jwt import InvalidTokenError
-from fastapi import HTTPException, Request
-from config import setting
-from datetime import datetime, timedelta
-from typing import Union, Any, Optional
-import jwt
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+import datetime
+from datetime import timedelta
+from typing import Any
+from typing import Optional
+from typing import Union
+
+from Authorization.utils.config import setting
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer
 from jose import jwt
-from config import setting
+from jwt import InvalidTokenError
 
 
 # generate JWTs (access and refresh tokens) for a user identifier
@@ -79,6 +83,3 @@ class JWTBearer(HTTPBearer):
             return False
         except jwt.JWTError:
             return False
-
-
-# jwt_bearer = JWTBearer()
