@@ -1,5 +1,5 @@
 import datetime
-from datetime import timedelta
+from datetime import timedelta, timezone
 from typing import Any
 from typing import Optional
 from typing import Union
@@ -16,9 +16,9 @@ from jwt import InvalidTokenError
 # generate JWTs (access and refresh tokens) for a user identifier
 def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
     if expires_delta is not None:
-        expires_delta = datetime.datetime.now(datetime.UTC) + expires_delta
+        expires_delta = datetime.datetime.now(timezone.utc) + expires_delta
     else:
-        expires_delta = datetime.datetime.now(datetime.UTC) + timedelta(
+        expires_delta = datetime.datetime.now(timezone.utc) + timedelta(
             minutes=setting.ACCESS_TOKEN_EXPIRE_MINUTES
         )
 
@@ -29,9 +29,9 @@ def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> 
 
 def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
     if expires_delta is not None:
-        expires_delta = datetime.datetime.now(datetime.UTC) + expires_delta
+        expires_delta = datetime.datetime.now(timezone.utc) + expires_delta
     else:
-        expires_delta = datetime.datetime.now(datetime.UTC) + timedelta(
+        expires_delta = datetime.datetime.now(timezone.utc) + timedelta(
             minutes=setting.REFRESH_TOKEN_EXPIRE_MINUTES
         )
 

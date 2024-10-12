@@ -5,6 +5,44 @@
     "version": "0.1.0"
   },
   "paths": {
+    "/auth/google/login": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Google Login",
+        "operationId": "google_login_auth_google_login_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/google/callback": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Google Callback",
+        "operationId": "google_callback_auth_google_callback_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -103,15 +141,21 @@
             "title": "Username"
           },
           "password": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Password"
           }
         },
         "type": "object",
         "required": [
           "email",
-          "username",
-          "password"
+          "username"
         ],
         "title": "CreateUser"
       },
@@ -178,14 +222,18 @@
             "title": "Username"
           },
           "password": {
-            "type": "string",
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
             "title": "Password"
           }
         },
         "type": "object",
-        "required": [
-          "password"
-        ],
         "title": "LoginUser"
       },
       "ValidationError": {

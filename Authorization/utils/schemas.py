@@ -18,7 +18,7 @@ class GetUser(BaseModel):
 class LoginUser(BaseModel):
     email: Optional[EmailStr] = None  # Either email or username is required
     username: Optional[str] = None
-    password: str
+    password: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -28,7 +28,7 @@ class LoginUser(BaseModel):
 class CreateUser(BaseModel):
     email: EmailStr
     username: str
-    password: str
+    password: Optional[str] = None
 
     class Config:
         from_attributes = True
