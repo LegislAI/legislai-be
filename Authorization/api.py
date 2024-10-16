@@ -5,6 +5,7 @@ from Authorization.utils.schemas import GetUser, LoginUser, CreateUser
 from Authorization.utils.auth import create_access_token, create_refresh_token
 from fastapi.responses import RedirectResponse
 from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.base_client import OAuthError
 from dotenv import load_dotenv
 from starlette.middleware.sessions import SessionMiddleware  # Use Starlette's session middleware
 import os
@@ -14,12 +15,23 @@ from contextlib import asynccontextmanager
 import boto3
 from botocore.exceptions import ClientError
 from typing import Optional, Dict
+from starlette.config import Config
 
 import logging
 import uuid
 import time
 import datetime
 from datetime import timezone
+import secrets
+from uuid import uuid4
+
+"""
+na pasta inf/terraform
+terraform init
+terraform plan
+terraform apply
+uvicorn Authorization.api:app --reload
+"""
 
 load_dotenv()
 logging.basicConfig(
@@ -31,30 +43,6 @@ LOG = logging.getLogger(__name__)
 route = APIRouter(prefix="/auth", tags=["Authentication"])
 oauth2bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
 
-oauth = OAuth()
-
-# Register the Google OAuth provider
-oauth.register(
-    name='google',
-    client_id=os.getenv('GOOGLE_CLIENT_ID'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
-    access_token_url='https://accounts.google.com/o/oauth2/token',
-    authorize_url='https://accounts.google.com/o/oauth2/auth',
-    redirect_uri='http://localhost:8000/auth/google/callback',  
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
-
-
-boto3_client = boto3.client(
-    "dynamodb",
-    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.environ.get("AWS_REGION"),
-)
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     openapi_spec = app.openapi()
@@ -65,9 +53,37 @@ async def lifespan(app: FastAPI):
 
     yield
 
-
 app = FastAPI(lifespan=lifespan)
-app.add_middleware(SessionMiddleware, secret_key=os.environ.get("secret_key_middleware"), session_cookie="legislai_cookie", same_site="None", https_only=True)
+app.add_middleware(SessionMiddleware, secret_key=os.environ.get("secret_key_middleware")) #session_cookie="legislai_cookie", same_site="Lax", https_only=False)
+
+client_id = os.getenv('GOOGLE_CLIENT_ID')
+client_secret=os.getenv('GOOGLE_CLIENT_SECRET')
+config_data = {'GOOGLE_CLIENT_ID': client_id, 'GOOGLE_CLIENT_SECRET': client_secret}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+
+
+GOOGLE_REDIRECT_URI = "https://localhost/auth/google/callback"
+
+# Register the Google OAuth provider
+oauth.register(
+    name='google',
+    access_token_url='https://accounts.google.com/o/oauth2/token',
+    authorize_url='https://accounts.google.com/o/oauth2/auth',
+    redirect_uri=GOOGLE_REDIRECT_URI,  
+    client_kwargs={
+        'scope': 'openid email profile'
+    },
+    jwks_uri = "https://www.googleapis.com/oauth2/v3/certs"
+)
+
+
+boto3_client = boto3.client(
+    "dynamodb",
+    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.environ.get("AWS_REGION"),
+)
 
 
 async def add_process_time_header(request: Request, call_next):
@@ -160,27 +176,80 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
         return False
 
 
+@app.get("/world")
+def index():
+    return "Hello World"
+
 # Google Login Route
 @route.get("/google/login")
+# async def google_login(request: Request):
+#     state = str(uuid4())
+#     request.session['state'] = state  
+#     response = await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI)
+#     return response
 async def google_login(request: Request):
     redirect_uri = request.url_for('google_callback')
-    print("url --------------")
-    print(redirect_uri)
-    return await oauth.google.authorize_redirect(request, redirect_uri)
+    response = await oauth.google.authorize_redirect(request, redirect_uri)
+    
+    return response
 
-# Google Callback Route
+
+# async def google_login(request: Request):
+#     LOG.info("Initiating Google login with OAuth")
+
+#     # Generate a state and store it in the session for CSRF protection
+#     state = secrets.token_urlsafe(16) 
+#     request.session['state'] = state
+#     LOG.info(f"State stored in session: {state}")
+
+#     # Construct the full redirect URL manually to log it
+#     redirect_url = (
+#         f"https://accounts.google.com/o/oauth2/auth"
+#         f"?response_type=code&client_id={os.getenv('GOOGLE_CLIENT_ID')}"
+#         f"&redirect_uri={GOOGLE_REDIRECT_URI}"
+#         f"&scope=openid%20email%20profile"
+#         f"&state={state}"
+#     )
+
+#     # Log the URL for debugging
+#     LOG.info(f"Redirecting to Google: {redirect_url}")
+
+#     # Perform the actual redirect
+#     return await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI, state=state)
+
+
+
+# Google Callback Route - This route will handle the response from Google
 @route.get("/google/callback")
 async def google_callback(request: Request):
-    print("here ")
-    token = await oauth.google.authorize_access_token(request)
-    print(f"token received : {token}")
-    # Fetch user information from Google
+    LOG.info(f"1. Full request received: {request.url}")
+    returned_state = request.query_params.get('state')
+    LOG.info(f"2. Returned state from Google callback: {returned_state}")
+    
+    # Compare with the original state from the session
+    original_state = request.session.get('state')
+    LOG.info(f"3. Original state stored in session: {original_state}")
+
+    # if returned_state != original_state:
+    #     LOG.error("State mismatch! Possible CSRF attack.")
+    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid state parameter")
+    
+    LOG.info(f"{oauth.google.authorize_access_token(request)}")
+
+    try:
+        token = await oauth.google.authorize_access_token(request)
+        LOG.info(f"exists token: {token} !!!!!!!!!!")
+    except OAuthError as e: 
+        LOG.error(f"OAuthError occurred: {e}")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+    
+    
     user_info = await oauth.google.parse_id_token(request, token)
     
     if not user_info:
-        raise HTTPException(status_code=401, detail="Authentication failed")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed")
     
-    user = _get_user(boto3_client, email=user_info['email'])
+    user = _get_user(boto3_client, email=user_info['email']) # ver se ja existe
     
     if not user:
         _create_user(boto3_client, CreateUser(
@@ -188,9 +257,11 @@ async def google_callback(request: Request):
             email=user_info['email'],
             password=None  
         ))
+
     
     access_token = create_access_token(user_info['email'], timedelta(minutes=30))
     refresh_token = create_refresh_token(user_info['email'], timedelta(minutes=1008))
+
     print(f"Access token created for user {user_info['email']}.")
     return {
         "access_token": access_token,
