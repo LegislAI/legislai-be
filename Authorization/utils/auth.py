@@ -1,13 +1,17 @@
 import datetime
-from datetime import timedelta, timezone
-from typing import Any, Optional, Union
-
-from fastapi import HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import jwt
-from jwt import InvalidTokenError
+from datetime import timedelta
+from datetime import timezone
+from typing import Any
+from typing import Optional
+from typing import Union
 
 from Authorization.utils.config import setting
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer
+from jose import jwt
+from jwt import InvalidTokenError
 
 
 # generate JWTs (access and refresh tokens) for a user identifier
