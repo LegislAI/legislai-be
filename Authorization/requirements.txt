@@ -14,3 +14,4 @@ python-jose
 oauthlib
 httpx
 itsdangerous
+structlog

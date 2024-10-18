@@ -17,12 +17,12 @@ import boto3
 from botocore.exceptions import ClientError
 from typing import Optional, Dict
 from starlette.config import Config
-
 import logging
 import uuid
 import time
 import datetime
 from datetime import timezone
+import structlog
 
 """
 na pasta inf/terraform
@@ -40,6 +40,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 LOG = logging.getLogger(__name__)
+logger = structlog.get_logger()
 
 route = APIRouter(prefix="/auth", tags=["Authentication"])
 oauth2bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -51,7 +52,8 @@ async def lifespan(app: FastAPI):
     output_path = Path(__file__).resolve().parent / "openapi.json"
     with open(output_path, "w") as f:
         json.dump(openapi_spec, f, indent=2)
-    LOG.info(f"OpenAPI spec saved to {output_path}")
+    logger.info(f"OpenAPI spec saved to {output_path}")
+
 
     yield
 
@@ -68,7 +70,7 @@ starlette_config = Config(environ=config_data)
 oauth = OAuth(starlette_config)
 
 
-GOOGLE_REDIRECT_URI = "https://localhost/auth/google/callback"
+GOOGLE_REDIRECT_URI = "http://localhost/auth/google/callback"
 
 # Register the Google OAuth provider
 oauth.register(
@@ -120,7 +122,7 @@ def _get_user(boto3_client, email: Optional[str] = None) -> Optional[dict]:
             }
 
     except ClientError as e:
-        LOG.error(f"Error fetching user: {e.response['Error']['Message']}")
+        logger.error(f"Error fetching user: {e.response['Error']['Message']}")
 
     return None
 
@@ -141,10 +143,11 @@ def _create_user(db, user_data: CreateUser) -> bool:
                 "lastlogin": {"S": str(datetime.datetime.now(timezone.utc))},
             },
         )
+        logger.info(f"User with email {user_data.email} created!")
         return True
 
     except ClientError as e:
-        LOG.error(f"Error creating user: {e.response['Error']['Message']}")
+        logger.error(f"Error creating user: {e.response['Error']['Message']}")
         return False
 
 
@@ -171,16 +174,12 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
             UpdateExpression=update_expression,
             ExpressionAttributeValues=expression_attribute_values,
         )
+        logger.info("User updated!")
         return True
 
     except ClientError as e:
-        LOG.error(f"Error updating user fields: {e.response['Error']['Message']}")
+        logger.error(f"Error updating user fields: {e.response['Error']['Message']}")
         return False
-
-
-@app.get("/world")
-def index():
-    return "Hello World"
 
 
 # Google Login Route
@@ -193,105 +192,80 @@ def index():
 async def google_login(request: Request):
     redirect_uri = request.url_for("google_callback")
     response = await oauth.google.authorize_redirect(request, redirect_uri)
-
+    logger.info("Login with google!")
     return response
 
-
-# async def google_login(request: Request):
-#     LOG.info("Initiating Google login with OAuth")
-
-#     # Generate a state and store it in the session for CSRF protection
-#     state = secrets.token_urlsafe(16)
-#     request.session['state'] = state
-#     LOG.info(f"State stored in session: {state}")
-
-#     # Construct the full redirect URL manually to log it
-#     redirect_url = (
-#         f"https://accounts.google.com/o/oauth2/auth"
-#         f"?response_type=code&client_id={os.getenv('GOOGLE_CLIENT_ID')}"
-#         f"&redirect_uri={GOOGLE_REDIRECT_URI}"
-#         f"&scope=openid%20email%20profile"
-#         f"&state={state}"
-#     )
-
-#     # Log the URL for debugging
-#     LOG.info(f"Redirecting to Google: {redirect_url}")
-
-#     # Perform the actual redirect
-#     return await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI, state=state)
 
 
 # Google Callback Route - This route will handle the response from Google
 @route.get("/google/callback")
 async def google_callback(request: Request):
-    LOG.info(f"1. Full request received: {request.url}")
+    logger.info(f"1. Full request received: {request.url}")
     returned_state = request.query_params.get("state")
-    LOG.info(f"2. Returned state from Google callback: {returned_state}")
-
-    # Compare with the original state from the session
-    original_state = request.session.get("state")
-    LOG.info(f"3. Original state stored in session: {original_state}")
-
-    # if returned_state != original_state:
-    #     LOG.error("State mismatch! Possible CSRF attack.")
-    #     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid state parameter")
-
-    LOG.info(f"{oauth.google.authorize_access_token(request)}")
+    if not returned_state:
+        logger.error("Authorization state not found")
+    else:
+        logger.info(f"2. Returned state from Google callback: {returned_state}")
 
     try:
         token = await oauth.google.authorize_access_token(request)
-        LOG.info(f"exists token: {token} !!!!!!!!!!")
     except OAuthError as e:
-        LOG.error(f"OAuthError occurred: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
         )
 
-    user_info = await oauth.google.parse_id_token(token, None)
+    #user_info = await oauth.google.parse_id_token(token, None)
+    resp = await oauth.google.get('https://openidconnect.googleapis.com/v1/userinfo', token=token)
+
+    user_info = resp.json()
+
+    name = user_info.get("name") 
+    email = user_info.get("email")
 
     if not user_info:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed"
         )
 
-    user = _get_user(boto3_client, email=user_info["email"])  # ver se ja existe
+    user = _get_user(boto3_client, email=email) 
 
     if not user:
-        LOG.info(f"{user_info}")
         _create_user(
             boto3_client,
             CreateUser(
-                username=user_info["email"].split("@")[0],
-                email=user_info["email"],
+                username=name,
+                email=email,
                 password="password",
             ),
         )
+    else:
+        logger.error("User already exists!")
 
     access_token = create_access_token(user_info["email"], timedelta(minutes=30))
     refresh_token = create_refresh_token(user_info["email"], timedelta(minutes=1008))
 
-    # print(f"Access token created for user {user_info['email']}.")
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "refresh_token": refresh_token,
         "email": user_info["email"],
-        "name": user_info["email"].split("@")[0],
+        "name": name,
+        "info": user_info,
     }
 
 
 @route.post("/register", response_model=GetUser)
 def register_user(payload: CreateUser):
     if not payload.email:
-        LOG.error(f"User with payload: {payload} is missing email")
+        logger.error(f"User with payload: {payload} is missing email")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="email field is required",
         )
 
     if not payload.username:
-        LOG.error(f"User with payload: {payload} is missing username")
+        logger.error(f"User with payload: {payload} is missing username")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="username field is required",
@@ -299,7 +273,7 @@ def register_user(payload: CreateUser):
 
     user_by_email = _get_user(boto3_client=boto3_client, email=payload.email)
     if user_by_email:
-        LOG.error(f"User with email {payload.email} already exists")
+        logger.error(f"User with email {payload.email} already exists")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"User with email {payload.email} already exists",
@@ -307,7 +281,7 @@ def register_user(payload: CreateUser):
 
     user_created = _create_user(boto3_client, payload)
     if user_created:
-        LOG.info(f"User created: {payload.email}")
+        logger.info(f"User created: {payload.email}")
         return {
             "userid": str(uuid.uuid4()),
             "email": payload.email,
@@ -341,7 +315,7 @@ def login_user(payload: LoginUser):
     token = create_access_token(user["userid"], timedelta(minutes=30))
     refresh = create_refresh_token(user["userid"], timedelta(minutes=1008))
 
-    LOG.info(f"User logged in: {user['email']}")
+    logger.info(f"User logged in: {user['email']}")
 
     # Update the last login time using both userid and email
     fields_to_update = {"lastlogin": str(datetime.datetime.now(timezone.utc))}

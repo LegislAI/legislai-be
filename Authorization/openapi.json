@@ -5,22 +5,6 @@
     "version": "0.1.0"
   },
   "paths": {
-    "/world": {
-      "get": {
-        "summary": "Index",
-        "operationId": "index_world_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          }
-        }
-      }
-    },
     "/auth/google/login": {
       "get": {
         "tags": [
