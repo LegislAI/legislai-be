@@ -199,15 +199,8 @@
       "LoginUser": {
         "properties": {
           "email": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "email"
-              },
-              {
-                "type": "null"
-              }
-            ],
+            "type": "string",
+            "format": "email",
             "title": "Email"
           },
           "username": {
@@ -234,6 +227,9 @@
           }
         },
         "type": "object",
+        "required": [
+          "email"
+        ],
         "title": "LoginUser"
       },
       "ValidationError": {

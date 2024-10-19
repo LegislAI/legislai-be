@@ -54,7 +54,6 @@ async def lifespan(app: FastAPI):
         json.dump(openapi_spec, f, indent=2)
     logger.info(f"OpenAPI spec saved to {output_path}")
 
-
     yield
 
 
@@ -184,11 +183,6 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
 
 # Google Login Route
 @route.get("/google/login")
-# async def google_login(request: Request):
-#     state = str(uuid4())
-#     request.session['state'] = state
-#     response = await oauth.google.authorize_redirect(request, GOOGLE_REDIRECT_URI)
-#     return response
 async def google_login(request: Request):
     redirect_uri = request.url_for("google_callback")
     response = await oauth.google.authorize_redirect(request, redirect_uri)
@@ -196,39 +190,38 @@ async def google_login(request: Request):
     return response
 
 
-
 # Google Callback Route - This route will handle the response from Google
 @route.get("/google/callback")
 async def google_callback(request: Request):
-    logger.info(f"1. Full request received: {request.url}")
     returned_state = request.query_params.get("state")
     if not returned_state:
         logger.error("Authorization state not found")
     else:
-        logger.info(f"2. Returned state from Google callback: {returned_state}")
+        logger.info(f"Returned state from Google callback: {returned_state}")
 
     try:
         token = await oauth.google.authorize_access_token(request)
-    except OAuthError as e:
+    except OAuthError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
         )
 
-    #user_info = await oauth.google.parse_id_token(token, None)
-    resp = await oauth.google.get('https://openidconnect.googleapis.com/v1/userinfo', token=token)
+    # user_info = await oauth.google.parse_id_token(token, None)
+    resp = await oauth.google.get(
+        "https://openidconnect.googleapis.com/v1/userinfo", token=token
+    )
 
     user_info = resp.json()
 
-    name = user_info.get("name") 
+    name = user_info.get("name")
     email = user_info.get("email")
 
     if not user_info:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed"
         )
-
-    user = _get_user(boto3_client, email=email) 
+    user = _get_user(boto3_client, email=email)
 
     if not user:
         _create_user(
@@ -240,18 +233,17 @@ async def google_callback(request: Request):
             ),
         )
     else:
-        logger.error("User already exists!")
+        logger.info("User already exists!")
 
-    access_token = create_access_token(user_info["email"], timedelta(minutes=30))
-    refresh_token = create_refresh_token(user_info["email"], timedelta(minutes=1008))
+    access_token = create_access_token(email, timedelta(minutes=30))
+    refresh_token = create_refresh_token(email, timedelta(minutes=1008))
 
     return {
         "access_token": access_token,
-        "token_type": "bearer",
         "refresh_token": refresh_token,
-        "email": user_info["email"],
+        "token_type": "bearer",
+        "email": email,
         "name": name,
-        "info": user_info,
     }
 
 
@@ -281,7 +273,6 @@ def register_user(payload: CreateUser):
 
     user_created = _create_user(boto3_client, payload)
     if user_created:
-        logger.info(f"User created: {payload.email}")
         return {
             "userid": str(uuid.uuid4()),
             "email": payload.email,

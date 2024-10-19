@@ -16,7 +16,7 @@ class GetUser(BaseModel):
 
 
 class LoginUser(BaseModel):
-    email: Optional[EmailStr] = None  # Either email or username is required
+    email: EmailStr
     username: Optional[str] = None
     password: Optional[str] = None
 
