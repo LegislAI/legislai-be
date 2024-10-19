@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2024-10-12 18:02:18,767 - INFO - Scraping theme: Arrendamento
 2024-10-12 18:02:22,088 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/arrendamento
 2024-10-12 18:02:25,609 - INFO - Scraped article saved to theme_data/Arrendamento/Novo_regime_do_arrendamento_apoiado_para_habitação.json
@@ -23,6 +24,8 @@
 2024-10-12 18:03:09,648 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5528b7520>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
 2024-10-12 18:03:09,649 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5525ea170>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
 2024-10-12 18:03:09,649 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5525eaef0>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
+=======
+>>>>>>> d2ec6ba (Checkpoint)
 2024-10-17 18:21:39,963 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
 2024-10-17 18:21:43,987 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
 2024-10-17 18:21:44,009 - INFO - Scraped page: 0/1
@@ -1311,6 +1314,7 @@ Stacktrace:
 2024-10-19 16:14:51,947 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106b77410>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c
 2024-10-19 16:14:51,950 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106bc8860>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c
 2024-10-19 16:14:51,960 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106bc89b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c
+<<<<<<< HEAD
 2024-10-20 09:14:15,598 - WARNING - No sections found: Message: stale element reference: stale element not found in the current frame
   (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
 Stacktrace:
@@ -9257,3 +9261,5 @@ Stacktrace:
 2024-11-16 11:34:46,832 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b1730>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38
 2024-11-16 11:34:46,833 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b15e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38
 2024-11-16 11:34:46,834 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b1820>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38
+=======
+>>>>>>> d2ec6ba (Checkpoint)
