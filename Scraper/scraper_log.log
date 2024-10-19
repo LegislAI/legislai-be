@@ -1,0 +1,1288 @@
+2024-10-17 18:21:39,963 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 18:21:43,987 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
+2024-10-17 18:21:44,009 - INFO - Scraped page: 0/1
+2024-10-17 18:21:44,151 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 18:21:47,487 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475
+2024-10-17 18:21:47,492 - INFO - Scraped page: 0/1
+2024-10-17 18:21:47,608 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 18:21:50,186 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /session/235c96fa2a2579e0953797d6aded0b8d
+2024-10-17 18:21:50,190 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102577bf0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/235c96fa2a2579e0953797d6aded0b8d
+2024-10-17 18:21:50,203 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1025cc0b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/235c96fa2a2579e0953797d6aded0b8d
+2024-10-17 18:21:50,220 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102575ca0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/8b30529f7ea3e185ce74efdb43e58686
+2024-10-17 18:21:50,227 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1025cc4a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/8b30529f7ea3e185ce74efdb43e58686
+2024-10-17 18:21:50,241 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1025cc6b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/8b30529f7ea3e185ce74efdb43e58686
+2024-10-17 18:26:08,681 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 18:26:12,288 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
+2024-10-17 18:26:12,428 - ERROR - An error occurred while scraping: name 'LAW_TYPE_BUCKET_NAME' is not defined
+2024-10-17 18:27:06,739 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 18:27:10,415 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
+2024-10-17 18:27:10,554 - INFO - Uploading files to S3
+2024-10-17 18:27:11,740 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 18:27:15,860 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475
+2024-10-17 18:27:15,985 - INFO - Uploading files to S3
+2024-10-17 18:27:16,422 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 18:27:20,500 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2008-34455475
+2024-10-17 18:27:21,152 - INFO - Uploading files to S3
+2024-10-17 18:27:21,568 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 18:27:25,099 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2015-105602322
+2024-10-17 18:27:25,243 - INFO - Uploading files to S3
+2024-10-17 18:27:25,586 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 18:27:28,435 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2006-34578375
+2024-10-17 18:27:28,570 - INFO - Uploading files to S3
+2024-10-17 18:27:29,142 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 18:27:32,971 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1995-34437675
+2024-10-17 18:27:33,112 - INFO - Uploading files to S3
+2024-10-17 18:27:33,460 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 18:27:36,908 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1999-34575575
+2024-10-17 18:27:37,054 - INFO - Uploading files to S3
+2024-10-17 18:27:37,379 - INFO - Scraping theme: Código de Processo Penal - CPP
+2024-10-17 18:27:41,340 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1987-34570075
+2024-10-17 18:27:41,480 - INFO - Uploading files to S3
+2024-10-17 18:27:41,836 - INFO - Scraping theme: Código Civil - CC
+2024-10-17 18:27:45,201 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1966-34509075
+2024-10-17 18:27:47,277 - INFO - Uploading files to S3
+2024-10-17 18:27:47,650 - INFO - Scraping theme: Código de Processo Civil - CPC
+2024-10-17 18:27:51,868 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2013-34580575
+2024-10-17 18:27:52,014 - INFO - Uploading files to S3
+2024-10-17 18:27:52,372 - INFO - Scraping theme: Código das Sociedades Comerciais - CSC
+2024-10-17 18:27:55,201 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1986-34443975
+2024-10-17 18:27:55,409 - INFO - Uploading files to S3
+2024-10-17 18:27:55,758 - INFO - Scraping theme: Código da Publicidade
+2024-10-17 18:27:59,167 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1990-34537375
+2024-10-17 18:27:59,303 - INFO - Uploading files to S3
+2024-10-17 18:27:59,661 - INFO - Scraping theme: Código dos Valores Mobiliários - CVM
+2024-10-17 18:28:03,914 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1999-34575175
+2024-10-17 18:28:04,061 - INFO - Uploading files to S3
+2024-10-17 18:28:04,436 - INFO - Scraping theme: Código do Registo Predial - CRP
+2024-10-17 18:28:07,920 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1984-34544675
+2024-10-17 18:28:08,066 - INFO - Uploading files to S3
+2024-10-17 18:28:08,433 - INFO - Scraping theme: Código do Registo Civil - CRC
+2024-10-17 18:28:12,202 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1995-34525275
+2024-10-17 18:28:12,327 - INFO - Uploading files to S3
+2024-10-17 18:28:12,677 - INFO - Scraping theme: Código do Notariado - CN
+2024-10-17 18:28:16,060 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1995-34509175
+2024-10-17 18:28:16,199 - INFO - Uploading files to S3
+2024-10-17 18:28:16,556 - INFO - Scraping theme: Código das Expropriações
+2024-10-17 18:28:19,910 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/1999-34538575
+2024-10-17 18:28:20,038 - INFO - Uploading files to S3
+2024-10-17 18:28:20,404 - INFO - Scraping theme: Código de Justiça Militar - CJM
+2024-10-17 18:28:23,910 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2003-34499475
+2024-10-17 18:28:24,074 - INFO - Uploading files to S3
+2024-10-17 18:28:24,416 - INFO - Scraping theme: Código do Direito de Autor e dos Direitos Conexos - CDADC
+2024-10-17 18:28:27,913 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1985-34475475
+2024-10-17 18:28:28,047 - INFO - Uploading files to S3
+2024-10-17 18:28:28,416 - INFO - Scraping theme: Código de Procedimento e Processo Tributário - CPPT
+2024-10-17 18:28:32,063 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/1999-34577575
+2024-10-17 18:28:32,208 - INFO - Uploading files to S3
+2024-10-17 18:28:32,530 - INFO - Scraping theme: Código da Insolvência e da Recuperação de Empresas - CIRE
+2024-10-17 18:28:35,399 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2004-34529075
+2024-10-17 18:28:35,531 - INFO - Uploading files to S3
+2024-10-17 18:28:35,892 - INFO - Scraping theme: Código da Execução das Penas e Medidas Privativas da Liberdade
+2024-10-17 18:28:39,277 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34515975
+2024-10-17 18:28:39,425 - INFO - Uploading files to S3
+2024-10-17 18:28:39,776 - INFO - Scraping theme: Código do IRS - Imposto sobre o Rendimento das Pessoas Singulares - CIRS
+2024-10-17 18:28:43,154 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2014-70048167
+2024-10-17 18:28:43,287 - INFO - Uploading files to S3
+2024-10-17 18:28:43,649 - INFO - Scraping theme: Código do Imposto sobre o Rendimento das Pessoas Coletivas - CIRC
+2024-10-17 18:28:47,015 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2014-64205634
+2024-10-17 18:28:47,153 - INFO - Uploading files to S3
+2024-10-17 18:28:47,506 - INFO - Scraping theme: Código da Propriedade Industrial - CPI
+2024-10-17 18:28:50,922 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2018-117279941
+2024-10-17 18:28:51,059 - INFO - Uploading files to S3
+2024-10-17 18:28:51,447 - INFO - Scraping theme: Códigos do Imposto Municipal sobre Imóveis - CIMI - e do Imposto Municipal sobre as Transmissões Onerosas de Imóveis - CIMT
+2024-10-17 18:28:54,280 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-lei/2003-34499575
+2024-10-17 18:28:54,422 - INFO - Uploading files to S3
+2024-10-17 19:12:21,571 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 19:12:25,229 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
+2024-10-17 19:12:25,374 - INFO - Uploading files to S3
+2024-10-17 19:12:25,989 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 19:12:26,230 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 19:12:26,236 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10777daf0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6e17aa2114d04163e7b0b7ab59ba52f
+2024-10-17 19:12:26,238 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10775b350>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6e17aa2114d04163e7b0b7ab59ba52f
+2024-10-17 19:12:26,242 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x118be6c90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6e17aa2114d04163e7b0b7ab59ba52f
+2024-10-17 19:12:59,412 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 19:13:03,073 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
+2024-10-17 19:13:03,212 - INFO - Uploading files to S3
+2024-10-17 19:13:03,686 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 19:13:07,531 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475
+2024-10-17 19:13:07,646 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/951e729d202f30ff52a9f673af5250f6
+2024-10-17 19:13:07,647 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x110d10e90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/951e729d202f30ff52a9f673af5250f6
+2024-10-17 19:13:07,648 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x110d115e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/951e729d202f30ff52a9f673af5250f6
+2024-10-17 19:14:34,062 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 19:14:38,623 - INFO - Scraped article saved to theme_data/Constituição da República Portuguesa - CRP/Constituição_da_República_Portuguesa_-_CRP.json
+2024-10-17 19:14:38,753 - INFO - Uploading files to S3
+2024-10-17 21:04:10,406 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:04:35,498 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:04:35,504 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:04:39,342 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Input_Date2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000105174500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010516c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104d7c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104dc0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104dfab7c cxxbridge1$string$len + 607124
+5   chromedriver                        0x0000000104db5374 cxxbridge1$string$len + 322444
+6   chromedriver                        0x0000000104db5fc4 cxxbridge1$string$len + 325596
+7   chromedriver                        0x000000010513bd2c cxxbridge1$str$ptr + 1685732
+8   chromedriver                        0x0000000105140530 cxxbridge1$str$ptr + 1704168
+9   chromedriver                        0x0000000105120e08 cxxbridge1$str$ptr + 1575360
+10  chromedriver                        0x0000000105140e00 cxxbridge1$str$ptr + 1706424
+11  chromedriver                        0x0000000105111f94 cxxbridge1$str$ptr + 1514316
+12  chromedriver                        0x000000010515d62c cxxbridge1$str$ptr + 1823204
+13  chromedriver                        0x000000010515d7ac cxxbridge1$str$ptr + 1823588
+14  chromedriver                        0x000000010516c530 cxxbridge1$str$ptr + 1884392
+15  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+16  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:04:39,468 - INFO - Uploading files to S3
+2024-10-17 21:04:40,108 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:04:40,113 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:04:40,117 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:04:40,121 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:04:40,125 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:04:42,017 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/c6c28bfff2d1229f9f1127b59f77f50a
+2024-10-17 21:04:42,018 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10cef74d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c6c28bfff2d1229f9f1127b59f77f50a
+2024-10-17 21:04:42,021 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10cef7500>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c6c28bfff2d1229f9f1127b59f77f50a
+2024-10-17 21:04:42,023 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1058b7140>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/182a4224f1769184898cdc8516d7d217
+2024-10-17 21:04:42,024 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10cef7f80>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/182a4224f1769184898cdc8516d7d217
+2024-10-17 21:04:42,024 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10cef71d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/182a4224f1769184898cdc8516d7d217
+2024-10-17 21:07:06,888 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:07:06,895 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:07:14,814 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Input_Date2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001024d8500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001024d0890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001020e0538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102124878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010215eb7c cxxbridge1$string$len + 607124
+5   chromedriver                        0x0000000102119374 cxxbridge1$string$len + 322444
+6   chromedriver                        0x0000000102119fc4 cxxbridge1$string$len + 325596
+7   chromedriver                        0x000000010249fd2c cxxbridge1$str$ptr + 1685732
+8   chromedriver                        0x00000001024a4530 cxxbridge1$str$ptr + 1704168
+9   chromedriver                        0x0000000102484e08 cxxbridge1$str$ptr + 1575360
+10  chromedriver                        0x00000001024a4e00 cxxbridge1$str$ptr + 1706424
+11  chromedriver                        0x0000000102475f94 cxxbridge1$str$ptr + 1514316
+12  chromedriver                        0x00000001024c162c cxxbridge1$str$ptr + 1823204
+13  chromedriver                        0x00000001024c17ac cxxbridge1$str$ptr + 1823588
+14  chromedriver                        0x00000001024d0530 cxxbridge1$str$ptr + 1884392
+15  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+16  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:07:14,944 - INFO - Uploading files to S3
+2024-10-17 21:07:15,457 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:07:15,462 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:07:15,467 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:07:15,472 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:07:15,476 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:07:16,968 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/53d4cd8b11bbe73cb307ce699d620a1a
+2024-10-17 21:07:16,970 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1138f7b90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/53d4cd8b11bbe73cb307ce699d620a1a
+2024-10-17 21:07:16,975 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1138f4920>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/53d4cd8b11bbe73cb307ce699d620a1a
+2024-10-17 21:07:16,983 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106da5730>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/14bd31849253027734d9324f7db317b3
+2024-10-17 21:07:16,984 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1138f7cb0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/14bd31849253027734d9324f7db317b3
+2024-10-17 21:07:16,985 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1138f7f20>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/14bd31849253027734d9324f7db317b3
+2024-10-17 21:08:58,773 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:08:58,780 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:09:02,661 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Input_Date2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100e14500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100e0c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100a1c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100a60878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000100a56d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000100a9ab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000100a55374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000100a55fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100ddbd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100de0530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100dc0e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100de0e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100db1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000100dfd62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000100dfd7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100e0c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:09:02,787 - INFO - Uploading files to S3
+2024-10-17 21:09:03,309 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:09:03,316 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:09:03,322 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:09:03,327 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:09:03,332 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:09:04,583 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/532ca8fa5241f646fe9948b0611c8beb
+2024-10-17 21:09:04,585 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10d63c530>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/532ca8fa5241f646fe9948b0611c8beb
+2024-10-17 21:09:04,586 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10d63c770>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/532ca8fa5241f646fe9948b0611c8beb
+2024-10-17 21:09:04,589 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106a65ac0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/112b162ed9d2a6040fb9c056d2dbdceb
+2024-10-17 21:09:04,590 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10d63cc20>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/112b162ed9d2a6040fb9c056d2dbdceb
+2024-10-17 21:09:04,591 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10d63cd70>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/112b162ed9d2a6040fb9c056d2dbdceb
+2024-10-17 21:09:26,371 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:09:26,377 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:09:31,229 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Input_Date2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100ef8500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100ef0890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100b00538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100b44878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000100b3ad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000100b7eb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000100b39374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000100b39fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100ebfd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100ec4530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100ea4e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100ec4e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100e95f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000100ee162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000100ee17ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100ef0530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:09:31,349 - INFO - Uploading files to S3
+2024-10-17 21:09:31,821 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:09:31,827 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:09:31,833 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:09:31,838 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:09:31,842 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:09:31,950 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:09:31,951 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10568b3b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ba53ff56ed901dfa1959cd5923382bd0
+2024-10-17 21:09:31,952 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10618f9e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ba53ff56ed901dfa1959cd5923382bd0
+2024-10-17 21:09:31,952 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106ba4e00>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ba53ff56ed901dfa1959cd5923382bd0
+2024-10-17 21:10:09,822 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:10:09,828 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:10:13,907 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Modificado"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100da0500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100d98890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001009a8538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001009ec878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001009e2d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000100a26b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001009e1374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001009e1fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100d67d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100d6c530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100d4ce08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100d6ce00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100d3df94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000100d8962c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000100d897ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100d98530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:10:14,038 - INFO - Uploading files to S3
+2024-10-17 21:10:14,497 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:10:14,504 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:10:14,510 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:10:14,515 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:10:14,519 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:10:15,647 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/4c74270129eb2316bb3a5de570a56ec6
+2024-10-17 21:10:15,648 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10b9f79e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/4c74270129eb2316bb3a5de570a56ec6
+2024-10-17 21:10:15,650 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10b9f7620>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/4c74270129eb2316bb3a5de570a56ec6
+2024-10-17 21:10:15,655 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104e8dac0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d088fa34cb800236f5ca06e53386caab
+2024-10-17 21:10:15,656 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10b8f32c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d088fa34cb800236f5ca06e53386caab
+2024-10-17 21:10:15,657 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104b91e20>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d088fa34cb800236f5ca06e53386caab
+2024-10-17 21:11:08,412 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:11:08,418 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:11:12,328 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="Modificado"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000102dec500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000102de4890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001029f4538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102a38878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000102a2ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000102a72b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000102a2d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000102a2dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000102db3d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000102db8530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000102d98e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000102db8e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000102d89f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000102dd562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000102dd57ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000102de4530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:11:12,453 - INFO - Uploading files to S3
+2024-10-17 21:11:12,941 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:11:12,951 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/ceec0e6f1f4881161e9101d682be9418
+2024-10-17 21:11:12,952 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1064be630>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ceec0e6f1f4881161e9101d682be9418
+2024-10-17 21:11:12,953 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10d046c00>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ceec0e6f1f4881161e9101d682be9418
+2024-10-17 21:12:18,672 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:12:18,678 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:12:22,623 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".modificado_mobile"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104a68500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104a60890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104670538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001046b4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001046aad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001046eeb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001046a9374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001046a9fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000104a2fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104a34530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104a14e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104a34e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000104a05f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000104a5162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000104a517ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000104a60530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:12:22,745 - INFO - Uploading files to S3
+2024-10-17 21:12:23,191 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x107194b00>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/21a5e043bad1d77bc8682f8c14a36d81
+2024-10-17 21:12:23,205 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10a545d30>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/21a5e043bad1d77bc8682f8c14a36d81
+2024-10-17 21:12:23,222 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10a546f60>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/21a5e043bad1d77bc8682f8c14a36d81
+2024-10-17 21:12:42,794 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:12:42,800 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:12:46,773 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".modificado_mobile"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100b54500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100b4c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010075c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001007a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001007dab7c cxxbridge1$string$len + 607124
+5   chromedriver                        0x0000000100795374 cxxbridge1$string$len + 322444
+6   chromedriver                        0x0000000100795fc4 cxxbridge1$string$len + 325596
+7   chromedriver                        0x0000000100b1bd2c cxxbridge1$str$ptr + 1685732
+8   chromedriver                        0x0000000100b20530 cxxbridge1$str$ptr + 1704168
+9   chromedriver                        0x0000000100b00e08 cxxbridge1$str$ptr + 1575360
+10  chromedriver                        0x0000000100b20e00 cxxbridge1$str$ptr + 1706424
+11  chromedriver                        0x0000000100af1f94 cxxbridge1$str$ptr + 1514316
+12  chromedriver                        0x0000000100b3d62c cxxbridge1$str$ptr + 1823204
+13  chromedriver                        0x0000000100b3d7ac cxxbridge1$str$ptr + 1823588
+14  chromedriver                        0x0000000100b4c530 cxxbridge1$str$ptr + 1884392
+15  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+16  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:12:46,893 - INFO - Uploading files to S3
+2024-10-17 21:12:47,403 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:12:47,409 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:12:47,415 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:12:47,420 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:12:47,425 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:12:48,489 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/9bdfc869135791f2fb7841fe16d8b1ce
+2024-10-17 21:12:48,491 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102ac7350>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/9bdfc869135791f2fb7841fe16d8b1ce
+2024-10-17 21:12:48,493 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10216d310>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/9bdfc869135791f2fb7841fe16d8b1ce
+2024-10-17 21:12:48,501 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102128b00>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a5b94b004b475ae58d7ee9aaac8778fa
+2024-10-17 21:12:48,502 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102c10410>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a5b94b004b475ae58d7ee9aaac8778fa
+2024-10-17 21:12:48,503 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102c10560>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a5b94b004b475ae58d7ee9aaac8778fa
+2024-10-17 21:17:26,803 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:17:26,811 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:17:31,070 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".modificado_mobile"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001044c4500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001044bc890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001040cc538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104110878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104106d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x000000010414ab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104105374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104105fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010448bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104490530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104470e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104490e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000104461f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x00000001044ad62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001044ad7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001044bc530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:17:31,194 - INFO - Uploading files to S3
+2024-10-17 21:17:31,750 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:17:31,756 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:17:31,760 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:17:31,765 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:17:31,769 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:17:31,957 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:17:31,958 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10709d850>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6636bac45749e4586a8217b19ae5151
+2024-10-17 21:17:31,959 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1070d9520>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6636bac45749e4586a8217b19ae5151
+2024-10-17 21:17:31,960 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x100a12ea0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b6636bac45749e4586a8217b19ae5151
+2024-10-17 21:18:39,137 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:18:39,143 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:18:43,067 - INFO - Scraped article saved to
+2024-10-17 21:18:43,222 - INFO - Uploading files to S3
+2024-10-17 21:18:43,698 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:18:43,704 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:18:43,710 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:18:43,716 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:18:43,720 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:18:43,792 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:18:43,794 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102aa06e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bdb38e719ec03c3d6af2433d75991d6a
+2024-10-17 21:18:43,795 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1023778c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bdb38e719ec03c3d6af2433d75991d6a
+2024-10-17 21:18:43,796 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102aa15b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bdb38e719ec03c3d6af2433d75991d6a
+2024-10-17 21:20:04,979 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:20:04,985 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:20:08,926 - ERROR - An error occurred while scraping: list index out of range
+2024-10-17 21:20:09,058 - INFO - Uploading files to S3
+2024-10-17 21:20:09,601 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:20:09,608 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:20:09,613 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:20:09,618 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:20:09,623 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:20:10,837 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/ba94fb226198e7c83ba681136e6c15e8
+2024-10-17 21:20:10,838 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113bf77a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ba94fb226198e7c83ba681136e6c15e8
+2024-10-17 21:20:10,840 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113bf7f80>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ba94fb226198e7c83ba681136e6c15e8
+2024-10-17 21:20:10,844 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x107a9c800>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/e337bbfcccbf95fbb5ce81cbb72d1166
+2024-10-17 21:20:10,846 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10753e8a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/e337bbfcccbf95fbb5ce81cbb72d1166
+2024-10-17 21:20:10,848 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113ac47a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/e337bbfcccbf95fbb5ce81cbb72d1166
+2024-10-17 21:20:36,016 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:20:36,022 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:20:39,540 - INFO - Scraped article saved to
+2024-10-17 21:20:39,658 - INFO - Uploading files to S3
+2024-10-17 21:20:40,089 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:20:40,095 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:20:40,100 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:20:40,105 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:20:40,110 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:20:40,280 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:20:40,281 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106ea06b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ee8ac15e4e1ba938a2507cd02348d070
+2024-10-17 21:20:40,282 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106daea20>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ee8ac15e4e1ba938a2507cd02348d070
+2024-10-17 21:20:40,283 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106df7890>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/ee8ac15e4e1ba938a2507cd02348d070
+2024-10-17 21:37:07,853 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:37:07,859 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:37:11,290 - ERROR - An error occurred while scraping: 'list' object has no attribute 'find_element'
+2024-10-17 21:37:11,411 - INFO - Uploading files to S3
+2024-10-17 21:37:11,951 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:37:11,958 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:37:11,965 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:37:11,970 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:37:11,975 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:37:14,777 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'RemoteDisconnected('Remote end closed connection without response')': /session/52f66e05ab78ede657418629fffac80b
+2024-10-17 21:37:14,780 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10833c800>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/52f66e05ab78ede657418629fffac80b
+2024-10-17 21:37:14,784 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10833c740>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/52f66e05ab78ede657418629fffac80b
+2024-10-17 21:37:14,793 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106d962d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/734dfb4f1d723b2ddee609df035b5539
+2024-10-17 21:37:14,794 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10833ce90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/734dfb4f1d723b2ddee609df035b5539
+2024-10-17 21:37:14,795 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10833cfb0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/734dfb4f1d723b2ddee609df035b5539
+2024-10-17 21:37:44,638 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:37:44,644 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:37:48,805 - INFO - Document has Diploma and Body
+2024-10-17 21:37:48,813 - INFO - Scraped article saved to
+2024-10-17 21:37:48,935 - INFO - Uploading files to S3
+2024-10-17 21:37:49,391 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:37:49,398 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:37:49,404 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:37:49,409 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:37:49,413 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:37:49,977 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:37:49,981 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104896030>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d3a8c6057c074a6c07785aad46fb960b
+2024-10-17 21:37:49,981 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x116bf7f50>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d3a8c6057c074a6c07785aad46fb960b
+2024-10-17 21:37:49,985 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x116d3c4a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/d3a8c6057c074a6c07785aad46fb960b
+2024-10-17 21:43:45,342 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:43:45,346 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:43:49,596 - INFO - Document has Diploma and Body
+2024-10-17 21:43:49,599 - ERROR - An error occurred while scraping: 'list' object has no attribute 'find_element'
+2024-10-17 21:43:49,721 - INFO - Uploading files to S3
+2024-10-17 21:43:50,259 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:43:50,265 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:43:50,272 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:43:50,277 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:43:50,281 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:43:52,681 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106520500>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/0f7010a4422eec9b23aa210723abfdee
+2024-10-17 21:43:52,687 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106520c80>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/0f7010a4422eec9b23aa210723abfdee
+2024-10-17 21:43:52,691 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106520e00>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/0f7010a4422eec9b23aa210723abfdee
+2024-10-17 21:43:52,693 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x101e7f740>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/fc6b1247692800c7f833d9c01c047e6e
+2024-10-17 21:43:52,694 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1065210d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/fc6b1247692800c7f833d9c01c047e6e
+2024-10-17 21:43:52,695 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106521340>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/fc6b1247692800c7f833d9c01c047e6e
+2024-10-17 21:44:52,892 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:44:52,898 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:44:57,086 - INFO - Document has Diploma and Body
+2024-10-17 21:44:57,104 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x000000010506c500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000105064890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104c74538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104cb8878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104caed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000104cf2b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104cad374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104cadfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000105033d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000105038530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000105018e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000105038e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000105009f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010505562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001050557ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000105064530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-17 21:44:57,223 - INFO - Uploading files to S3
+2024-10-17 21:44:57,673 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:44:57,679 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:44:57,684 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:44:57,689 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:44:57,693 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:44:59,119 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/e619b0d94968052c434bd8b57ec882fd
+2024-10-17 21:44:59,121 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x110620590>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/e619b0d94968052c434bd8b57ec882fd
+2024-10-17 21:44:59,123 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1106207d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/e619b0d94968052c434bd8b57ec882fd
+2024-10-17 21:44:59,130 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104aba060>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/17071ff4047f2a53d84972be71a541ef
+2024-10-17 21:44:59,131 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x110620a40>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/17071ff4047f2a53d84972be71a541ef
+2024-10-17 21:44:59,132 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x110620c80>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/17071ff4047f2a53d84972be71a541ef
+2024-10-17 21:46:49,927 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
+2024-10-17 21:46:49,933 - INFO - Scraping theme: Código do Trabalho - CT
+2024-10-17 21:46:53,552 - INFO - Document has Diploma and Body
+2024-10-17 21:46:53,568 - INFO - Scraped article saved to
+2024-10-17 21:46:53,690 - INFO - Uploading files to S3
+2024-10-17 21:46:54,146 - INFO - Scraping theme: Código dos Contratos Públicos - CCP
+2024-10-17 21:46:54,149 - INFO - Scraping theme: Código do Procedimento Administrativo - CPA
+2024-10-17 21:46:54,152 - INFO - Scraping theme: Novo Regime do Arrendamento Urbano - NRAU
+2024-10-17 21:46:54,156 - INFO - Scraping theme: Código Penal - CP
+2024-10-17 21:46:54,159 - INFO - Scraping theme: Código de Processo do Trabalho - CPT
+2024-10-17 21:46:54,298 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-10-17 21:46:54,299 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10626b320>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/9f6477675ae1a4365f94441317307d98
+2024-10-17 21:46:54,299 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11331c950>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/9f6477675ae1a4365f94441317307d98
+2024-10-17 21:46:54,300 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11331c5f0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/9f6477675ae1a4365f94441317307d98
+2024-10-19 09:17:48,700 - ERROR - An error occurred while scraping: LawTypeScraper.scrape_article() got an unexpected keyword argument 'THEME_URL'
+2024-10-19 09:18:24,291 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":"data-container"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000102a58500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000102a50890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102660538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001026a4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010269ad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001026deb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000102699374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000102699fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000102a1fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000102a24530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000102a04e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000102a24e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001029f5f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000102a4162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000102a417ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000102a50530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 09:26:18,023 - ERROR - An error occurred while scraping: 'LawTypeScraper' object has no attribute 'scrape_article'
+2024-10-19 09:26:32,985 - ERROR - An error occurred while scraping: LawTypeScraper.scrape_article() missing 1 required positional argument: 'driver'
+2024-10-19 09:27:05,950 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102b40e30>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/544b821f613e95754b8c723090aa098d
+2024-10-19 09:27:05,951 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102a1a3c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/544b821f613e95754b8c723090aa098d
+2024-10-19 09:27:05,951 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102b410d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/544b821f613e95754b8c723090aa098d
+2024-10-19 09:30:21,373 - INFO - Scraped article saved to
+2024-10-19 10:12:09,086 - INFO - Scraped article saved to
+2024-10-19 10:22:39,385 - WARNING - No diploma or alteration found: 'list' object has no attribute 'text'
+2024-10-19 10:24:55,688 - WARNING - No diploma or alteration found: 'WebElement' object is not iterable
+2024-10-19 10:50:12,583 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".input-date"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x000000010475c500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104754890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104364538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a8878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010439ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043e2b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x000000010439d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x000000010439dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000104723d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104728530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104708e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104728e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f9f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010474562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001047457ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000104754530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:50:30,497 - WARNING - No diploma or alteration found: LawTypeScraper.parse_alteration_section() missing 1 required positional argument: 'element'
+2024-10-19 10:50:53,612 - WARNING - No diploma or alteration found: LawTypeScraper.parse_alteration_section() missing 1 required positional argument: 'element'
+2024-10-19 10:55:33,538 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-container] .Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100578500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100570890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100180538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001001c4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001001bad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001001feb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001001b9374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001001b9fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010053fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100544530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100524e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100544e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100515f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010056162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005617ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100570530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:55:33,541 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-container] .Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100578500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100570890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100180538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001001c4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001001bad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001001feb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001001b9374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001001b9fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010053fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100544530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100524e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100544e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100515f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010056162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005617ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100570530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:55:35,225 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-container] .Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100578500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100570890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100180538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001001c4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001001bad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001001feb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001001b9374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001001b9fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010053fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100544530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100524e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100544e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100515f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010056162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005617ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100570530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:55:35,228 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-container] .Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100578500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100570890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100180538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001001c4878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001001bad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001001feb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001001b9374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001001b9fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010053fd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100544530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100524e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100544e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100515f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010056162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005617ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100570530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:55:35,228 - INFO - Payload: {'document_name': 'Lei do trabalho', 'law_name': 'Lei n.º 7/2009 ', 'dr_document': 'Diário da República n.º 30/2009, Série I de 2009-02-12', 'link': 'https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475', 'date_of_fetch': '2024-10-19', 'theme': 'Lei do trabalho', 'sections': {'diploma': {'title': 'Diploma', 'text': 'Aprova a revisão do Código do Trabalho', 'alterations': [{}, {}], 'previous_iterations': [{}, {}]}}}
+2024-10-19 10:57:34,396 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id$="AlteradoPor2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001032fc500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001032f4890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102f04538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102f48878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000102f3ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000102f82b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000102f3d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000102f3dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x00000001032c3d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x00000001032c8530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x00000001032a8e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x00000001032c8e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000103299f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x00000001032e562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001032e57ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001032f4530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:57:34,399 - ERROR - Error parsing alteration section: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-container]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001032fc500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001032f4890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102f04538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102f48878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000102f3ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000102f82b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000102f3d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000102f3dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x00000001032c3d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x00000001032c8530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x00000001032a8e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x00000001032c8e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000103299f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x00000001032e562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001032e57ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001032f4530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 10:57:35,613 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/83017a7aed896a291851a930148e1f61
+2024-10-19 10:57:35,614 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x107024e90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/83017a7aed896a291851a930148e1f61
+2024-10-19 10:57:35,614 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x107024c20>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/83017a7aed896a291851a930148e1f61
+2024-10-19 10:58:43,328 - WARNING - No diploma or alteration found: LawTypeScraper.parse_alteration_section() takes 2 positional arguments but 3 were given
+2024-10-19 11:46:48,465 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.FragmentoVerDiferencas"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100c04500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100bfc890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010080c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100850878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010088ab7c cxxbridge1$string$len + 607124
+5   chromedriver                        0x0000000100845374 cxxbridge1$string$len + 322444
+6   chromedriver                        0x0000000100845fc4 cxxbridge1$string$len + 325596
+7   chromedriver                        0x0000000100bcbd2c cxxbridge1$str$ptr + 1685732
+8   chromedriver                        0x0000000100bd0530 cxxbridge1$str$ptr + 1704168
+9   chromedriver                        0x0000000100bb0e08 cxxbridge1$str$ptr + 1575360
+10  chromedriver                        0x0000000100bd0e00 cxxbridge1$str$ptr + 1706424
+11  chromedriver                        0x0000000100ba1f94 cxxbridge1$str$ptr + 1514316
+12  chromedriver                        0x0000000100bed62c cxxbridge1$str$ptr + 1823204
+13  chromedriver                        0x0000000100bed7ac cxxbridge1$str$ptr + 1823588
+14  chromedriver                        0x0000000100bfc530 cxxbridge1$str$ptr + 1884392
+15  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+16  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 11:47:23,362 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.FragmentoVerDiferencas"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000102dc8500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000102dc0890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001029d0538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102a14878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000102a4eb7c cxxbridge1$string$len + 607124
+5   chromedriver                        0x0000000102a09374 cxxbridge1$string$len + 322444
+6   chromedriver                        0x0000000102a09fc4 cxxbridge1$string$len + 325596
+7   chromedriver                        0x0000000102d8fd2c cxxbridge1$str$ptr + 1685732
+8   chromedriver                        0x0000000102d94530 cxxbridge1$str$ptr + 1704168
+9   chromedriver                        0x0000000102d74e08 cxxbridge1$str$ptr + 1575360
+10  chromedriver                        0x0000000102d94e00 cxxbridge1$str$ptr + 1706424
+11  chromedriver                        0x0000000102d65f94 cxxbridge1$str$ptr + 1514316
+12  chromedriver                        0x0000000102db162c cxxbridge1$str$ptr + 1823204
+13  chromedriver                        0x0000000102db17ac cxxbridge1$str$ptr + 1823588
+14  chromedriver                        0x0000000102dc0530 cxxbridge1$str$ptr + 1884392
+15  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+16  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 11:49:59,541 - WARNING - No diploma or alteration found: 'WebDriver' object has no attribute 'click'
+2024-10-19 11:50:29,907 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/46893f8abb2b4e6c32246ec31cb79fa9
+2024-10-19 11:50:29,909 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102a9edb0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/46893f8abb2b4e6c32246ec31cb79fa9
+2024-10-19 11:50:29,909 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x102c924b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/46893f8abb2b4e6c32246ec31cb79fa9
+2024-10-19 11:50:52,388 - WARNING - No diploma or alteration found: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x00000001049fc500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001049f4890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104604538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104609624 cxxbridge1$string$len + 110140
+4   chromedriver                        0x000000010460ad94 cxxbridge1$string$len + 116140
+5   chromedriver                        0x000000010460ae0c cxxbridge1$string$len + 116260
+6   chromedriver                        0x00000001046485e8 cxxbridge1$string$len + 368128
+7   chromedriver                        0x000000010463ed18 cxxbridge1$string$len + 329008
+8   chromedriver                        0x0000000104682b7c cxxbridge1$string$len + 607124
+9   chromedriver                        0x000000010463d374 cxxbridge1$string$len + 322444
+10  chromedriver                        0x000000010463dfc4 cxxbridge1$string$len + 325596
+11  chromedriver                        0x00000001049c3d2c cxxbridge1$str$ptr + 1685732
+12  chromedriver                        0x00000001049c8530 cxxbridge1$str$ptr + 1704168
+13  chromedriver                        0x00000001049a8e08 cxxbridge1$str$ptr + 1575360
+14  chromedriver                        0x00000001049c8e00 cxxbridge1$str$ptr + 1706424
+15  chromedriver                        0x0000000104999f94 cxxbridge1$str$ptr + 1514316
+16  chromedriver                        0x00000001049e562c cxxbridge1$str$ptr + 1823204
+17  chromedriver                        0x00000001049e57ac cxxbridge1$str$ptr + 1823588
+18  chromedriver                        0x00000001049f4530 cxxbridge1$str$ptr + 1884392
+19  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 11:52:04,775 - WARNING - No diploma or alteration found: Message: stale element reference: stale element not found in the current frame
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#stale-element-reference-exception
+Stacktrace:
+0   chromedriver                        0x0000000100c04500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100bfc890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010080c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100811624 cxxbridge1$string$len + 110140
+4   chromedriver                        0x0000000100812d94 cxxbridge1$string$len + 116140
+5   chromedriver                        0x0000000100812e0c cxxbridge1$string$len + 116260
+6   chromedriver                        0x00000001008505e8 cxxbridge1$string$len + 368128
+7   chromedriver                        0x0000000100846d18 cxxbridge1$string$len + 329008
+8   chromedriver                        0x000000010088ab7c cxxbridge1$string$len + 607124
+9   chromedriver                        0x0000000100845374 cxxbridge1$string$len + 322444
+10  chromedriver                        0x0000000100845fc4 cxxbridge1$string$len + 325596
+11  chromedriver                        0x0000000100bcbd2c cxxbridge1$str$ptr + 1685732
+12  chromedriver                        0x0000000100bd0530 cxxbridge1$str$ptr + 1704168
+13  chromedriver                        0x0000000100bb0e08 cxxbridge1$str$ptr + 1575360
+14  chromedriver                        0x0000000100bd0e00 cxxbridge1$str$ptr + 1706424
+15  chromedriver                        0x0000000100ba1f94 cxxbridge1$str$ptr + 1514316
+16  chromedriver                        0x0000000100bed62c cxxbridge1$str$ptr + 1823204
+17  chromedriver                        0x0000000100bed7ac cxxbridge1$str$ptr + 1823588
+18  chromedriver                        0x0000000100bfc530 cxxbridge1$str$ptr + 1884392
+19  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 12:41:36,421 - WARNING - No diploma or alteration found: LawTypeScraper.parse_alteration_page() missing 1 required positional argument: 'initial_date'
+2024-10-19 12:43:29,330 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/b15f619877063fd46123fa10e7bcc5d8
+2024-10-19 12:43:29,331 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1050b6cc0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b15f619877063fd46123fa10e7bcc5d8
+2024-10-19 12:43:29,333 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104e263c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/b15f619877063fd46123fa10e7bcc5d8
+2024-10-19 12:43:41,767 - WARNING - No diploma or alteration found: 'NoneType' object has no attribute 'group'
+2024-10-19 12:45:07,225 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="b20-b1-VersaoInicial"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100d2c500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100d24890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100934538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100978878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010096ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001009b2b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x000000010096d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x000000010096dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100cf3d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100cf8530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100cd8e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100cf8e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100cc9f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000100d1562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000100d157ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100d24530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 12:46:00,536 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001047e8500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001047e0890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001043f0538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104434878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010442ad18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x000000010446eb7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104429374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104429fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x00000001047afd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x00000001047b4530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104794e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x00000001047b4e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000104785f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x00000001047d162c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001047d17ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001047e0530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 12:46:17,734 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x000000010455c500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104554890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104164538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001041a8878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010419ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001041e2b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x000000010419d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x000000010419dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000104523d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104528530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104508e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104528e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001044f9f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010454562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001045457ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000104554530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:33:29,980 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Texto diploma-fragmento"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001005b0500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001005a8890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001001b8538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001001fc878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x00000001001f2d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000100236b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x00000001001f1374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x00000001001f1fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100577d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x000000010057c530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x000000010055ce08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x000000010057ce00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x000000010054df94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010059962c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005997ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001005a8530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:34:20,772 - ERROR - An error occurred while scraping: list indices must be integers or slices, not str
+2024-10-19 15:35:27,160 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Texto"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000100f34500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100f2c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100b3c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100b80878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000100b76d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000100bbab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000100b75374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000100b75fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000100efbd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000100f00530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000100ee0e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000100f00e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000100ed1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000100f1d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000100f1d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100f2c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:37:14,664 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Texto"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104bc4500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104bbc890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x00000001047cc538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104810878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104806d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x000000010484ab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104805374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104805fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000104b8bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104b90530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104b70e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104b90e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000104b61f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000104bad62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000104bad7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000104bbc530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,052 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="b20-b1-l1-1709_0-AlteradoPor2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,067 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="b20-b1-l1-1709_0-AlteradoPor2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,071 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,073 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,077 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,080 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:42:33,083 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Titulo"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104754500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x000000010474c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x000000010435c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x00000001043a0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104396d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001043dab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104395374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104395fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x000000010471bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104720530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104700e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104720e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001046f1f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010473d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x000000010473d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x000000010474c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:46:35,797 - ERROR - An error occurred while scraping: Message: invalid selector
+from javascript error: {"status":32,"value":"An invalid or illegal selector was specified"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+0   chromedriver                        0x00000001033f0500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001033e8890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102ff8538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102ffd624 cxxbridge1$string$len + 110140
+4   chromedriver                        0x0000000102ffed94 cxxbridge1$string$len + 116140
+5   chromedriver                        0x0000000102ffee0c cxxbridge1$string$len + 116260
+6   chromedriver                        0x000000010303c5e8 cxxbridge1$string$len + 368128
+7   chromedriver                        0x0000000103032d18 cxxbridge1$string$len + 329008
+8   chromedriver                        0x0000000103076b7c cxxbridge1$string$len + 607124
+9   chromedriver                        0x0000000103031374 cxxbridge1$string$len + 322444
+10  chromedriver                        0x0000000103031fc4 cxxbridge1$string$len + 325596
+11  chromedriver                        0x00000001033b7d2c cxxbridge1$str$ptr + 1685732
+12  chromedriver                        0x00000001033bc530 cxxbridge1$str$ptr + 1704168
+13  chromedriver                        0x000000010339ce08 cxxbridge1$str$ptr + 1575360
+14  chromedriver                        0x00000001033bce00 cxxbridge1$str$ptr + 1706424
+15  chromedriver                        0x000000010338df94 cxxbridge1$str$ptr + 1514316
+16  chromedriver                        0x00000001033d962c cxxbridge1$str$ptr + 1823204
+17  chromedriver                        0x00000001033d97ac cxxbridge1$str$ptr + 1823588
+18  chromedriver                        0x00000001033e8530 cxxbridge1$str$ptr + 1884392
+19  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:48:21,486 - ERROR - An error occurred while scraping subsequent versions: Message: invalid selector
+from javascript error: {"status":32,"value":"An invalid or illegal selector was specified"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+0   chromedriver                        0x0000000104fc4500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104fbc890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104bcc538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104bd1624 cxxbridge1$string$len + 110140
+4   chromedriver                        0x0000000104bd2d94 cxxbridge1$string$len + 116140
+5   chromedriver                        0x0000000104bd2e0c cxxbridge1$string$len + 116260
+6   chromedriver                        0x0000000104c105e8 cxxbridge1$string$len + 368128
+7   chromedriver                        0x0000000104c06d18 cxxbridge1$string$len + 329008
+8   chromedriver                        0x0000000104c4ab7c cxxbridge1$string$len + 607124
+9   chromedriver                        0x0000000104c05374 cxxbridge1$string$len + 322444
+10  chromedriver                        0x0000000104c05fc4 cxxbridge1$string$len + 325596
+11  chromedriver                        0x0000000104f8bd2c cxxbridge1$str$ptr + 1685732
+12  chromedriver                        0x0000000104f90530 cxxbridge1$str$ptr + 1704168
+13  chromedriver                        0x0000000104f70e08 cxxbridge1$str$ptr + 1575360
+14  chromedriver                        0x0000000104f90e00 cxxbridge1$str$ptr + 1706424
+15  chromedriver                        0x0000000104f61f94 cxxbridge1$str$ptr + 1514316
+16  chromedriver                        0x0000000104fad62c cxxbridge1$str$ptr + 1823204
+17  chromedriver                        0x0000000104fad7ac cxxbridge1$str$ptr + 1823588
+18  chromedriver                        0x0000000104fbc530 cxxbridge1$str$ptr + 1884392
+19  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:52:33,531 - ERROR - Error parsing a subsequent version: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[id="b20-b1-l1-1709_0-AlteradoPor2"]"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x0000000104e74500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000104e6c890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000104a7c538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000104ac0878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000104ab6d18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000104afab7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000104ab5374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000104ab5fc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000104e3bd2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000104e40530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000104e20e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000104e40e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000104e11f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x0000000104e5d62c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x0000000104e5d7ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000104e6c530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:53:41,969 - ERROR - An error occurred while scraping: 'list' object has no attribute 'find_elements'
+2024-10-19 15:54:25,838 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Texto"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x000000010052c500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000100524890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000100134538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000100178878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x000000010016ed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x00000001001b2b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x000000010016d374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x000000010016dfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x00000001004f3d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x00000001004f8530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x00000001004d8e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x00000001004f8e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x00000001004c9f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010051562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001005157ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x0000000100524530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 15:55:00,476 - ERROR - An error occurred while scraping: Message: no such element: Unable to locate element: {"method":"css selector","selector":".Fragmento_Texto"}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+Stacktrace:
+0   chromedriver                        0x00000001032ac500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x00000001032a4890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102eb4538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102ef8878 cxxbridge1$string$len + 368784
+4   chromedriver                        0x0000000102eeed18 cxxbridge1$string$len + 329008
+5   chromedriver                        0x0000000102f32b7c cxxbridge1$string$len + 607124
+6   chromedriver                        0x0000000102eed374 cxxbridge1$string$len + 322444
+7   chromedriver                        0x0000000102eedfc4 cxxbridge1$string$len + 325596
+8   chromedriver                        0x0000000103273d2c cxxbridge1$str$ptr + 1685732
+9   chromedriver                        0x0000000103278530 cxxbridge1$str$ptr + 1704168
+10  chromedriver                        0x0000000103258e08 cxxbridge1$str$ptr + 1575360
+11  chromedriver                        0x0000000103278e00 cxxbridge1$str$ptr + 1706424
+12  chromedriver                        0x0000000103249f94 cxxbridge1$str$ptr + 1514316
+13  chromedriver                        0x000000010329562c cxxbridge1$str$ptr + 1823204
+14  chromedriver                        0x00000001032957ac cxxbridge1$str$ptr + 1823588
+15  chromedriver                        0x00000001032a4530 cxxbridge1$str$ptr + 1884392
+16  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 16:06:28,787 - ERROR - An error occurred while scraping: 'WebElement' object is not iterable
+2024-10-19 16:07:02,663 - ERROR - An error occurred while scraping: 'WebElement' object is not iterable
+2024-10-19 16:12:36,211 - ERROR - An error occurred while scraping: 'WebElement' object is not iterable
+2024-10-19 16:12:59,666 - ERROR - An error occurred while scraping: Message: invalid selector
+from javascript error: {"status":32,"value":"Unable to locate an element with the xpath expression .//div[contains(@id, 'DetalheArtigo') because of the following error:\nSyntaxError: Failed to execute 'evaluate' on 'Document': The string './/div[contains(@id, 'DetalheArtigo')' is not a valid XPath expression."}
+  (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#invalid-selector-exception
+Stacktrace:
+0   chromedriver                        0x0000000103268500 cxxbridge1$str$ptr + 1917112
+1   chromedriver                        0x0000000103260890 cxxbridge1$str$ptr + 1885256
+2   chromedriver                        0x0000000102e70538 cxxbridge1$string$len + 89424
+3   chromedriver                        0x0000000102e75624 cxxbridge1$string$len + 110140
+4   chromedriver                        0x0000000102e76d94 cxxbridge1$string$len + 116140
+5   chromedriver                        0x0000000102e76e0c cxxbridge1$string$len + 116260
+6   chromedriver                        0x0000000102eb45e8 cxxbridge1$string$len + 368128
+7   chromedriver                        0x0000000102eaad18 cxxbridge1$string$len + 329008
+8   chromedriver                        0x0000000102eeeb7c cxxbridge1$string$len + 607124
+9   chromedriver                        0x0000000102ea9374 cxxbridge1$string$len + 322444
+10  chromedriver                        0x0000000102ea9fc4 cxxbridge1$string$len + 325596
+11  chromedriver                        0x000000010322fd2c cxxbridge1$str$ptr + 1685732
+12  chromedriver                        0x0000000103234530 cxxbridge1$str$ptr + 1704168
+13  chromedriver                        0x0000000103214e08 cxxbridge1$str$ptr + 1575360
+14  chromedriver                        0x0000000103234e00 cxxbridge1$str$ptr + 1706424
+15  chromedriver                        0x0000000103205f94 cxxbridge1$str$ptr + 1514316
+16  chromedriver                        0x000000010325162c cxxbridge1$str$ptr + 1823204
+17  chromedriver                        0x00000001032517ac cxxbridge1$str$ptr + 1823588
+18  chromedriver                        0x0000000103260530 cxxbridge1$str$ptr + 1884392
+19  libsystem_pthread.dylib             0x000000019c3adf94 _pthread_start + 136
+20  libsystem_pthread.dylib             0x000000019c3a8d34 thread_start + 8
+
+2024-10-19 16:14:51,919 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectionResetError(54, 'Connection reset by peer')': /session/df90abcc5006d8a1f37a28a12dd0026f
+2024-10-19 16:14:51,921 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1054023c0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/df90abcc5006d8a1f37a28a12dd0026f
+2024-10-19 16:14:51,921 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106bc80b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/df90abcc5006d8a1f37a28a12dd0026f
+2024-10-19 16:14:51,947 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106b77410>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c
+2024-10-19 16:14:51,950 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106bc8860>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c
+2024-10-19 16:14:51,960 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x106bc89b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/c7348ffce4d808ca6459a966a53a239c

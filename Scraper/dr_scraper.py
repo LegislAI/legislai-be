@@ -31,6 +31,7 @@ logging.basicConfig(
 LOG = logging.getLogger(__name__)
 
 FULL_SCRAPER_BUCKET_NAME = "legislaifullscraperdata"
+LAW_TYPE_BUCKET_NAME = "legislailawtypescraperdata"
 DATA_SOURCE = "diario_da_republica"
 
 
@@ -593,6 +594,232 @@ class ThemeScraper:
             driver.quit()
 
 
+class LawTypeScraper:
+    def __init__(self):
+        BASE_THEME_URL = (
+            "https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
+        )
+        SELECT_THEME_DIV_ID = "ConteudoBotao"
+        PATH = "theme_data"
+
+        try:
+            if not os.path.exists(PATH):
+                os.mkdir(PATH)
+
+            driver = webdriver.Chrome()
+            driver.get(BASE_THEME_URL)
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, SELECT_THEME_DIV_ID))
+            )
+
+            sleep(1)
+
+            theme_divs = driver.find_elements(By.CLASS_NAME, "ThemeGrid_MarginGutter")
+            self.scrape_article(
+                PATH="data",
+                article_url="https://diariodarepublica.pt/dr/legislacao-consolidada/lei/2009-34546475",
+                theme="Lei do trabalho",
+            )
+
+        except Exception as e:
+            LOG.error(f"An error occurred while scraping: {str(e)}")
+            exit()
+        finally:
+            driver.quit()
+
+    def scrape_article(self, article_url: str, theme: str, PATH: str):
+        try:
+            driver = webdriver.Chrome()
+            driver.get(article_url)
+
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+            )
+
+            sleep(2)
+
+            content = driver.find_element(By.ID, "b3-Conteudo")
+
+            date_version_wrapper = content.find_element(By.CLASS_NAME, "input-date")
+            date_version = date_version_wrapper.find_element(
+                By.TAG_NAME, "input"
+            ).get_attribute("value")
+
+            heading = content.find_element(By.ID, "Cabecalho")
+            law_name = (
+                heading.find_element(By.ID, "ConteudoTitle")
+                .find_elements(By.TAG_NAME, "div")[0]
+                .text
+            )
+            body = driver.find_element(By.ID, "ConteudoGeral")
+            dr_document = body.find_element(By.ID, "Modificado").text
+
+            payload = {
+                "document_name": theme,
+                "law_name": law_name,
+                "dr_document": dr_document,
+                "link": article_url,
+                "date_of_fetch": date_version,
+                "theme": theme,
+                "sections": {},
+            }
+
+            content_div = body.find_element(
+                By.CSS_SELECTOR,
+                '[data-block="LegislacaoConsolidada.DiplomaCompleto"]',
+            )
+
+            try:
+                diploma_div = content_div.find_element(
+                    By.CSS_SELECTOR, "[data-container]"
+                )
+                titulo = diploma_div.find_element(
+                    By.CLASS_NAME, "Fragmento_Titulo"
+                ).text
+                texto = diploma_div.find_element(By.CLASS_NAME, "Fragmento_Texto").text
+
+                alteracoes_div = diploma_div.find_element(
+                    By.CSS_SELECTOR,
+                    '[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId"]',
+                )
+                alteracoes_completas_div = alteracoes_div.find_element(
+                    By.CSS_SELECTOR, "[data-container]"
+                )
+                alteracoes_completas_link = alteracoes_completas_div.find_element(
+                    By.TAG_NAME, "a"
+                )
+                alteracoes_list = alteracoes_div.find_element(
+                    By.CSS_SELECTOR, "[data-list]"
+                )
+                alteracoes = alteracoes_list.find_elements(
+                    By.CSS_SELECTOR, "[data-container]"
+                )
+
+                alterations = []
+                for alteration_item in alteracoes:
+                    alterations.append(self.parse_alteration_section(alteration_item))
+
+                alteracoes_completas_link.click()
+                WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+                )
+
+                initial_date = re.search(r"\d{4}-\d{2}-\d{2}", dr_document).group(0)
+                copy_driver = copy.copy(driver)
+                iterations = self.parse_alteration_page(
+                    copy_driver, initial_date=initial_date
+                )
+
+                diploma_payload = {
+                    "title": titulo,
+                    "text": texto,
+                    "alterations": alterations,
+                    "previous_iterations": iterations,
+                }
+
+                payload["sections"]["diploma"] = diploma_payload
+
+            except Exception as e:
+                LOG.warning(f"No diploma or alteration found: {e}")
+
+        except Exception as e:
+            LOG.error(f"An error occurred while scraping: {e}")
+        finally:
+            driver.quit()
+
+    def parse_alteration_section(self, element) -> dict:
+        try:
+            link_element = element.find_element(By.TAG_NAME, "a")
+            url = link_element.get_attribute("href")
+
+            full_text = link_element.text
+
+            alteration_text = element.text
+            if "em vigor a partir de" in alteration_text:
+                active_from = alteration_text.split("em vigor a partir de")[-1].strip()
+            else:
+                active_from = "Not specified"
+
+            return {"text": full_text, "url": url, "active_from": active_from}
+
+        except Exception as e:
+            print(f"An error occurred while parsing the alteration section: {e}")
+            return None
+
+    def parse_alteration_page(self, driver, initial_date: str) -> list:
+
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+        )
+
+        sleep(1)
+
+        content = driver.find_element(By.ID, "b3-Conteudo")
+        alteracoes_div = content.find_element(
+            By.CSS_SELECTOR,
+            '[data-block="LegislacaoConsolidada.FragmentoVerDiferencas"]',
+        )
+        versao_inicial = alteracoes_div.find_element(By.ID, "b20-b1-VersaoInicial")
+        titulo_versao_inicial = ""
+        epigrafe_versao_inicial = ""
+        content = {"versions": []}
+        try:
+            titulo_versao_inicial = versao_inicial.find_element(
+                By.CLASS_NAME, "Fragmento_Titulo"
+            ).text
+            epigrafe_versao_inicial = versao_inicial.find_element(
+                By.CLASS_NAME, "Fragmento_Epigrafe"
+            ).text
+            payload = {
+                "title": titulo_versao_inicial,
+                "epigrafe": epigrafe_versao_inicial,
+                "text": versao_inicial.find_element(
+                    By.CLASS_NAME, "Fragmento_Texto"
+                ).text,
+                "active_from": initial_date,
+            }
+            content["versions"].append(payload)
+        except Exception as e:
+            LOG.error(f"An error occurred while scraping: {str(e)}")
+
+        try:
+            subsequent_versions = alteracoes_div.find_elements(
+                By.XPATH, ".//div[@id='b20-b1-VersoesSeguintes']/div/div"
+            )
+
+            for version in subsequent_versions:
+
+                article = version.find_element(
+                    By.XPATH, ".//div[contains(@id, 'DetalheArtigo')]"
+                )
+                update_div = version.find_element(
+                    By.XPATH, ".//div[contains(@id, 'AlteradoPor')]"
+                )
+
+                updated_content = article.find_element(
+                    By.CLASS_NAME, "Fragmento_Texto"
+                ).text
+
+                payload = {
+                    "title": titulo_versao_inicial,
+                    "epigrafe": epigrafe_versao_inicial,
+                    "text": updated_content,
+                    "active_from": self.extract_date_from_text(update_div.text),
+                }
+                content["versions"].append(payload)
+
+        except Exception as e:
+            LOG.error(f"An error occurred while scraping: {str(e)}")
+
+        return content
+
+    def extract_date_from_text(self, text):
+        if "em vigor a partir de" in text:
+            return text.split("em vigor a partir de")[-1].strip()
+        else:
+            return "Date not specified"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -608,6 +835,8 @@ def main():
         FullScraper()
     elif args.run_type == "theme":
         ThemeScraper()
+    elif args.run_type == "law_type":
+        LawTypeScraper()
     else:
         LOG.error("Please specify the type of run: 'daily', 'full' or 'theme'")
         exit(1)
