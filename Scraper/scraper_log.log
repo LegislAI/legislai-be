@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 2024-10-12 18:02:18,767 - INFO - Scraping theme: Arrendamento
 2024-10-12 18:02:22,088 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/arrendamento
 2024-10-12 18:02:25,609 - INFO - Scraped article saved to theme_data/Arrendamento/Novo_regime_do_arrendamento_apoiado_para_habitação.json
@@ -24,8 +23,6 @@
 2024-10-12 18:03:09,648 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5528b7520>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
 2024-10-12 18:03:09,649 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5525ea170>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
 2024-10-12 18:03:09,649 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x71b5525eaef0>: Failed to establish a new connection: [Errno 111] Connection refused')': /session/ed402576fb6f2593ab1698a5889f6ac9
-=======
->>>>>>> d2ec6ba (Checkpoint)
 2024-10-17 18:21:39,963 - INFO - Scraping theme: Constituição da República Portuguesa - CRP
 2024-10-17 18:21:43,987 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada/decreto-aprovacao-constituicao/1976-34520775
 2024-10-17 18:21:44,009 - INFO - Scraped page: 0/1
@@ -4556,6 +4553,9 @@ Stacktrace:
 2024-10-20 12:10:17,347 - INFO - Found new article
 2024-10-20 12:10:17,351 - WARNING - Article was not updated
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a4cb533 (Checkpoint)
 2024-10-20 13:44:19,994 - INFO - Found new article
 2024-10-20 13:44:20,001 - WARNING - Article was not updated
 2024-10-20 13:44:20,028 - INFO - Found new article
@@ -7660,6 +7660,7 @@ Stacktrace:
 2024-10-20 14:00:38,342 - INFO - Found new article
 2024-10-20 14:00:38,347 - WARNING - Article was not updated
 2024-10-20 14:00:38,511 - INFO - Finished scraping the document
+<<<<<<< HEAD
 2024-10-20 14:07:11,185 - WARNING - No diploma or alteration found: Message: no such element: Unable to locate element: {"method":"css selector","selector":"[data-block="LegislacaoConsolidada.FragmentoVerDiferencas"]"}
   (Session info: chrome=129.0.6668.101); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
 Stacktrace:
@@ -9269,3 +9270,5 @@ Stacktrace:
 >>>>>>> d2ec6ba (Checkpoint)
 =======
 >>>>>>> c78a0cb (Checkpoint)
+=======
+>>>>>>> a4cb533 (Checkpoint)
