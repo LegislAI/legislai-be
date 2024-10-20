@@ -9,7 +9,7 @@ client = TestClient(app)
 
 class TestAuthentication(unittest.TestCase):
     @patch("api._get_user")
-    def test_register_existing_user(self, mock_get_user):  # PASSED
+    def test_register_existing_user(self, mock_get_user):
         """Test registering a user that already exists"""
         mock_get_user.return_value = {
             "email": "existingemail@example.com",
@@ -33,7 +33,7 @@ class TestAuthentication(unittest.TestCase):
 
     @patch("api._create_user")
     @patch("api._get_user")
-    def test_register_new_user(self, mock_get_user, mock_create_user):  # PASSED
+    def test_register_new_user(self, mock_get_user, mock_create_user):
         """Test registering a new user"""
         mock_get_user.return_value = None
         mock_create_user.return_value = {
@@ -55,7 +55,7 @@ class TestAuthentication(unittest.TestCase):
         self.assertEqual(response.json()["email"], "newemail@example.com")
 
     @patch("api._get_user")
-    def test_login_non_existent_email(self, mock_get_user):  # PASSED
+    def test_login_non_existent_email(self, mock_get_user):
         """Test logging in with a non-existent email"""
         mock_get_user.return_value = None
 
@@ -67,7 +67,7 @@ class TestAuthentication(unittest.TestCase):
         self.assertEqual(response.json()["detail"], "Incorrect credentials")
 
     @patch("api._get_user")
-    def test_login_wrong_password(self, mock_get_user):  # PASSED
+    def test_login_wrong_password(self, mock_get_user):
         """Test logging in with a wrong password"""
         mock_get_user.return_value = {
             "email": "existingemail@example.com",
