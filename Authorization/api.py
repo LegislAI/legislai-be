@@ -1,28 +1,36 @@
-from datetime import timedelta
-from fastapi import FastAPI, APIRouter, HTTPException, status, Request
-from fastapi.security import OAuth2PasswordBearer
-from Authorization.utils.schemas import GetUser, LoginUser, CreateUser
-from Authorization.utils.auth import create_access_token, create_refresh_token
-from authlib.integrations.starlette_client import OAuth
-from authlib.integrations.base_client import OAuthError
-from dotenv import load_dotenv
-from starlette.middleware.sessions import (
-    SessionMiddleware,
-)  # Use Starlette's session middleware
-import os
-import json
-from pathlib import Path
-from contextlib import asynccontextmanager
-import boto3
-from botocore.exceptions import ClientError
-from typing import Optional, Dict
-from starlette.config import Config
-import logging
-import uuid
-import time
 import datetime
+import json
+import logging
+import os
+import time
+import uuid
+from contextlib import asynccontextmanager
+from datetime import timedelta
 from datetime import timezone
+from pathlib import Path
+from typing import Dict
+from typing import Optional
+
+import boto3
 import structlog
+from authlib.integrations.base_client import OAuthError
+from authlib.integrations.starlette_client import OAuth
+from botocore.exceptions import ClientError
+from dotenv import load_dotenv
+from fastapi import APIRouter
+from fastapi import FastAPI
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi import status
+from fastapi.security import OAuth2PasswordBearer
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+
+from .utils.auth import create_access_token
+from .utils.auth import create_refresh_token
+from .utils.schemas import CreateUser
+from .utils.schemas import GetUser
+from .utils.schemas import LoginUser
 
 """
 na pasta inf/terraform
@@ -31,6 +39,9 @@ terraform plan
 terraform apply
 uvicorn Authorization.api:app --reload
 """
+
+# mock database
+todos = {}
 
 load_dotenv()
 # When using windows specify the all path
@@ -307,7 +318,6 @@ def login_user(payload: LoginUser):
     refresh = create_refresh_token(user["userid"], timedelta(minutes=1008))
 
     logger.info(f"User logged in: {user['email']}")
-
     # Update the last login time using both userid and email
     fields_to_update = {"lastlogin": str(datetime.datetime.now(timezone.utc))}
     _update_user_fields(boto3_client, user["userid"], user["email"], fields_to_update)

@@ -4,8 +4,7 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-
-from Authorization.utils.config import setting
+from .config import setting
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
