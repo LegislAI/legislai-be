@@ -669,6 +669,12 @@ class LawTypeScraper:
                 '[data-block="LegislacaoConsolidada.DiplomaCompleto"]',
             )
 
+            last_book_number = ""
+            last_book_title = ""
+            last_title_name = ""
+            last_book_chapter_number = ""
+            last_book_chapter_name = ""
+
             try:
                 diploma_div = content_div.find_element(
                     By.CSS_SELECTOR, "[data-container]"
@@ -713,6 +719,8 @@ class LawTypeScraper:
                     "previous_iterations": iterations,
                 }
 
+                last_book_title = titulo
+
                 payload["sections"]["diploma"] = diploma_payload
             except Exception as e:
                 LOG.warning(f"No diploma or alteration found: {e}")
@@ -722,12 +730,6 @@ class LawTypeScraper:
                     By.CSS_SELECTOR,
                     '[data-block="LegislacaoConsolidada.FragmentoDetailTextoCompleto"]',
                 )
-
-                last_book_number = ""
-                last_book_title = ""
-                last_title_name = ""
-                last_book_chapter_number = ""
-                last_book_chapter_name = ""
                 for section in content:
                     try:
                         section_title = section.find_element(
@@ -801,12 +803,6 @@ class LawTypeScraper:
                             .replace("/", "_")
                         )
                         section_payload = {
-                            "title": section_title.text.encode("utf-8").decode("utf-8"),
-                            "epigrafe": section_epigrafe.text.encode("utf-8").decode(
-                                "utf-8"
-                            ),
-                            "text": section_text.text.encode("utf-8").decode("utf-8"),
-                            "updates": updates,
                             "book_number": last_book_number.encode("utf-8").decode(
                                 "utf-8"
                             ),
@@ -814,6 +810,13 @@ class LawTypeScraper:
                                 "utf-8"
                             ),
                             "chapter": f"{last_title_name}>{last_book_chapter_number}:{last_book_chapter_name}",
+                            "title": section_title.text.encode("utf-8").decode("utf-8"),
+                            "epigrafe": section_epigrafe.text.encode("utf-8").decode(
+                                "utf-8"
+                            ),
+                            "text": section_text.text.encode("utf-8").decode("utf-8"),
+                            "updates": updates,
+                            "previous_iterations": [],
                         }
 
                         payload["sections"][section_name] = section_payload
@@ -826,9 +829,11 @@ class LawTypeScraper:
         finally:
             driver.quit()
 
-            payload = json.dumps(payload, ensure_ascii=False)
-            with open(f"{PATH}.json", "w") as f:
-                f.write(payload)
+            # payload = json.dumps(payload, ensure_ascii=False)
+            with open(f"{PATH}.json", "w", encoding="utf-8") as f:
+                json.dump(payload, f, ensure_ascii=False, indent=4)
+
+            LOG.info("Finished scraping the document")
 
     def parse_updated_section(self, element) -> dict:
         try:
