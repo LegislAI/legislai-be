@@ -678,56 +678,159 @@ class LawTypeScraper:
                 ).text
                 texto = diploma_div.find_element(By.CLASS_NAME, "Fragmento_Texto").text
 
-                alteracoes_div = diploma_div.find_element(
+                updates_div = diploma_div.find_element(
                     By.CSS_SELECTOR,
                     '[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId"]',
                 )
-                alteracoes_completas_div = alteracoes_div.find_element(
+                full_updates_div = updates_div.find_element(
                     By.CSS_SELECTOR, "[data-container]"
                 )
-                alteracoes_completas_link = alteracoes_completas_div.find_element(
-                    By.TAG_NAME, "a"
-                )
-                alteracoes_list = alteracoes_div.find_element(
-                    By.CSS_SELECTOR, "[data-list]"
-                )
-                alteracoes = alteracoes_list.find_elements(
+                full_updates_link = full_updates_div.find_element(By.TAG_NAME, "a")
+                updated_list = updates_div.find_element(By.CSS_SELECTOR, "[data-list]")
+                updated_list = updated_list.find_elements(
                     By.CSS_SELECTOR, "[data-container]"
                 )
 
-                alterations = []
-                for alteration_item in alteracoes:
-                    alterations.append(self.parse_alteration_section(alteration_item))
+                updates = []
+                for updated_item in updated_list:
+                    updates.append(self.parse_updated_section(updated_item))
 
-                alteracoes_completas_link.click()
-                WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.ID, "b3-Conteudo"))
-                )
+                # alteracoes_completas_link.click()
+                # WebDriverWait(driver, 10).until(
+                #     EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+                # )
 
-                initial_date = re.search(r"\d{4}-\d{2}-\d{2}", dr_document).group(0)
-                copy_driver = copy.copy(driver)
-                iterations = self.parse_alteration_page(
-                    copy_driver, initial_date=initial_date
-                )
+                # initial_date = re.search(r"\d{4}-\d{2}-\d{2}", dr_document).group(0)
+                iterations = []
+                # iterations = self.parse_alteration_page(
+                #     driver, initial_date=initial_date
+                # )
 
                 diploma_payload = {
                     "title": titulo,
                     "text": texto,
-                    "alterations": alterations,
+                    "updates": updates,
                     "previous_iterations": iterations,
                 }
 
                 payload["sections"]["diploma"] = diploma_payload
-
             except Exception as e:
                 LOG.warning(f"No diploma or alteration found: {e}")
+
+            try:
+                content = content_div.find_elements(
+                    By.CSS_SELECTOR,
+                    '[data-block="LegislacaoConsolidada.FragmentoDetailTextoCompleto"]',
+                )
+
+                last_book_number = ""
+                last_book_title = ""
+                last_title_name = ""
+                last_book_chapter_number = ""
+                last_book_chapter_name = ""
+                for section in content:
+                    try:
+                        section_title = section.find_element(
+                            By.CLASS_NAME, "Fragmento_Titulo"
+                        )
+                    except:
+                        LOG.warning("Could not fetch title")
+                        continue
+                    try:
+                        section_epigrafe = section.find_element(
+                            By.CLASS_NAME, "Fragmento_Epigrafe"
+                        )
+                    except:
+                        LOG.warning("Could not fetch epigrafe")
+                        continue
+
+                    book_regex = r"Livro (.*)"
+                    title_regex = r"Título (.*)"
+                    chapter_regex = r"Capítulo (.*)"
+                    article_regex = r"Artigo (.*)"
+                    if re.search(book_regex, section_title.text):
+                        LOG.info(f"Found book...")
+                        last_book_number = section_title.text
+                        last_book_title = section_epigrafe.text
+                    elif re.search(title_regex, section_title.text):
+                        LOG.info("Updating book title...")
+                        last_title_name = section_epigrafe.text
+                    elif re.search(chapter_regex, section_title.text):
+                        LOG.info("Updating book chapter")
+                        last_book_chapter_number = section_title.text
+                        last_book_chapter_name = section_epigrafe.text
+                    elif re.search(article_regex, section_title.text):
+                        LOG.info("Found new article")
+                        section_text = section.find_element(
+                            By.CLASS_NAME, "Fragmento_Texto"
+                        )
+                        try:
+                            updates_div = section.find_element(
+                                By.CSS_SELECTOR,
+                                '[data-block="LegislacaoConsolidada.AlteracoesByFragmentoId"]',
+                            )
+                            full_updates_div = updates_div.find_element(
+                                By.CSS_SELECTOR, "[data-container]"
+                            )
+                            alteracoes_completas_link = full_updates_div.find_element(
+                                By.TAG_NAME, "a"
+                            )
+                            updates_list = updates_div.find_element(
+                                By.CSS_SELECTOR, "[data-list]"
+                            )
+                            updates_list = updates_list.find_elements(
+                                By.CSS_SELECTOR, "[data-container]"
+                            )
+
+                            for update_item in updates_list:
+                                updates.append(self.parse_updated_section(update_item))
+                        except:
+                            LOG.warning(f"Article was not updated")
+                            updates = []
+
+                        # alteracoes_completas_link.click()
+                        # WebDriverWait(driver, 10).until(
+                        #     EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+                        # )
+                        section_name = (
+                            f"{last_title_name}>{last_book_chapter_number}:{last_book_chapter_name}>{section_title.text}".encode(
+                                "utf-8"
+                            )
+                            .decode("utf-8")
+                            .replace(" ", "_")
+                            .replace("/", "_")
+                        )
+                        section_payload = {
+                            "title": section_title.text.encode("utf-8").decode("utf-8"),
+                            "epigrafe": section_epigrafe.text.encode("utf-8").decode(
+                                "utf-8"
+                            ),
+                            "text": section_text.text.encode("utf-8").decode("utf-8"),
+                            "updates": updates,
+                            "book_number": last_book_number.encode("utf-8").decode(
+                                "utf-8"
+                            ),
+                            "book_title": last_book_title.encode("utf-8").decode(
+                                "utf-8"
+                            ),
+                            "chapter": f"{last_title_name}>{last_book_chapter_number}:{last_book_chapter_name}",
+                        }
+
+                        payload["sections"][section_name] = section_payload
+
+            except Exception as e:
+                LOG.warning(f"No sections found: {e}")
 
         except Exception as e:
             LOG.error(f"An error occurred while scraping: {e}")
         finally:
             driver.quit()
 
-    def parse_alteration_section(self, element) -> dict:
+            payload = json.dumps(payload, ensure_ascii=False)
+            with open(f"{PATH}.json", "w") as f:
+                f.write(payload)
+
+    def parse_updated_section(self, element) -> dict:
         try:
             link_element = element.find_element(By.TAG_NAME, "a")
             url = link_element.get_attribute("href")
