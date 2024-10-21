@@ -4,13 +4,15 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-from .config import setting
+
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt import InvalidTokenError
+
+from .config import setting
 
 
 # generate JWTs (access and refresh tokens) for a user identifier
