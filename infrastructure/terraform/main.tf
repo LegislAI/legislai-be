@@ -38,6 +38,15 @@ resource "aws_vpc" "authorization_vpc" {
   }
 }
 
+# Create an Internet Gateway
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.authorization_vpc.id
+
+  tags = {
+    Name = "authorization-igw"
+  }
+}
+
 # Create public subnets with valid availability zones for eu-west-1
 resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.authorization_vpc.id
@@ -59,15 +68,40 @@ resource "aws_subnet" "public_subnet_2" {
   }
 }
 
+# Create a route table for public subnets
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.authorization_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+
+  tags = {
+    Name = "public-route-table"
+  }
+}
+
+# Associate the route table with the public subnets
+resource "aws_route_table_association" "public_subnet_1" {
+  subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "public_subnet_2" {
+  subnet_id      = aws_subnet.public_subnet_2.id
+  route_table_id = aws_route_table.public.id
+}
+
 # Create a security group
 resource "aws_security_group" "authorization_sg" {
   vpc_id = aws_vpc.authorization_vpc.id
 
   ingress {
-    from_port   = 8000
-    to_port     = 8000
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Allow all incoming traffic on port 8000
+    cidr_blocks = ["0.0.0.0/0"] # Allow all incoming traffic on port 80 (for ALB)
   }
 
   egress {
@@ -82,29 +116,7 @@ resource "aws_security_group" "authorization_sg" {
   }
 }
 
-# Create IAM role for ECS task execution
-resource "aws_iam_role" "ecs_execution_role" {
-  name = "ecs_execution_role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action    = "sts:AssumeRole"
-      Effect    = "Allow"
-      Principal = {
-        Service = "ecs-tasks.amazonaws.com"
-      }
-    }]
-  })
-}
-
-resource "aws_iam_policy_attachment" "ecs_execution_policy" {
-  name       = "ecs_execution_policy_attachment"
-  roles      = [aws_iam_role.ecs_execution_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
-resource "aws_dynamodb_table" "users-table" {
+resource "aws_dynamodb_table" "users_table" {
   name           = "users"
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
@@ -138,8 +150,7 @@ resource "aws_dynamodb_table" "users-table" {
     range_key          = "username"
     write_capacity     = 10
     read_capacity      = 10
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["userid", "username", "password", "usercreated", "lastlogin"]
+    projection_type    = "ALL"
   }
 
   tags = {
@@ -151,10 +162,58 @@ resource "aws_ecr_repository" "authorization" {
   name = "authorization"
 }
 
+resource "aws_route53_zone" "legislai_org" {
+  name = "legislai.org"
+}
+
+# Create a CloudWatch Log Group
+resource "aws_cloudwatch_log_group" "ecs_log_group" {
+  name              = "/ecs/authorization" # Change this name as needed
+  retention_in_days = 14 # Optional: set retention policy
+}
+
+# Create an ECS cluster
 resource "aws_ecs_cluster" "authorization" {
   name = "authorization-cluster"
 }
 
+# IAM Role for ECS Task Execution
+resource "aws_iam_role" "ecs_task_execution_role" {
+  name = "ecsTaskExecutionRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
+
+  # Attach the policy to allow logging
+  policy {
+    name   = "ecs_task_execution_role_policy"
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = [
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ]
+          Effect   = "Allow"
+          Resource = "${aws_cloudwatch_log_group.ecs_log_group.arn}:*"
+        }
+      ]
+    })
+  }
+}
+
+# ECS Task Definition for Authorization API
 resource "aws_ecs_task_definition" "authorization" {
   family                   = "authorization-task"
   requires_compatibilities = ["FARGATE"]
@@ -162,7 +221,7 @@ resource "aws_ecs_task_definition" "authorization" {
   cpu                     = "256"
   memory                  = "512"
 
-  execution_role_arn = aws_iam_role.ecs_execution_role.arn # Add execution role
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn 
 
   container_definitions = jsonencode([
     {
@@ -188,18 +247,94 @@ resource "aws_ecs_task_definition" "authorization" {
           value = var.AWS_SECRET_ACCESS_KEY
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.ecs_log_group.name
+          "awslogs-region"       = var.AWS_REGION
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
     }
   ])
 }
 
+# Create an Application Load Balancer
+resource "aws_lb" "app_lb" {
+  name               = "authorization-lb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.authorization_sg.id]
+  subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
+
+  enable_deletion_protection = false
+
+  tags = {
+    Name = "authorization-lb"
+  }
+}
+
+# Create a Target Group for the Authorization API (IP type)
+resource "aws_lb_target_group" "authorization" {
+  name     = "authorization-tg"
+  port     = 8000
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.authorization_vpc.id
+  target_type = "ip"  # Set target type to 'ip'
+
+  health_check {
+    path                = "/"
+    port                = "8000"
+    protocol            = "HTTP"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+
+  tags = {
+    Name = "authorization-target-group"
+  }
+}
+
+# Create a Listener for the Load Balancer
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.app_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.authorization.arn
+  }
+}
+
+# Create ECS Service for the Authorization API
 resource "aws_ecs_service" "authorization" {
   name            = "authorization-service"
   cluster         = aws_ecs_cluster.authorization.id
   task_definition = aws_ecs_task_definition.authorization.id
   desired_count   = 1
 
+  launch_type = "FARGATE"
+
   network_configuration {
     subnets          = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
     security_groups  = [aws_security_group.authorization_sg.id]
+    assign_public_ip = true
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.authorization.arn
+    container_name   = "authorization"
+    container_port   = 8000
+  }
+
+  lifecycle {
+    ignore_changes = [task_definition]  # Ignore changes to task definition
+  }
+
+  tags = {
+    Name = "authorization-service"
   }
 }

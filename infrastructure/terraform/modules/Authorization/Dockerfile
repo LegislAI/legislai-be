@@ -1,5 +1,4 @@
-# Use a lightweight Python image
-FROM python:3.12-slim
+FROM public.ecr.aws/sam/build-python3.12:latest
 
 # Set the working directory inside the container
 WORKDIR /app
