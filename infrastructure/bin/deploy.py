@@ -132,6 +132,10 @@ def main():
     source_code_path = Path(f"../{module_name}")
     image_name = module_name.lower()
 
+<<<<<<< HEAD
+=======
+    aws_region = "eu-west-1" if not args.aws_region else args.aws_region
+>>>>>>> a4d7cd1 (Database Controller with FAISS and Pinecone integration)
     if (
         not module_path.exists()
         or not dockerfile_path.exists()
@@ -167,9 +171,6 @@ def main():
         terraform_init(module_path)
         terraform_plan(module_path)
         terraform_apply(module_path)
-
-        if not args.aws_region:
-            aws_region = "eu-west-1"
 
         ecr_repository_url = get_terraform_output(module_path, "ecr_repository_url")
 

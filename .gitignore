@@ -2,7 +2,6 @@
 **/.terraform/*
 *.tfplan
 *.tfvars
-
 #Misc
 .env
 .cache/

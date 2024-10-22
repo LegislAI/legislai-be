@@ -263,7 +263,10 @@ class FullScraper:
                         # Zip and upload previous month
                         zip_file_name = f"{path_name}.zip"
                         self.zip_path(src_path=path_name, dest_path=zip_file_name)
-                        bucket_path = f"full_scraper/{DATA_SOURCE}/{year_folder}/{month_folder}/full_scraper_v{version}.zip"
+                        bucket_path = (
+                            f"full_scraper/{DATA_SOURCE}/{year_folder}/"
+                            f"{month_folder}/full_scraper_v{version}.zip"
+                        )
                         self.upload_file(
                             file_name=zip_file_name,
                             bucket_name=FULL_SCRAPER_BUCKET_NAME,
@@ -384,7 +387,7 @@ class FullScraper:
 class ThemeScraper:
     def __init__(self):
         BASE_THEME_URL = (
-            f"https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
+            "https://diariodarepublica.pt/dr/legislacao-consolidada-destaques"
         )
         SELECT_THEME_DIV_ID = "ConteudoBotao"
         PATH = "theme_data"
@@ -798,15 +801,13 @@ class LawTypeScraper:
                             for update_item in updates_list:
                                 updates.append(self.parse_updated_section(update_item))
                         except:
-                            LOG.warning(f"Article was not updated")
+                            LOG.warning("Article was not updated")
                             updates = []
 
-                        # alteracoes_completas_link_copy = copy.copy(alteracoes_completas_link)
-
-                        # alteracoes_completas_link.click()
-                        # WebDriverWait(driver, 10).until(
-                        #     EC.presence_of_element_located((By.ID, "b3-Conteudo"))
-                        # )
+                        alteracoes_completas_link.click()
+                        WebDriverWait(driver, 10).until(
+                            EC.presence_of_element_located((By.ID, "b3-Conteudo"))
+                        )
                         section_name = (
                             f"{last_title_name}>{last_book_chapter_number}:{last_book_chapter_name}>{section_title.text}".encode(
                                 "utf-8"

@@ -1,0 +1,468 @@
+2024-10-26 14:04:35,471 - INFO - Use pytorch device_name: mps
+2024-10-26 14:04:35,471 - INFO - Load pretrained SentenceTransformer: facebook/bart-large
+2024-10-26 14:04:35,814 - WARNING - No sentence-transformers model found with name facebook/bart-large. Creating a new one with mean pooling.
+2024-10-26 14:05:18,459 - INFO - Use pytorch device_name: mps
+2024-10-26 14:05:18,459 - INFO - Load pretrained SentenceTransformer: facebook/bart-large
+2024-10-26 14:05:18,791 - WARNING - No sentence-transformers model found with name facebook/bart-large. Creating a new one with mean pooling.
+2024-10-26 14:05:33,825 - INFO - Use pytorch device_name: mps
+2024-10-26 14:05:33,825 - INFO - Load pretrained SentenceTransformer: facebook/bart-large
+2024-10-26 14:05:34,135 - WARNING - No sentence-transformers model found with name facebook/bart-large. Creating a new one with mean pooling.
+2024-10-26 14:16:03,182 - INFO - Use pytorch device_name: mps
+2024-10-26 14:16:03,183 - INFO - Load pretrained SentenceTransformer: facebook/bart-large
+2024-10-26 14:16:03,527 - WARNING - No sentence-transformers model found with name facebook/bart-large. Creating a new one with mean pooling.
+2024-10-26 14:17:03,016 - INFO - Use pytorch device_name: mps
+2024-10-26 14:17:03,016 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:21:57,138 - INFO - Use pytorch device_name: mps
+2024-10-26 14:21:57,138 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:25:59,459 - INFO - Use pytorch device_name: mps
+2024-10-26 14:25:59,459 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:26:23,569 - INFO - Use pytorch device_name: mps
+2024-10-26 14:26:23,570 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:03,177 - INFO - Use pytorch device_name: mps
+2024-10-26 14:27:03,177 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:05,717 - INFO - Use pytorch device_name: mps
+2024-10-26 14:27:05,718 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:07,514 - INFO - Initializing FAISS Instance
+2024-10-26 14:27:07,514 - INFO - Initializing database
+2024-10-26 14:27:18,387 - INFO - Use pytorch device_name: mps
+2024-10-26 14:27:18,388 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:28,006 - INFO - Use pytorch device_name: mps
+2024-10-26 14:27:28,006 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:30,408 - INFO - Use pytorch device_name: mps
+2024-10-26 14:27:30,408 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:27:32,639 - INFO - Initializing FAISS Instance
+2024-10-26 14:27:32,639 - INFO - Initializing database
+2024-10-26 14:30:06,537 - INFO - Use pytorch device_name: mps
+2024-10-26 14:30:06,537 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:30:09,065 - INFO - Use pytorch device_name: mps
+2024-10-26 14:30:09,065 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:30:11,333 - INFO - Initializing FAISS Instance
+2024-10-26 14:30:11,333 - INFO - Initializing database
+2024-10-26 14:30:56,669 - INFO - Use pytorch device_name: mps
+2024-10-26 14:30:56,670 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:30:59,182 - INFO - Use pytorch device_name: mps
+2024-10-26 14:30:59,182 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:31:01,082 - INFO - Initializing FAISS Instance
+2024-10-26 14:31:01,083 - INFO - Initializing database
+2024-10-26 14:32:20,874 - INFO - Use pytorch device_name: mps
+2024-10-26 14:32:20,875 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:32:23,416 - INFO - Use pytorch device_name: mps
+2024-10-26 14:32:23,416 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:32:25,621 - INFO - Initializing FAISS Instance
+2024-10-26 14:32:25,621 - INFO - Initializing database
+2024-10-26 14:32:25,824 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'index'
+2024-10-26 14:34:10,211 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:10,212 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:12,842 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:12,842 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:14,745 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:14,745 - INFO - Initializing database
+2024-10-26 14:34:15,002 - ERROR - Error initializing FAISS Instance: EmbeddingModel.generate_embeddings() missing 1 required positional argument: 'text'
+2024-10-26 14:34:35,212 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:35,212 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:37,617 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:37,617 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:39,643 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:39,644 - INFO - Initializing database
+2024-10-26 14:34:39,844 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:39,844 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:41,900 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:41,900 - INFO - Initializing database
+2024-10-26 14:34:41,933 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:41,933 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:44,245 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:44,245 - INFO - Initializing database
+2024-10-26 14:34:44,271 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:44,271 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:46,321 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:46,321 - INFO - Initializing database
+2024-10-26 14:34:46,342 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:46,342 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:48,270 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:48,270 - INFO - Initializing database
+2024-10-26 14:34:48,296 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:48,296 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:50,666 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:50,666 - INFO - Initializing database
+2024-10-26 14:34:50,698 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:50,698 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:52,720 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:52,720 - INFO - Initializing database
+2024-10-26 14:34:52,744 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:52,744 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:54,830 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:54,830 - INFO - Initializing database
+2024-10-26 14:34:54,853 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:54,853 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:57,448 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:57,448 - INFO - Initializing database
+2024-10-26 14:34:57,485 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:57,485 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:34:59,900 - INFO - Initializing FAISS Instance
+2024-10-26 14:34:59,900 - INFO - Initializing database
+2024-10-26 14:34:59,931 - INFO - Use pytorch device_name: mps
+2024-10-26 14:34:59,931 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:01,907 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:01,907 - INFO - Initializing database
+2024-10-26 14:35:01,945 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:01,945 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:04,319 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:04,319 - INFO - Initializing database
+2024-10-26 14:35:04,398 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:04,398 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:06,598 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:06,598 - INFO - Initializing database
+2024-10-26 14:35:06,685 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:06,686 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:08,727 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:08,727 - INFO - Initializing database
+2024-10-26 14:35:08,757 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:08,757 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:11,225 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:11,225 - INFO - Initializing database
+2024-10-26 14:35:11,267 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:11,267 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:13,163 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:13,163 - INFO - Initializing database
+2024-10-26 14:35:13,186 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:13,186 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:15,259 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:15,259 - INFO - Initializing database
+2024-10-26 14:35:15,282 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:15,282 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:17,600 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:17,600 - INFO - Initializing database
+2024-10-26 14:35:17,627 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:17,627 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:19,588 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:19,588 - INFO - Initializing database
+2024-10-26 14:35:19,612 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:19,613 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:21,519 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:21,519 - INFO - Initializing database
+2024-10-26 14:35:21,548 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:21,548 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:23,645 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:23,645 - INFO - Initializing database
+2024-10-26 14:35:23,682 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:23,682 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:25,623 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:25,624 - INFO - Initializing database
+2024-10-26 14:35:25,655 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:25,655 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:27,767 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:27,768 - INFO - Initializing database
+2024-10-26 14:35:27,801 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:27,801 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:29,918 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:29,918 - INFO - Initializing database
+2024-10-26 14:35:29,940 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:29,941 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:31,913 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:31,913 - INFO - Initializing database
+2024-10-26 14:35:31,936 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:31,937 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:34,072 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:34,072 - INFO - Initializing database
+2024-10-26 14:35:34,106 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:34,106 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:36,192 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:36,192 - INFO - Initializing database
+2024-10-26 14:35:36,217 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:36,218 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:38,307 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:38,307 - INFO - Initializing database
+2024-10-26 14:35:38,336 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:38,336 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:40,119 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:40,119 - INFO - Initializing database
+2024-10-26 14:35:40,145 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:40,146 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:42,695 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:42,695 - INFO - Initializing database
+2024-10-26 14:35:42,729 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:42,729 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:44,632 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:44,632 - INFO - Initializing database
+2024-10-26 14:35:44,664 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:44,664 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:46,544 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:46,545 - INFO - Initializing database
+2024-10-26 14:35:46,574 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:46,574 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:49,065 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:49,065 - INFO - Initializing database
+2024-10-26 14:35:49,088 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:49,088 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:51,033 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:51,033 - INFO - Initializing database
+2024-10-26 14:35:51,061 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:51,061 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:53,006 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:53,006 - INFO - Initializing database
+2024-10-26 14:35:53,030 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:53,030 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:35:58,071 - INFO - Initializing FAISS Instance
+2024-10-26 14:35:58,071 - INFO - Initializing database
+2024-10-26 14:35:58,125 - INFO - Use pytorch device_name: mps
+2024-10-26 14:35:58,125 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:00,346 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:00,347 - INFO - Initializing database
+2024-10-26 14:36:00,379 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:00,379 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:02,558 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:02,558 - INFO - Initializing database
+2024-10-26 14:36:02,587 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:02,588 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:04,972 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:04,972 - INFO - Initializing database
+2024-10-26 14:36:05,008 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:05,009 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:06,895 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:06,895 - INFO - Initializing database
+2024-10-26 14:36:06,922 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:06,922 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:08,930 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:08,930 - INFO - Initializing database
+2024-10-26 14:36:08,959 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:08,959 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:11,106 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:11,109 - INFO - Initializing database
+2024-10-26 14:36:11,164 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:11,164 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:12,979 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:12,979 - INFO - Initializing database
+2024-10-26 14:36:13,010 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:13,010 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:14,956 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:14,957 - INFO - Initializing database
+2024-10-26 14:36:14,984 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:14,984 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:17,228 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:17,229 - INFO - Initializing database
+2024-10-26 14:36:17,283 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:17,283 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:35,187 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:35,187 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:37,471 - INFO - Use pytorch device_name: mps
+2024-10-26 14:36:37,471 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:36:39,625 - INFO - Initializing FAISS Instance
+2024-10-26 14:36:39,626 - INFO - Initializing database
+2024-10-26 14:36:39,626 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 14:37:41,260 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:41,260 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:43,560 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:43,560 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:45,479 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:45,479 - INFO - Initializing database
+2024-10-26 14:37:45,479 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:45,479 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:47,567 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:47,568 - INFO - Initializing database
+2024-10-26 14:37:47,568 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:47,568 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:49,641 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:49,641 - INFO - Initializing database
+2024-10-26 14:37:49,642 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:49,642 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:51,670 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:51,670 - INFO - Initializing database
+2024-10-26 14:37:51,671 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:51,671 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:53,613 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:53,613 - INFO - Initializing database
+2024-10-26 14:37:53,614 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:53,614 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:55,463 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:55,463 - INFO - Initializing database
+2024-10-26 14:37:55,464 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:55,464 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:57,607 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:57,607 - INFO - Initializing database
+2024-10-26 14:37:57,608 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:57,608 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:37:59,864 - INFO - Initializing FAISS Instance
+2024-10-26 14:37:59,864 - INFO - Initializing database
+2024-10-26 14:37:59,865 - INFO - Use pytorch device_name: mps
+2024-10-26 14:37:59,865 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:38:02,142 - INFO - Initializing FAISS Instance
+2024-10-26 14:38:02,142 - INFO - Initializing database
+2024-10-26 14:38:02,143 - INFO - Use pytorch device_name: mps
+2024-10-26 14:38:02,143 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:38:03,978 - INFO - Initializing FAISS Instance
+2024-10-26 14:38:03,979 - INFO - Initializing database
+2024-10-26 14:38:03,979 - INFO - Use pytorch device_name: mps
+2024-10-26 14:38:03,979 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:38:05,971 - INFO - Initializing FAISS Instance
+2024-10-26 14:38:05,971 - INFO - Initializing database
+2024-10-26 14:38:05,971 - INFO - Use pytorch device_name: mps
+2024-10-26 14:38:05,971 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:42:30,477 - INFO - Use pytorch device_name: mps
+2024-10-26 14:42:30,477 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:42:33,044 - INFO - Use pytorch device_name: mps
+2024-10-26 14:42:33,045 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:42:34,940 - INFO - Initializing FAISS Instance
+2024-10-26 14:42:34,940 - INFO - Initializing database
+2024-10-26 14:42:34,940 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 14:43:10,654 - INFO - Use pytorch device_name: mps
+2024-10-26 14:43:10,654 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:43:13,068 - INFO - Use pytorch device_name: mps
+2024-10-26 14:43:13,069 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:43:15,053 - INFO - Initializing FAISS Instance
+2024-10-26 14:43:15,053 - INFO - Initializing database
+2024-10-26 14:43:15,072 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 14:43:52,251 - INFO - Use pytorch device_name: mps
+2024-10-26 14:43:52,251 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:43:54,620 - INFO - Use pytorch device_name: mps
+2024-10-26 14:43:54,620 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:43:56,432 - INFO - Initializing FAISS Instance
+2024-10-26 14:43:56,432 - INFO - Initializing database
+2024-10-26 14:43:56,449 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 14:45:52,267 - INFO - Use pytorch device_name: mps
+2024-10-26 14:45:52,267 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:45:54,666 - INFO - Use pytorch device_name: mps
+2024-10-26 14:45:54,667 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 14:45:56,528 - INFO - Initializing FAISS Instance
+2024-10-26 14:45:56,528 - INFO - Initializing database
+2024-10-26 14:45:56,528 - INFO - Database created
+2024-10-26 14:45:56,528 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 15:04:45,387 - INFO - Use pytorch device_name: mps
+2024-10-26 15:04:45,387 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:04:47,799 - INFO - Use pytorch device_name: mps
+2024-10-26 15:04:47,799 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:04:50,119 - INFO - Initializing FAISS Instance
+2024-10-26 15:04:50,119 - INFO - Initializing database
+2024-10-26 15:04:50,300 - ERROR - Error initializing FAISS Instance: FAISS.__init__() got an unexpected keyword argument 'embedding_function'
+2024-10-26 15:05:46,866 - INFO - Use pytorch device_name: mps
+2024-10-26 15:05:46,866 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:05:49,306 - INFO - Use pytorch device_name: mps
+2024-10-26 15:05:49,306 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:05:51,285 - INFO - Initializing FAISS Instance
+2024-10-26 15:05:51,285 - INFO - Initializing database
+2024-10-26 15:05:51,465 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:05:51,465 - INFO - Database initialized
+2024-10-26 15:05:51,469 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:06:15,776 - INFO - Use pytorch device_name: mps
+2024-10-26 15:06:15,776 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:06:18,050 - INFO - Use pytorch device_name: mps
+2024-10-26 15:06:18,050 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:06:19,948 - INFO - Initializing FAISS Instance
+2024-10-26 15:06:19,948 - INFO - Initializing database
+2024-10-26 15:06:19,948 - ERROR - Error initializing FAISS Instance: FAISS.load_local() missing 1 required positional argument: 'embeddings'
+2024-10-26 15:06:58,537 - INFO - Use pytorch device_name: mps
+2024-10-26 15:06:58,537 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:07:00,944 - INFO - Initializing FAISS Instance
+2024-10-26 15:07:00,946 - INFO - Use pytorch device_name: mps
+2024-10-26 15:07:00,946 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:07:02,991 - INFO - Initializing database
+2024-10-26 15:07:02,991 - ERROR - Error initializing FAISS Instance: FAISS.load_local() missing 1 required positional argument: 'embeddings'
+2024-10-26 15:07:37,791 - INFO - Use pytorch device_name: mps
+2024-10-26 15:07:37,791 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:07:40,323 - INFO - Initializing FAISS Instance
+2024-10-26 15:07:40,326 - INFO - Use pytorch device_name: mps
+2024-10-26 15:07:40,326 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:07:42,498 - INFO - Initializing database
+2024-10-26 15:07:42,498 - INFO - Loading database from disk
+2024-10-26 15:07:42,498 - ERROR - Error initializing FAISS Instance: FAISS.load_local() missing 1 required positional argument: 'embeddings'
+2024-10-26 15:08:12,411 - INFO - Use pytorch device_name: mps
+2024-10-26 15:08:12,411 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:08:16,721 - INFO - Initializing FAISS Instance
+2024-10-26 15:08:16,723 - INFO - Use pytorch device_name: mps
+2024-10-26 15:08:16,723 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:08:18,644 - INFO - Initializing database
+2024-10-26 15:08:18,644 - INFO - Loading database from disk
+2024-10-26 15:08:18,644 - ERROR - Error initializing FAISS Instance: FAISS.load_local() missing 1 required positional argument: 'embeddings'
+2024-10-26 15:08:44,850 - INFO - Use pytorch device_name: mps
+2024-10-26 15:08:44,850 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:08:47,357 - INFO - Initializing FAISS Instance
+2024-10-26 15:08:47,359 - INFO - Use pytorch device_name: mps
+2024-10-26 15:08:47,359 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:08:49,322 - INFO - Initializing database
+2024-10-26 15:08:49,322 - INFO - Loading database from disk
+2024-10-26 15:08:49,325 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:08:49,325 - INFO - Database initialized
+2024-10-26 15:08:49,325 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:10:02,693 - INFO - Use pytorch device_name: mps
+2024-10-26 15:10:02,693 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:10:22,270 - INFO - Use pytorch device_name: mps
+2024-10-26 15:10:22,270 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:10:50,774 - INFO - Use pytorch device_name: mps
+2024-10-26 15:10:50,774 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:10:53,413 - INFO - Use pytorch device_name: mps
+2024-10-26 15:10:53,413 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:10:55,403 - INFO - Initializing database
+2024-10-26 15:10:55,405 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-26 15:10:55,406 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-26 15:10:55,594 - INFO - Installing plugin inference into Pinecone
+2024-10-26 15:10:57,439 - INFO - Initializing FAISS Instance
+2024-10-26 15:10:57,441 - INFO - Use pytorch device_name: mps
+2024-10-26 15:10:57,441 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:10:59,362 - INFO - Initializing database
+2024-10-26 15:10:59,362 - INFO - Loading database from disk
+2024-10-26 15:10:59,364 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:10:59,364 - INFO - Database initialized
+2024-10-26 15:10:59,364 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:12:18,512 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:18,513 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:22,154 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:22,155 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:24,187 - INFO - Initializing database
+2024-10-26 15:12:24,188 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-26 15:12:24,189 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-26 15:12:24,335 - INFO - Installing plugin inference into Pinecone
+2024-10-26 15:12:24,956 - INFO - Initializing FAISS Instance
+2024-10-26 15:12:24,959 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:24,959 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:26,967 - INFO - Initializing database
+2024-10-26 15:12:26,967 - INFO - Loading database from disk
+2024-10-26 15:12:26,978 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:12:26,978 - INFO - Database initialized
+2024-10-26 15:12:26,979 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:12:51,890 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:51,891 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:54,186 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:54,186 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:56,190 - INFO - Initializing Pinecone database
+2024-10-26 15:12:56,192 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-26 15:12:56,193 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-26 15:12:56,204 - INFO - Installing plugin inference into Pinecone
+2024-10-26 15:12:56,792 - INFO - Initializing FAISS Instance
+2024-10-26 15:12:56,794 - INFO - Use pytorch device_name: mps
+2024-10-26 15:12:56,794 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:12:58,803 - INFO - Initializing database
+2024-10-26 15:12:58,803 - INFO - Loading database from disk
+2024-10-26 15:12:58,804 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:12:58,804 - INFO - Database initialized
+2024-10-26 15:12:58,805 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:19:35,002 - INFO - Use pytorch device_name: mps
+2024-10-26 15:19:35,003 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:19:37,644 - INFO - Use pytorch device_name: mps
+2024-10-26 15:19:37,644 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:19:39,463 - INFO - Initializing Pinecone database
+2024-10-26 15:19:39,464 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-26 15:19:39,465 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-26 15:19:39,478 - INFO - Installing plugin inference into Pinecone
+2024-10-26 15:19:40,362 - INFO - Initializing FAISS Instance
+2024-10-26 15:19:40,363 - INFO - Use pytorch device_name: mps
+2024-10-26 15:19:40,363 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:19:42,296 - INFO - Initializing database
+2024-10-26 15:19:42,296 - INFO - Loading database from disk
+2024-10-26 15:19:42,297 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:19:42,297 - INFO - Database initialized
+2024-10-26 15:19:42,298 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
+2024-10-26 15:20:42,455 - INFO - Use pytorch device_name: mps
+2024-10-26 15:20:42,455 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:20:44,726 - INFO - Use pytorch device_name: mps
+2024-10-26 15:20:44,726 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:20:46,673 - INFO - Initializing Pinecone database
+2024-10-26 15:20:46,675 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-26 15:20:46,675 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-26 15:20:46,687 - INFO - Installing plugin inference into Pinecone
+2024-10-26 15:20:47,516 - INFO - Initializing FAISS Instance
+2024-10-26 15:20:47,517 - INFO - Use pytorch device_name: mps
+2024-10-26 15:20:47,517 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-mpnet-base-v2
+2024-10-26 15:20:49,513 - INFO - Initializing database
+2024-10-26 15:20:49,513 - INFO - Loading database from disk
+2024-10-26 15:20:49,514 - WARNING - `embedding_function` is expected to be an Embeddings object, support for passing in a function will soon be removed.
+2024-10-26 15:20:49,514 - INFO - Database initialized
+2024-10-26 15:20:49,515 - INFO - FAISS Instance closed, saving database to {DATABASE_PATH}/{DATABASE_NAME}
