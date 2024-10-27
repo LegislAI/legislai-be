@@ -1,38 +1,60 @@
-from datetime import timedelta
-from fastapi import FastAPI, APIRouter, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from Authorization.utils.schemas import GetUser, LoginUser, CreateUser
-from Authorization.utils.auth import create_access_token, create_refresh_token
-from dotenv import load_dotenv
-import os
-import json
-from pathlib import Path
-from contextlib import asynccontextmanager
-import boto3
-from botocore.exceptions import ClientError
-from typing import Optional, Dict
-
-import logging
-import uuid
 import datetime
+import json
+import logging
+import os
+import time
+import uuid
+from contextlib import asynccontextmanager
+from datetime import timedelta
 from datetime import timezone
+from pathlib import Path
+from typing import Dict
+from typing import Optional
+
+import boto3
+import structlog
+from authlib.integrations.base_client import OAuthError
+from authlib.integrations.starlette_client import OAuth
+from botocore.exceptions import ClientError
+from dotenv import load_dotenv
+from fastapi import APIRouter
+from fastapi import FastAPI
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi import status
+from fastapi.security import OAuth2PasswordBearer
+from starlette.config import Config
+from starlette.middleware.sessions import SessionMiddleware
+
+from .utils.auth import create_access_token
+from .utils.auth import create_refresh_token
+from .utils.schemas import CreateUser
+from .utils.schemas import GetUser
+from .utils.schemas import LoginUser
+
+"""
+na pasta inf/terraform
+terraform init
+terraform plan
+terraform apply
+uvicorn Authorization.api:app --reload
+"""
+
+# mock database
+todos = {}
+
+load_dotenv()
+# When using windows specify the all path
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 LOG = logging.getLogger(__name__)
+logger = structlog.get_logger()
 
 route = APIRouter(prefix="/auth", tags=["Authentication"])
 oauth2bearer = OAuth2PasswordBearer(tokenUrl="auth/login")
-
-load_dotenv()
-boto3_client = boto3.client(
-    "dynamodb",
-    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.environ.get("AWS_REGION"),
-)
 
 
 @asynccontextmanager
@@ -41,12 +63,50 @@ async def lifespan(app: FastAPI):
     output_path = Path(__file__).resolve().parent / "openapi.json"
     with open(output_path, "w") as f:
         json.dump(openapi_spec, f, indent=2)
-    LOG.info(f"OpenAPI spec saved to {output_path}")
+    logger.info(f"OpenAPI spec saved to {output_path}")
 
     yield
 
 
 app = FastAPI(lifespan=lifespan)
+app.add_middleware(
+    SessionMiddleware, secret_key=os.environ.get("secret_key_middleware")
+)  # session_cookie="legislai_cookie", same_site="Lax", https_only=False)
+
+client_id = os.getenv("GOOGLE_CLIENT_ID")
+client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
+config_data = {"GOOGLE_CLIENT_ID": client_id, "GOOGLE_CLIENT_SECRET": client_secret}
+starlette_config = Config(environ=config_data)
+oauth = OAuth(starlette_config)
+
+
+GOOGLE_REDIRECT_URI = "http://localhost/auth/google/callback"
+
+# Register the Google OAuth provider
+oauth.register(
+    name="google",
+    access_token_url="https://accounts.google.com/o/oauth2/token",
+    authorize_url="https://accounts.google.com/o/oauth2/auth",
+    redirect_uri=GOOGLE_REDIRECT_URI,
+    client_kwargs={"scope": "openid email profile"},
+    jwks_uri="https://www.googleapis.com/oauth2/v3/certs",
+)
+
+
+boto3_client = boto3.client(
+    "dynamodb",
+    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.environ.get("AWS_REGION"),
+)
+
+
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time = time.perf_counter() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
 
 
 def _get_user(boto3_client, email: Optional[str] = None) -> Optional[dict]:
@@ -72,7 +132,7 @@ def _get_user(boto3_client, email: Optional[str] = None) -> Optional[dict]:
             }
 
     except ClientError as e:
-        LOG.error(f"Error fetching user: {e.response['Error']['Message']}")
+        logger.error(f"Error fetching user: {e.response['Error']['Message']}")
 
     return None
 
@@ -93,10 +153,11 @@ def _create_user(db, user_data: CreateUser) -> bool:
                 "lastlogin": {"S": str(datetime.datetime.now(timezone.utc))},
             },
         )
+        logger.info(f"User with email {user_data.email} created!")
         return True
 
     except ClientError as e:
-        LOG.error(f"Error creating user: {e.response['Error']['Message']}")
+        logger.error(f"Error creating user: {e.response['Error']['Message']}")
         return False
 
 
@@ -123,24 +184,91 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
             UpdateExpression=update_expression,
             ExpressionAttributeValues=expression_attribute_values,
         )
+        logger.info("User updated!")
         return True
 
     except ClientError as e:
-        LOG.error(f"Error updating user fields: {e.response['Error']['Message']}")
+        logger.error(f"Error updating user fields: {e.response['Error']['Message']}")
         return False
+
+
+# Google Login Route
+@route.get("/google/login")
+async def google_login(request: Request):
+    redirect_uri = request.url_for("google_callback")
+    response = await oauth.google.authorize_redirect(request, redirect_uri)
+    logger.info("Login with google!")
+    return response
+
+
+# Google Callback Route - This route will handle the response from Google
+@route.get("/google/callback")
+async def google_callback(request: Request):
+    returned_state = request.query_params.get("state")
+    if not returned_state:
+        logger.error("Authorization state not found")
+    else:
+        logger.info(f"Returned state from Google callback: {returned_state}")
+
+    try:
+        token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+        )
+
+    # user_info = await oauth.google.parse_id_token(token, None)
+    resp = await oauth.google.get(
+        "https://openidconnect.googleapis.com/v1/userinfo", token=token
+    )
+
+    user_info = resp.json()
+
+    name = user_info.get("name")
+    email = user_info.get("email")
+
+    if not user_info:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed"
+        )
+    user = _get_user(boto3_client, email=email)
+
+    if not user:
+        _create_user(
+            boto3_client,
+            CreateUser(
+                username=name,
+                email=email,
+                password="password",
+            ),
+        )
+    else:
+        logger.info("User already exists!")
+
+    access_token = create_access_token(email, timedelta(minutes=30))
+    refresh_token = create_refresh_token(email, timedelta(minutes=1008))
+
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
+        "token_type": "bearer",
+        "email": email,
+        "name": name,
+    }
 
 
 @route.post("/register", response_model=GetUser)
 def register_user(payload: CreateUser):
     if not payload.email:
-        LOG.error(f"User with payload: {payload} is missing email")
+        logger.error(f"User with payload: {payload} is missing email")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="email field is required",
         )
 
     if not payload.username:
-        LOG.error(f"User with payload: {payload} is missing username")
+        logger.error(f"User with payload: {payload} is missing username")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="username field is required",
@@ -148,7 +276,7 @@ def register_user(payload: CreateUser):
 
     user_by_email = _get_user(boto3_client=boto3_client, email=payload.email)
     if user_by_email:
-        LOG.error(f"User with email {payload.email} already exists")
+        logger.error(f"User with email {payload.email} already exists")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"User with email {payload.email} already exists",
@@ -156,7 +284,6 @@ def register_user(payload: CreateUser):
 
     user_created = _create_user(boto3_client, payload)
     if user_created:
-        LOG.info(f"User created: {payload.email}")
         return {
             "userid": str(uuid.uuid4()),
             "email": payload.email,
@@ -190,8 +317,7 @@ def login_user(payload: LoginUser):
     token = create_access_token(user["userid"], timedelta(minutes=30))
     refresh = create_refresh_token(user["userid"], timedelta(minutes=1008))
 
-    LOG.info(f"User logged in: {user['email']}")
-
+    logger.info(f"User logged in: {user['email']}")
     # Update the last login time using both userid and email
     fields_to_update = {"lastlogin": str(datetime.datetime.now(timezone.utc))}
     _update_user_fields(boto3_client, user["userid"], user["email"], fields_to_update)

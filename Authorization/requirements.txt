@@ -11,3 +11,8 @@ botocore
 pyjwt
 python-multipart
 python-jose
+oauthlib
+httpx
+itsdangerous
+structlog
+pytest
