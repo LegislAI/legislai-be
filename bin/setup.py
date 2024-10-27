@@ -1,11 +1,12 @@
 #!/usr/bin/env/python3
-from glob import glob
-import subprocess
-from pathlib import Path
-import os
-import logging
 import argparse
-from typing import List, Tuple
+import logging
+import os
+import subprocess
+from glob import glob
+from pathlib import Path
+from typing import List
+from typing import Tuple
 
 LOG = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
