@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+authlib
+pydantic-settings
+pydantic[email]
+passlib
+python-dotenv
+boto3
+botocore
+pyjwt
+python-multipart
+python-jose
