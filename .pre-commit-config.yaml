@@ -15,16 +15,6 @@ repos:
     hooks:
     -   id: black
 
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-          - flake8_formatter_abspath
-          - flake8-print
-          - git+https://github.com/PyCQA/pycodestyle@2.10.0#egg=pycodestyle
-          - git+https://github.com/PyCQA/pyflakes@3.0.0#egg=pyflakes
-
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v3.9.0
     hooks:

@@ -71,7 +71,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     SessionMiddleware, secret_key=os.environ.get("secret_key")
-) # session_cookie="legislai_cookie", same_site="Lax", https_only=False)
+)  # session_cookie="legislai_cookie", same_site="Lax", https_only=False)
 
 client_id = os.getenv("GOOGLE_CLIENT_ID")
 client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
@@ -198,7 +198,6 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
     except ClientError as e:
         logger.error(f"Error updating user fields: {e.response['Error']['Message']}")
         return False
-
 
 
 # Google Login Route
@@ -328,6 +327,8 @@ def login_user(payload: LoginUser):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found",
         )
+
+    print(user)
     if not payload.password or user["password"] != payload.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

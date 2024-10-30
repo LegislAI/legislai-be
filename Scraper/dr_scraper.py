@@ -713,14 +713,13 @@ class LawTypeScraper:
                         copy_of_driver, full_updates_link, initial_date=initial_date
                     )
 
-
                     WebDriverWait(driver, 10).until(
                         EC.presence_of_element_located((By.ID, "b3-Conteudo"))
                     )
-                    
+
                 except Exception as e:
                     LOG.warning(f"Could not fetch alterations: {e}")
-                    iterations = [] 
+                    iterations = []
 
                 sleep(5)
 
@@ -869,7 +868,6 @@ class LawTypeScraper:
             return None
 
     def parse_alteration_page(self, driver, element, initial_date: str) -> list:
-
 
         element.click()
 
