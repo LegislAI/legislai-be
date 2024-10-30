@@ -12,10 +12,10 @@ from dotenv import load_dotenv
 
 logging.basicConfig(
     level=logging.INFO,
-    format="[FAISS]-%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("faiss_db_log.log"), logging.StreamHandler()],
 )
-LOG = logging.getLogger(__name__)
+LOG = logging.getLogger("FAISS")
 
 DATABASE_PATH = ".database/FAISS"
 DATABASE_NAME = "legislai"

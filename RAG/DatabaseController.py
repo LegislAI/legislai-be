@@ -12,10 +12,10 @@ from dotenv import load_dotenv
 
 logging.basicConfig(
     level=logging.INFO,
-    format="[DB_CONTROLLER]-%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("db_controller_log.log"), logging.StreamHandler()],
 )
-LOG = logging.getLogger(__name__)
+LOG = logging.getLogger("DB_CONTROLLER")
 
 
 class DatabaseController:

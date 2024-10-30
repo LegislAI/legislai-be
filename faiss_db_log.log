@@ -4093,3 +4093,45 @@ HTTP response body: {"code":3,"message":"Either 'vector' or 'ID' must be provide
 [FAISS]-2024-10-30 21:43:17,056 - INFO - Query time: 0.03546595573425293 seconds
 [FAISS]-2024-10-30 21:43:17,056 - INFO - Test insert result: 0, score: 0.5153806209564209
 [FAISS]-2024-10-30 21:43:17,056 - INFO - Number of embeddings after test insert: 617
+[FAISS]-2024-10-30 23:30:54,922 - INFO - Use pytorch device_name: mps
+[FAISS]-2024-10-30 23:30:54,923 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+[FAISS]-2024-10-30 23:42:05,380 - INFO - Use pytorch device_name: mps
+[FAISS]-2024-10-30 23:42:05,380 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+[FAISS]-2024-10-30 23:42:11,587 - INFO - Use pytorch device_name: mps
+[FAISS]-2024-10-30 23:42:11,587 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+[FAISS]-2024-10-30 23:42:14,517 - INFO - Initializing Pinecone database
+[FAISS]-2024-10-30 23:42:14,519 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+[FAISS]-2024-10-30 23:42:14,520 - INFO - Looking for plugins in pinecone_plugins.inference
+[FAISS]-2024-10-30 23:42:14,684 - INFO - Installing plugin inference into Pinecone
+[FAISS]-2024-10-30 23:42:15,242 - INFO - Testing insert
+[FAISS]-2024-10-30 23:42:16,357 - INFO - Query time: 0.24626731872558594 seconds
+[FAISS]-2024-10-30 23:42:16,357 - INFO - Initializing FAISS Instance
+[FAISS]-2024-10-30 23:42:16,358 - INFO - Use pytorch device_name: mps
+[FAISS]-2024-10-30 23:42:16,358 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+[FAISS]-2024-10-30 23:42:18,959 - INFO - Initializing database
+[FAISS]-2024-10-30 23:42:18,960 - INFO - Loading database from disk
+[FAISS]-2024-10-30 23:42:18,970 - INFO - Number of embeddings in database: 616
+[FAISS]-2024-10-30 23:42:18,971 - INFO - Testing insert
+[FAISS]-2024-10-30 23:42:19,085 - INFO - Query time: 0.02949810028076172 seconds
+[FAISS]-2024-10-30 23:42:19,085 - INFO - Test insert result: 0, score: 0.5153806209564209
+[FAISS]-2024-10-30 23:42:19,085 - INFO - Number of embeddings after test insert: 617
+2024-10-30 23:45:07,068 - INFO - Use pytorch device_name: mps
+2024-10-30 23:45:07,068 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2024-10-30 23:45:11,378 - INFO - Use pytorch device_name: mps
+2024-10-30 23:45:11,378 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2024-10-30 23:45:13,588 - INFO - Initializing Pinecone database
+2024-10-30 23:45:13,589 - INFO - Discovering subpackages in _NamespacePath(['/Users/ctw03833/.pyenv/versions/3.12.6/envs/legislai-authorization/lib/python3.12/site-packages/pinecone_plugins'])
+2024-10-30 23:45:13,590 - INFO - Looking for plugins in pinecone_plugins.inference
+2024-10-30 23:45:13,910 - INFO - Installing plugin inference into Pinecone
+2024-10-30 23:45:14,914 - INFO - Testing insert
+2024-10-30 23:45:16,079 - INFO - Query time: 0.30901503562927246 seconds
+2024-10-30 23:45:16,080 - INFO - Initializing FAISS Instance
+2024-10-30 23:45:16,082 - INFO - Use pytorch device_name: mps
+2024-10-30 23:45:16,082 - INFO - Load pretrained SentenceTransformer: BAAI/bge-large-en-v1.5
+2024-10-30 23:45:18,945 - INFO - Initializing database
+2024-10-30 23:45:18,945 - INFO - Loading database from disk
+2024-10-30 23:45:19,005 - INFO - Number of embeddings in database: 616
+2024-10-30 23:45:19,005 - INFO - Testing insert
+2024-10-30 23:45:19,129 - INFO - Query time: 0.029967784881591797 seconds
+2024-10-30 23:45:19,129 - INFO - Test insert result: 0, score: 0.5153806209564209
+2024-10-30 23:45:19,129 - INFO - Number of embeddings after test insert: 617

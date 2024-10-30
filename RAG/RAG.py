@@ -12,10 +12,10 @@ from DatabaseController import DatabaseController as dbc
 
 logging.basicConfig(
     level=logging.INFO,
-    format="[RAG]-%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("db_controller_log.log"), logging.StreamHandler()],
 )
-LOG = logging.getLogger(__name__)
+LOG = logging.getLogger("RAG_INTERFACE")
 
 
 class RAG:

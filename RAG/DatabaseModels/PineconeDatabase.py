@@ -13,10 +13,10 @@ from pinecone import ServerlessSpec
 
 logging.basicConfig(
     level=logging.INFO,
-    format="[Pinecone]-%(asctime)s - %(levelname)s - %(message)s",
+    format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("pinecone_db_log.log"), logging.StreamHandler()],
 )
-LOG = logging.getLogger(__name__)
+LOG = logging.getLogger("PINECONE")
 
 
 class PineconeDatabase:
