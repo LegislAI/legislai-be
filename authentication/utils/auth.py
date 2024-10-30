@@ -5,7 +5,7 @@ from typing import Any
 from typing import Optional
 from typing import Union
 
-from authentication.config.settings import Settings
+from authentication.config.settings import settings
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
@@ -20,10 +20,9 @@ def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> 
         expires_delta = datetime.now(timezone.utc) + expires_delta
     else:
         expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=Settings().access_token_expire_minutes
+            minutes=settings.access_token_expire_minutes
         )
 
-    settings = Settings()
     to_encode = {"exp": expires_delta, "sub": str(subject)}
     encoded_jwt = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
 
@@ -35,10 +34,9 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
         expires_delta = datetime.now(timezone.utc) + expires_delta
     else:
         expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=Settings().refresh_token_expire_minutes
+            minutes=settings.refresh_token_expire_minutes
         )
 
-    settings = Settings()
     to_encode = {"exp": expires_delta, "sub": str(subject)}
     encoded_jwt = jwt.encode(to_encode, settings.refresh_secret_key, settings.algorithm)
     return encoded_jwt
@@ -47,7 +45,6 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
 # This function decodes a JWT to extract the payload.
 def decodeJWT(jwtoken: str):
     try:
-        settings = Settings()
         payload = jwt.decode(jwtoken, settings.secret_key, settings.algorithm)
         return payload
     except InvalidTokenError:

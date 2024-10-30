@@ -1,10 +1,9 @@
-from authentication.config.settings import Settings
+from authentication.config.settings import settings
 from authentication.routes.auth_routes import route as auth_routes
 from authentication.routes.google_routes import route as google_routes
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 
-settings = Settings()
 app = FastAPI()
 
 app.add_middleware(SessionMiddleware, secret_key=settings.secret_key)

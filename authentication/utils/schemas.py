@@ -1,28 +1,31 @@
 from typing import Optional
 
 from pydantic import BaseModel
-from pydantic import ConfigDict
 from pydantic import EmailStr
 
 
-class GetUser(BaseModel):
+class RegisterUserRequest(BaseModel):
+    email: EmailStr
+    username: str
+    password: Optional[str] = None
+
+
+class RegisterUserResponse(BaseModel):
     userid: str
     email: EmailStr
     username: str
-    access_token: Optional[str] = None
-    refresh_token: Optional[str] = None
-    ConfigDict(from_attributes=True, use_enum_values=True)
 
 
-class LoginUser(BaseModel):
+class LoginUserRequest(BaseModel):
     email: EmailStr
-    username: Optional[str] = None
-    password: Optional[str] = None
-    ConfigDict(from_attributes=True, use_enum_values=True)
+    password: str
 
 
-class CreateUser(BaseModel):
+class LoginUserResponse(BaseModel):
+    userid: str
     email: EmailStr
     username: str
-    password: Optional[str] = None
-    ConfigDict(from_attributes=True, use_enum_values=True)
+    access_token: str
+    refresh_token: str
+    access_token_expire_minutes: int
+    refresh_token_expire_minutes: int

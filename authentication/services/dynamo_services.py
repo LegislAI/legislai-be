@@ -1,25 +1,24 @@
-import os
 import uuid
 from datetime import datetime
 from datetime import timezone
 from typing import Dict
-from typing import Optional
 
 import boto3
+from authentication.config.settings import settings
 from authentication.utils.logging_config import logger
-from authentication.utils.schemas import CreateUser
+from authentication.utils.schemas import RegisterUserRequest
 from botocore.exceptions import ClientError
 
 
 boto3_client = boto3.client(
     "dynamodb",
-    aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
-    aws_secret_access_key=os.environ.get("AWS_SECRET_ACCESS_KEY"),
-    region_name=os.environ.get("AWS_REGION"),
+    aws_access_key_id=settings.aws_access_key_id,
+    aws_secret_access_key=settings.aws_secret_access_key,
+    region_name=settings.aws_region,
 )
 
 
-def get_user(boto3_client, email: Optional[str] = None) -> Dict:
+def get_user(boto3_client, email: str) -> Dict:
     """
     Fetch a user by email from the DynamoDB table.
     """
@@ -43,11 +42,10 @@ def get_user(boto3_client, email: Optional[str] = None) -> Dict:
 
     except ClientError as e:
         logger.error(f"Error fetching user: {e.response['Error']['Message']}")
+        return {}
 
-    return {}
 
-
-def create_user(db, user_data: CreateUser) -> Dict:
+def create_user(db, user_data: RegisterUserRequest) -> Dict:
     """
     Create a new user in the DynamoDB table.
     """
