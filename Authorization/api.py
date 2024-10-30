@@ -70,8 +70,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
-    SessionMiddleware, secret_key=os.environ.get("secret_key_middleware")
-)  # session_cookie="legislai_cookie", same_site="Lax", https_only=False)
+    SessionMiddleware, secret_key=os.environ.get("secret_key")
+) # session_cookie="legislai_cookie", same_site="Lax", https_only=False)
 
 client_id = os.getenv("GOOGLE_CLIENT_ID")
 client_secret = os.getenv("GOOGLE_CLIENT_SECRET")
@@ -109,7 +109,7 @@ async def add_process_time_header(request: Request, call_next):
     return response
 
 
-def _get_user(boto3_client, email: Optional[str] = None) -> Optional[dict]:
+def _get_user(boto3_client, email: Optional[str] = None) -> dict:
     """
     Fetch a user by email from the DynamoDB table.
     """
@@ -134,31 +134,39 @@ def _get_user(boto3_client, email: Optional[str] = None) -> Optional[dict]:
     except ClientError as e:
         logger.error(f"Error fetching user: {e.response['Error']['Message']}")
 
-    return None
+    return {}
 
 
-def _create_user(db, user_data: CreateUser) -> bool:
+def _create_user(db, user_data: CreateUser) -> dict:
     """
     Create a new user in the DynamoDB table.
     """
+    email, username, password = user_data.email, user_data.username, user_data.password
+    user_id = str(uuid.uuid4())
+
     try:
         db.put_item(
             TableName="users",
             Item={
-                "userid": {"S": str(uuid.uuid4())},
-                "username": {"S": user_data.username},
-                "email": {"S": user_data.email},
-                "password": {"S": user_data.password},
+                "userid": {"S": user_id},
+                "email": {"S": email},
+                "username": {"S": username},
+                "password": {"S": password},
                 "usercreated": {"S": str(datetime.datetime.now(timezone.utc))},
                 "lastlogin": {"S": str(datetime.datetime.now(timezone.utc))},
             },
         )
-        logger.info(f"User with email {user_data.email} created!")
-        return True
+        logger.info(f"User with email {email} created!")
+        return {
+            "userid": user_id,
+            "email": email,
+            "username": username,
+            "password": password,
+        }
 
     except ClientError as e:
         logger.error(f"Error creating user: {e.response['Error']['Message']}")
-        return False
+        return {}
 
 
 def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> bool:
@@ -171,8 +179,8 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
     :param fields: A dictionary of fields to update, e.g., {"lastlogin": "new_value"}
     :return: True if the update was successful, False otherwise
     """
-    update_expression = "SET " + ", ".join(f"{k} =: {k}" for k in fields.keys())
-    expression_attribute_values = {f": {k}": {"S": v} for k, v in fields.items()}
+    update_expression = "SET " + ", ".join(f"{k} = :{k}" for k in fields.keys())
+    expression_attribute_values = {f":{k}": {"S": v} for k, v in fields.items()}
 
     try:
         db.update_item(
@@ -190,6 +198,7 @@ def _update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> 
     except ClientError as e:
         logger.error(f"Error updating user fields: {e.response['Error']['Message']}")
         return False
+
 
 
 # Google Login Route
@@ -232,10 +241,10 @@ async def google_callback(request: Request):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed"
         )
-    user = _get_user(boto3_client, email=email)
 
+    user = _get_user(boto3_client, email=email)
     if not user:
-        _create_user(
+        user_id = _create_user(
             boto3_client,
             CreateUser(
                 username=name,
@@ -246,8 +255,14 @@ async def google_callback(request: Request):
     else:
         logger.info("User already exists!")
 
-    access_token = create_access_token(email, timedelta(minutes=30))
-    refresh_token = create_refresh_token(email, timedelta(minutes=1008))
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="User creation failed",
+        )
+
+    access_token = create_access_token(user_id, timedelta(minutes=30))
+    refresh_token = create_refresh_token(user_id, timedelta(minutes=1008))
 
     return {
         "access_token": access_token,
@@ -260,34 +275,34 @@ async def google_callback(request: Request):
 
 @route.post("/register", response_model=GetUser)
 def register_user(payload: CreateUser):
-    if not payload.email:
-        logger.error(f"User with payload: {payload} is missing email")
+    email, username = payload.email, payload.username
+
+    if not email:
+        logger.error("email field is required")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="email field is required",
         )
 
-    if not payload.username:
-        logger.error(f"User with payload: {payload} is missing username")
+    if not username:
+        logger.error("username field is required")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="username field is required",
         )
 
-    user_by_email = _get_user(boto3_client=boto3_client, email=payload.email)
-    if user_by_email:
-        logger.error(f"User with email {payload.email} already exists")
+    if _get_user(boto3_client=boto3_client, email=email):
+        logger.error(f"User with email {email} already exists")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"User with email {payload.email} already exists",
+            detail=f"User with email {email} already exists",
         )
 
-    user_created = _create_user(boto3_client, payload)
-    if user_created:
+    if _create_user(boto3_client, payload):
         return {
             "userid": str(uuid.uuid4()),
-            "email": payload.email,
-            "username": payload.username,
+            "email": email,
+            "username": username,
         }
     else:
         raise HTTPException(
@@ -308,7 +323,12 @@ def login_user(payload: LoginUser):
         )
 
     user = _get_user(boto3_client, payload.email)
-    if not user or user["password"] != payload.password:
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+        )
+    if not payload.password or user["password"] != payload.password:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect credentials",
@@ -321,6 +341,9 @@ def login_user(payload: LoginUser):
     # Update the last login time using both userid and email
     fields_to_update = {"lastlogin": str(datetime.datetime.now(timezone.utc))}
     _update_user_fields(boto3_client, user["userid"], user["email"], fields_to_update)
+
+    print(token)
+    print(refresh)
 
     return {
         "access_token": token,

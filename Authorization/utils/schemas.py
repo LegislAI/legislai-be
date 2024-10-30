@@ -4,14 +4,13 @@ from pydantic import BaseModel
 from pydantic import ConfigDict
 from pydantic import EmailStr
 
-
 class GetUser(BaseModel):
     userid: str
     email: EmailStr
     username: str
-    # role: int
+    access_token: Optional[str] = None
+    refresh_token: Optional[str] = None
     ConfigDict(from_attributes=True, use_enum_values=True)
-
 
 class LoginUser(BaseModel):
     email: EmailStr
@@ -19,13 +18,8 @@ class LoginUser(BaseModel):
     password: Optional[str] = None
     ConfigDict(from_attributes=True, use_enum_values=True)
 
-
 class CreateUser(BaseModel):
     email: EmailStr
     username: str
     password: Optional[str] = None
     ConfigDict(from_attributes=True, use_enum_values=True)
-
-    # class Config:
-    #     from_attributes = True
-    #     use_enum_values = True

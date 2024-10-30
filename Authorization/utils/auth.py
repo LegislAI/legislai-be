@@ -12,7 +12,7 @@ from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt import InvalidTokenError
 
-from .config import setting
+from .config import Settings
 
 
 # generate JWTs (access and refresh tokens) for a user identifier
@@ -21,11 +21,13 @@ def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> 
         expires_delta = datetime.datetime.now(timezone.utc) + expires_delta
     else:
         expires_delta = datetime.datetime.now(timezone.utc) + timedelta(
-            minutes=setting.ACCESS_TOKEN_EXPIRE_MINUTES
+            minutes=Settings().access_token_expire_minutes
         )
 
+    settings = Settings()
     to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, setting.secret_key, setting.algorithm)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
+
     return encoded_jwt
 
 
@@ -34,18 +36,20 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
         expires_delta = datetime.datetime.now(timezone.utc) + expires_delta
     else:
         expires_delta = datetime.datetime.now(timezone.utc) + timedelta(
-            minutes=setting.REFRESH_TOKEN_EXPIRE_MINUTES
+            minutes=Settings().refresh_token_expire_minutes
         )
 
+    settings = Settings()
     to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, setting.refresh_secret_key, setting.algorithm)
+    encoded_jwt = jwt.encode(to_encode, settings.refresh_secret_key, settings.algorithm)
     return encoded_jwt
 
 
 # This function decodes a JWT to extract the payload.
 def decodeJWT(jwtoken: str):
     try:
-        payload = jwt.decode(jwtoken, setting.secret_key, setting.algorithm)
+        settings = Settings()
+        payload = jwt.decode(jwtoken, settings.secret_key, settings.algorithm)
         return payload
     except InvalidTokenError:
         return None
