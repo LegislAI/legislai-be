@@ -1,11 +1,14 @@
 import os
 import uuid
+from datetime import datetime
+from datetime import timezone
+from typing import Dict
+from typing import Optional
+
 import boto3
-from botocore.exceptions import ClientError
-from typing import Dict, Optional
-from datetime import datetime, timezone
-from authentication.utils.schemas import CreateUser
 from authentication.utils.logging_config import logger
+from authentication.utils.schemas import CreateUser
+from botocore.exceptions import ClientError
 
 
 boto3_client = boto3.client(
