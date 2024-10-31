@@ -6,13 +6,11 @@ from typing import Optional
 from typing import Union
 from authentication.utils.logging_config import logger
 from authentication.config.settings import settings
-from authentication.services.dynamo_services import get_user_by_id, boto3_client
 from fastapi import HTTPException
-from fastapi import Request, Depends, status
+from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
 from jose import jwt
-from jwt import InvalidTokenError
 
 
 # generate JWTs (access and refresh tokens) for a user identifier

@@ -16,23 +16,16 @@ from authentication.services.dynamo_services import verify_reset_token
 from authentication.utils.auth import create_access_token
 from authentication.utils.auth import create_refresh_token
 from authentication.utils.auth import decodeJWT
-from authentication.utils.auth import JWTBearer
 from authentication.utils.logging_config import logger
 from authentication.utils.password import SecurityUtils
 from authentication.utils.schemas import LoginUserRequest
 from authentication.utils.schemas import LoginUserResponse
 from authentication.utils.schemas import LogoutResponse
-from authentication.utils.schemas import PasswordResetRequest
-from authentication.utils.schemas import PasswordResetResponse
 from authentication.utils.schemas import RegisterUserRequest
 from authentication.utils.schemas import RegisterUserResponse
-from authentication.utils.schemas import ResetPasswordConfirm
 from fastapi import APIRouter
-from fastapi import Depends
 from fastapi import HTTPException
-from fastapi import Request
 from fastapi import status
-from fastapi.security import HTTPAuthorizationCredentials
 
 
 route = APIRouter()
@@ -42,7 +35,6 @@ security = SecurityUtils()
 @route.post("/register", response_model=RegisterUserResponse)
 def register_user(payload: RegisterUserRequest):
     email, username = payload.email, payload.username
-
     if not email:
         logger.error("email field is required")
         raise HTTPException(
@@ -101,13 +93,12 @@ def login_user(payload: LoginUserRequest):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found",
         )
-    print(user)
+
     if not security.verify_password(user["password"], payload.password):
         logger.warning(f"Failed login attempt for email: {payload.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
-
     access_token = create_access_token(
         user["userid"], timedelta(minutes=settings.access_token_expire_minutes)
     )
@@ -140,6 +131,7 @@ even though you have cleaned the token from the client side, then you might need
 async def logout_user(credentials: LoginUserRequest):
     """Logout user using email and password"""
     try:
+        # Verify user exists and credentials are correct
         user = get_user(boto3_client, credentials.email)
         if not user:
             raise HTTPException(
@@ -153,6 +145,7 @@ async def logout_user(credentials: LoginUserRequest):
                 detail="Invalid email or password",
             )
 
+        # Get all active tokens for the user
         active_tokens = await get_user_active_tokens(user["userid"])
 
         # Blacklist all active tokens
@@ -160,6 +153,7 @@ async def logout_user(credentials: LoginUserRequest):
         for token_info in active_tokens:
             token = token_info.get("token")
             if token:
+                # Decode token to get expiration
                 try:
                     payload = decodeJWT(token)
                     if payload and "exp" in payload:
@@ -200,95 +194,95 @@ async def logout_user(credentials: LoginUserRequest):
         )
 
 
-@route.post("/request-password-reset", response_model=PasswordResetResponse)
-async def request_password_reset(request: PasswordResetRequest):
-    """
-    Request a password reset token
+# @route.post("/request-password-reset", response_model=PasswordResetResponse)
+# async def request_password_reset(request: PasswordResetRequest):
+#     """
+#     Request a password reset token
 
-    This endpoint:
-    1. Validates the email exists
-    2. Creates a reset token
-    3. Sends an email with the reset link
-    """
-    try:
-        # Check if user exists
-        user = get_user(boto3_client, request.email)
-        if not user:
-            # Return success even if email doesn't exist (security best practice)
-            return PasswordResetResponse(
-                message="If your email is registered, you will receive reset instructions."
-            )
+#     This endpoint:
+#     1. Validates the email exists
+#     2. Creates a reset token
+#     3. Sends an email with the reset link
+#     """
+#     try:
+#         # Check if user exists
+#         user = get_user(boto3_client, request.email)
+#         if not user:
+#             # Return success even if email doesn't exist (security best practice)
+#             return PasswordResetResponse(
+#                 message="If your email is registered, you will receive reset instructions."
+#             )
 
-        # Create reset token
-        reset_token = create_password_reset_token(user["userid"])
+#         # Create reset token
+#         reset_token = create_password_reset_token(user["userid"])
 
-        # Send reset email
-        email_sent = send_reset_email(request.email, reset_token)
-        if not email_sent:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to send reset email",
-            )
+#         # Send reset email
+#         email_sent = send_reset_email(request.email, reset_token)
+#         if not email_sent:
+#             raise HTTPException(
+#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#                 detail="Failed to send reset email"
+#             )
 
-        logger.info(f"Password reset requested for user: {request.email}")
-        return PasswordResetResponse(
-            message="If your email is registered, you will receive reset instructions."
-        )
+#         logger.info(f"Password reset requested for user: {request.email}")
+#         return PasswordResetResponse(
+#             message="If your email is registered, you will receive reset instructions."
+#         )
 
-    except Exception as e:
-        logger.error(f"Password reset request failed: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to process password reset request",
-        )
+#     except Exception as e:
+#         logger.error(f"Password reset request failed: {str(e)}")
+#         raise HTTPException(
+#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#             detail="Failed to process password reset request"
+#         )
 
+# @route.post("/reset-password", response_model=PasswordResetResponse)
+# async def reset_password(request: ResetPasswordConfirm):
+#     """
+#     Reset password using the reset token
 
-@route.post("/reset-password", response_model=PasswordResetResponse)
-async def reset_password(request: ResetPasswordConfirm):
-    """
-    Reset password using the reset token
+#     This endpoint:
+#     1. Validates the reset token
+#     2. Updates the user's password
+#     3. Invalidates all existing sessions
+#     """
+#     try:
+#         # Verify token and get user_id
+#         user_id = verify_reset_token(request.token)
+#         if not user_id:
+#             raise HTTPException(
+#                 status_code=status.HTTP_400_BAD_REQUEST,
+#                 detail="Invalid reset token"
+#             )
 
-    This endpoint:
-    1. Validates the reset token
-    2. Updates the user's password
-    3. Invalidates all existing sessions
-    """
-    try:
-        # Verify token and get user_id
-        user_id = verify_reset_token(request.token)
-        if not user_id:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid reset token"
-            )
+#         # Get user details
+#         user = get_user_by_id(boto3_client, user_id)
+#         if not user:
+#             raise HTTPException(
+#                 status_code=status.HTTP_404_NOT_FOUND,
+#                 detail="User not found"
+#             )
 
-        # Get user details
-        user = get_user_by_id(boto3_client, user_id)
-        if not user:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-            )
+#         hashed_password = security.get_password_hash(request.new_password)
 
-        # Hash new password
-        hashed_password = security.get_password_hash(request.new_password)
+#         # Update password in DynamoDB
+#         fields_to_update = {
+#             "password": hashed_password,
+#             "password_changed_at": str(datetime.now(timezone.utc))
+#         }
+#         update_user_fields(boto3_client, user_id, user["email"], fields_to_update)
 
-        # Update password in DynamoDB
-        fields_to_update = {
-            "password": hashed_password,
-            "password_changed_at": str(datetime.now(timezone.utc)),
-        }
-        update_user_fields(boto3_client, user_id, user["email"], fields_to_update)
+#         # Optional: Invalidate all existing sessions for this user
+#         # This would require implementing a way to track and invalidate all tokens
 
-        # Optional: Invalidate all existing sessions for this user
-        # This would require implementing a way to track and invalidate all tokens
+#         logger.info(f"Password reset successful for user: {user['email']}")
+#         return PasswordResetResponse(message="Password has been reset successfully")
 
-        logger.info(f"Password reset successful for user: {user['email']}")
-        return PasswordResetResponse(message="Password has been reset successfully")
-
-    except HTTPException as he:
-        raise he
-    except Exception as e:
-        logger.error(f"Password reset failed: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to reset password",
-        )
+#     except HTTPException as he:
+#         raise he
+#     except Exception as e:
+#         logger.error(f"Password reset failed: {str(e)}")
+#         raise HTTPException(
+#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+#             detail="Failed to reset password"
+#         )
