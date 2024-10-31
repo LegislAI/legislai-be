@@ -4,14 +4,16 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-
+from authentication.utils.logging_config import logger
 from authentication.config.settings import settings
+from authentication.services.dynamo_services import get_user_by_id, boto3_client
 from fastapi import HTTPException
-from fastapi import Request
+from fastapi import Request, Depends, status
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt import InvalidTokenError
+
 
 
 # generate JWTs (access and refresh tokens) for a user identifier
@@ -45,11 +47,23 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
 # This function decodes a JWT to extract the payload.
 def decodeJWT(jwtoken: str):
     try:
-        payload = jwt.decode(jwtoken, settings.secret_key, settings.algorithm)
+        logger.info("Attempting to decode JWT")
+        payload = jwt.decode(
+            jwtoken,
+            settings.secret_key,
+            algorithms=[settings.algorithm]
+        )
+        logger.info("JWT decoded successfully")
         return payload
-    except InvalidTokenError:
+    except jwt.ExpiredSignatureError:
+        logger.error("Token has expired")
         return None
-
+    except jwt.InvalidTokenError as e:
+        logger.error(f"Invalid token: {str(e)}")
+        return None
+    except Exception as e:
+        logger.error(f"Unexpected error decoding token: {str(e)}")
+        return None
 
 class JWTBearer(HTTPBearer):
     """This class is a custom authentication class that inherits
@@ -65,6 +79,7 @@ class JWTBearer(HTTPBearer):
         ).__call__(request)
         if credentials:
             if not credentials.scheme == "Bearer":
+                logger.error(f"Invalid auth scheme: {credentials.scheme}")
                 raise HTTPException(
                     status_code=403, detail="Invalid authentication scheme."
                 )
@@ -73,8 +88,14 @@ class JWTBearer(HTTPBearer):
                 raise HTTPException(
                     status_code=403, detail="Invalid token or expired token."
                 )
+            if self.is_token_blacklisted(token):
+                raise HTTPException(
+                    status_code=401,
+                    detail="Token has been invalidated"
+                )
             return token
         else:
+            logger.error(f"no credentials")
             raise HTTPException(status_code=403, detail="Invalid authorization code.")
 
     def verify_jwt(self, jwtoken: str) -> bool:
@@ -85,3 +106,31 @@ class JWTBearer(HTTPBearer):
             return False
         except jwt.JWTError:
             return False
+    
+    @staticmethod
+    def is_token_blacklisted(token: str) -> bool:
+        """
+        Check if token is blacklisted in DynamoDB
+        """
+        try:
+            # Decode token to get user ID
+            payload = decodeJWT(token)
+            if not payload:
+                return True
+                
+            user_id = payload.get("userid")
+            if not user_id:
+                return True
+                
+            # check blacklisted_tokens
+            user = get_user_by_id(boto3_client, user_id) 
+            if not user:
+                return True
+                
+            blacklisted_tokens = user.get("blacklisted_tokens", {})
+            return token in blacklisted_tokens
+            
+        except Exception as e:
+            logger.error(f"Error checking token blacklist: {str(e)}")
+            return True 
+        

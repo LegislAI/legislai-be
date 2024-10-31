@@ -5,6 +5,10 @@ load_dotenv()
 
 
 class Settings(BaseSettings):
+    reset_token_secret : str = "new-pass-1234"  
+    frontend_url : str = "http://localhost:8000"  # For reset link in email
+    ses_sender_email : str = "mfranciscalemos@gmail.com"  # Verified SES email
+    development_mode: bool = True  
     secret_key: str
     refresh_secret_key: str
 
