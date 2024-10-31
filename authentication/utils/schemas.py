@@ -34,11 +34,14 @@ class LoginUserResponse(BaseModel):
 class LogoutResponse(BaseModel):
     message: str
 
+
 class PasswordResetRequest(BaseModel):
     email: EmailStr
 
+
 class PasswordResetResponse(BaseModel):
     message: str
+
 
 class ResetPasswordConfirm(BaseModel):
     token: str

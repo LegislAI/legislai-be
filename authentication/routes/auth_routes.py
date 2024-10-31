@@ -4,22 +4,34 @@ from datetime import timezone
 
 from authentication.config.settings import settings
 from authentication.services.dynamo_services import boto3_client
+from authentication.services.dynamo_services import create_password_reset_token
 from authentication.services.dynamo_services import create_user
 from authentication.services.dynamo_services import get_user
-from authentication.services.dynamo_services import update_user_fields, token_blacklist, create_password_reset_token, send_reset_email, verify_reset_token, get_user_by_id
-from authentication.utils.auth import decodeJWT, JWTBearer
+from authentication.services.dynamo_services import get_user_active_tokens
+from authentication.services.dynamo_services import get_user_by_id
+from authentication.services.dynamo_services import send_reset_email
+from authentication.services.dynamo_services import token_blacklist
+from authentication.services.dynamo_services import update_user_fields
+from authentication.services.dynamo_services import verify_reset_token
 from authentication.utils.auth import create_access_token
 from authentication.utils.auth import create_refresh_token
+from authentication.utils.auth import decodeJWT
+from authentication.utils.auth import JWTBearer
 from authentication.utils.logging_config import logger
+from authentication.utils.password import SecurityUtils
 from authentication.utils.schemas import LoginUserRequest
 from authentication.utils.schemas import LoginUserResponse
+from authentication.utils.schemas import LogoutResponse
+from authentication.utils.schemas import PasswordResetRequest
+from authentication.utils.schemas import PasswordResetResponse
 from authentication.utils.schemas import RegisterUserRequest
-from authentication.utils.schemas import RegisterUserResponse, LogoutResponse
-from authentication.utils.schemas import PasswordResetResponse, PasswordResetRequest, ResetPasswordConfirm
-from authentication.utils.password import SecurityUtils
-from fastapi import APIRouter, Request
+from authentication.utils.schemas import RegisterUserResponse
+from authentication.utils.schemas import ResetPasswordConfirm
+from fastapi import APIRouter
+from fastapi import Depends
 from fastapi import HTTPException
-from fastapi import Depends, status
+from fastapi import Request
+from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
 
 
@@ -93,8 +105,7 @@ def login_user(payload: LoginUserRequest):
     if not security.verify_password(user["password"], payload.password):
         logger.warning(f"Failed login attempt for email: {payload.email}")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
 
     access_token = create_access_token(
@@ -121,55 +132,79 @@ def login_user(payload: LoginUserRequest):
     )
 
 
-
-"""But if you plan to have a strict log out functionality, that cannot wait for the token auto-expiration, 
+"""But if you plan to have a strict log out functionality, that cannot wait for the token auto-expiration,
 even though you have cleaned the token from the client side, then you might need to neglect the stateless logic and do some queries."""
 
 
 @route.post("/logout", response_model=LogoutResponse)
-async def logout_user(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
-    """Logout user by blacklisting their access and refresh tokens"""
+async def logout_user(credentials: LoginUserRequest):
+    """Logout user using email and password"""
     try:
-        logger.info("innn")
-        # Get the access token from the authorization header
-        access_token = credentials
-        
-        # Decode the token to get the expiration time
-        payload = decodeJWT(access_token)
-        if not payload:
+        user = get_user(boto3_client, credentials.email)
+        if not user:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
             )
 
-        # Add access token to blacklist
-        blacklist_success = token_blacklist.add_to_blacklist(
-            access_token,
-            payload.get("exp", 0)
-        )
-        
+        if not security.verify_password(user["password"], credentials.password):
+            logger.warning(f"Failed logout attempt for email: {credentials.email}")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid email or password",
+            )
+
+        active_tokens = await get_user_active_tokens(user["userid"])
+
+        # Blacklist all active tokens
+        blacklist_success = True
+        for token_info in active_tokens:
+            token = token_info.get("token")
+            if token:
+                try:
+                    payload = decodeJWT(token)
+                    if payload and "exp" in payload:
+                        success = token_blacklist.add_to_blacklist(
+                            token, payload["exp"]
+                        )
+                        if not success:
+                            blacklist_success = False
+                            logger.error(
+                                f"Failed to blacklist token for user {user['userid']}"
+                            )
+                except Exception as e:
+                    logger.error(f"Error processing token: {str(e)}")
+                    blacklist_success = False
+
         if not blacklist_success:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to logout. Please try again."
+                detail="Failed to logout all sessions. Please try again.",
             )
 
-        logger.info(f"User {payload.get('sub')} logged out successfully")
-        
-        return LogoutResponse(message="Successfully logged out")
+        # Update last logout time
+        fields_to_update = {"last_logout": str(datetime.now(timezone.utc))}
+        update_user_fields(
+            boto3_client, user["userid"], user["email"], fields_to_update
+        )
+
+        logger.info(
+            f"User {credentials.email} logged out successfully from all sessions"
+        )
+        return LogoutResponse(message="Successfully logged out from all sessions")
 
     except Exception as e:
         logger.error(f"Logout failed: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An error occurred during logout"
+            detail="An error occurred during logout",
         )
-    
+
+
 @route.post("/request-password-reset", response_model=PasswordResetResponse)
 async def request_password_reset(request: PasswordResetRequest):
     """
     Request a password reset token
-    
+
     This endpoint:
     1. Validates the email exists
     2. Creates a reset token
@@ -192,7 +227,7 @@ async def request_password_reset(request: PasswordResetRequest):
         if not email_sent:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to send reset email"
+                detail="Failed to send reset email",
             )
 
         logger.info(f"Password reset requested for user: {request.email}")
@@ -204,14 +239,15 @@ async def request_password_reset(request: PasswordResetRequest):
         logger.error(f"Password reset request failed: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to process password reset request"
+            detail="Failed to process password reset request",
         )
+
 
 @route.post("/reset-password", response_model=PasswordResetResponse)
 async def reset_password(request: ResetPasswordConfirm):
     """
     Reset password using the reset token
-    
+
     This endpoint:
     1. Validates the reset token
     2. Updates the user's password
@@ -222,16 +258,14 @@ async def reset_password(request: ResetPasswordConfirm):
         user_id = verify_reset_token(request.token)
         if not user_id:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Invalid reset token"
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid reset token"
             )
 
         # Get user details
         user = get_user_by_id(boto3_client, user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
 
         # Hash new password
@@ -240,7 +274,7 @@ async def reset_password(request: ResetPasswordConfirm):
         # Update password in DynamoDB
         fields_to_update = {
             "password": hashed_password,
-            "password_changed_at": str(datetime.now(timezone.utc))
+            "password_changed_at": str(datetime.now(timezone.utc)),
         }
         update_user_fields(boto3_client, user_id, user["email"], fields_to_update)
 
@@ -256,5 +290,5 @@ async def reset_password(request: ResetPasswordConfirm):
         logger.error(f"Password reset failed: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to reset password"
+            detail="Failed to reset password",
         )

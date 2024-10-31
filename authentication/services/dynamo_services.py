@@ -1,20 +1,24 @@
+import secrets
+import smtplib
 import uuid
 from datetime import datetime
-from datetime import timezone, timedelta
+from datetime import timedelta
+from datetime import timezone
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from typing import Dict
-from fastapi import HTTPException,status
+from typing import Optional
+
 import boto3
+import jwt
 from authentication.config.settings import settings
 from authentication.utils.logging_config import logger
+from authentication.utils.password import SecurityUtils
 from authentication.utils.schemas import RegisterUserRequest
 from botocore.exceptions import ClientError
-from authentication.utils.password import SecurityUtils
-import secrets
-import jwt
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from typing import Optional
-import smtplib
+from fastapi import HTTPException
+from fastapi import status
+
 security = SecurityUtils()
 boto3_client = boto3.client(
     "dynamodb",
@@ -22,7 +26,6 @@ boto3_client = boto3.client(
     aws_secret_access_key=settings.aws_secret_access_key,
     region_name=settings.aws_region,
 )
-
 
 
 def get_user(boto3_client, email: str) -> Dict:
@@ -116,23 +119,26 @@ def update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> b
     Update specified fields for the user in the DynamoDB table.
 
     :param db: DynamoDB client
-    :param userid: User's unique ID (partition key)
-    :param email: User's email (sort key)
+    :param userid: User's unique ID
+    :param email: User's email
     :param fields: A dictionary of fields to update, e.g., {"lastlogin": "new_value"}
     :return: True if the update was successful, False otherwise
     """
-    update_expression = "SET " + ", ".join(f"{k} = :{k}" for k in fields.keys())
-    expression_attribute_values = {f":{k}": {"S": v} for k, v in fields.items()}
+    update_expr = "SET " + ", ".join(f"#{key} = :{key}" for key in fields.keys())
+    expr_attr_values = {f":{key}": {"S": value} for key, value in fields.items()}
+    expr_attr_names = {f"#{key}": key for key in fields.keys()}
+    logger.info(f"expr_attr_values  ---> {expr_attr_values}")
 
     try:
         db.update_item(
             TableName="users",
             Key={
-                "userid": {"S": userid},  # Partition key
-                "email": {"S": email},  # Sort key
+                "userid": {"S": userid},
+                "email": {"S": email},
             },
-            UpdateExpression=update_expression,
-            ExpressionAttributeValues=expression_attribute_values,
+            UpdateExpression=update_expr,
+            ExpressionAttributeValues=expr_attr_values,
+            ExpressionAttributeNames=expr_attr_names,
         )
         logger.info("User updated!")
         return True
@@ -144,7 +150,7 @@ def update_user_fields(db, userid: str, email: str, fields: Dict[str, str]) -> b
 
 class TokenBlacklist:
     """Handles token blacklisting operations in DynamoDB"""
-    
+
     def __init__(self, dynamodb_client):
         self.client = dynamodb_client
         self.table_name = "token_blacklist"
@@ -156,8 +162,8 @@ class TokenBlacklist:
                 Item={
                     "token": {"S": token},
                     "expires_at": {"N": str(expires_at)},
-                    "blacklisted_at": {"S": str(datetime.now(timezone.utc))}
-                }
+                    "blacklisted_at": {"S": str(datetime.now(timezone.utc))},
+                },
             )
             return True
         except Exception as e:
@@ -167,8 +173,7 @@ class TokenBlacklist:
     def is_blacklisted(self, token: str) -> bool:
         try:
             response = self.client.get_item(
-                TableName=self.table_name,
-                Key={"token": {"S": token}}
+                TableName=self.table_name, Key={"token": {"S": token}}
             )
             return "Item" in response
         except Exception as e:
@@ -176,11 +181,33 @@ class TokenBlacklist:
             return False
 
 
-
 token_blacklist = TokenBlacklist(boto3_client)
+
+
 def is_token_blacklisted(self, token: str) -> bool:
     return token_blacklist.is_blacklisted(token)
 
+
+async def get_user_active_tokens(user_id: str) -> list:
+    """Get all active tokens for a user"""
+    try:
+        # Get user's refresh tokens from your token storage
+        user = get_user_by_id(boto3_client, user_id)
+        if not user:
+            return []
+
+        active_tokens = []
+
+        if "access_token" in user:
+            active_tokens.append({"token": user["access_token"]})
+
+        if "refresh_token" in user:
+            active_tokens.append({"token": user["refresh_token"]})
+
+        return active_tokens
+    except Exception as e:
+        logger.error(f"Error getting active tokens: {str(e)}")
+        return []
 
 
 # reset password
@@ -188,13 +215,12 @@ def send_reset_email(email: str, reset_token: str):
     """Send password reset email using AWS SES"""
     try:
         ses_client = boto3.client(
-            'ses',
+            "ses",
             aws_access_key_id=settings.aws_access_key_id,
             aws_secret_access_key=settings.aws_secret_access_key,
-            region_name=settings.aws_region
+            region_name=settings.aws_region,
         )
 
-       
         reset_link = f"{settings.frontend_url}/reset-password?token={reset_token}"
 
         # Create the email message
@@ -225,10 +251,9 @@ def send_reset_email(email: str, reset_token: str):
         #     Destinations=[email],
         #     RawMessage={"Data": message.as_string()}
         # )
-        s = smtplib.SMTP('localhost',8000)
-        s.sendmail(email,'localhost',message ), 
+        s = smtplib.SMTP("localhost", 8000)
+        s.sendmail(email, "localhost", message),
         s.quit()
-
 
         logger.info(f"Password reset email sent to {email}")
         return True
@@ -236,36 +261,32 @@ def send_reset_email(email: str, reset_token: str):
         logger.error(f"Failed to send reset email: {str(e)}")
         return False
 
+
 def create_password_reset_token(user_id: str) -> str:
     """Create a secure reset token"""
     payload = {
         "user_id": user_id,
         "exp": datetime.now(timezone.utc) + timedelta(minutes=30),
-        "jti": secrets.token_hex(32)  # Unique token ID
+        "jti": secrets.token_hex(32),  # Unique token ID
     }
     token = jwt.encode(
-        payload,
-        settings.reset_token_secret,
-        algorithm=settings.algorithm
+        payload, settings.reset_token_secret, algorithm=settings.algorithm
     )
     return token
+
 
 def verify_reset_token(token: str) -> Optional[str]:
     """Verify the reset token and return the user_id if valid"""
     try:
         payload = jwt.decode(
-            token,
-            settings.reset_token_secret,
-            algorithms=[settings.algorithm]
+            token, settings.reset_token_secret, algorithms=[settings.algorithm]
         )
         return payload.get("user_id")
     except jwt.ExpiredSignatureError:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Reset token has expired"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Reset token has expired"
         )
     except jwt.JWTError:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Invalid reset token"
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid reset token"
         )
