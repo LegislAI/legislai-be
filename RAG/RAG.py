@@ -21,7 +21,7 @@ LOG = logging.getLogger("RAG_INTERFACE")
 class RAG:
     def __init__(self):
         self.databasecontroller = dbc()
-        # self.load_data()
+        self.load_data()
         # self.query()
 
     def query(self):
@@ -94,9 +94,8 @@ class RAG:
                         documents.append(document)
                         LOG.info(f"Processed document ID: {doc_id}, Title: {title}")
                         self.databasecontroller.insert_into_databases(document)
-        # self.databasecontroller.insert_many_into_databases(documents)
-        LOG.info("Processed all documents")
 
+        LOG.info("Processed all documents")
         return documents
 
 
