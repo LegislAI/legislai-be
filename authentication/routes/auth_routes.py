@@ -3,38 +3,40 @@ from datetime import timedelta
 from datetime import timezone
 
 from authentication.config.settings import settings
-from authentication.services.dynamo_services import boto3_client
-from authentication.services.dynamo_services import create_password_reset_token
 from authentication.services.dynamo_services import create_user
-from authentication.services.dynamo_services import get_user
-from authentication.services.dynamo_services import get_user_active_tokens
-from authentication.services.dynamo_services import get_user_by_id
-from authentication.services.dynamo_services import send_reset_email
-from authentication.services.dynamo_services import token_blacklist
+from authentication.services.dynamo_services import get_refresh_token
+from authentication.services.dynamo_services import get_user_by_email
+from authentication.services.dynamo_services import revoke_token
 from authentication.services.dynamo_services import update_user_fields
-from authentication.services.dynamo_services import verify_reset_token
 from authentication.utils.auth import create_access_token
 from authentication.utils.auth import create_refresh_token
-from authentication.utils.auth import decodeJWT
+from authentication.utils.auth import JWTBearer
+from authentication.utils.exceptions import UserNotFoundException
 from authentication.utils.logging_config import logger
 from authentication.utils.password import SecurityUtils
-from authentication.utils.schemas import LoginUserRequest
-from authentication.utils.schemas import LoginUserResponse
+from authentication.utils.schemas import LoginRequest
+from authentication.utils.schemas import LoginResponse
+from authentication.utils.schemas import LogoutRequest
 from authentication.utils.schemas import LogoutResponse
-from authentication.utils.schemas import RegisterUserRequest
-from authentication.utils.schemas import RegisterUserResponse
+from authentication.utils.schemas import RefreshTokenRequest
+from authentication.utils.schemas import RefreshTokenResponse
+from authentication.utils.schemas import RegisterRequest
+from authentication.utils.schemas import RegisterResponse
 from fastapi import APIRouter
+from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
+from fastapi.security import HTTPAuthorizationCredentials
 
 
 route = APIRouter()
 security = SecurityUtils()
 
 
-@route.post("/register", response_model=RegisterUserResponse)
-def register_user(payload: RegisterUserRequest):
+@route.post("/register", response_model=RegisterResponse)
+def register_user(payload: RegisterRequest):
     email, username = payload.email, payload.username
+
     if not email:
         logger.error("email field is required")
         raise HTTPException(
@@ -48,29 +50,40 @@ def register_user(payload: RegisterUserRequest):
             detail="username field is required",
         )
 
-    if get_user(boto3_client=boto3_client, email=email):
+    user = None
+
+    try:
+        user = get_user_by_email(email=email)
+    except UserNotFoundException:
+        pass
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed registration attempt",
+        )
+
+    if user:
         logger.error(f"User with email {email} already exists")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail=f"User with email {email} already exists",
         )
 
-    user = create_user(boto3_client, payload)
-    if user:
-        return RegisterUserResponse(
-            userid=user["userid"],
-            email=email,
-            username=username,
-        )
-    else:
+    try:
+        if create_user(payload):
+            logger.info(f"User {email} created successfully")
+            return RegisterResponse(message=f"User {email} created successfully")
+    except Exception as e:
+        logger.error(f"Failed to create user: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="User creation failed",
+            detail="Failed registration attempt",
         )
 
 
-@route.post("/login", response_model=LoginUserResponse)
-def login_user(payload: LoginUserRequest):
+@route.post("/login", response_model=LoginResponse)
+def login_user(payload: LoginRequest):
     """
     Login user based on email and password
     """
@@ -87,11 +100,18 @@ def login_user(payload: LoginUserRequest):
             detail="Please provide password",
         )
 
-    user = get_user(boto3_client, payload.email)
-    if not user:
+    try:
+        user = get_user_by_email(payload.email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="User not found",
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
         )
 
     if not security.verify_password(user["password"], payload.password):
@@ -99,99 +119,128 @@ def login_user(payload: LoginUserRequest):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
+
     access_token = create_access_token(
-        user["userid"], timedelta(minutes=settings.access_token_expire_minutes)
+        email, timedelta(minutes=settings.access_token_expire_minutes)
     )
     refresh_token = create_refresh_token(
-        user["userid"], timedelta(minutes=settings.refresh_token_expire_minutes)
+        email, timedelta(minutes=settings.refresh_token_expire_minutes)
     )
 
-    # Update the last login time
-    fields_to_update = {"lastlogin": str(datetime.now(timezone.utc))}
-    update_user_fields(boto3_client, user["userid"], user["email"], fields_to_update)
+    fields_to_update = {
+        "last_login": str(datetime.now(timezone.utc)),
+        "refresh_token": refresh_token,
+    }
+
+    try:
+        update_user_fields(user["user_id"], user["email"], fields_to_update)
+    except Exception as e:
+        logger.error(f"Failed to update user fields: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
+        )
 
     logger.info(f"User logged in: {user['email']}")
-
-    return LoginUserResponse(
-        userid=user["userid"],
+    return LoginResponse(
+        user_id=user["user_id"],
         email=user["email"],
         username=user["username"],
         access_token=access_token,
         refresh_token=refresh_token,
-        access_token_expire_minutes=settings.access_token_expire_minutes,
-        refresh_token_expire_minutes=settings.refresh_token_expire_minutes,
     )
 
 
-"""But if you plan to have a strict log out functionality, that cannot wait for the token auto-expiration,
-even though you have cleaned the token from the client side, then you might need to neglect the stateless logic and do some queries."""
+@route.post(
+    "/logout", response_model=LogoutResponse, dependencies=[Depends(JWTBearer())]
+)
+async def logout_user(
+    payload: LogoutRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
+):
+    """
+    Logout user based on email and revoke tokens
+    """
+    email = payload.email
+    access_token = credentials.credentials
 
-
-@route.post("/logout", response_model=LogoutResponse)
-async def logout_user(credentials: LoginUserRequest):
-    """Logout user using email and password"""
     try:
-        # Verify user exists and credentials are correct
-        user = get_user(boto3_client, credentials.email)
-        if not user:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
-            )
-
-        if not security.verify_password(user["password"], credentials.password):
-            logger.warning(f"Failed logout attempt for email: {credentials.email}")
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid email or password",
-            )
-
-        # Get all active tokens for the user
-        active_tokens = await get_user_active_tokens(user["userid"])
-
-        # Blacklist all active tokens
-        blacklist_success = True
-        for token_info in active_tokens:
-            token = token_info.get("token")
-            if token:
-                # Decode token to get expiration
-                try:
-                    payload = decodeJWT(token)
-                    if payload and "exp" in payload:
-                        success = token_blacklist.add_to_blacklist(
-                            token, payload["exp"]
-                        )
-                        if not success:
-                            blacklist_success = False
-                            logger.error(
-                                f"Failed to blacklist token for user {user['userid']}"
-                            )
-                except Exception as e:
-                    logger.error(f"Error processing token: {str(e)}")
-                    blacklist_success = False
-
-        if not blacklist_success:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Failed to logout all sessions. Please try again.",
-            )
-
-        # Update last logout time
-        fields_to_update = {"last_logout": str(datetime.now(timezone.utc))}
-        update_user_fields(
-            boto3_client, user["userid"], user["email"], fields_to_update
-        )
-
-        logger.info(
-            f"User {credentials.email} logged out successfully from all sessions"
-        )
-        return LogoutResponse(message="Successfully logged out from all sessions")
-
+        refresh_token = get_refresh_token(email)
+        revoke_token(email, refresh_token, "refresh_token")
+        revoke_token(email, access_token, "access_token")
     except Exception as e:
-        logger.error(f"Logout failed: {str(e)}")
+        logger.error(f"Failed to logout user: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="An error occurred during logout",
+            detail="Failed to logout user",
         )
+
+    logger.info(f"User {email} logged out successfully")
+    return LogoutResponse(message="Successfully logged out")
+
+
+@route.post(
+    "/refresh-token",
+    response_model=RefreshTokenResponse,
+    dependencies=[Depends(JWTBearer())],
+)
+async def refresh_tokens(
+    payload: RefreshTokenRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
+):
+    """
+    Refresh access token using refresh token
+    """
+    email = payload.email
+    access_token = credentials.credentials
+
+    try:
+        refresh_token = get_refresh_token(email)
+        revoke_token(email, refresh_token, "refresh_token")
+        revoke_token(email, access_token, "access_token")
+    except Exception as e:
+        logger.error(f"Failed to refresh token: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to refresh tokens",
+        )
+
+    new_access_token = create_access_token(
+        email, timedelta(minutes=settings.access_token_expire_minutes)
+    )
+    new_refresh_token = create_refresh_token(
+        email, timedelta(minutes=settings.refresh_token_expire_minutes)
+    )
+
+    try:
+        user = get_user_by_email(payload.email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to refresh tokens",
+        )
+
+    try:
+        update_user_fields(
+            user["user_id"], user["email"], {"refresh_token": new_refresh_token}
+        )
+    except Exception as e:
+        logger.error(f"Failed to update user fields: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to refresh tokens",
+        )
+
+    return RefreshTokenResponse(
+        access_token=new_access_token,
+        refresh_token=new_refresh_token,
+    )
 
 
 # @route.post("/request-password-reset", response_model=PasswordResetResponse)
@@ -214,7 +263,7 @@ async def logout_user(credentials: LoginUserRequest):
 #             )
 
 #         # Create reset token
-#         reset_token = create_password_reset_token(user["userid"])
+#         reset_token = create_password_reset_token(user["user_id"])
 
 #         # Send reset email
 #         email_sent = send_reset_email(request.email, reset_token)

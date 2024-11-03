@@ -1,7 +1,9 @@
-from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError
 import secrets
 from typing import Tuple
+
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+from authentication.utils.logging_config import logger
 
 
 class SecurityUtils:
@@ -27,10 +29,15 @@ class SecurityUtils:
         """
         try:
             self.ph.verify(hashed_password, password)
+            logger.info("Password verification successful.")
             return True
+
         except VerifyMismatchError:
+            logger.info("Password verification failed.")
             return False
-        except Exception:
+
+        except Exception as e:
+            logger.error(f"Error verifying password: {str(e)}")
             return False
 
     @staticmethod
@@ -40,4 +47,5 @@ class SecurityUtils:
         """
         token = secrets.token_urlsafe(32)
         token_hash = PasswordHasher().hash(token)
+
         return token, token_hash

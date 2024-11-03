@@ -121,11 +121,11 @@ resource "aws_dynamodb_table" "users_table" {
   billing_mode   = "PROVISIONED"
   read_capacity  = 20
   write_capacity = 20
-  hash_key       = "userid"
+  hash_key       = "user_id"
   range_key      = "email"
 
   attribute {
-    name = "userid"
+    name = "user_id"
     type = "S"
   }
 
@@ -155,6 +155,34 @@ resource "aws_dynamodb_table" "users_table" {
 
   tags = {
     Name = "users_table"
+  }
+}
+
+resource "aws_dynamodb_table" "token_blacklist_table" {
+  name           = "token_blacklist"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "email"
+  range_key      = "auth_token"
+
+  attribute {
+    name = "email"
+    type = "S"
+  }
+
+  attribute {
+    name = "auth_token"
+    type = "S"
+  }
+
+  ttl {
+    attribute_name = "TimeToExist"
+    enabled        = true
+  }
+
+  tags = {
+    Name = "token_blacklist_table"
   }
 }
 
@@ -193,24 +221,6 @@ resource "aws_iam_role" "ecs_task_execution_role" {
       }
     ]
   })
-
-  # Attach the policy to allow logging
-  policy {
-    name   = "ecs_task_execution_role_policy"
-    policy = jsonencode({
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Action = [
-            "logs:CreateLogStream",
-            "logs:PutLogEvents"
-          ]
-          Effect   = "Allow"
-          Resource = "${aws_cloudwatch_log_group.ecs_log_group.arn}:*"
-        }
-      ]
-    })
-  }
 }
 
 # ECS Task Definition for Authorization API

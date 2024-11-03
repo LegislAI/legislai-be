@@ -2,7 +2,8 @@ from datetime import timedelta
 
 from authentication.services.dynamo_services import boto3_client
 from authentication.services.dynamo_services import create_user
-from authentication.services.dynamo_services import get_user
+from authentication.services.dynamo_services import get_user_by_email
+from authentication.utils.exceptions import UserNotFoundException
 from authentication.utils.auth import create_access_token
 from authentication.utils.auth import create_refresh_token
 from authentication.utils.logging_config import logger
@@ -14,8 +15,8 @@ from fastapi import Request
 from fastapi import status
 from starlette.config import Config
 from authentication.config.settings import settings
-from authentication.utils.schemas import LoginUserResponse
-from authentication.utils.schemas import RegisterUserRequest
+from authentication.utils.schemas import LoginResponse
+from authentication.utils.schemas import RegisterRequest
 
 
 route = APIRouter()
@@ -43,12 +44,13 @@ oauth.register(
 async def google_login(request: Request):
     redirect_uri = request.url_for("google_callback")
     response = await oauth.google.authorize_redirect(request, redirect_uri)
+
     logger.info("Login with google!")
     return response
 
 
 # Google Callback Route - This route will handle the response from Google
-@route.get("/google/callback", response_model=LoginUserResponse)
+@route.get("/google/callback", response_model=LoginResponse)
 async def google_callback(request: Request):
     returned_state = request.query_params.get("state")
     if not returned_state:
@@ -78,31 +80,52 @@ async def google_callback(request: Request):
     username = user_info.get("username")
     email = user_info.get("email")
 
-    user = get_user(boto3_client, email=email)
-    if not user:
+    user = None
+
+    try:
+        user = get_user_by_email(email=email)
+    except UserNotFoundException:
+        pass
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed registration attempt",
+        )
+
+    if user:
+        logger.error(f"User with email {email} already exists")
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f"User with email {email} already exists",
+        )
+
+    try:
         user = create_user(
             boto3_client,
-            RegisterUserRequest(
+            RegisterRequest(
                 email=email,
                 username=username,
             ),
         )
+    except Exception as e:
+        logger.error(f"Failed to create user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed registration attempt",
+        )
 
-        if not user:
-            raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="User creation failed",
-            )
+    access_token = create_access_token(
+        user["email"], timedelta(minutes=settings.access_token_expire_minutes)
+    )
+    refresh_token = create_refresh_token(
+        user["email"], timedelta(minutes=settings.refresh_token_expire_minutes)
+    )
 
-    access_token = create_access_token(user["userid"], timedelta(minutes=30))
-    refresh_token = create_refresh_token(user["userid"], timedelta(minutes=1008))
-
-    return LoginUserResponse(
-        userid=user["userid"],
-        email=email,
-        username=username,
+    return LoginResponse(
+        user_id=user["user_id"],
+        email=user["email"],
+        username=user["username"],
         access_token=access_token,
         refresh_token=refresh_token,
-        access_token_expire_minutes=settings.access_token_expire_minutes,
-        refresh_token_expire_minutes=settings.refresh_token_expire_minutes,
     )
