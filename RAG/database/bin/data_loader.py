@@ -4,10 +4,9 @@ import logging
 import os
 from argparse import ArgumentParser
 from typing import List
-from typing import Optional
 
-from bin.Models import EmbeddingDocument
-from DatabaseController import DatabaseController as dbc
+from RAG.bin.models import EmbeddingDocument
+from RAG.database.DatabaseController import DatabaseController as dbc
 
 database_controller = dbc()
 

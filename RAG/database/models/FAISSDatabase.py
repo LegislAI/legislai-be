@@ -6,9 +6,9 @@ from typing import List
 
 import faiss
 import numpy as np
-from bin.Models import EmbeddingDocument
-from bin.utils import EmbeddingModel
+from bin.models import EmbeddingDocument
 from dotenv import load_dotenv
+from RAG.database.bin.utils import EmbeddingModel
 
 logging.basicConfig(
     level=logging.INFO,

@@ -1,12 +1,15 @@
 from datetime import timedelta
 
+from authentication.config.settings import settings
 from authentication.services.dynamo_services import boto3_client
 from authentication.services.dynamo_services import create_user
 from authentication.services.dynamo_services import get_user_by_email
-from authentication.utils.exceptions import UserNotFoundException
 from authentication.utils.auth import create_access_token
 from authentication.utils.auth import create_refresh_token
+from authentication.utils.exceptions import UserNotFoundException
 from authentication.utils.logging_config import logger
+from authentication.utils.schemas import LoginResponse
+from authentication.utils.schemas import RegisterRequest
 from authlib.integrations.starlette_client import OAuth
 from authlib.integrations.starlette_client import OAuthError
 from fastapi import APIRouter
@@ -14,9 +17,6 @@ from fastapi import HTTPException
 from fastapi import Request
 from fastapi import status
 from starlette.config import Config
-from authentication.config.settings import settings
-from authentication.utils.schemas import LoginResponse
-from authentication.utils.schemas import RegisterRequest
 
 
 route = APIRouter()

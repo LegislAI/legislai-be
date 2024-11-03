@@ -3,16 +3,15 @@ import os
 import time
 from typing import List
 from typing import Optional
-from uuid import uuid4
 
 import spacy
-from bin.Models import EmbeddingDocument
-from bin.utils import DenseEmbeddingModel
-from bin.utils import EmbeddingModel
-from bin.utils import SparseEmbeddingModel
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from pinecone import ServerlessSpec
+from RAG.bin.models import EmbeddingDocument
+from RAG.database.bin.utils import DenseEmbeddingModel
+from RAG.database.bin.utils import EmbeddingModel
+from RAG.database.bin.utils import SparseEmbeddingModel
 
 
 logging.basicConfig(
@@ -123,6 +122,14 @@ class PineconeDatabase:
             )
             reranked_results.append(reranked_result)
         return reranked_results
+
+    def insert_many_into_databases(self, payloads: List[EmbeddingDocument]):
+        try:
+            for payload in payloads:
+                self.insert_into_database(payload)
+            LOG.info(f"Inserted {len(payloads)} documents into database")
+        except Exception as e:
+            LOG.error(f"Error inserting payload into database: {e}")
 
     def create_database(
         self,

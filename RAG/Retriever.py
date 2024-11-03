@@ -1,17 +1,16 @@
 #!/usr/bin/env/python3
-import hashlib
 import logging
 import time
 from typing import Optional
 
-from DatabaseController import DatabaseController as dbc
+from database.DatabaseController import DatabaseController as dbc
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("db_controller_log.log"), logging.StreamHandler()],
+    handlers=[logging.FileHandler("retriever.log"), logging.StreamHandler()],
 )
-LOG = logging.getLogger("RAG_INTERFACE")
+LOG = logging.getLogger("retriever")
 
 
 class Retriever:
