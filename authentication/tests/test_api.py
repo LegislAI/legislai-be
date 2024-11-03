@@ -86,7 +86,7 @@ class TestAuthentication(unittest.TestCase):
     def test_login_success(self, mock_get_user, mock_update_user_fields):
         """Test logging in with correct credentials"""
         mock_get_user.return_value = {
-            "userid": "some-uuid",
+            "user_id": "some-uuid",
             "email": "existingemail@example.com",
             "password": "password123",
             "username": "existinguser",
