@@ -2,3 +2,4 @@ langchain-huggingface
 python-dotenv
 faiss-cpu
 langchain-community
+rank-bm25

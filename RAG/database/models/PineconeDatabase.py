@@ -8,7 +8,7 @@ import spacy
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from pinecone import ServerlessSpec
-from RAG.bin.models import EmbeddingDocument
+from RAG.database.bin.models import EmbeddingDocument
 from RAG.database.bin.utils import DenseEmbeddingModel
 from RAG.database.bin.utils import EmbeddingModel
 from RAG.database.bin.utils import SparseEmbeddingModel
@@ -50,7 +50,9 @@ class PineconeDatabase:
     def insert_into_database(self, payload: EmbeddingDocument):
         try:
             i = 0
-            for text in self.chunk_text(payload.metadata["text"]):
+            chunks = self.chunk_text(payload.metadata["text"])
+            payload.metadata["num_chunks"] = len(chunks)
+            for text in chunks:
                 dense_embedding = self.dense_embeddings.embed_query(text)
                 sparse_embedding = self.sparse_embeddings.embed_query(text)
                 sparse_embedding = {
@@ -72,11 +74,25 @@ class PineconeDatabase:
         except Exception as e:
             LOG.error(f"Error inserting payload: {payload} into database: {e}")
 
+    def process_results(self, results, metadata_filter):
+        # Filter by date
+        date_metadata = metadata_filter.get("date", None)
+        if date_metadata:
+            # Lets sort the updates by date, if the
+            results.sort(key=lambda x: x["metadata"]["date"])
+
+        pass
+
+        # Retrieve other chunks
+        pass
+
     def query(self, query: str, metadata_filter: dict = {}, top_k: int = 5):
         try:
             results = self.hybrid_query(
                 query, top_k, alpha=0.3, metadata_filter=metadata_filter
             )
+            print(results)
+            self.process_results(results, metadata_filter)
             return results
         except Exception as e:
             LOG.error(f"Error querying database: {e}, query: {query}")
@@ -85,12 +101,10 @@ class PineconeDatabase:
     def hybrid_scale(self, dense, sparse: dict, alpha: float):
         if alpha < 0 or alpha > 1:
             raise ValueError("Alpha must be between 0 and 1")
-
         hsparse = {
             "indices": list(sparse.keys()),
             "values": [float(v) * (1 - alpha) for v in sparse.values()],
         }
-
         hdense = [v * alpha for v in dense]
         return hdense, hsparse
 
@@ -107,21 +121,6 @@ class PineconeDatabase:
         )
         print(result)
         return result
-
-    def rerank_results(self, results, query, top_k, alpha):
-        reranked_results = []
-        for result in results:
-            dense_vec = result["values"]
-            sparse_vec = result["sparse_values"]
-            dense_vec, sparse_vec = self.hybrid_scale(dense_vec, sparse_vec, alpha)
-            reranked_result = self.db.query(
-                vector=dense_vec,
-                sparse_vector=sparse_vec,
-                top_k=top_k,
-                include_metadata=True,
-            )
-            reranked_results.append(reranked_result)
-        return reranked_results
 
     def insert_many_into_databases(self, payloads: List[EmbeddingDocument]):
         try:

@@ -4,7 +4,7 @@ import logging
 from typing import List
 from typing import Optional
 
-from bin.models import EmbeddingDocument
+from database.bin.models import EmbeddingDocument
 from database.bin.utils import EmbeddingModel
 from database.models.PineconeDatabase import PineconeDatabase as Pinecone
 
