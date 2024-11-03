@@ -24,14 +24,19 @@ class Retriever:
         topk: Optional[int],
         metadata_filter: Optional[dict] = {},
     ):
+        LOG.info(f"Received query: {query} with filters: {metadata_filter}")
         start = time.time()
         results = self.databasecontroller.query(
             query=query, top_k=topk, metadata_filter=metadata_filter
         )
+        results = self.rerank_results(results, query)
         end = time.time()
         LOG.info(f"Results for query:{query} in {end-start} seconds")
         return results
 
+    def rerank_results(self, results, query):
+        pass
+
 
 if __name__ == "__main__":
-    Retriever()
+    retriever = Retriever()

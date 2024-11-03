@@ -5,6 +5,7 @@ from typing import List
 from typing import Optional
 from uuid import uuid4
 
+import spacy
 from bin.Models import EmbeddingDocument
 from bin.utils import DenseEmbeddingModel
 from bin.utils import EmbeddingModel
@@ -12,8 +13,6 @@ from bin.utils import SparseEmbeddingModel
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from pinecone import ServerlessSpec
-
-import spacy
 
 
 logging.basicConfig(
@@ -76,7 +75,9 @@ class PineconeDatabase:
 
     def query(self, query: str, metadata_filter: dict = {}, top_k: int = 5):
         try:
-            results = self.hybrid_query(query, top_k, alpha=0.3, filter=metadata_filter)
+            results = self.hybrid_query(
+                query, top_k, alpha=0.3, metadata_filter=metadata_filter
+            )
             return results
         except Exception as e:
             LOG.error(f"Error querying database: {e}, query: {query}")
@@ -105,6 +106,7 @@ class PineconeDatabase:
             include_metadata=True,
             filter=metadata_filter,
         )
+        print(result)
         return result
 
     def rerank_results(self, results, query, top_k, alpha):
