@@ -57,10 +57,14 @@ class DenseEmbeddingModel(Embeddings):
         self.embedding_model = SentenceTransformer(model_name, cache_folder=cache_dir)
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
-        return self.embedding_model.encode(texts, convert_to_tensor=True).tolist()
+        return self.embedding_model.encode(
+            texts, convert_to_tensor=True, show_progress_bar=False
+        ).tolist()
 
     def embed_query(self, text: str) -> List[float]:
-        return self.embedding_model.encode(text, convert_to_tensor=True).tolist()
+        return self.embedding_model.encode(
+            text, convert_to_tensor=True, show_progress_bar=False
+        ).tolist()
 
     async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
         return await asyncio.get_event_loop().run_in_executor(
@@ -76,7 +80,6 @@ class DenseEmbeddingModel(Embeddings):
 class SparseEmbeddingModel(Embeddings):
     def __init__(
         self,
-        docs_model: Optional[str] = "naver/efficient-splade-V-large-doc",
         query_model: Optional[str] = "naver/efficient-splade-V-large-query",
         cache_dir: Optional[str] = ".cache",
     ):

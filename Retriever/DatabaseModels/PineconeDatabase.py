@@ -23,8 +23,9 @@ logging.basicConfig(
 )
 LOG = logging.getLogger("PINECONE")
 
-#Dont forget to downlaod the spacy model through:
-#python3 -m spacy download pt_core_news_sm
+# Dont forget to downlaod the spacy model through:
+# python3 -m spacy download pt_core_news_sm
+
 
 class PineconeDatabase:
     def __init__(self):
@@ -41,51 +42,23 @@ class PineconeDatabase:
         database = Pinecone(api_key=pinecone_api_key)
         self.create_database(database_name=database_name, database=database)
         return database.Index(database_name)
-    
+
     def chunk_text(self, text: str, chunk_size: int = 512) -> List[str]:
-            """
-            Splits text into chunks of a maximum size chunk_size tokens, avoiding mid-sentence splits.
-            """
-            doc = self.nlp(text)  
-            chunks = []
-            current_chunk = []
-            current_length = 0
-
-            for sentence in doc.sents:  # Use spaCy's sentence boundaries
-                sentence_tokens = [token.text for token in sentence]
-                sentence_length = len(sentence_tokens)
-
-                # If adding this sentence exceeds the chunk size, finalize current chunk
-                if current_length + sentence_length > chunk_size:
-                    chunks.append(" ".join(current_chunk))
-                    current_chunk = []
-                    current_length = 0
-
-                # Add sentence to the current chunk
-                current_chunk.extend(sentence_tokens)
-                current_length += sentence_length
-
-            # Add any remaining text in the last chunk
-            if current_chunk:
-                chunks.append(" ".join(current_chunk))
-
-            return chunks
+        chunks = []
+        for i in range(0, len(text), chunk_size):
+            chunks.append(text[i : i + chunk_size])
+        return chunks
 
     def insert_into_database(self, payload: EmbeddingDocument):
         try:
-            i=0
+            i = 0
             for text in self.chunk_text(payload.metadata["text"]):
-                dense_embedding = self.dense_embeddings.embed_query(
-                    text
-                )
-                sparse_embedding = self.sparse_embeddings.embed_query(
-                   text
-                )
+                dense_embedding = self.dense_embeddings.embed_query(text)
+                sparse_embedding = self.sparse_embeddings.embed_query(text)
                 sparse_embedding = {
                     "indices": list(sparse_embedding.keys()),
                     "values": list(float(x) for x in sparse_embedding.values()),
                 }
-
                 self.db.upsert(
                     vectors=[
                         {
@@ -96,7 +69,7 @@ class PineconeDatabase:
                         }
                     ]
                 )
-                i+=1
+                i += 1
                 LOG.info("Inserted payload into database")
         except Exception as e:
             LOG.error(f"Error inserting payload: {payload} into database: {e}")
@@ -112,7 +85,7 @@ class PineconeDatabase:
     def hybrid_scale(self, dense, sparse: dict, alpha: float):
         if alpha < 0 or alpha > 1:
             raise ValueError("Alpha must be between 0 and 1")
-        
+
         hsparse = {
             "indices": list(sparse.keys()),
             "values": [float(v) * (1 - alpha) for v in sparse.values()],
