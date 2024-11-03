@@ -74,7 +74,8 @@ class RAG:
                     for section_key, section in sections.items():
                         title = section.get("title", "Unknown")
                         text = section.get("text", "")
-                        doc_id = self.hash_id(section_key)
+                        # doc_id = self.hash_id(section_key)
+                        doc_id = section_key
 
                         metadata = {
                             **base_metadata,
