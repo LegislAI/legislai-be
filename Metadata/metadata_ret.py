@@ -21,7 +21,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '03112024',
-            'summary': 'Resumo: Condições e requisitos para o registo predial segundo a legislação atual.'
+            'summary': 'Resumo: Condições e requisitos para o registo predial segundo a legislação atual.',
+            'subject': 'Registo Predial'
         }
         """,
     },
@@ -32,7 +33,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2022',
             'question_date': '03112024',
-            'summary': 'Resumo: Prazos de arrendamento estipulados pelo Novo Regime do Arrendamento Urbano.'
+            'summary': 'Resumo: Prazos de arrendamento estipulados pelo Novo Regime do Arrendamento Urbano.',
+            'subject': 'Prazos de Arrendamento'
         }
         """,
     },
@@ -44,7 +46,8 @@ few_shot_examples = [
             'legislation_date': '2024',
             'question_date': '03112024',
             'summary': 'Resumo: Direitos e deveres dos arrendatários segundo o Novo Regime do Arrendamento Urbano.',
-            'region': 'Lisboa'
+            'region': 'Lisboa',
+            'subject': 'Direitos dos Arrendatários'
         }
         """,
     },
@@ -55,7 +58,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '03112024',
-            'summary': 'Resumo: Principais direitos ao estabelecer um contrato de trabalho.'
+            'summary': 'Resumo: Principais direitos ao estabelecer um contrato de trabalho.',
+            'subject': 'Contratos de Trabalho'
         }
         """,
     },
@@ -67,7 +71,8 @@ few_shot_examples = [
             'legislation_date': '2024',
             'question_date': '03112024',
             'region': 'Porto',
-            'summary': 'Resumo: Regras de indemnização em caso de despedimento na região do Porto.'
+            'summary': 'Resumo: Regras de indemnização em caso de despedimento na região do Porto.',
+            'subject': 'Indemnização por Despedimento'
         }
         """,
     },
@@ -78,7 +83,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '03112024',
-            'summary': 'Resumo: Disposições sobre segurança e saúde no trabalho segundo o Código do Trabalho.'
+            'summary': 'Resumo: Disposições sobre segurança e saúde no trabalho segundo o Código do Trabalho.',
+            'subject': 'Segurança e Saúde no Trabalho'
         }
         """,
     },
@@ -90,7 +96,8 @@ few_shot_examples = [
             'legislation_date': '2024',
             'question_date': '03112024',
             'region': 'Lisboa',
-            'summary': 'Resumo: Direitos laborais aplicáveis na região de Lisboa sobre rescisão de contrato em 2024.'
+            'summary': 'Resumo: Direitos laborais aplicáveis na região de Lisboa sobre rescisão de contrato em 2024.',
+            'subject': 'Rescisão de Contrato'
         }
         """,
     },
@@ -101,7 +108,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Regras sobre pagamento de horas extras segundo a legislação atual.'
+            'summary': 'Resumo: Regras sobre pagamento de horas extras segundo a legislação atual.',
+            'subject': 'Pagamento de Horas Extras'
         }
         """,
     },
@@ -112,7 +120,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Procedimentos legais para partilha de herança em Portugal.'
+            'summary': 'Resumo: Procedimentos legais para partilha de herança em Portugal.',
+            'subject': 'Processo de Herança'
         }
         """,
     },
@@ -123,7 +132,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2023',
             'question_date': '04112024',
-            'summary': 'Resumo: Direitos e deveres dos trabalhadores em regime de teletrabalho em 2023.'
+            'summary': 'Resumo: Direitos e deveres dos trabalhadores em regime de teletrabalho em 2023.',
+            'subject': 'Direitos em Teletrabalho'
         }
         """,
     },
@@ -135,7 +145,8 @@ few_shot_examples = [
             'legislation_date': '2024',
             'question_date': '04112024',
             'region': 'Lisboa',
-            'summary': 'Resumo: Limites para duração de contratos de arrendamento em Lisboa.'
+            'summary': 'Resumo: Limites para duração de contratos de arrendamento em Lisboa.',
+            'subject': 'Duração de Contratos de Arrendamento'
         }
         """,
     },
@@ -146,7 +157,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Métodos de cálculo do subsídio de desemprego segundo a legislação portuguesa.'
+            'summary': 'Resumo: Métodos de cálculo do subsídio de desemprego segundo a legislação portuguesa.',
+            'subject': 'Cálculo do Subsídio de Desemprego'
         }
         """,
     },
@@ -157,7 +169,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Direitos de licença parental para o pai na altura do nascimento do filho.'
+            'summary': 'Resumo: Direitos de licença parental para o pai na altura do nascimento do filho.',
+            'subject': 'Licença Parental'
         }
         """,
     },
@@ -168,7 +181,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Requisitos e benefícios para a isenção do IMT na primeira compra de habitação.'
+            'summary': 'Resumo: Requisitos e benefícios para a isenção do IMT na primeira compra de habitação.',
+            'subject': 'Isenção de IMT'
         }
         """,
     },
@@ -179,7 +193,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Condições e direitos associados a contratos de estágio segundo a legislação de 2024.'
+            'summary': 'Resumo: Condições e direitos associados a contratos de estágio segundo a legislação de 2024.',
+            'subject': 'Contratos de Estágio'
         }
         """,
     },
@@ -190,7 +205,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Procedimento de licenciamento para obras em património histórico.'
+            'summary': 'Resumo: Procedimento de licenciamento para obras em património histórico.',
+            'subject': 'Licenciamento de Obras'
         }
         """,
     },
@@ -201,7 +217,8 @@ few_shot_examples = [
         Metadata: {
             'legislation_date': '2024',
             'question_date': '04112024',
-            'summary': 'Resumo: Normas e direitos relativos ao trabalho noturno.'
+            'summary': 'Resumo: Normas e direitos relativos ao trabalho noturno.',
+            'subject': 'Trabalho Noturno'
         }
         """,
     },
@@ -212,17 +229,21 @@ f = open("queries.txt", "r")
 for line in f:
     # print(line)
     user_query = f"""
-    {line}\n\n Dá me apenas os metadados que tiraste desta querie\n\n
+    {line}\n\n Dá me apenas os metadados que tiraste desta query\n\n
     Se não for indicado um ano em concreto, deves assumir o ano atual como 'legislation_date'\n\n
     Hoje é dia {data_formatada}
     """
 
     messages = few_shot_examples + [{"role": "user", "content": user_query}]
 
+    init_time = datetime.now()
     response = client.chat.completions.create(
         model="meta-llama/Llama-Vision-Free",
         messages=messages,
     )
+    final_time = datetime.now()
+
+    # print(final_time-init_time)
 
     # print(response.choices[0].message.content)
     # print("-" * 100)
