@@ -6,12 +6,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 boto3_client = boto3.client(
-    "dynamodb"
+    "dynamodb",
+    aws_access_key_id=f"AKIATG6MGK5D5X6DOTFH",
+    aws_secret_access_key=f"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",
+    region_name=f"eu-west-1",
 )
 
 
 def get_all_users():
-    response = boto3_client.scan(TableName="users")
+    response = boto3_client.scan(TableName='users')
     return response["Items"]
 
 
