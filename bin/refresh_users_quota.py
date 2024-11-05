@@ -6,10 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 boto3_client = boto3.client(
-    "dynamodb",
-    aws_access_key_id=f"{os.getenv("AWS_ACCESS_KEY_ID")}",
-    aws_secret_access_key=f"{os.getenv("AWS_SECRET_ACCESS_KEY")}",
-    region_name=f"{os.getenv("AWS_REGION")}",
+    "dynamodb"
 )
 
 
