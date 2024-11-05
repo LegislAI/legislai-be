@@ -1,13 +1,16 @@
-name: Run Checks
+---
+name: Refresh Users Daily Quota
 
 on:
-  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
   push:
+    pull_request:
     branches:
-      - main
+      - "*"
 
 jobs:
-  checks:
+  refresh-quota:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -29,10 +32,10 @@ jobs:
           pip install -r requirements.txt
         shell: bash
 
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
+      - name: Refresh Users Daily Quota
+        run: python3 ./bin/refresh_users_quota.py
         shell: bash
-
-      - name: Run Unit Tests
-        run: ./bin/run_unit_tests.sh
-        shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }},
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }},
+          AWS_REGION: ${{ secrets.AWS_REGION }}
