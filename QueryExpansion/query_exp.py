@@ -1,8 +1,7 @@
-import os
-import json
 from dotenv import load_dotenv
 from langchain_together import Together
 from prompt_toolkit import prompt
+import os, json
 
 load_dotenv()
 
