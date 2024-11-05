@@ -32,3 +32,7 @@ jobs:
       - name: Run pre-commit hooks
         run: pre-commit run --all-files
         shell: bash
+
+      - name: Run Unit Tests
+        run: ./bin/run_unit_tests.sh
+        shell: bash

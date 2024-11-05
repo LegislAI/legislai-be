@@ -1,14 +1,8 @@
-from datetime import datetime
-from datetime import timedelta
-from datetime import timezone
 from typing import Any
 from typing import Optional
-from typing import Union
 
-from authentication.config.settings import settings
 from authentication.services.dynamo_services import token_blacklist
 from authentication.utils.exceptions import TokenRevokedException
-from authentication.utils.logging_config import logger
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
@@ -16,42 +10,21 @@ from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt.exceptions import ExpiredSignatureError
 from jwt.exceptions import InvalidTokenError
+from users.config.settings import settings
+from users.utils.logging_config import logger
 
 
-def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
+def is_authenticated(token: str) -> bool:
     """
-    Create an access token for a user identifier.
+    Check if the token is valid and not expired.
     """
-    if expires_delta is not None:
-        expires_delta = datetime.now(timezone.utc) + expires_delta
-
-    else:
-        expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=settings.access_token_expire_minutes
-        )
-
-    to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
-
-    return encoded_jwt
-
-
-def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
-    """
-    Create a refresh token for a user identifier.
-    """
-    if expires_delta is not None:
-        expires_delta = datetime.now(timezone.utc) + expires_delta
-
-    else:
-        expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=settings.refresh_token_expire_minutes
-        )
-
-    to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.refresh_secret_key, settings.algorithm)
-
-    return encoded_jwt
+    try:
+        payload = decodeJWT(token)
+        if not payload:
+            return False
+        return True
+    except Exception:
+        return False
 
 
 def decodeJWT(jwtoken: str):
