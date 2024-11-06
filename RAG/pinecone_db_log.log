@@ -1,0 +1,2 @@
+2024-11-03 16:05:09,783 - INFO - Use pytorch device_name: mps
+2024-11-03 16:05:09,783 - INFO - Load pretrained SentenceTransformer: dunzhang/stella_en_1.5B_v5

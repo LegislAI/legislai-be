@@ -235,13 +235,3 @@ class QueryExpander:
             expanded_queries = query
 
         return {"queries": expanded_queries}
-
-
-if __name__ == "__main__":
-    user_query = prompt("Escreve a query: ")
-    expansion_number = int(
-        prompt("Escreve o número de queries expandidas que desejas: ")
-    )
-    expander = QueryExpander()
-    result = expander.expand_query(query=user_query, number=expansion_number)
-    print("Queries expandidas:", result["queries"])
