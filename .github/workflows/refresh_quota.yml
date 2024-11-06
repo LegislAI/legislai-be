@@ -4,8 +4,8 @@ name: Refresh Users Daily Quota
 on:
   schedule:
     - cron: '0 0 * * *'
+  pull_request:  
   push:
-    pull_request:
     branches:
       - "*"
 

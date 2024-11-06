@@ -1,15 +1,15 @@
 import os
 import boto3
 
-aws_key_id = os.getenv("AWS_ACCESS_KEY_ID")
-aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-aws_region = os.getenv("AWS_REGION")
+# aws_key_id = os.getenv("AWS_ACCESS_KEY_ID")
+# aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+# aws_region = os.getenv("AWS_REGION")
 
 boto3_client = boto3.client(
     "dynamodb",
-    aws_access_key_id=f"{aws_key_id}",
-    aws_secret_access_key=f"{aws_secret_key}",
-    region_name=f"{aws_region}",
+    # aws_access_key_id=f"{aws_key_id}",
+    # aws_secret_access_key=f"{aws_secret_key}",
+    # region_name=f"{aws_region}",
 )
 
 
