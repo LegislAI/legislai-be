@@ -2,11 +2,11 @@
 **/.terraform/*
 *.tfplan
 *.tfvars
-
 #Misc
 .env
 .cache/
 __pycache__/
 .DS_Store
 .pytest_cache/
-RAG/.database/FAISS/legislai/*
+.database/
+*.log

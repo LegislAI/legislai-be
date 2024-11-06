@@ -8,8 +8,12 @@ from pathlib import Path
 from typing import List
 from typing import Tuple
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("scraper_log.log"), logging.StreamHandler()],
+)
 LOG = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
 
 OS = os.uname().sysname
 

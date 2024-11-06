@@ -221,6 +221,11 @@ resource "aws_iam_role" "ecs_task_execution_role" {
       }
     ]
   })
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a4d7cd1 (Database Controller with FAISS and Pinecone integration)
 }
 
 # ECS Task Definition for Authorization API
