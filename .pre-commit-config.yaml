@@ -32,7 +32,7 @@ repos:
       - id: detect-aws-credentials
         args: [--allow-missing-credentials]
       - id: pretty-format-json
-        args: [--autofix, --no-sort-keys]
+        args: [--autofix, --no-sort-keys, --no-ensure-ascii]
       - id: detect-private-key
         additional_dependencies:
           - ruamel.yaml>=0.15.0
