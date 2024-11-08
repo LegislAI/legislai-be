@@ -15,13 +15,13 @@ jobs:
 
       - name: Get Python Version
         id: get-python-version
-        run: echo "VERSION=$(cat .python-version)" >> $GITHUB_ENV
+        run: echo "VERSION=$(cat .python-version)" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.VERSION }}
+          python-version: ${{ steps.get-python-version.outputs.VERSION }}
 
       - name: Install dependencies
         run: |
