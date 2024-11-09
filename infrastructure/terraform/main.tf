@@ -192,9 +192,15 @@ resource "aws_dynamodb_table" "conversations_table" {
   read_capacity  = 20
   write_capacity = 20
   hash_key       = "conversation_id"
+  range_key      = "user_id"
 
   attribute {
     name = "conversation_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "user_id"
     type = "S"
   }
 
@@ -211,6 +217,15 @@ resource "aws_dynamodb_table" "conversations_table" {
   attribute {
     name = "updated_at"
     type = "S"
+  }
+
+  # GSI for querying by user_id
+  global_secondary_index {
+    name               = "UserIdAtIndex"
+    hash_key           = "user_id"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
   }
 
   # GSI for querying by updated_at
