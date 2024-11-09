@@ -18,16 +18,7 @@ class Message(BaseModel):
     attachments: Optional[List[Attachment]] = []
 
 
-class AddMessageRequest(BaseModel):
-    conversation_id: str
-    messages: List[Message]
-
-
-class MessageResponse(BaseModel):
-    message: str
-
-
-class NewConversationRequest(BaseModel):
+class Conversation(BaseModel):
     conversation_id: str
     conversation_name: str
     conversation_field: str
@@ -35,5 +26,27 @@ class NewConversationRequest(BaseModel):
     messages: List[Message]
 
 
+class NewConversationRequest(BaseModel):
+    user_id: str
+    messages: List[Message]
+    conversation_name: str
+    conversation_field: str
+
+
+class ConversationRequest(BaseModel):
+    user_id: str
+    conversation_id: str
+
+
 class ConversationResponse(BaseModel):
+    conversation_id: str
+
+
+class AddMessageRequest(BaseModel):
+    user_id: str
+    conversation_id: str
+    messages: List[Message]
+
+
+class MessageResponse(BaseModel):
     message: str
