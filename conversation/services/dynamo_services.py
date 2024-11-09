@@ -2,15 +2,15 @@ from typing import Dict
 from typing import List
 
 import boto3
-from authentication.utils.logging_config import logger
 from botocore.exceptions import ClientError
-from conversation.config.settings import settings
-from conversation.utils.aux_func import format_messages
-from conversation.utils.aux_func import parse_dynamodb_message
-from conversation.utils.schemas import AddMessageRequest
-from conversation.utils.schemas import NewConversationRequest
+from config.settings import settings
 from fastapi import HTTPException
 from fastapi import status
+from utils.aux_func import format_messages
+from utils.aux_func import parse_dynamodb_message
+from utils.logging_config import logger
+from utils.schemas import AddMessageRequest
+from utils.schemas import NewConversationRequest
 
 
 boto3_client = boto3.client(

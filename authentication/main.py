@@ -5,6 +5,7 @@ from routes.google_routes import route as google_routes
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
+
 app = FastAPI()
 
 origins = [
@@ -27,4 +28,4 @@ app.include_router(google_routes, prefix="/auth", tags=["Google OAuth"])
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("authentication.main:app", host="127.0.0.1", port=5002, reload=True)

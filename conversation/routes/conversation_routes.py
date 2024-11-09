@@ -1,31 +1,31 @@
+
 import uuid
 from typing import List
 
-from aiohttp import ClientError
-from authentication.utils.logging_config import logger
-from conversation.services.dynamo_services import add_messages_to_conversation
-from conversation.services.dynamo_services import add_messages_to_new_conversation
-from conversation.services.dynamo_services import check_conversation
-from conversation.services.dynamo_services import delete_all_conversations
-from conversation.services.dynamo_services import delete_conversation
-from conversation.services.dynamo_services import get_conversation
-from conversation.services.dynamo_services import get_recent_conversations
-from conversation.services.dynamo_services import get_recent_messages
-from conversation.utils.auth_classes import JWTBearer
-from conversation.utils.exceptions import ConversationNotFound
-from conversation.utils.schemas import AddMessageRequest
-from conversation.utils.schemas import Conversation
-from conversation.utils.schemas import ConversationRequest
-from conversation.utils.schemas import ConversationResponse
-from conversation.utils.schemas import Message
-from conversation.utils.schemas import MessageResponse
-from conversation.utils.schemas import NewConversationRequest
+from botocore.exceptions import ClientError
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import Query
 from fastapi import status
-from fastapi.security import HTTPAuthorizationCredentials
+from services.dynamo_services import add_messages_to_conversation
+from services.dynamo_services import add_messages_to_new_conversation
+from services.dynamo_services import check_conversation
+from services.dynamo_services import delete_all_conversations
+from services.dynamo_services import delete_conversation
+from services.dynamo_services import get_conversation
+from services.dynamo_services import get_recent_conversations
+from services.dynamo_services import get_recent_messages
+from utils.auth_classes import JWTBearer
+from utils.exceptions import ConversationNotFound
+from utils.logging_config import logger
+from utils.schemas import AddMessageRequest
+from utils.schemas import Conversation
+from utils.schemas import ConversationRequest
+from utils.schemas import ConversationResponse
+from utils.schemas import Message
+from utils.schemas import MessageResponse
+from utils.schemas import NewConversationRequest
 
 
 route = APIRouter()
@@ -38,7 +38,6 @@ route = APIRouter()
 )
 def create_new_conversation_route(
     payload: NewConversationRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Creates a new conversation
@@ -65,7 +64,6 @@ def create_new_conversation_route(
 )
 def delete_conversation_route(
     payload: ConversationRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Deletes an existing conversation by its ID.
@@ -105,7 +103,6 @@ def delete_conversation_route(
 def get_conversation_route(
     user_id: str,
     conversation_id: str,
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets a conversation by its ID
@@ -140,7 +137,6 @@ async def get_recent_conversations_route(
     user_id: str,
     offset: int = Query(0),
     limit: int = Query(10),
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets the 10 last conversations with the 16 last messages in each
@@ -162,9 +158,7 @@ async def get_recent_conversations_route(
     response_model=MessageResponse,
     dependencies=[Depends(JWTBearer())],
 )
-async def delete_all_conversation_route(
-    user_id: str, credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())
-):
+async def delete_all_conversation_route(user_id: str):
     """
     Deletes all the conversations
     """
@@ -187,7 +181,6 @@ async def delete_all_conversation_route(
 )
 def add_messages_route(
     payload: AddMessageRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Creates a new Message for some conversation
@@ -226,7 +219,6 @@ async def get_recent_messages_route(
     conversation_id: str,
     offset: int = Query(0),
     limit: int = Query(16),
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets the 16 last messages of a conversation
