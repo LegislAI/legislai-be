@@ -1,11 +1,8 @@
 from typing import Any
 from typing import Dict
 
-from conversation.utils.schemas import Attachment
-from conversation.utils.schemas import Message
-from fastapi import HTTPException
-from fastapi import status
-from fastapi.security import HTTPAuthorizationCredentials
+from utils.schemas import Attachment
+from utils.schemas import Message
 
 
 def format_messages(messages):

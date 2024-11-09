@@ -6,21 +6,17 @@ from typing import Optional
 from typing import Union
 
 import boto3
-from authentication.config.settings import settings
-from authentication.services.dynamo_services import token_blacklist
-from authentication.utils.exceptions import TokenRevokedException
-from authentication.utils.logging_config import logger
 from botocore.exceptions import ClientError
-from conversation.config.settings import settings
-from fastapi import Depends
+from config.settings import settings
 from fastapi import HTTPException
 from fastapi import Request
-from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt.exceptions import ExpiredSignatureError
 from jwt.exceptions import InvalidTokenError
+from utils.exceptions import TokenRevokedException
+from utils.logging_config import logger
 
 
 boto3_client = boto3.client(
@@ -256,22 +252,24 @@ class JWTBearer(HTTPBearer):
         return credentials
 
 
-def is_authenticated(token: str) -> bool:
-    """
-    Check if the token is valid and not expired.
-    """
-    try:
-        payload = decodeJWT(token)
-        if not payload:
-            return False
-        return True
-    except Exception:
-        return False
+# For the future if we want to make a check if the user is correct
+
+# def is_authenticated(token: str) -> bool:
+#     """
+#     Check if the token is valid and not expired.
+#     """
+#     try:
+#         payload = decodeJWT(token)
+#         if not payload:
+#             return False
+#         return True
+#     except Exception:
+#         return False
 
 
-def verify_token(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
-    token = credentials.credentials
-    if not is_authenticated(token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
-        )
+# def verify_token(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
+#     token = credentials.credentials
+#     if not is_authenticated(token):
+#         raise HTTPException(
+#             status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+#         )

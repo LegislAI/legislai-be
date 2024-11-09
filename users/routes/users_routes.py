@@ -1,13 +1,13 @@
 from datetime import datetime
 from datetime import timezone
 
+from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
-from config.settings import settings
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_info
 from services.dynamo_services import update_user_plan as service_update_plan
