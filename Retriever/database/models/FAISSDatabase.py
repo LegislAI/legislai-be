@@ -8,7 +8,7 @@ import faiss
 import numpy as np
 from bin.models import EmbeddingDocument
 from dotenv import load_dotenv
-from RAG.database.bin.utils import EmbeddingModel
+from Retriever.database.bin.utils import EmbeddingModel
 
 logging.basicConfig(
     level=logging.INFO,

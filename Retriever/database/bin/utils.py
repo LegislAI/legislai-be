@@ -77,6 +77,36 @@ class DenseEmbeddingModel(Embeddings):
         )
 
 
+class RerankingModel(Embeddings):
+    def __init__(
+        self,
+        model_name: Optional[str] = "hkunlp/instructor-xl",
+        cache_dir: Optional[str] = ".cache",
+    ):
+        self.model_name = model_name
+        self.embedding_model = SentenceTransformer(model_name, cache_folder=cache_dir)
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        return self.embedding_model.encode(
+            texts, convert_to_tensor=True, show_progress_bar=False
+        ).tolist()
+
+    def embed_query(self, text: str) -> List[float]:
+        return self.embedding_model.encode(
+            text, convert_to_tensor=True, show_progress_bar=False
+        ).tolist()
+
+    async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
+        return await asyncio.get_event_loop().run_in_executor(
+            None, self.embed_documents, texts
+        )
+
+    async def aembed_query(self, text: str) -> List[float]:
+        return await asyncio.get_event_loop().run_in_executor(
+            None, self.embed_query, text
+        )
+
+
 class SparseEmbeddingModel(Embeddings):
     def __init__(
         self,
@@ -119,3 +149,85 @@ class SparseEmbeddingModel(Embeddings):
         return await asyncio.get_event_loop().run_in_executor(
             None, self.embed_query, text
         )
+
+
+from rank_bm25 import BM25Okapi
+from nltk.corpus import stopwords
+import nltk
+from collections import Counter
+from typing import List, Dict, Optional
+import torch
+from langchain_core.embeddings.embeddings import Embeddings
+from transformers import AutoTokenizer
+
+nltk.download("stopwords")
+STOP_WORDS = set(stopwords.words("portuguese"))
+
+
+class BM250RerankingModel(Embeddings):
+    def __init__(self, language: Optional[str] = "portuguese"):
+        self.language = language
+        self.tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
+
+    def preprocess_text(self, text: str) -> List[str]:
+        return [word.lower() for word in text.split() if word.lower() not in STOP_WORDS]
+
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        tokenized_documents = [self.preprocess_text(text) for text in texts]
+        # print(f"tokenized documents: {tokenized_documents}")
+        return tokenized_documents
+
+    def embed_query(self, text: str) -> List[float]:
+        return self.preprocess_text(text)
+
+    def bm25_rerank(self, query: str, documents: List[str]) -> List[Dict[str, float]]:
+        tokenized_documents = self.embed_documents(documents)
+        tokenized_query = self.embed_query(query)
+
+        bm25 = BM25Okapi(tokenized_documents)
+        scores = bm25.get_scores(tokenized_query)
+
+        # Rerank documents based on BM25 scores
+        reranked_results = [
+            {"bm25_score": score, "document": doc}
+            for score, doc in zip(scores, documents)
+        ]
+
+        # Sort results by BM25 score in descending order
+        reranked_results = sorted(
+            reranked_results, key=lambda x: x["bm25_score"], reverse=True
+        )
+
+        return reranked_results
+
+    async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
+        """
+        Asynchronously embed documents using BM25.
+        """
+        return await asyncio.get_event_loop().run_in_executor(
+            None, self.embed_documents, texts
+        )
+
+    async def aembed_query(self, text: str) -> List[float]:
+        """
+        Asynchronously embed a query using BM25.
+        """
+        return await asyncio.get_event_loop().run_in_executor(
+            None, self.embed_query, text
+        )
+
+
+# bm25_model = BM250RerankingModel()
+
+# documents = [
+#     "Como posso extinguir uma associação?",
+#     "Quais são os requisitos legais para dissolver uma associação?",
+#     "Existem passos formais para encerrar uma organização?",
+# ]
+
+# query = "Como posso extinguir uma associação?"
+
+# reranked_results = bm25_model.bm25_rerank(query, documents)
+
+# for result in reranked_results:
+#     print(f"Document: {result['document']}, BM25 Score: {result['bm25_score']}")

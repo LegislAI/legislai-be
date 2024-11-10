@@ -12,15 +12,13 @@ import spacy
 from dotenv import load_dotenv
 from together import Together
 
-# from classifier.generate_classifier import remove_stopwords
-
 logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger(__name__)
 
 load_dotenv()
 ENHANCEMENT_API_KEY = os.getenv("ENHANCEMENT_API_KEY")
 EXTRACTION_API_KEY = os.getenv("EXTRACTION_API_KEY")
-# CLASSIFIER_MODEL = "./classifier/model-best"
+CLASSIFIER_MODEL = "./classifier/models/model-best"
 
 data_atual = datetime.now()
 data_formatada = data_atual.strftime("%Y-%m-%d")
@@ -36,7 +34,8 @@ class Preprocessing:
 
         self.enhancement_client = Together(api_key=ENHANCEMENT_API_KEY)
         self.extraction_client = Together(api_key=EXTRACTION_API_KEY)
-        # self.classifier_model = spacy.load(CLASSIFIER_MODEL)
+        self.classifier_model = None
+        # self.classifier_model = spacy.load("./classifier/models/model-best", exclude=["tagger", "parser", "ner"])
 
     def query_enhancement(self, query: str, queue: Queue) -> None:
         query_expansion_prompt = f"""
@@ -121,7 +120,7 @@ class Preprocessing:
         Lembra-te:
         - Responde apenas no formato JSON mostrado.
         - Começa com <function=metadata_extraction> e termina com </function>.
-        - Se não for indicado um ano em concreto, deves assumir o ano atual como 'data_legislacao'.\n\n
+        - Se não for indicado um ano em concreto, deves assumir o ano atual como 'data_legislacao'.
         - Hoje é dia {data_formatada}.
         - Usa aspas duplas para strings.
         - Usa vírgulas para separar os elementos.
@@ -154,7 +153,7 @@ class Preprocessing:
         match = re.search(function_regex, response, re.DOTALL)
 
         if match:
-            function_name, args_string = match.groups()
+            _, args_string = match.groups()
             try:
                 args = json.loads(args_string.strip())
                 return args
@@ -167,10 +166,17 @@ class Preprocessing:
             LOG.warning("No function tag found in response.")
             return {}
 
+    def _remove_stopwords(self, text: str) -> str:
+        doc = self.classifier_model(text)
+        filtered_words = [
+            token.text for token in doc if not token.is_stop and not token.is_punct
+        ]
+        return " ".join(filtered_words)
+
     def classify_query(self, query: str, queue: Queue) -> None:
-        result = self.classifier_model(remove_stopwords(query))
+        result = self.classifier_model(self._remove_stopwords(query))
         sorted_results = sorted(result.cats.items(), key=lambda x: x[1], reverse=True)
-        queue.put({"classify_query": {"classification": sorted_results}})
+        queue.put({"score": sorted_results})
 
     @lru_cache(maxsize=100)
     def process_query(self, query: str, method_names: tuple[str] = ("all",)) -> dict:
@@ -212,5 +218,5 @@ class Preprocessing:
 #     preprocessor = Preprocessing()
 #     query = "Como funciona o processo de herança segundo a lei portuguesa?"
 
-#     payload = preprocessor.process_query(query, method_names=("query_enhancement", "metadata_extraction"))
+#     payload = preprocessor.process_query(query, method_names=("all", ))
 #     print(payload)

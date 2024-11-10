@@ -1,4 +1,4 @@
 lime
-spacy
+spacy==3.7.5
 pandas
 langchain_ollama

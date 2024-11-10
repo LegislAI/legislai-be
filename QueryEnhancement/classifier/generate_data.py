@@ -1,12 +1,15 @@
-from typing import List, Dict
-from dataclasses import dataclass
-from langchain_core.prompts import ChatPromptTemplate
-import pandas as pd
-from enum import Enum
-from langchain_ollama.llms import OllamaLLM
 import re
-from langchain_core.pydantic_v1 import BaseModel, Field
+from dataclasses import dataclass
+from enum import Enum
+from typing import Dict
+from typing import List
+
+import pandas as pd
 from langchain_core.output_parsers import JsonOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.pydantic_v1 import BaseModel
+from langchain_core.pydantic_v1 import Field
+from langchain_ollama.llms import OllamaLLM
 
 
 class QueriesFormat(BaseModel):

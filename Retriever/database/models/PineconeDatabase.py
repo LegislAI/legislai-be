@@ -8,10 +8,10 @@ import spacy
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from pinecone import ServerlessSpec
-from RAG.database.bin.models import EmbeddingDocument
-from RAG.database.bin.utils import DenseEmbeddingModel
-from RAG.database.bin.utils import EmbeddingModel
-from RAG.database.bin.utils import SparseEmbeddingModel
+from database.bin.models import EmbeddingDocument
+from database.bin.utils import DenseEmbeddingModel
+from database.bin.utils import EmbeddingModel
+from database.bin.utils import SparseEmbeddingModel
 
 
 logging.basicConfig(
@@ -74,25 +74,11 @@ class PineconeDatabase:
         except Exception as e:
             LOG.error(f"Error inserting payload: {payload} into database: {e}")
 
-    def process_results(self, results, metadata_filter):
-        # Filter by date
-        date_metadata = metadata_filter.get("date", None)
-        if date_metadata:
-            # Lets sort the updates by date, if the
-            results.sort(key=lambda x: x["metadata"]["date"])
-
-        pass
-
-        # Retrieve other chunks
-        pass
-
     def query(self, query: str, metadata_filter: dict = {}, top_k: int = 5):
         try:
             results = self.hybrid_query(
                 query, top_k, alpha=0.3, metadata_filter=metadata_filter
             )
-            print(results)
-            self.process_results(results, metadata_filter)
             return results
         except Exception as e:
             LOG.error(f"Error querying database: {e}, query: {query}")
@@ -119,8 +105,8 @@ class PineconeDatabase:
             include_metadata=True,
             filter=metadata_filter,
         )
-        print(result)
-        return result
+
+        return result.get("matches", [])
 
     def insert_many_into_databases(self, payloads: List[EmbeddingDocument]):
         try:
