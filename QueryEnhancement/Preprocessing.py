@@ -4,8 +4,10 @@ import os
 import re
 from datetime import datetime
 from functools import lru_cache
+from multiprocessing import freeze_support
 from multiprocessing import Process
 from multiprocessing import Queue
+from pathlib import Path
 from typing import List
 
 import spacy
@@ -16,9 +18,12 @@ logging.basicConfig(level=logging.INFO)
 LOG = logging.getLogger(__name__)
 
 load_dotenv()
+
+QUERY_ENHANCEMENT_PATH = Path("QueryEnhancement").resolve()
+
 ENHANCEMENT_API_KEY = os.getenv("ENHANCEMENT_API_KEY")
 EXTRACTION_API_KEY = os.getenv("EXTRACTION_API_KEY")
-CLASSIFIER_MODEL = "./classifier/models/model-best"
+CLASSIFIER_MODEL = QUERY_ENHANCEMENT_PATH / "models/model-best"
 
 data_atual = datetime.now()
 data_formatada = data_atual.strftime("%Y-%m-%d")
@@ -26,10 +31,14 @@ data_formatada = data_atual.strftime("%Y-%m-%d")
 
 class Preprocessing:
     def __init__(self):
-        with open("bin/query_expansion_few_show_examples.json") as f:
+        with open(
+            QUERY_ENHANCEMENT_PATH / "bin/query_expansion_few_show_examples.json"
+        ) as f:
             self.query_expansion_few_shot_examples = json.load(f)
 
-        with open("bin/query_metadata_few_shot_examples.json") as f:
+        with open(
+            QUERY_ENHANCEMENT_PATH / "bin/query_metadata_few_shot_examples.json"
+        ) as f:
             self.query_metadata_few_shot_examples = json.load(f)
 
         self.enhancement_client = Together(api_key=ENHANCEMENT_API_KEY)
@@ -109,7 +118,7 @@ class Preprocessing:
 
         <function=metadata_extraction>
         {{
-            "data_legislacao": "{data_formatada}",
+            "data_legislacao": "data_legislacao",
             "data_pergunta": "{data_formatada}",
             "resumo": "Fornece um breve resumo do contexto legal de '{query}'",
             "assunto": "Fornece o tópico legal principal aqui"
@@ -175,8 +184,10 @@ class Preprocessing:
 
     def classify_query(self, query: str, queue: Queue) -> None:
         result = self.classifier_model(self._remove_stopwords(query))
-        sorted_results = sorted(result.cats.items(), key=lambda x: x[1], reverse=True)
-        queue.put({"score": sorted_results})
+        sorted_results = sorted(result.cats.items(), key=lambda x: x[1], reverse=True)[
+            0
+        ]
+        queue.put({"theme": sorted_results})
 
     @lru_cache(maxsize=100)
     def process_query(self, query: str, method_names: tuple[str] = ("all",)) -> dict:
@@ -186,7 +197,7 @@ class Preprocessing:
         method_mapping = {
             "query_enhancement": self.query_enhancement,
             "metadata_extraction": self.metadata_extraction,
-            "classify_query": self.classify_query,
+            # "classify_query": self.classify_query,
         }
 
         if method_names == ("all",):
@@ -211,12 +222,33 @@ class Preprocessing:
 
         final_time = datetime.now()
         LOG.info(f"Processing query took {final_time - init_time} seconds")
+
+        metadata = results.get("metadata", {})
+        query_enchancement = results.get("queries_expanded", {})
+        query_classification = results.get("theme", {})
+
+        # parsed_results = {
+        #     "metadata_filter" : {
+        #         "data_legislacao" : results.get("data_legislacao", ""),
+        #         "data_pergunta" : results.get("data_pergunta", ""),
+        #         "document_name" : query_classification if query_classification.get("score")>,
+        #     },
+        #     "expanded_queries" : query_enchancement,
+        #     "suporting_metadata" : {
+        #         "resumo" : results.get("resumo", ""),
+        #         "assunto" : results.get("metadata", {}).get("assunto", ""),
+        #     }
+        # }
+
         return results
 
 
-# if __name__ == "__main__":
+if __name__ == "__main__":
+    freeze_support()
 #     preprocessor = Preprocessing()
 #     query = "Como funciona o processo de herança segundo a lei portuguesa?"
 
+#     payload = preprocessor.process_query(query, method_names=("all", ))
+#     print(payload)
 #     payload = preprocessor.process_query(query, method_names=("all", ))
 #     print(payload)

@@ -8,10 +8,10 @@ import spacy
 from dotenv import load_dotenv
 from pinecone import Pinecone
 from pinecone import ServerlessSpec
-from database.bin.models import EmbeddingDocument
-from database.bin.utils import DenseEmbeddingModel
-from database.bin.utils import EmbeddingModel
-from database.bin.utils import SparseEmbeddingModel
+from Retriever.database.bin.models import EmbeddingDocument
+from Retriever.database.bin.utils import DenseEmbeddingModel
+from Retriever.database.bin.utils import EmbeddingModel
+from Retriever.database.bin.utils import SparseEmbeddingModel
 
 
 logging.basicConfig(

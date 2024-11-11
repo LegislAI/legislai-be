@@ -10,8 +10,8 @@ from multiprocessing import Process
 from multiprocessing import Queue
 from typing import Optional
 
-from database.bin.utils import BM250RerankingModel
-from database.DatabaseController import DatabaseController as dbc
+from Retriever.database.bin.utils import BM250RerankingModel
+from Retriever.database.DatabaseController import DatabaseController as dbc
 from together import Together
 
 logging.basicConfig(
@@ -43,7 +43,7 @@ class Retriever:
         results = self.databasecontroller.query(
             query=query, top_k=topk, metadata_filter=metadata_filter
         )
-        print(results)
+        LOG.info(f"Results for query:{query} in {time.time()-start} seconds")
         results = self.rerank_results(results, query, metadata_filter)
         end = time.time()
         LOG.info(f"Results for query:{query} in {end-start} seconds")
@@ -52,28 +52,30 @@ class Retriever:
     # TODO: implement processing based on the metadata_filter
     def process_results(self, results, metadata_filter):
         # Return the original results, just join its text by ""
-        return [
-            {
+        return {
+            result["id"]: {
                 "id": result["id"],
                 "metadata": result["metadata"],
                 "score": result["score"],
                 "text": "".join(result["metadata"]["text"]),
+                "theme": result["metadata"].get("theme", ""),
+                "source_url": result["metadata"].get("link", ""),
+                "law_name": result["metadata"].get("law_name", ""),
+                "title": result["metadata"].get("title", ""),
+                "epigrafe": result["metadata"].get("epigrafe", ""),
             }
             for result in results
-        ]
+        }
 
     def bm250_rerank(self, query, results):
-        documents = []
-        for result in results:
-            joint_result = "".join(result["text"])
-            documents.append(joint_result)
+        documents = [result["text"] for result in results]
 
         rerankinkg_result = self.bm25_model.bm25_rerank(query, documents)
         # sort the reraanked results by the bm25 score
         maped_id_result = []
         for result in rerankinkg_result:
             for result_id in results:
-                if result["document"] == "".join(result_id["metadata"]["text"]):
+                if result["document"] == result_id["text"]:
                     maped_id_result.append(
                         {"id": result_id["id"], "score": result["bm25_score"]}
                     )
@@ -120,8 +122,8 @@ class Retriever:
     def rerank_results(self, results, query, metadata_filter):
         # tf idf from query with the results
         process_results = self.process_results(results, metadata_filter)
-        bm25_results = self.bm250_rerank(query, process_results)
-        llm_reranking = self.llm_rerank(query, process_results)
+        bm25_results = self.bm250_rerank(query, process_results.values())
+        llm_reranking = self.llm_rerank(query, process_results.values())
 
         # interpolate the rankings with 0.3 percent influence in every reranked result
         reranked_results = {
@@ -131,9 +133,43 @@ class Retriever:
             "bm25_results": bm25_results,
             "llm_reranking": llm_reranking,
         }
+        interpolated_ranked_results = self.interpolate_results(reranked_results, 0.3)
 
-        results = self.interpolate_results(reranked_results, 0.3)
-        return results
+        reranked_results = []
+        for result in interpolated_ranked_results:
+            result_id = result["id"]
+            if result_id not in process_results:
+                LOG.info(f"Document {result_id} not found in the interpolated results.")
+                continue
+
+            process_result = process_results[result_id]
+            process_result["score"] = result["score"]
+            reranked_results.append(process_result)
+        # for result in process_results:
+        #     result_id = result["id"]
+        #     print(result_id)
+        #     if result_id not in interpolated_ranked_results:
+        #         LOG.info(f"Document {result_id} not found in the interpolated results.")
+        #         continue
+        #     print(result)
+        #     interpolated_score = interpolated_ranked_results[result_id]
+        #     text = result["text"]
+        #     metadata = result["metadata"]
+        #     {
+        #         "id": result["id"],
+        #         "score": interpolated_score,
+        #         "text" : text,
+        #         "theme" : metadata.get("theme", ""),
+        #         "source_url" : metadata.get("link", ""),
+        #         "text" : result.get("text", ""),
+        #         "law_name" : metadata.get("law_name", ""),
+        #         "title" : metadata.get("title", ""),
+        #         "epigrafe" : metadata.get("epigrafe", ""),
+        #     }
+        #     reranked_results.append(result)
+
+        print(reranked_results)
+        return reranked_results
 
     def llm_rerank(self, query, results):
         LOG.info(f"Reranking documents using an llm for query: {query}")
