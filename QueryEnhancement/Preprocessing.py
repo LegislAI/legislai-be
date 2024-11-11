@@ -43,8 +43,9 @@ class Preprocessing:
 
         self.enhancement_client = Together(api_key=ENHANCEMENT_API_KEY)
         self.extraction_client = Together(api_key=EXTRACTION_API_KEY)
-        self.classifier_model = None
-        # self.classifier_model = spacy.load("./classifier/models/model-best", exclude=["tagger", "parser", "ner"])
+        self.classifier_model = spacy.load(
+            "QueryEnhancement/classifier/models/model-best"
+        )
 
     def query_enhancement(self, query: str, queue: Queue) -> None:
         query_expansion_prompt = f"""
@@ -197,7 +198,7 @@ class Preprocessing:
         method_mapping = {
             "query_enhancement": self.query_enhancement,
             "metadata_extraction": self.metadata_extraction,
-            # "classify_query": self.classify_query,
+            "classify_query": self.classify_query,
         }
 
         if method_names == ("all",):
@@ -245,10 +246,8 @@ class Preprocessing:
 
 if __name__ == "__main__":
     freeze_support()
-#     preprocessor = Preprocessing()
-#     query = "Como funciona o processo de herança segundo a lei portuguesa?"
+    preprocessor = Preprocessing()
+    query = "Como posso extinguir uma associação?"
 
-#     payload = preprocessor.process_query(query, method_names=("all", ))
-#     print(payload)
-#     payload = preprocessor.process_query(query, method_names=("all", ))
-#     print(payload)
+    payload = preprocessor.process_query(query, method_names=("all",))
+    print(payload)
