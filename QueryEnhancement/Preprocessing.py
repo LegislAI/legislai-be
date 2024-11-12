@@ -71,6 +71,8 @@ class Preprocessing:
                                       "Como proceder com a alteração de informações após o registo da sociedade?",
                                       "Quais são os prazos legais para o registo de uma sociedade após sua constituição?"]
 
+        Query a expandir: {query}
+
         <function=query_expansion>
         {{
             "query_original": "{query}",
@@ -121,6 +123,7 @@ class Preprocessing:
         {{
             "data_legislacao": "data_legislacao",
             "data_pergunta": "{data_formatada}",
+            "tipo_de_direito": "nome": "x", "score": "x",
             "resumo": "Fornece um breve resumo do contexto legal de '{query}'",
             "assunto": "Fornece o tópico legal principal aqui"
         }}
@@ -132,6 +135,9 @@ class Preprocessing:
         - Começa com <function=metadata_extraction> e termina com </function>.
         - Se não for indicado um ano em concreto, deves assumir o ano atual como 'data_legislacao'.
         - Hoje é dia {data_formatada}.
+        - Classifica o tipo de direito como um destes: Constituição da República Portuguesa - CRP; Código do Trabalho - CT; Código dos Contratos Públicos - CCP; Novo Regime do Arrendamento Urbano - NRAU; Código de Processo do Trabalho - CPT;
+        - Atribui também um score ao tipo de direito que se relacione com a tua certeza relativamente à sua atribuição.
+        - Caso não tenhas certeza atribui o valor de None ao score e ao campo do tipo de direito
         - Usa aspas duplas para strings.
         - Usa vírgulas para separar os elementos.
         - Usa chavetas para agrupar os elementos.
