@@ -10,6 +10,6 @@ class Settings(BaseSettings):
     langchain_endpoint : str
     langchain_api_key : str
     langchain_project : str
+    together_key : str 
     
-def get_settings():
-    return Settings()
+settings = Settings()

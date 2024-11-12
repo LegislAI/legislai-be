@@ -1,35 +1,20 @@
 from typing import Dict, List, Optional, TypedDict, Any
-from langgraph.graph import StateGraph, END
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.chat_models import ChatOpenAI
-from langchain_core.output_parsers import JsonOutputParser
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langgraph.graph import StateGraph, END, START
 from langsmith import traceable
 from dataclasses import dataclass
-import numpy as np
 from utils.state import GraphState
-from services.agents.hallucination import HallucinationEvaluator
+from agents.metadata import metadata_extraction_agent
+from agents.query_expansion import query_expansion_agent
+from agents.uppercase import uppercase_transformation_agent
+from agents.lowercase import lowercase_transformation_agent
+from agents.classifier import code_classification_agent
 
-llm = ChatOpenAI(temperature=0)
-embeddings = OpenAIEmbeddings()
-vectorstore = Chroma(embedding_function=embeddings)
-evaluator = HallucinationEvaluator(max_retries=3)
-next_step = evaluator.evaluate(state=graph_state)
+# llm = ChatOpenAI(temperature=0)
+# embeddings = OpenAIEmbeddings()
+# vectorstore = Chroma(embedding_function=embeddings)
+# evaluator = HallucinationEvaluator(max_retries=3)
+# next_step = evaluator.evaluate(state=graph_state)
 
-@traceable(name="query_expansion")
-def query_expansion_agent(state: GraphState) -> GraphState:
-    return state
-
-# Classification Agent
-@traceable(name="classification")
-def classification_agent(state: GraphState) -> GraphState:
-    return state
-
-# Metadata Extraction Agent
-@traceable(name="metadata_extraction")
-def metadata_extraction_agent(state: GraphState) -> GraphState:
-    return state
 
 # Embedding Agent
 @traceable(name="embedding")
@@ -85,30 +70,35 @@ def process_rag_pipeline(inputs: RAGInputs) -> RAGOutput:
     return inputs
 
 
-# Update the graph structure
 def build_legal_rag_graph() -> StateGraph:
     workflow = StateGraph(GraphState)
     
     # Add nodes
     workflow.add_node("query_expansion", query_expansion_agent)
-    workflow.add_node("classification", classification_agent)
+    workflow.add_node("code_classification", code_classification_agent)
     workflow.add_node("metadata_extraction", metadata_extraction_agent)
-    workflow.add_node("rag_coordinator", rag_coordinator_agent)
-    # workflow.add_node("retrivel_validation", validation_agent)  # FALAR COM MALTA !!
-    workflow.add_node("prompt_engineering", prompt_engineering_agent)
+    workflow.add_node("uppercase_agent", uppercase_transformation_agent)
+    # workflow.add_node("lowercase_agent", lowercase_transformation_agent)
+    
+    
+    # workflow.add_node("rag_coordinator", rag_coordinator_agent)
+    # # workflow.add_node("retrivel_validation", validation_agent)  # FALAR COM MALTA !!
+    # workflow.add_node("prompt_engineering", prompt_engineering_agent)
     
 
-    workflow.set_entry_point("classification")
-    workflow.add_edge("classification", "query_expansion")
-    workflow.add_edge("classification", "metadata_extraction")
+    workflow.add_edge(START, "metadata_extraction")
+    workflow.add_edge(START, "code_classification")
+    workflow.add_edge(START, "query_expansion")
     
-    # Wait for all required inputs before RAG
-    workflow.add_edge("metadata_extraction", "rag_coordinator")
-    
-    workflow.add_edge("rag_coordinator", "prompt_engineering")
+    # # Wait for all required inputs before RAG
+    # workflow.add_edge("metadata_extraction", "rag_coordinator")
+    # workflow.add_edge("rag_coordinator", "prompt_engineering")
 
-    workflow.add_conditional_edges("prompt_engineering",evaluator.evaluate())
-    workflow.add_edge("prompt_engineering", END)
-    
-    return workflow
+    # workflow.add_conditional_edges("prompt_engineering",evaluator.evaluate())
+    workflow.add_edge("query_expansion", "uppercase_agent")
+    workflow.add_edge("metadata_extraction", "uppercase_agent")
+    workflow.add_edge("code_classification", "uppercase_agent")
+    workflow.add_edge("uppercase_agent", END)
+    app = workflow.compile()
+    return app
 
