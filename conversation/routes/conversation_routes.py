@@ -19,9 +19,9 @@ from conversation.utils.schemas import NewConversationRequest
 from conversation.utils.schemas import ConversationRequest
 from conversation.utils.schemas import Conversation
 from conversation.utils.schemas import Message
-from fastapi import APIRouter, HTTPException
-from fastapi import Query
-from fastapi import status
+from conversation.utils.auth_classes import verify_token
+from fastapi import APIRouter, HTTPException, Depends, Query, status
+from fastapi.security import HTTPAuthorizationCredentials
 
 from conversation.utils.exceptions import ConversationNotFound
 
@@ -30,7 +30,10 @@ route = APIRouter()
 
 
 @route.post("/new_conversation", response_model=ConversationResponse)
-def create_new_conversation_route(payload: NewConversationRequest):
+def create_new_conversation_route(
+    payload: NewConversationRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+):
     """
     Creates a new conversation
     """
@@ -50,7 +53,10 @@ def create_new_conversation_route(payload: NewConversationRequest):
 
 
 @route.delete("/{conversation_id}/delete", response_model=ConversationResponse)
-def delete_conversation_route(payload: ConversationRequest):
+def delete_conversation_route(
+    payload: ConversationRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+):
     """
     Deletes an existing conversation by its ID.
     """
@@ -82,12 +88,14 @@ def delete_conversation_route(payload: ConversationRequest):
 
 
 @route.get("/{conversation_id}", response_model=Conversation)
-def get_conversation_route(conversation_id: str, user_id: str):
+def get_conversation_route(
+    conversation_id: str,
+    user_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+):
     """
     Gets a conversation by its ID
     """
-    # user_id, conversation_id = payload.user_id, payload.conversation_id
-
     try:
         if check_conversation(user_id, conversation_id):
             return get_conversation(conversation_id, user_id)
@@ -111,7 +119,10 @@ def get_conversation_route(conversation_id: str, user_id: str):
 
 @route.get("/load_last_conversations/", response_model=List[Conversation])
 async def get_recent_conversations_route(
-    user_id, offset: int = Query(0), limit: int = Query(10)
+    user_id,
+    offset: int = Query(0),
+    limit: int = Query(10),
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
 ):
     """
     Gets the 10 last conversations with the 16 last messages in each
@@ -129,7 +140,9 @@ async def get_recent_conversations_route(
 
 
 @route.delete("/delete_all_conversations", response_model=MessageResponse)
-async def delete_all_conversation_route(user_id: str):
+async def delete_all_conversation_route(
+    user_id: str, credentials: HTTPAuthorizationCredentials = Depends(verify_token)
+):
     """
     Deletes all the conversations
     """
@@ -146,7 +159,11 @@ async def delete_all_conversation_route(user_id: str):
 
 
 @route.post("/{conversation_id}/add_messages", response_model=MessageResponse)
-def add_messages_route(conversation_id: str, payload: AddMessageRequest):
+def add_messages_route(
+    conversation_id: str,
+    payload: AddMessageRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+):
     """
     Creates a new Message for some conversation
     """
@@ -177,7 +194,11 @@ def add_messages_route(conversation_id: str, payload: AddMessageRequest):
     "/{conversation_id}/messages/load_last_messages/", response_model=List[Message]
 )
 async def get_recent_messages_route(
-    conversation_id: str, user_id: str, offset: int = Query(0), limit: int = Query(16)
+    conversation_id: str,
+    user_id: str,
+    offset: int = Query(0),
+    limit: int = Query(16),
+    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
 ):
     """
     Gets the 16 last messages of a conversation
