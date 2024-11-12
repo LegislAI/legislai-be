@@ -1,28 +1,21 @@
-from datetime import datetime, timezone
-from authentication.utils.logging_config import logger
-import boto3
-from conversation.config.settings import settings
-from botocore.exceptions import ClientError
-from datetime import datetime
-from datetime import timezone
-from typing import Any
-from typing import Optional
-from authentication.utils.logging_config import logger
-from authentication.config.settings import settings
-from authentication.services.dynamo_services import token_blacklist
-from authentication.utils.exceptions import TokenRevokedException
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-from authentication.utils.logging_config import logger
+
+import boto3
 from authentication.config.settings import settings
 from authentication.services.dynamo_services import token_blacklist
 from authentication.utils.exceptions import TokenRevokedException
+from authentication.utils.logging_config import logger
+from botocore.exceptions import ClientError
+from conversation.config.settings import settings
+from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import Request
+from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
 from fastapi.security import HTTPBearer
 from jose import jwt
@@ -262,3 +255,24 @@ class JWTBearer(HTTPBearer):
             raise HTTPException(status_code=500, detail="Internal server error.")
 
         return credentials
+
+
+def is_authenticated(token: str) -> bool:
+    """
+    Check if the token is valid and not expired.
+    """
+    try:
+        payload = decodeJWT(token)
+        if not payload:
+            return False
+        return True
+    except Exception:
+        return False
+
+
+def verify_token(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
+    token = credentials.credentials
+    if not is_authenticated(token):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized"
+        )
