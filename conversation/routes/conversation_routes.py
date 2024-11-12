@@ -2,7 +2,6 @@
 import uuid
 from typing import List
 
-from botocore.exceptions import ClientError
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
@@ -47,7 +46,7 @@ def create_new_conversation_route(
     try:
         add_messages_to_new_conversation(conversation_id, payload)
 
-    except ClientError as e:
+    except Exception as e:
         logger.error(f"Error creating conversation: {e.response['Error']['Message']}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
