@@ -1,4 +1,5 @@
 import os
+
 import boto3
 
 aws_key_id = os.getenv("AWS_ACCESS_KEY_ID")
@@ -14,7 +15,7 @@ boto3_client = boto3.client(
 
 
 def get_all_users():
-    response = boto3_client.scan(TableName='users')
+    response = boto3_client.scan(TableName="users")
     return response["Items"]
 
 

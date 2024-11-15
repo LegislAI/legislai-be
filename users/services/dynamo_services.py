@@ -4,15 +4,15 @@ from datetime import timezone
 from typing import Dict
 
 import boto3
+from botocore.exceptions import ClientError
 from users.config.settings import settings
 from users.utils.exceptions import UserNotFoundException
 from users.utils.logging_config import logger
 from users.utils.password import SecurityUtils
-from users.utils.users import decodeJWT
-from users.utils.schemas import UsersResponse
 from users.utils.schemas import UsersPlanResponse
 from users.utils.schemas import UsersRequestPayload
-from botocore.exceptions import ClientError
+from users.utils.schemas import UsersResponse
+from users.utils.users import decodeJWT
 
 security = SecurityUtils()
 boto3_client = boto3.client(

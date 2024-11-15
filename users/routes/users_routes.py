@@ -1,25 +1,26 @@
-from datetime import datetime, timezone
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from datetime import datetime
+from datetime import timezone
 
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import status
+from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer
 from users.config.settings import settings
-from users.services.dynamo_services import (
-    get_user_by_email,
-    update_user_plan as service_update_plan,
-    update_user_info,
-)
-from users.utils.users import is_authenticated, decodeJWT
+from users.services.dynamo_services import get_user_by_email
+from users.services.dynamo_services import update_user_info
+from users.services.dynamo_services import update_user_plan as service_update_plan
 from users.utils.exceptions import UserNotFoundException
 from users.utils.logging_config import logger
 from users.utils.password import SecurityUtils
+from users.utils.schemas import UsersPlanResponse
+from users.utils.schemas import UsersRequestPayload
+from users.utils.schemas import UsersResponse
+from users.utils.schemas import UsersUpdatePlanRequest
+from users.utils.users import decodeJWT
+from users.utils.users import is_authenticated
 from users.utils.users import JWTBearer
-
-from users.utils.schemas import (
-    UsersResponse,
-    UsersRequestPayload,
-    UsersUpdatePlanRequest,
-    UsersPlanResponse,
-)
 
 route = APIRouter()
 security = SecurityUtils()
