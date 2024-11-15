@@ -1,14 +1,14 @@
 import unittest
 from unittest.mock import patch
 
-from api import app
+from authentication.main import app
 from fastapi.testclient import TestClient
 
 client = TestClient(app)
 
 
 class TestAuthentication(unittest.TestCase):
-    @patch("api._get_user")
+    @patch("main._get_user")
     def test_register_existing_user(self, mock_get_user):
         """Test registering a user that already exists"""
         mock_get_user.return_value = {
@@ -31,8 +31,8 @@ class TestAuthentication(unittest.TestCase):
             "User with email existingemail@example.com already exists",
         )
 
-    @patch("api._create_user")
-    @patch("api._get_user")
+    @patch("main._create_user")
+    @patch("main._get_user")
     def test_register_new_user(self, mock_get_user, mock_create_user):
         """Test registering a new user"""
         mock_get_user.return_value = None
@@ -54,7 +54,7 @@ class TestAuthentication(unittest.TestCase):
         self.assertIn("email", response.json())
         self.assertEqual(response.json()["email"], "newemail@example.com")
 
-    @patch("api._get_user")
+    @patch("main._get_user")
     def test_login_non_existent_email(self, mock_get_user):
         """Test logging in with a non-existent email"""
         mock_get_user.return_value = None
@@ -66,7 +66,7 @@ class TestAuthentication(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.json()["detail"], "Incorrect credentials")
 
-    @patch("api._get_user")
+    @patch("main._get_user")
     def test_login_wrong_password(self, mock_get_user):
         """Test logging in with a wrong password"""
         mock_get_user.return_value = {
@@ -81,8 +81,8 @@ class TestAuthentication(unittest.TestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.json()["detail"], "Incorrect credentials")
 
-    @patch("api._update_user_fields")
-    @patch("api._get_user")
+    @patch("main._update_user_fields")
+    @patch("main._get_user")
     def test_login_success(self, mock_get_user, mock_update_user_fields):
         """Test logging in with correct credentials"""
         mock_get_user.return_value = {
