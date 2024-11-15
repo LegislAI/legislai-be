@@ -1,6 +1,9 @@
 from enum import Enum
 from langchain import PromptTemplate
 
+
+nota_final = """Observação: Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
+
 class LegalCode(Enum):
     TRABALHO = "Código do Trabalho e Processo do Trabalho"
     NRAU = "NRAU e Código do Registo Predial"
@@ -20,7 +23,7 @@ class SpecialistPrompts:
             LegalCode.PUBLIC_CONTRACTS: "És um especialista em contratação pública em Portugal. Tens conhecimento aprofundado do Código dos Contratos Públicos e da legislação aplicável aos contratos celebrados por entidades públicas.",
             LegalCode.COPYRIGHT: "És um especialista em legislação de propriedade intelectual em Portugal. Tens profundo conhecimento do Código dos Direitos de Autor e Direitos Conexos, com foco na proteção e gestão de obras intelectuais.",
             LegalCode.INSOLVENCY: "És um especialista em insolvência e recuperação de empresas em Portugal. Dominas o Código de Insolvência e Recuperação de Empresa e toda a legislação aplicável aos processos de recuperação e falência de empresas.",
-            LegalCode.IRS: "És um especialista sobre o Codigo do IRS - imposto sobre o Rendimento das Pessoas Singulares. Tens profundo conhecimento do Código do IRS, incluindo as normas e obrigações relacionadas com esse imposto em Portugal.",
+            LegalCode.IRS: "És um especialista sobre o Codigo do IRS - imposto sobre o Rendimsento das Pessoas Singulares. Tens profundo conhecimento do Código do IRS, incluindo as normas e obrigações relacionadas com esse imposto em Portugal.",
             LegalCode.IMI_IMT: "És um especialista em impostos sobre o património imobiliário em Portugal. Dominas o Código do IMI (Imposto Municipal sobre Imóveis) e o Código do IMT (Imposto Municipal sobre as Transmissões Onerosas de Imóveis).",
             LegalCode.NOTARIADO: "És um especialista em direito notarial em Portugal. Tens profundo conhecimento do Código do Notariado e das normas relativas à autenticação e formalização de atos e documentos legais.",
             LegalCode.ESTRADA: "És um especialista em legislação rodoviária em Portugal. Dominas o Código da Estrada e toda a regulamentação relacionada com a segurança, regras de trânsito e legislação para condutores e veículos."
@@ -32,10 +35,11 @@ class SpecialistPrompts:
             2. Se não encontrares resposta à pergunta nos documentos fornecidos, deves informar que não possuis dados para responder.
             3. Sempre que usares informação de um documento específico, indica a fonte que permita ao leitor saber exatamente de onde veio a informação.
     
-            O formato da resposta deve ser:
-            - Resposta: A tua resposta à pergunta colocada.
-            - Referências: Lista dos documentos utilizados para compor a resposta.
-    
+            O formato da resposta deve ser em formato JSON:
+            {
+                "resposta": A tua resposta à pergunta colocada.
+                "referências": Lista dos documentos utilizados para compor a resposta.
+            }
             A tua tarefa:
             Documentos: {documentos}
             Questão: {query}
