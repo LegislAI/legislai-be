@@ -186,6 +186,137 @@ resource "aws_dynamodb_table" "token_blacklist_table" {
   }
 }
 
+resource "aws_dynamodb_table" "conversations_table" {
+  name           = "conversations"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "conversation_id"
+
+  attribute {
+    name = "conversation_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "conversation_name"
+    type = "S"
+  }
+
+  attribute {
+    name = "conversation_field"
+    type = "S"
+  }
+
+  attribute {
+    name = "updated_at"
+    type = "S"
+  }
+
+  # GSI for querying by updated_at
+  global_secondary_index {
+    name               = "UpdatedAtIndex"
+    hash_key           = "updated_at"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  # GSI for querying by name (if needed)
+  global_secondary_index {
+    name               = "NameIndex"
+    hash_key           = "conversation_name"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  # GSI for querying by field (if needed)
+  global_secondary_index {
+    name               = "FieldIndex"
+    hash_key           = "conversation_field"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  tags = {
+    Name = "conversations_table"
+  }
+}
+
+resource "aws_dynamodb_table" "messages_table" {
+  name           = "messages"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key       = "message_index"
+  range_key      = "conversation_id"
+
+  attribute {
+    name = "message_index"
+    type = "S"
+  }
+
+  attribute {
+    name = "conversation_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "S"
+  }
+
+  attribute {
+    name = "message"
+    type = "S"
+  }
+
+  attribute {
+    name = "sender"
+    type = "S"
+  }
+
+  # attribute {
+  #   name = "attachments"
+  #   type = "L"
+  # }
+
+  # GSI for querying by created_at
+  global_secondary_index {
+    name               = "TimeStampIndex"
+    hash_key           = "timestamp"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  # GSI for querying by sender (if needed)
+  global_secondary_index {
+    name               = "SenderIndex"
+    hash_key           = "sender"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  global_secondary_index {
+    name               = "MessageIndex"
+    hash_key           = "message"
+    projection_type    = "ALL"
+    write_capacity     = 10
+    read_capacity      = 10
+  }
+
+  tags = {
+    Name = "messages_table"
+  }
+}
+
+
+
+
 resource "aws_ecr_repository" "authorization" {
   name = "authorization"
 }
@@ -221,11 +352,8 @@ resource "aws_iam_role" "ecs_task_execution_role" {
       }
     ]
   })
-<<<<<<< HEAD
-=======
 
 
->>>>>>> a4d7cd1 (Database Controller with FAISS and Pinecone integration)
 }
 
 # ECS Task Definition for Authorization API
