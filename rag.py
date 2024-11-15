@@ -1,6 +1,7 @@
 # from Retriever.retriever import Retriever
-from QueryEnhancement.Preprocessing import Preprocessing
 from multiprocessing import freeze_support
+
+from QueryEnhancement.Preprocessing import Preprocessing
 
 
 class RAG:
