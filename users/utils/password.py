@@ -3,7 +3,7 @@ from typing import Tuple
 
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
-from users.utils.logging_config import logger
+from utils.logging_config import logger
 
 
 class SecurityUtils:

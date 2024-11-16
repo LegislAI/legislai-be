@@ -37,7 +37,7 @@ class RAG:
         while not queue.empty():
             queue_element = queue.get()
             results.update(queue_element)
-        print(results)
+        # print(results)
         # Retrieval
         # results = self.retriever.query(query=query, topk=topk, metadata_filter=metadata_filter)
         # print(results)

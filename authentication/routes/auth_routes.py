@@ -2,31 +2,31 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
-from authentication.config.settings import settings
-from authentication.services.dynamo_services import create_user
-from authentication.services.dynamo_services import get_refresh_token
-from authentication.services.dynamo_services import get_user_by_email
-from authentication.services.dynamo_services import revoke_token
-from authentication.services.dynamo_services import update_user_fields
-from authentication.utils.auth import create_access_token
-from authentication.utils.auth import create_refresh_token
-from authentication.utils.auth import JWTBearer
-from authentication.utils.exceptions import UserNotFoundException
-from authentication.utils.logging_config import logger
-from authentication.utils.password import SecurityUtils
-from authentication.utils.schemas import LoginRequest
-from authentication.utils.schemas import LoginResponse
-from authentication.utils.schemas import LogoutRequest
-from authentication.utils.schemas import LogoutResponse
-from authentication.utils.schemas import RefreshTokenRequest
-from authentication.utils.schemas import RefreshTokenResponse
-from authentication.utils.schemas import RegisterRequest
-from authentication.utils.schemas import RegisterResponse
+from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
+from services.dynamo_services import create_user
+from services.dynamo_services import get_refresh_token
+from services.dynamo_services import get_user_by_email
+from services.dynamo_services import revoke_token
+from services.dynamo_services import update_user_fields
+from utils.auth import create_access_token
+from utils.auth import create_refresh_token
+from utils.auth import JWTBearer
+from utils.exceptions import UserNotFoundException
+from utils.logging_config import logger
+from utils.password import SecurityUtils
+from utils.schemas import LoginRequest
+from utils.schemas import LoginResponse
+from utils.schemas import LogoutRequest
+from utils.schemas import LogoutResponse
+from utils.schemas import RefreshTokenRequest
+from utils.schemas import RefreshTokenResponse
+from utils.schemas import RegisterRequest
+from utils.schemas import RegisterResponse
 
 
 route = APIRouter()
@@ -121,10 +121,10 @@ def login_user(payload: LoginRequest):
         )
 
     access_token = create_access_token(
-        email, timedelta(minutes=settings.access_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.access_token_expire_minutes)
     )
     refresh_token = create_refresh_token(
-        email, timedelta(minutes=settings.refresh_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.refresh_token_expire_minutes)
     )
 
     fields_to_update = {
@@ -151,9 +151,7 @@ def login_user(payload: LoginRequest):
     )
 
 
-@route.post(
-    "/logout", response_model=LogoutResponse, dependencies=[Depends(JWTBearer())]
-)
+@route.post("/logout", response_model=LogoutResponse)
 async def logout_user(
     payload: LogoutRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -165,9 +163,23 @@ async def logout_user(
     access_token = credentials.credentials
 
     try:
-        refresh_token = get_refresh_token(email)
-        revoke_token(email, refresh_token, "refresh_token")
-        revoke_token(email, access_token, "access_token")
+        user = get_user_by_email(email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
+        )
+
+    try:
+        refresh_token = get_refresh_token(user["user_id"])
+        revoke_token(user["user_id"], refresh_token, "refresh_token")
+        revoke_token(user["user_id"], access_token, "access_token")
     except Exception as e:
         logger.error(f"Failed to logout user: {str(e)}")
         raise HTTPException(
@@ -179,25 +191,35 @@ async def logout_user(
     return LogoutResponse(message="Successfully logged out")
 
 
-@route.post(
-    "/refresh-token",
-    response_model=RefreshTokenResponse,
-    dependencies=[Depends(JWTBearer())],
-)
+@route.post("/refresh-tokens", response_model=RefreshTokenResponse)
 async def refresh_tokens(
     payload: RefreshTokenRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
-    Refresh access token using refresh token
+    Refresh access and refresh tokens
     """
-    email = payload.email
-    access_token = credentials.credentials
+    email, access_token = payload.email, payload.access_token
 
     try:
-        refresh_token = get_refresh_token(email)
-        revoke_token(email, refresh_token, "refresh_token")
-        revoke_token(email, access_token, "access_token")
+        user = get_user_by_email(email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
+        )
+
+    refresh_token = credentials.credentials
+
+    try:
+        revoke_token(user["user_id"], refresh_token, "refresh_token")
+        revoke_token(user["user_id"], access_token, "access_token")
     except Exception as e:
         logger.error(f"Failed to refresh token: {str(e)}")
         raise HTTPException(
@@ -206,10 +228,10 @@ async def refresh_tokens(
         )
 
     new_access_token = create_access_token(
-        email, timedelta(minutes=settings.access_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.access_token_expire_minutes)
     )
     new_refresh_token = create_refresh_token(
-        email, timedelta(minutes=settings.refresh_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.refresh_token_expire_minutes)
     )
 
     try:

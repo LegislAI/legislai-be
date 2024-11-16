@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from datetime import timezone
 from typing import Dict
 
@@ -8,9 +8,8 @@ from config.settings import settings
 from utils.exceptions import UserNotFoundException
 from utils.logging_config import logger
 from utils.password import SecurityUtils
-from utils.schemas import UsersPlanResponse
-from utils.schemas import UsersRequestPayload
-from utils.schemas import UsersResponse
+from utils.schemas import UserDataResponse
+
 
 security = SecurityUtils()
 boto3_client = boto3.client(
@@ -21,13 +20,13 @@ boto3_client = boto3.client(
 )
 
 
-def get_user_by_email(email: str) -> UsersResponse:
+def get_user_by_email(email: str) -> UserDataResponse:
     """
     Fetch a user by email from the DynamoDB table.
     """
     try:
         response = boto3_client.query(
-            TableName="users",
+            TableName="rag_api",
             IndexName="EmailIndex",
             KeyConditionExpression="email = :email",
             ExpressionAttributeValues={":email": {"S": email}},
@@ -39,7 +38,7 @@ def get_user_by_email(email: str) -> UsersResponse:
             raise UserNotFoundException(f"User with email {email} not found")
 
         user = response["Items"][0]
-        return UsersResponse(
+        return UserDataResponse(
             user_id=user["user_id"]["S"],
             email=user["email"]["S"],
             username=user["username"]["S"],
@@ -51,7 +50,7 @@ def get_user_by_email(email: str) -> UsersResponse:
         raise e
 
 
-def get_user_by_id(user_id) -> UsersResponse:
+def get_user_by_id(user_id) -> UserDataResponse:
     """
     Fetch a user by id from the DynamoDB table.
     """
@@ -65,7 +64,7 @@ def get_user_by_id(user_id) -> UsersResponse:
 
         if response["Items"]:
             user = response["Items"][0]
-            return UsersResponse(
+            return UserDataResponse(
                 user_id=user["user_id"]["S"],
                 email=user["email"]["S"],
                 username=user["username"]["S"],
@@ -113,74 +112,15 @@ def update_user_fields(user_id: str, email: str, fields: Dict[str, str]) -> bool
         raise e
 
 
-def update_user_plan(
-    user_id: str, user_email: str, desired_plan: str
-) -> UsersPlanResponse:
+def update_user_plan(user_id: str, user_email: str, desired_plan: str) -> bool:
     """
     Update the user's plan in the DynamoDB table.
     """
-
-    update_user_fields(user_id, user_email, {"plan": desired_plan})
-    return UsersPlanResponse(user_id=user_id, plan=desired_plan)
-
-
-def update_user_info(payload: UsersRequestPayload, user_id: str) -> UsersResponse:
-
-    username = payload.username
-    password = payload.password
-
-    if not username and not password:
-        raise ValueError("At least one field must be provided to update user info")
-
-    fields = {}
-    if username:
-        fields["username"] = username
-    if password:
-        fields["password"] = security.hash_password(password)
-
-    email = get_user_by_id(user_id).email
-
-    update_user_fields(user_id, email, fields)
-    return UsersResponse(user_id=user_id, username=username)
-
-
-def revoke_token(user_id: str, token: str, type: str):
-    """
-    Revoke user's access or refresh tokens
-    """
     try:
-        token_blacklist.add_to_blacklist(user_id, token, type)
-        logger.info(f"{type} revoked for {user_id}")
-
+        update_user_fields(user_id, user_email, {"plan": desired_plan})
+        return True
     except Exception as e:
-        logger.error(f"Failed to revoke tokens: {str(e)}")
-        raise e
-
-
-def get_refresh_token(user_id: str) -> str:
-    """
-    Fetch the refresh token for the user
-    """
-    try:
-        response = boto3_client.query(
-            TableName="users",
-            KeyConditionExpression="user_id = :user_id",
-            ExpressionAttributeValues={":user_id": {"S": user_id}},
-            ProjectionExpression="refresh_token",
-        )
-
-        if response["Items"]:
-            return response["Items"][0]["refresh_token"]["S"]
-        else:
-            raise UserNotFoundException(f"Refresh token not found for user: {user_id}")
-
-    except UserNotFoundException as e:
-        logger.error(f"Error fetching refresh token: {str(e)}")
-        raise e
-
-    except ClientError as e:
-        logger.error(f"Error fetching refresh token: {str(e)}")
-        raise e
+        raise
 
 
 class TokenBlacklist:

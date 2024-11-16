@@ -1,6 +1,6 @@
 from config.settings import settings
 from fastapi import FastAPI
-from routes.users_routes import route as users_routes
+from routes.rag_api_routes import route as rag_api_routes
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
@@ -20,9 +20,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(users_routes, prefix="/users", tags=["Users"])
+app.include_router(rag_api_routes, prefix="", tags=["rag_api"])
 
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8002, reload=True)
