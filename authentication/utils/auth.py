@@ -48,7 +48,7 @@ def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) ->
         )
 
     to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.refresh_secret_key, settings.algorithm)
+    encoded_jwt = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
 
     return encoded_jwt
 
@@ -110,6 +110,9 @@ class JWTBearer(HTTPBearer):
             logger.error("Invalid or expired token")
             raise HTTPException(status_code=403, detail="Invalid or expired token.")
 
+        print(
+            "token time left:", payload["exp"] - datetime.now(timezone.utc).timestamp()
+        )
         email = payload["sub"]
 
         try:

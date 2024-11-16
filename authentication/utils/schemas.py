@@ -37,6 +37,7 @@ class LogoutResponse(BaseModel):
 
 class RefreshTokenRequest(BaseModel):
     email: EmailStr
+    access_token: str
 
 
 class RefreshTokenResponse(BaseModel):

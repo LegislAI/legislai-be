@@ -153,7 +153,7 @@ class TokenBlacklist:
         self.client = dynamodb_client
         self.table_name = "token_blacklist"
 
-    def add_to_blacklist(self, email: str, auth_token: str, type: str):
+    def add_to_blacklist(self, user_id: str, auth_token: str, type: str):
         """
         Add a token to the blacklist
         """
@@ -161,7 +161,7 @@ class TokenBlacklist:
             self.client.put_item(
                 TableName=self.table_name,
                 Item={
-                    "email": {"S": email},
+                    "user_id": {"S": user_id},
                     "auth_token": {"S": auth_token},
                     "type": {"S": type},
                     "blacklisted_at": {"S": str(datetime.now(timezone.utc))},
@@ -172,15 +172,15 @@ class TokenBlacklist:
             logger.error(f"Failed to blacklist auth_token: {str(e)}")
             raise e
 
-    def get_blacklisted_tokens(self, email: str):
+    def get_blacklisted_tokens(self, user_id: str):
         """
         Fetch all blacklisted tokens for a user
         """
         try:
             response = self.client.query(
                 TableName=self.table_name,
-                KeyConditionExpression="email = :email",
-                ExpressionAttributeValues={":email": {"S": email}},
+                KeyConditionExpression="user_id = :user_id",
+                ExpressionAttributeValues={":user_id": {"S": user_id}},
             )
 
             tokens = [item["auth_token"]["S"] for item in response.get("Items", [])]
@@ -190,16 +190,16 @@ class TokenBlacklist:
             logger.error(f"Failed to fetch blacklisted tokens: {str(e)}")
             raise e
 
-    def is_blacklisted(self, email: str, auth_token: str) -> bool:
+    def is_blacklisted(self, user_id: str, auth_token: str) -> bool:
         """
         Check if a token has been in the blacklist
         """
         try:
             response = self.client.query(
                 TableName=self.table_name,
-                KeyConditionExpression="email = :email AND auth_token = :auth_token",
+                KeyConditionExpression="user_id = :user_id AND auth_token = :auth_token",
                 ExpressionAttributeValues={
-                    ":email": {"S": email},
+                    ":user_id": {"S": user_id},
                     ":auth_token": {"S": auth_token},
                 },
             )
@@ -210,13 +210,13 @@ class TokenBlacklist:
             logger.error(f"Failed to check token blacklist: {str(e)}")
             raise e
 
-    def add_user_active_refresh_token_to_blacklist(self, email: str):
+    def add_user_active_refresh_token_to_blacklist(self, user_id: str):
         """
         Add active refresh token to the blacklist
         """
         try:
-            refresh_token = get_refresh_token(email)
-            self.add_to_blacklist(email, refresh_token, "refresh")
+            refresh_token = get_refresh_token(user_id)
+            self.add_to_blacklist(user_id, refresh_token, "refresh")
 
         except Exception as e:
             logger.error(f"Failed to blacklist active refresh_token: {str(e)}")
@@ -226,38 +226,42 @@ class TokenBlacklist:
 token_blacklist = TokenBlacklist(boto3_client)
 
 
-def revoke_token(email: str, token: str, type: str):
+def revoke_token(user_id: str, token: str, type: str):
     """
     Revoke user's access or refresh tokens
     """
     try:
-        token_blacklist.add_to_blacklist(email, token, type)
-        logger.info(f"{type} revoked for {email}")
+        token_blacklist.add_to_blacklist(user_id, token, type)
+        logger.info(f"{type} revoked for {user_id}")
 
     except Exception as e:
         logger.error(f"Failed to revoke tokens: {str(e)}")
         raise e
 
 
-def get_refresh_token(email: str) -> str:
+def get_refresh_token(user_id: str) -> str:
     """
     Fetch the refresh token for the user
     """
     try:
         response = boto3_client.query(
             TableName="users",
-            IndexName="EmailIndex",
-            KeyConditionExpression="email = :email",
-            ExpressionAttributeValues={":email": {"S": email}},
+            KeyConditionExpression="user_id = :user_id",
+            ExpressionAttributeValues={":user_id": {"S": user_id}},
             ProjectionExpression="refresh_token",
         )
 
         if response["Items"]:
-            user = response["Items"][0]
-            return user["refresh_token"]["S"]
+            return response["Items"][0]["refresh_token"]["S"]
+        else:
+            raise UserNotFoundException(f"Refresh token not found for user: {user_id}")
+
+    except UserNotFoundException as e:
+        logger.error(f"Error fetching refresh token: {str(e)}")
+        raise e
 
     except ClientError as e:
-        logger.error(f"Error fetching refresh token: {e.response['Error']['Message']}")
+        logger.error(f"Error fetching refresh token: {str(e)}")
         raise e
 
 
