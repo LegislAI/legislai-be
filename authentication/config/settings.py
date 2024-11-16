@@ -6,8 +6,6 @@ load_dotenv()
 
 class Settings(BaseSettings):
     secret_key: str
-    refresh_secret_key: str
-    reset_token_secret: str
     algorithm: str
     access_token_expire_minutes: int
     refresh_token_expire_minutes: int

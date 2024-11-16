@@ -121,10 +121,10 @@ def login_user(payload: LoginRequest):
         )
 
     access_token = create_access_token(
-        email, timedelta(minutes=settings.access_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.access_token_expire_minutes)
     )
     refresh_token = create_refresh_token(
-        email, timedelta(minutes=settings.refresh_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.refresh_token_expire_minutes)
     )
 
     fields_to_update = {
@@ -151,9 +151,7 @@ def login_user(payload: LoginRequest):
     )
 
 
-@route.post(
-    "/logout", response_model=LogoutResponse, dependencies=[Depends(JWTBearer())]
-)
+@route.post("/logout", response_model=LogoutResponse)
 async def logout_user(
     payload: LogoutRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -165,9 +163,23 @@ async def logout_user(
     access_token = credentials.credentials
 
     try:
-        refresh_token = get_refresh_token(email)
-        revoke_token(email, refresh_token, "refresh_token")
-        revoke_token(email, access_token, "access_token")
+        user = get_user_by_email(email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
+        )
+
+    try:
+        refresh_token = get_refresh_token(user["user_id"])
+        revoke_token(user["user_id"], refresh_token, "refresh_token")
+        revoke_token(user["user_id"], access_token, "access_token")
     except Exception as e:
         logger.error(f"Failed to logout user: {str(e)}")
         raise HTTPException(
@@ -179,25 +191,35 @@ async def logout_user(
     return LogoutResponse(message="Successfully logged out")
 
 
-@route.post(
-    "/refresh-token",
-    response_model=RefreshTokenResponse,
-    dependencies=[Depends(JWTBearer())],
-)
+@route.post("/refresh-tokens", response_model=RefreshTokenResponse)
 async def refresh_tokens(
     payload: RefreshTokenRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
-    Refresh access token using refresh token
+    Refresh access and refresh tokens
     """
-    email = payload.email
-    access_token = credentials.credentials
+    email, access_token = payload.email, payload.access_token
 
     try:
-        refresh_token = get_refresh_token(email)
-        revoke_token(email, refresh_token, "refresh_token")
-        revoke_token(email, access_token, "access_token")
+        user = get_user_by_email(email)
+    except UserNotFoundException as e:
+        logger.error(f"User not found: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
+        )
+    except Exception as e:
+        logger.error(f"Failed to fetch user: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed login attempt",
+        )
+
+    refresh_token = credentials.credentials
+
+    try:
+        revoke_token(user["user_id"], refresh_token, "refresh_token")
+        revoke_token(user["user_id"], access_token, "access_token")
     except Exception as e:
         logger.error(f"Failed to refresh token: {str(e)}")
         raise HTTPException(
@@ -206,10 +228,10 @@ async def refresh_tokens(
         )
 
     new_access_token = create_access_token(
-        email, timedelta(minutes=settings.access_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.access_token_expire_minutes)
     )
     new_refresh_token = create_refresh_token(
-        email, timedelta(minutes=settings.refresh_token_expire_minutes)
+        user["user_id"], timedelta(minutes=settings.refresh_token_expire_minutes)
     )
 
     try:
