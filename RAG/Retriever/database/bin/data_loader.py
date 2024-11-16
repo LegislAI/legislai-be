@@ -5,8 +5,8 @@ import os
 from argparse import ArgumentParser
 from typing import List
 
-from RAG.bin.models import EmbeddingDocument
-from RAG.database.DatabaseController import DatabaseController as dbc
+from RAG.Retriever.database.bin.models import EmbeddingDocument
+from RAG.Retriever.database.DatabaseController import DatabaseController as dbc
 
 database_controller = dbc()
 

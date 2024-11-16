@@ -6,8 +6,7 @@ import re
 import subprocess
 import time
 from datetime import datetime
-from multiprocessing import Process
-from multiprocessing import Queue
+from queue import Queue
 from typing import Optional
 
 from Retriever.database.bin.utils import BM250RerankingModel
@@ -36,18 +35,25 @@ class Retriever:
         self,
         query: Optional[str],
         topk: Optional[int],
+        queue: Optional[Queue],
         metadata_filter: Optional[dict] = {},
     ):
-        LOG.info(f"Received query: {query} with filters: {metadata_filter}")
-        start = time.time()
-        results = self.databasecontroller.query(
-            query=query, top_k=topk, metadata_filter=metadata_filter
-        )
-        LOG.info(f"Results for query:{query} in {time.time()-start} seconds")
-        results = self.rerank_results(results, query, metadata_filter)
-        end = time.time()
-        LOG.info(f"Results for query:{query} in {end-start} seconds")
-        return results
+        try:
+            LOG.info(f"Received query: {query} with filters: {metadata_filter}")
+            start = time.time()
+            results = self.databasecontroller.query(query=query, top_k=topk)
+            LOG.info(f"Results for query:{query} in {time.time()-start} seconds")
+            results = self.rerank_results(results, query, metadata_filter)
+            end = time.time()
+            LOG.info(f"Results for query:{query} in {end-start} seconds")
+        except:
+            LOG.error(f"Error querying database for query: {query}")
+            results = []
+        finally:
+            if queue:
+                queue.put({query: results})
+            else:
+                return results
 
     # TODO: implement processing based on the metadata_filter
     def process_results(self, results, metadata_filter):
@@ -145,30 +151,6 @@ class Retriever:
             process_result = process_results[result_id]
             process_result["score"] = result["score"]
             reranked_results.append(process_result)
-        # for result in process_results:
-        #     result_id = result["id"]
-        #     print(result_id)
-        #     if result_id not in interpolated_ranked_results:
-        #         LOG.info(f"Document {result_id} not found in the interpolated results.")
-        #         continue
-        #     print(result)
-        #     interpolated_score = interpolated_ranked_results[result_id]
-        #     text = result["text"]
-        #     metadata = result["metadata"]
-        #     {
-        #         "id": result["id"],
-        #         "score": interpolated_score,
-        #         "text" : text,
-        #         "theme" : metadata.get("theme", ""),
-        #         "source_url" : metadata.get("link", ""),
-        #         "text" : result.get("text", ""),
-        #         "law_name" : metadata.get("law_name", ""),
-        #         "title" : metadata.get("title", ""),
-        #         "epigrafe" : metadata.get("epigrafe", ""),
-        #     }
-        #     reranked_results.append(result)
-
-        print(reranked_results)
         return reranked_results
 
     def llm_rerank(self, query, results):
@@ -267,7 +249,8 @@ class Retriever:
             return {}
 
 
-if __name__ == "__main__":
-    retriever = Retriever()
-    results = retriever.query(query="Como posso extinguir uma associação?", topk=5)
-    print(results)
+# if __name__ == "__main__":
+#     retriever = Retriever()
+#     results = retriever.query(query="Como posso extinguir uma associação?", topk=5, metadata_filter={
+#     })
+#     print(results)
