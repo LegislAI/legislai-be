@@ -1,20 +1,7 @@
-import os
-from dotenv import load_dotenv
 import boto3
-
-load_dotenv()
-
-aws_key_id = os.getenv("AWS_ACCESS_KEY_ID")
-aws_secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
-aws_region = os.getenv("AWS_REGION")
-
-print(f"Using AWS credentials: {aws_key_id}, {aws_secret_key}, {aws_region}")
 
 boto3_client = boto3.client(
     "dynamodb",
-    aws_access_key_id=f"{aws_key_id}",
-    aws_secret_access_key=f"{aws_secret_key}",
-    region_name=f"{aws_region}",
 )
 
 

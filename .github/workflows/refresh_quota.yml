@@ -32,8 +32,12 @@ jobs:
           pip install -r requirements.txt
         shell: bash
 
-      - run: echo ${{ vars.AWS_ACCESS_KEY_ID }}
-        shell: bash
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Refresh Users Daily Quota
         run: python3 ./bin/refresh_users_quota.py
