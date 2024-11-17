@@ -22,5 +22,7 @@ class Settings(BaseSettings):
     aws_secret_access_key: str
     aws_region: str
 
+    stripe_api_key: str
+
 
 settings = Settings()
