@@ -13,6 +13,7 @@ from services.dynamo_services import get_refresh_token
 from services.dynamo_services import get_user_by_email
 from services.dynamo_services import revoke_token
 from services.dynamo_services import update_user_fields
+from services.stripe_services import StripeServices
 from utils.auth import create_access_token
 from utils.auth import create_refresh_token
 from utils.auth import JWTBearer
@@ -31,6 +32,7 @@ from utils.schemas import RegisterResponse
 
 route = APIRouter()
 security = SecurityUtils()
+stripe_services = StripeServices()
 
 
 @route.post("/register", response_model=RegisterResponse)
@@ -71,7 +73,11 @@ def register_user(payload: RegisterRequest):
         )
 
     try:
-        if create_user(payload):
+        user = create_user(payload)
+        stripe_user = stripe_services.create_customer(email, user["user_id"], username)
+        if user and stripe_user:
+            # create a subscription to the free plan
+            stripe_services.create_subscription(stripe_user.id, "free", None)
             logger.info(f"User {email} created successfully")
             return RegisterResponse(message=f"User {email} created successfully")
     except Exception as e:
