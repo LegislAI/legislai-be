@@ -32,13 +32,13 @@ jobs:
           pip install -r requirements.txt
         shell: bash
 
-      - run: echo ${{ env.AWS_ACCESS_KEY_ID }}
+      - run: echo ${{ vars.AWS_ACCESS_KEY_ID }}
         shell: bash
 
       - name: Refresh Users Daily Quota
         run: python3 ./bin/refresh_users_quota.py
         shell: bash
         env:
-          AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }},
-          AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }},
-          AWS_REGION: ${{ env.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ vars.AWS_ACCESS_KEY_ID }},
+          AWS_SECRET_ACCESS_KEY: ${{ vars.AWS_SECRET_ACCESS_KEY }},
+          AWS_REGION: ${{ vars.AWS_REGION }}
