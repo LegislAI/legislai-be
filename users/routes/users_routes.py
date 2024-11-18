@@ -175,6 +175,7 @@ def update_user_plan(
     except DeclinedPaymentMethodException as e:
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
+            detail="Payment method declined",
         )
 
     except UserNotFoundException:
