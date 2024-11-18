@@ -4,10 +4,6 @@ name: Refresh Users Daily Quota
 on:
   schedule:
     - cron: '0 0 * * SUN'
-  pull_request:
-  push:
-    branches:
-      - "*"
 
 jobs:
   refresh-quota:
