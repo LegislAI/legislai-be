@@ -112,6 +112,7 @@ class JWTBearer(HTTPBearer):
 
         user_id = payload["sub"]
 
+
         try:
             if token_blacklist.is_blacklisted(user_id, token):
                 token_blacklist.add_user_active_refresh_token_to_blacklist(user_id)

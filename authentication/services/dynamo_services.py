@@ -263,3 +263,7 @@ def get_refresh_token(user_id: str) -> str:
     except ClientError as e:
         logger.error(f"Error fetching refresh token: {str(e)}")
         raise e
+
+    except ClientError as e:
+        logger.error(f"Error fetching refresh token: {str(e)}")
+        raise e
