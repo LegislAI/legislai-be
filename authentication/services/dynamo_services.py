@@ -4,12 +4,12 @@ from datetime import timezone
 from typing import Dict
 
 import boto3
-from authentication.config.settings import settings
-from authentication.utils.exceptions import UserNotFoundException
-from authentication.utils.logging_config import logger
-from authentication.utils.password import SecurityUtils
-from authentication.utils.schemas import RegisterRequest
 from botocore.exceptions import ClientError
+from config.settings import settings
+from utils.exceptions import UserNotFoundException
+from utils.logging_config import logger
+from utils.password import SecurityUtils
+from utils.schemas import RegisterRequest
 
 security = SecurityUtils()
 boto3_client = boto3.client(
@@ -97,6 +97,8 @@ def create_user(payload: RegisterRequest) -> Dict:
                 "username": {"S": username},
                 "password": {"S": hashed_password},
                 "created_at": {"S": str(datetime.now(timezone.utc))},
+                "plan_name": {"S": "free"},
+                "daily_queries": {"S": "0"},
             },
         )
         logger.info(f"User with email {email} created!")

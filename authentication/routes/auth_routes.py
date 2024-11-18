@@ -2,26 +2,7 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
-from authentication.config.settings import settings
-from authentication.services.dynamo_services import create_user
-from authentication.services.dynamo_services import get_refresh_token
-from authentication.services.dynamo_services import get_user_by_email
-from authentication.services.dynamo_services import revoke_token
-from authentication.services.dynamo_services import update_user_fields
-from authentication.utils.auth import create_access_token
-from authentication.utils.auth import create_refresh_token
-from authentication.utils.auth import JWTBearer
-from authentication.utils.exceptions import UserNotFoundException
-from authentication.utils.logging_config import logger
-from authentication.utils.password import SecurityUtils
-from authentication.utils.schemas import LoginRequest
-from authentication.utils.schemas import LoginResponse
-from authentication.utils.schemas import LogoutRequest
-from authentication.utils.schemas import LogoutResponse
-from authentication.utils.schemas import RefreshTokenRequest
-from authentication.utils.schemas import RefreshTokenResponse
-from authentication.utils.schemas import RegisterRequest
-from authentication.utils.schemas import RegisterResponse
+from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException

@@ -153,7 +153,7 @@ class StripeServices:
                 user_id, plan_price, payment_method.id
             )
             return subscription
-        except stripe.error.CardError as e:
+        except stripe.InvalidRequestError as e:
             raise DeclinedPaymentMethodException()
 
         except Exception as e:
