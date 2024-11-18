@@ -2,31 +2,31 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 
-from config.settings import settings
+from authentication.config.settings import settings
+from authentication.services.dynamo_services import create_user
+from authentication.services.dynamo_services import get_refresh_token
+from authentication.services.dynamo_services import get_user_by_email
+from authentication.services.dynamo_services import revoke_token
+from authentication.services.dynamo_services import update_user_fields
+from authentication.utils.auth import create_access_token
+from authentication.utils.auth import create_refresh_token
+from authentication.utils.auth import JWTBearer
+from authentication.utils.exceptions import UserNotFoundException
+from authentication.utils.logging_config import logger
+from authentication.utils.password import SecurityUtils
+from authentication.utils.schemas import LoginRequest
+from authentication.utils.schemas import LoginResponse
+from authentication.utils.schemas import LogoutRequest
+from authentication.utils.schemas import LogoutResponse
+from authentication.utils.schemas import RefreshTokenRequest
+from authentication.utils.schemas import RefreshTokenResponse
+from authentication.utils.schemas import RegisterRequest
+from authentication.utils.schemas import RegisterResponse
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
-from services.dynamo_services import create_user
-from services.dynamo_services import get_refresh_token
-from services.dynamo_services import get_user_by_email
-from services.dynamo_services import revoke_token
-from services.dynamo_services import update_user_fields
-from utils.auth import create_access_token
-from utils.auth import create_refresh_token
-from utils.auth import JWTBearer
-from utils.exceptions import UserNotFoundException
-from utils.logging_config import logger
-from utils.password import SecurityUtils
-from utils.schemas import LoginRequest
-from utils.schemas import LoginResponse
-from utils.schemas import LogoutRequest
-from utils.schemas import LogoutResponse
-from utils.schemas import RefreshTokenRequest
-from utils.schemas import RefreshTokenResponse
-from utils.schemas import RegisterRequest
-from utils.schemas import RegisterResponse
 
 
 route = APIRouter()
@@ -235,20 +235,6 @@ async def refresh_tokens(
     )
 
     try:
-        user = get_user_by_email(payload.email)
-    except UserNotFoundException as e:
-        logger.error(f"User not found: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
-        )
-    except Exception as e:
-        logger.error(f"Failed to fetch user: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to refresh tokens",
-        )
-
-    try:
         update_user_fields(
             user["user_id"], user["email"], {"refresh_token": new_refresh_token}
         )
@@ -263,97 +249,3 @@ async def refresh_tokens(
         access_token=new_access_token,
         refresh_token=new_refresh_token,
     )
-
-
-# @route.post("/request-password-reset", response_model=PasswordResetResponse)
-# async def request_password_reset(request: PasswordResetRequest):
-#     """
-#     Request a password reset token
-
-#     This endpoint:
-#     1. Validates the email exists
-#     2. Creates a reset token
-#     3. Sends an email with the reset link
-#     """
-#     try:
-#         # Check if user exists
-#         user = get_user(boto3_client, request.email)
-#         if not user:
-#             # Return success even if email doesn't exist (security best practice)
-#             return PasswordResetResponse(
-#                 message="If your email is registered, you will receive reset instructions."
-#             )
-
-#         # Create reset token
-#         reset_token = create_password_reset_token(user["user_id"])
-
-#         # Send reset email
-#         email_sent = send_reset_email(request.email, reset_token)
-#         if not email_sent:
-#             raise HTTPException(
-#                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#                 detail="Failed to send reset email"
-#             )
-
-#         logger.info(f"Password reset requested for user: {request.email}")
-#         return PasswordResetResponse(
-#             message="If your email is registered, you will receive reset instructions."
-#         )
-
-#     except Exception as e:
-#         logger.error(f"Password reset request failed: {str(e)}")
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail="Failed to process password reset request"
-#         )
-
-# @route.post("/reset-password", response_model=PasswordResetResponse)
-# async def reset_password(request: ResetPasswordConfirm):
-#     """
-#     Reset password using the reset token
-
-#     This endpoint:
-#     1. Validates the reset token
-#     2. Updates the user's password
-#     3. Invalidates all existing sessions
-#     """
-#     try:
-#         # Verify token and get user_id
-#         user_id = verify_reset_token(request.token)
-#         if not user_id:
-#             raise HTTPException(
-#                 status_code=status.HTTP_400_BAD_REQUEST,
-#                 detail="Invalid reset token"
-#             )
-
-#         # Get user details
-#         user = get_user_by_id(boto3_client, user_id)
-#         if not user:
-#             raise HTTPException(
-#                 status_code=status.HTTP_404_NOT_FOUND,
-#                 detail="User not found"
-#             )
-
-#         hashed_password = security.get_password_hash(request.new_password)
-
-#         # Update password in DynamoDB
-#         fields_to_update = {
-#             "password": hashed_password,
-#             "password_changed_at": str(datetime.now(timezone.utc))
-#         }
-#         update_user_fields(boto3_client, user_id, user["email"], fields_to_update)
-
-#         # Optional: Invalidate all existing sessions for this user
-#         # This would require implementing a way to track and invalidate all tokens
-
-#         logger.info(f"Password reset successful for user: {user['email']}")
-#         return PasswordResetResponse(message="Password has been reset successfully")
-
-#     except HTTPException as he:
-#         raise he
-#     except Exception as e:
-#         logger.error(f"Password reset failed: {str(e)}")
-#         raise HTTPException(
-#             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-#             detail="Failed to reset password"
-#         )

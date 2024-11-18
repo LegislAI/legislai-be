@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(rag_api_routes, prefix="", tags=["rag_api"])
+app.include_router(rag_api_routes, prefix="rag", tags=["rag_api"])
 
 if __name__ == "__main__":
     import uvicorn

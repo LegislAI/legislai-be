@@ -4,10 +4,10 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-from utils.logging_config import logger
-from config.settings import settings
-from services.dynamo_services import token_blacklist
-from utils.exceptions import TokenRevokedException
+from authentication.utils.logging_config import logger
+from authentication.config.settings import settings
+from authentication.services.dynamo_services import token_blacklist
+from authentication.utils.exceptions import TokenRevokedException
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
@@ -110,14 +110,11 @@ class JWTBearer(HTTPBearer):
             logger.error("Invalid or expired token")
             raise HTTPException(status_code=403, detail="Invalid or expired token.")
 
-        print(
-            "token time left:", payload["exp"] - datetime.now(timezone.utc).timestamp()
-        )
-        email = payload["sub"]
+        user_id = payload["sub"]
 
         try:
-            if token_blacklist.is_blacklisted(email, token):
-                token_blacklist.add_user_active_refresh_token_to_blacklist(email)
+            if token_blacklist.is_blacklisted(user_id, token):
+                token_blacklist.add_user_active_refresh_token_to_blacklist(user_id)
                 raise TokenRevokedException("Token has been revoked")
         except TokenRevokedException as e:
             logger.error(f"Token has been revoked: {str(e)}")
