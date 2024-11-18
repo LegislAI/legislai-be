@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
-from api import app  # Adjust this to your app module
+from authentication.main import app
 from fastapi.testclient import TestClient
 
 client = TestClient(app)

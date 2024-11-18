@@ -8,8 +8,12 @@ from pathlib import Path
 from typing import List
 from typing import Tuple
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("scraper_log.log"), logging.StreamHandler()],
+)
 LOG = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
 
 OS = os.uname().sysname
 
@@ -75,10 +79,19 @@ def setup_venv(envs: List[Tuple[Path, Path]]):
 
         if (env_path.parent / "requirements.txt").exists():
             LOG.info("Installing dependencies...")
+            print(env_path.parent)
+            print(venv_name)
             subprocess.run(
-                ["pip", "install", "-r", env_path.parent / "requirements.txt"],
+                [
+                    "pyenv",
+                    "exec",
+                    "pip",
+                    "install",
+                    "-r",
+                    env_path.parent / "requirements.txt",
+                ],
                 check=True,
-                capture_output=True,
+                env={"PYENV_VERSION": venv_name},
             )
         else:
             LOG.info("No requirements.txt found.")

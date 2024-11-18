@@ -9217,3 +9217,43 @@ Stacktrace:
 2024-10-20 16:25:24,269 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x104ba0590>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bd8679dc3e404e9e83a0bf1c3596dc04
 2024-10-20 16:25:24,274 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1077a76e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bd8679dc3e404e9e83a0bf1c3596dc04
 2024-10-20 16:25:24,289 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1077a7890>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/bd8679dc3e404e9e83a0bf1c3596dc04
+2024-11-16 11:33:35,237 - ERROR - Please specify the type of run: 'daily', 'full' or 'theme'
+2024-11-16 11:34:05,082 - INFO - Scraping theme: Arrendamento
+2024-11-16 11:34:09,686 - INFO - Scraping page: https://diariodarepublica.pt/dr/legislacao-consolidada-pesquisa/arrendamento
+2024-11-16 11:34:13,509 - ERROR - An error occurred while scraping: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=130.0.6723.117)
+Stacktrace:
+0   chromedriver                        0x00000001048f95dc cxxbridge1$str$ptr + 3653648
+1   chromedriver                        0x00000001048f1e3c cxxbridge1$str$ptr + 3623024
+2   chromedriver                        0x000000010435c100 cxxbridge1$string$len + 88404
+3   chromedriver                        0x0000000104337b78 core::str::slice_error_fail::h1cab30ac4b13c655 + 3792
+4   chromedriver                        0x00000001043c4664 cxxbridge1$string$len + 515768
+5   chromedriver                        0x00000001043d7630 cxxbridge1$string$len + 593540
+6   chromedriver                        0x00000001043930fc cxxbridge1$string$len + 313680
+7   chromedriver                        0x0000000104393d4c cxxbridge1$string$len + 316832
+8   chromedriver                        0x00000001048c464c cxxbridge1$str$ptr + 3436672
+9   chromedriver                        0x00000001048c7988 cxxbridge1$str$ptr + 3449788
+10  chromedriver                        0x00000001048aba5c cxxbridge1$str$ptr + 3335312
+11  chromedriver                        0x00000001048c824c cxxbridge1$str$ptr + 3452032
+12  chromedriver                        0x000000010489cce8 cxxbridge1$str$ptr + 3274524
+13  chromedriver                        0x00000001048e29dc cxxbridge1$str$ptr + 3560464
+14  chromedriver                        0x00000001048e2b58 cxxbridge1$str$ptr + 3560844
+15  chromedriver                        0x00000001048f1ad4 cxxbridge1$str$ptr + 3622152
+16  libsystem_pthread.dylib             0x000000018bf41f94 _pthread_start + 136
+17  libsystem_pthread.dylib             0x000000018bf3cd34 thread_start + 8
+
+2024-11-16 11:34:14,150 - ERROR - An error occurred while scraping: cannot access local variable 'driver' where it is not associated with a value
+2024-11-16 11:34:14,158 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab21b0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a801a5b156e6401ffa57d6545ff75dc9
+2024-11-16 11:34:14,161 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab2840>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a801a5b156e6401ffa57d6545ff75dc9
+2024-11-16 11:34:14,163 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab2de0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/a801a5b156e6401ffa57d6545ff75dc9
+2024-11-16 11:34:14,169 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x101734980>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430/execute/sync
+2024-11-16 11:34:14,170 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab2f90>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430/execute/sync
+2024-11-16 11:34:14,171 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab31d0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430/execute/sync
+2024-11-16 11:34:14,171 - ERROR - An error occurred while scraping: HTTPConnectionPool(host='localhost', port=60706): Max retries exceeded with url: /session/add03ac73c131211126bd58c57a36430/execute/sync (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab3410>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2024-11-16 11:34:14,172 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab3650>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430
+2024-11-16 11:34:14,173 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab3830>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430
+2024-11-16 11:34:14,174 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x103ab39e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/add03ac73c131211126bd58c57a36430
+2024-11-16 11:34:46,832 - WARNING - Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b1730>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38
+2024-11-16 11:34:46,833 - WARNING - Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b15e0>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38
+2024-11-16 11:34:46,834 - WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1052b1820>: Failed to establish a new connection: [Errno 61] Connection refused')': /session/442ff27afc520d032b81a87dcd5def38

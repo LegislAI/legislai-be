@@ -1,7 +1,7 @@
-from authentication.config.settings import settings
-from authentication.routes.auth_routes import route as auth_routes
-from authentication.routes.google_routes import route as google_routes
+from config.settings import settings
 from fastapi import FastAPI
+from routes.auth_routes import route as auth_routes
+from routes.google_routes import route as google_routes
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
