@@ -1,0 +1,487 @@
+{
+  "generate_answer": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "context": {
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo I - Sec\u00e7ao I ": [
+            {
+              "article_number": " Artigo 11.\u00ba",
+              "date": "1985-03-14",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-12o-inicio-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2105%23a-seccao-2284",
+              "article_name": "Condu\u00e7\u00e3o de ve\u00edculos e animais",
+              "content": "1 - Todo o ve\u00edculo ou animal que circule na via p\u00fablica deve ter um condutor, salvo as exce\u00e7\u00f5es previstas neste C\u00f3digo.\n2 - Os condutores devem, durante a condu\u00e7\u00e3o, abster-se da pr\u00e1tica de quaisquer atos que sejam suscet\u00edveis de prejudicar o exerc\u00edcio da condu\u00e7\u00e3o com seguran\u00e7a.\n3 - O condutor de um ve\u00edculo n\u00e3o pode p\u00f4r em perigo os utilizadores vulner\u00e1veis.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "C\u00f3digo do Estrada - Artigo 12.\u00ba",
+              "date": " 1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-11o-conducao-de-veiculos-e-animais\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2104%23a-seccao-2284",
+              "article_name": "Inicio da Marcha",
+              "content": "1 - Os condutores n\u00e3o podem iniciar ou retomar a marcha sem assinalarem com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": " Artigo 13.\u00ba",
+              "date": "1991-09-08",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-13o-posicao-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2106%23a-seccao-2284",
+              "article_name": "Posi\u00e7\u00e3o de Marcha",
+              "content": "1 - A posi\u00e7\u00e3o de marcha dos ve\u00edculos deve fazer-se pelo lado direito da faixa de rodagem, conservando das bermas ou passeios uma dist\u00e2ncia suficiente que permita evitar acidentes.\n2 - Quando necess\u00e1rio, pode ser utilizado o lado esquerdo da faixa de rodagem para ultrapassar ou mudar de dire\u00e7\u00e3o.\n3 - Sempre que, no mesmo sentido, existam duas ou mais vias de tr\u00e2nsito, este deve fazer-se pela via mais \u00e0 direita, podendo, no entanto, utilizar-se outra se n\u00e3o houver lugar naquela e, bem assim, para ultrapassar ou mudar de dire\u00e7\u00e3o.\n4 - Quem infringir o disposto nos n.os 1 e 3 \u00e9 sancionado com coima de (euro) 60 a (euro) 300, salvo o disposto no n\u00famero seguinte.\n5 - Quem circular em sentido oposto ao estabelecido \u00e9 sancionado com coima de (euro) 250 a (euro) 1250."
+            },
+            {
+              "article_number": "Artigo 14.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-pluralidade-de-vias-de-transito-dentro-das-localidades\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2107%23a-seccao-2284",
+              "article_name": "Pluralidade de vias de tr\u00e2nsito dentro das localidades",
+              "content": "1 - (Revogado.)\n2 - Dentro das localidades, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino, s\u00f3 lhes sendo permitida a mudan\u00e7a para outra, depois de tomadas as devidas precau\u00e7\u00f5es, a fim de mudar de dire\u00e7\u00e3o, ultrapassar, parar ou estacionar.\n3 - (Revogado.)\n4 - Quem infringir o disposto no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300"
+            },
+            {
+              "article_number": "Artigo 14-A.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-a-rotundas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2108%23a-seccao-2284",
+              "article_name": "Rotundas",
+              "content": "1 - Nas rotundas, o condutor deve adotar o seguinte comportamento:\na) Entrar na rotunda ap\u00f3s ceder a passagem aos ve\u00edculos que nela circulam, qualquer que seja a via por onde o fa\u00e7am;\nb) Se pretender sair da rotunda na primeira via de sa\u00edda, deve ocupar a via da direita;\nc) Se pretender sair da rotunda por qualquer das outras vias de sa\u00edda, s\u00f3 deve ocupar a via de tr\u00e2nsito mais \u00e0 direita ap\u00f3s passar a via de sa\u00edda imediatamente anterior \u00e0quela por onde pretende sair, aproximando-se progressivamente desta e mudando de via depois de tomadas as devidas precau\u00e7\u00f5es;\nd) Sem preju\u00edzo do disposto nas al\u00edneas anteriores, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino.\n2 - Os condutores de ve\u00edculos de tra\u00e7\u00e3o animal ou de animais, de veloc\u00edpedes e de autom\u00f3veis pesados, podem ocupar a via de tr\u00e2nsito mais \u00e0 direita, sem preju\u00edzo do dever de facultar a sa\u00edda aos condutores que circulem nos termos da al\u00ednea c) do n.\u00ba 1.\n3 - Quem infringir o disposto nas al\u00edneas b), c) e d) do n.\u00ba 1 e no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 15.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-15o-transito-em-filas-paralelas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2109%23a-seccao-2284",
+              "article_name": "Tr\u00e2nsito em filas paralelas",
+              "content": "1 - Sempre que, existindo mais de uma via de tr\u00e2nsito no mesmo sentido, os ve\u00edculos, devido \u00e0 intensidade da circula\u00e7\u00e3o, ocupem toda a largura da faixa de rodagem destinada a esse sentido, estando a velocidade de cada um dependente da marcha dos que o precedem, os condutores n\u00e3o podem sair da respetiva fila para outra mais \u00e0 direita, salvo para mudar de dire\u00e7\u00e3o, parar ou estacionar.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 120 a (euro) 600."
+            },
+            {
+              "article_number": "Artigo 16.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-16o-placas-postes-ilheus-e-dispositivos-semelhantes\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2110%23a-seccao-2284",
+              "article_name": "Placas, postes, ilh\u00e9us e dispositivos semelhantes",
+              "content": "1 - Nos cruzamentos, entroncamentos e rotundas o tr\u00e2nsito faz-se por forma a dar a esquerda \u00e0 parte central dos mesmos ou \u00e0s placas, postes, ilh\u00e9us direcionais ou dispositivos semelhantes existentes, desde que se encontrem no eixo da faixa de rodagem de que procedem os ve\u00edculos.\n2 - Quando na faixa de rodagem exista algum dos dispositivos referidos no n.\u00ba 1, o tr\u00e2nsito, sem preju\u00edzo do disposto nos artigos 13.\u00ba e 14.\u00ba, faz-se por forma a dar-lhes a esquerda, salvo se se encontrarem numa via de sentido \u00fanico ou na parte da faixa de rodagem afeta a um s\u00f3 sentido, casos em que o tr\u00e2nsito se pode fazer pela esquerda ou pela direita, conforme for mais conveniente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 17.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-17o-bermas-e-passeios\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2111%23a-seccao-2284",
+              "article_name": "Bermas e passeios",
+              "content": "1 - Os ve\u00edculos s\u00f3 podem circular nas bermas ou nos passeios desde que o acesso aos pr\u00e9dios o exija, salvo as exce\u00e7\u00f5es previstas em regulamento local.\n2 - Sem preju\u00edzo do disposto no n\u00famero anterior, os veloc\u00edpedes podem circular nas bermas fora das situa\u00e7\u00f5es previstas, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es que nelas circulem.\n3 - Os veloc\u00edpedes conduzidos por crian\u00e7as at\u00e9 10 anos podem circular nos passeios, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es.\n4 - Quem infringir o disposto no n.\u00ba 1 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 18.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-18o-distancia-entre-veiculos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2112%23a-seccao-2284",
+              "article_name": "Dist\u00e2ncia entre ve\u00edculos",
+              "content": "1 - O condutor de um ve\u00edculo em marcha deve manter entre o seu ve\u00edculo e o que o precede a dist\u00e2ncia suficiente para evitar acidentes em caso de s\u00fabita paragem ou diminui\u00e7\u00e3o de velocidade deste, tendo em especial considera\u00e7\u00e3o os utilizadores vulner\u00e1veis.\n2 - O condutor de um ve\u00edculo em marcha deve manter dist\u00e2ncia lateral suficiente para evitar acidentes entre o seu ve\u00edculo e os ve\u00edculos que transitam na mesma faixa de rodagem, no mesmo sentido ou em sentido oposto.\n3 - O condutor de um ve\u00edculo motorizado deve manter entre o seu ve\u00edculo e um veloc\u00edpede que transite na mesma faixa de rodagem uma dist\u00e2ncia lateral de pelo menos 1,5 m, para evitar acidentes.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 19.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-19o-visibilidade-reduzida-ou-insuficiente\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2113%23a-seccao-2284",
+              "article_name": "Visibilidade reduzida ou insuficiente",
+              "content": "Para os efeitos deste C\u00f3digo e legisla\u00e7\u00e3o complementar, considera-se que a visibilidade \u00e9 reduzida ou insuficiente sempre que o condutor n\u00e3o possa avistar a faixa de rodagem em toda a sua largura numa extens\u00e3o de, pelo menos, 50 m."
+            },
+            {
+              "article_number": "Artigo 20.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-20o-veiculos-de-transporte-coletivo-de-passageiros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2114%23a-seccao-2284",
+              "article_name": "Ve\u00edculos de transporte coletivo de passageiros",
+              "content": "1 - Nas localidades, os condutores devem abrandar a sua marcha e, se necess\u00e1rio, parar, sempre que os ve\u00edculos de transporte coletivo de passageiros retomem a marcha \u00e0 sa\u00edda dos locais de paragem.\n2 - Os condutores de ve\u00edculos de transporte coletivo de passageiros n\u00e3o podem, no entanto, retomar a marcha sem assinalarem a sua inten\u00e7\u00e3o imediatamente antes de a retomarem e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            }
+          ],
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo II - Sec\u00e7\u00e3o II ": [
+            {
+              "article_number": "Artigo 21.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-21o-sinalizacao-de-manobras\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8364%23a-seccao-2295",
+              "article_name": "Sinaliza\u00e7\u00e3o de manobras",
+              "content": "1 - Quando o condutor pretender reduzir a velocidade, parar, estacionar, mudar de dire\u00e7\u00e3o ou de via de tr\u00e2nsito, iniciar uma ultrapassagem ou inverter o sentido de marcha, deve assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o.\n2 - O sinal deve manter-se enquanto se efetua a manobra e cessar logo que ela esteja conclu\u00edda.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 22.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-22o-sinais-sonoros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8365%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Os sinais sonoros devem ser breves.\n2 - S\u00f3 \u00e9 permitida a utiliza\u00e7\u00e3o de sinais sonoros:\na) Em caso de perigo iminente;\nb) Fora das localidades, para prevenir um condutor da inten\u00e7\u00e3o de o ultrapassar e, bem assim, nas curvas, cruzamentos, entroncamentos e lombas de visibilidade reduzida.\n3 - Excetuam-se do disposto nos n\u00fameros anteriores os sinais de ve\u00edculos de pol\u00edcia ou que transitem em presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico.\n4 - As caracter\u00edsticas dos dispositivos emissores dos sinais sonoros s\u00e3o fixadas em regulamento.\n5 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores sonoros especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n6 - N\u00e3o \u00e9 permitida em quaisquer outros ve\u00edculos a instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o dos avisadores referidos no n\u00famero anterior nem a emiss\u00e3o de sinais sonoros que se possam confundir com os emitidos por aqueles dispositivos.\n7 - Quem infringir o disposto nos n.os 1 e 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n8 - Quem infringir o disposto no n.\u00ba 6 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba."
+            },
+            {
+              "article_number": "Artigo 23.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-23o-sinais-luminosos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8366%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Quando os ve\u00edculos transitem fora das localidades com as luzes acesas por insufici\u00eancia de visibilidade, os sinais sonoros podem ser substitu\u00eddos por sinais luminosos, atrav\u00e9s da utiliza\u00e7\u00e3o alternada dos m\u00e1ximos com os m\u00e9dios, mas sempre sem provocar encandeamento.\n2 - Dentro das localidades, durante a noite, \u00e9 obrigat\u00f3ria a substitui\u00e7\u00e3o dos sinais sonoros pelos sinais luminosos utilizados nas condi\u00e7\u00f5es previstas no n\u00famero anterior.\n3 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n4 - Os ve\u00edculos a motor que, em raz\u00e3o do servi\u00e7o a que se destinam, devam parar na via p\u00fablica ou deslocar-se em marcha lenta, incluindo os tratores e m\u00e1quinas agr\u00edcolas ou florestais e as m\u00e1quinas industriais, devem estar equipados com avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento, devendo os seus condutores deles fazer uso.\n5 - N\u00e3o \u00e9 permitida:\na) A instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o de avisadores luminosos especiais em quaisquer outros ve\u00edculos para al\u00e9m dos referidos nos n\u00fameros anteriores;\nb) A utiliza\u00e7\u00e3o dos avisadores luminosos especiais em situa\u00e7\u00f5es em que n\u00e3o haja necessidade.\n6 - Quem infringir o disposto nos n.os 2 e 4 e na al\u00ednea b) do n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n7 - Quem infringir o disposto na al\u00ednea a) do n.\u00ba 5 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba .\n8 - O n\u00e3o funcionamento ou funcionamento defeituoso do avisador luminoso especial \u00e9 equiparado \u00e0 sua falta."
+            }
+          ]
+        },
+        "question": "O que \u00e9 exigido ao condutor ao iniciar ou retomar a marcha?",
+        "reasoning": "O condutor deve assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.",
+        "answer": "{\"answer\":\"Assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\",\"references\":[{\"article_title\":\"Inicio da Marcha\",\"url\":\"https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-11o-conducao-de-veiculos-e-animais\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2104%23a-seccao-2284\",\"date\":\"1985-09-22\"}]}"
+      },
+      {
+        "augmented": true,
+        "context": {
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo I - Sec\u00e7ao I ": [
+            {
+              "article_number": " Artigo 11.\u00ba",
+              "date": "1985-03-14",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-12o-inicio-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2105%23a-seccao-2284",
+              "article_name": "Condu\u00e7\u00e3o de ve\u00edculos e animais",
+              "content": "1 - Todo o ve\u00edculo ou animal que circule na via p\u00fablica deve ter um condutor, salvo as exce\u00e7\u00f5es previstas neste C\u00f3digo.\n2 - Os condutores devem, durante a condu\u00e7\u00e3o, abster-se da pr\u00e1tica de quaisquer atos que sejam suscet\u00edveis de prejudicar o exerc\u00edcio da condu\u00e7\u00e3o com seguran\u00e7a.\n3 - O condutor de um ve\u00edculo n\u00e3o pode p\u00f4r em perigo os utilizadores vulner\u00e1veis.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "C\u00f3digo do Estrada - Artigo 12.\u00ba",
+              "date": " 1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-11o-conducao-de-veiculos-e-animais\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2104%23a-seccao-2284",
+              "article_name": "Inicio da Marcha",
+              "content": "1 - Os condutores n\u00e3o podem iniciar ou retomar a marcha sem assinalarem com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": " Artigo 13.\u00ba",
+              "date": "1991-09-08",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-13o-posicao-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2106%23a-seccao-2284",
+              "article_name": "Posi\u00e7\u00e3o de Marcha",
+              "content": "1 - A posi\u00e7\u00e3o de marcha dos ve\u00edculos deve fazer-se pelo lado direito da faixa de rodagem, conservando das bermas ou passeios uma dist\u00e2ncia suficiente que permita evitar acidentes.\n2 - Quando necess\u00e1rio, pode ser utilizado o lado esquerdo da faixa de rodagem para ultrapassar ou mudar de dire\u00e7\u00e3o.\n3 - Sempre que, no mesmo sentido, existam duas ou mais vias de tr\u00e2nsito, este deve fazer-se pela via mais \u00e0 direita, podendo, no entanto, utilizar-se outra se n\u00e3o houver lugar naquela e, bem assim, para ultrapassar ou mudar de dire\u00e7\u00e3o.\n4 - Quem infringir o disposto nos n.os 1 e 3 \u00e9 sancionado com coima de (euro) 60 a (euro) 300, salvo o disposto no n\u00famero seguinte.\n5 - Quem circular em sentido oposto ao estabelecido \u00e9 sancionado com coima de (euro) 250 a (euro) 1250."
+            },
+            {
+              "article_number": "Artigo 14.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-pluralidade-de-vias-de-transito-dentro-das-localidades\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2107%23a-seccao-2284",
+              "article_name": "Pluralidade de vias de tr\u00e2nsito dentro das localidades",
+              "content": "1 - (Revogado.)\n2 - Dentro das localidades, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino, s\u00f3 lhes sendo permitida a mudan\u00e7a para outra, depois de tomadas as devidas precau\u00e7\u00f5es, a fim de mudar de dire\u00e7\u00e3o, ultrapassar, parar ou estacionar.\n3 - (Revogado.)\n4 - Quem infringir o disposto no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300"
+            },
+            {
+              "article_number": "Artigo 14-A.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-a-rotundas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2108%23a-seccao-2284",
+              "article_name": "Rotundas",
+              "content": "1 - Nas rotundas, o condutor deve adotar o seguinte comportamento:\na) Entrar na rotunda ap\u00f3s ceder a passagem aos ve\u00edculos que nela circulam, qualquer que seja a via por onde o fa\u00e7am;\nb) Se pretender sair da rotunda na primeira via de sa\u00edda, deve ocupar a via da direita;\nc) Se pretender sair da rotunda por qualquer das outras vias de sa\u00edda, s\u00f3 deve ocupar a via de tr\u00e2nsito mais \u00e0 direita ap\u00f3s passar a via de sa\u00edda imediatamente anterior \u00e0quela por onde pretende sair, aproximando-se progressivamente desta e mudando de via depois de tomadas as devidas precau\u00e7\u00f5es;\nd) Sem preju\u00edzo do disposto nas al\u00edneas anteriores, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino.\n2 - Os condutores de ve\u00edculos de tra\u00e7\u00e3o animal ou de animais, de veloc\u00edpedes e de autom\u00f3veis pesados, podem ocupar a via de tr\u00e2nsito mais \u00e0 direita, sem preju\u00edzo do dever de facultar a sa\u00edda aos condutores que circulem nos termos da al\u00ednea c) do n.\u00ba 1.\n3 - Quem infringir o disposto nas al\u00edneas b), c) e d) do n.\u00ba 1 e no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 15.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-15o-transito-em-filas-paralelas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2109%23a-seccao-2284",
+              "article_name": "Tr\u00e2nsito em filas paralelas",
+              "content": "1 - Sempre que, existindo mais de uma via de tr\u00e2nsito no mesmo sentido, os ve\u00edculos, devido \u00e0 intensidade da circula\u00e7\u00e3o, ocupem toda a largura da faixa de rodagem destinada a esse sentido, estando a velocidade de cada um dependente da marcha dos que o precedem, os condutores n\u00e3o podem sair da respetiva fila para outra mais \u00e0 direita, salvo para mudar de dire\u00e7\u00e3o, parar ou estacionar.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 120 a (euro) 600."
+            },
+            {
+              "article_number": "Artigo 16.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-16o-placas-postes-ilheus-e-dispositivos-semelhantes\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2110%23a-seccao-2284",
+              "article_name": "Placas, postes, ilh\u00e9us e dispositivos semelhantes",
+              "content": "1 - Nos cruzamentos, entroncamentos e rotundas o tr\u00e2nsito faz-se por forma a dar a esquerda \u00e0 parte central dos mesmos ou \u00e0s placas, postes, ilh\u00e9us direcionais ou dispositivos semelhantes existentes, desde que se encontrem no eixo da faixa de rodagem de que procedem os ve\u00edculos.\n2 - Quando na faixa de rodagem exista algum dos dispositivos referidos no n.\u00ba 1, o tr\u00e2nsito, sem preju\u00edzo do disposto nos artigos 13.\u00ba e 14.\u00ba, faz-se por forma a dar-lhes a esquerda, salvo se se encontrarem numa via de sentido \u00fanico ou na parte da faixa de rodagem afeta a um s\u00f3 sentido, casos em que o tr\u00e2nsito se pode fazer pela esquerda ou pela direita, conforme for mais conveniente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 17.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-17o-bermas-e-passeios\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2111%23a-seccao-2284",
+              "article_name": "Bermas e passeios",
+              "content": "1 - Os ve\u00edculos s\u00f3 podem circular nas bermas ou nos passeios desde que o acesso aos pr\u00e9dios o exija, salvo as exce\u00e7\u00f5es previstas em regulamento local.\n2 - Sem preju\u00edzo do disposto no n\u00famero anterior, os veloc\u00edpedes podem circular nas bermas fora das situa\u00e7\u00f5es previstas, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es que nelas circulem.\n3 - Os veloc\u00edpedes conduzidos por crian\u00e7as at\u00e9 10 anos podem circular nos passeios, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es.\n4 - Quem infringir o disposto no n.\u00ba 1 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 18.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-18o-distancia-entre-veiculos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2112%23a-seccao-2284",
+              "article_name": "Dist\u00e2ncia entre ve\u00edculos",
+              "content": "1 - O condutor de um ve\u00edculo em marcha deve manter entre o seu ve\u00edculo e o que o precede a dist\u00e2ncia suficiente para evitar acidentes em caso de s\u00fabita paragem ou diminui\u00e7\u00e3o de velocidade deste, tendo em especial considera\u00e7\u00e3o os utilizadores vulner\u00e1veis.\n2 - O condutor de um ve\u00edculo em marcha deve manter dist\u00e2ncia lateral suficiente para evitar acidentes entre o seu ve\u00edculo e os ve\u00edculos que transitam na mesma faixa de rodagem, no mesmo sentido ou em sentido oposto.\n3 - O condutor de um ve\u00edculo motorizado deve manter entre o seu ve\u00edculo e um veloc\u00edpede que transite na mesma faixa de rodagem uma dist\u00e2ncia lateral de pelo menos 1,5 m, para evitar acidentes.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 19.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-19o-visibilidade-reduzida-ou-insuficiente\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2113%23a-seccao-2284",
+              "article_name": "Visibilidade reduzida ou insuficiente",
+              "content": "Para os efeitos deste C\u00f3digo e legisla\u00e7\u00e3o complementar, considera-se que a visibilidade \u00e9 reduzida ou insuficiente sempre que o condutor n\u00e3o possa avistar a faixa de rodagem em toda a sua largura numa extens\u00e3o de, pelo menos, 50 m."
+            },
+            {
+              "article_number": "Artigo 20.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-20o-veiculos-de-transporte-coletivo-de-passageiros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2114%23a-seccao-2284",
+              "article_name": "Ve\u00edculos de transporte coletivo de passageiros",
+              "content": "1 - Nas localidades, os condutores devem abrandar a sua marcha e, se necess\u00e1rio, parar, sempre que os ve\u00edculos de transporte coletivo de passageiros retomem a marcha \u00e0 sa\u00edda dos locais de paragem.\n2 - Os condutores de ve\u00edculos de transporte coletivo de passageiros n\u00e3o podem, no entanto, retomar a marcha sem assinalarem a sua inten\u00e7\u00e3o imediatamente antes de a retomarem e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            }
+          ],
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo II - Sec\u00e7\u00e3o II ": [
+            {
+              "article_number": "Artigo 21.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-21o-sinalizacao-de-manobras\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8364%23a-seccao-2295",
+              "article_name": "Sinaliza\u00e7\u00e3o de manobras",
+              "content": "1 - Quando o condutor pretender reduzir a velocidade, parar, estacionar, mudar de dire\u00e7\u00e3o ou de via de tr\u00e2nsito, iniciar uma ultrapassagem ou inverter o sentido de marcha, deve assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o.\n2 - O sinal deve manter-se enquanto se efetua a manobra e cessar logo que ela esteja conclu\u00edda.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 22.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-22o-sinais-sonoros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8365%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Os sinais sonoros devem ser breves.\n2 - S\u00f3 \u00e9 permitida a utiliza\u00e7\u00e3o de sinais sonoros:\na) Em caso de perigo iminente;\nb) Fora das localidades, para prevenir um condutor da inten\u00e7\u00e3o de o ultrapassar e, bem assim, nas curvas, cruzamentos, entroncamentos e lombas de visibilidade reduzida.\n3 - Excetuam-se do disposto nos n\u00fameros anteriores os sinais de ve\u00edculos de pol\u00edcia ou que transitem em presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico.\n4 - As caracter\u00edsticas dos dispositivos emissores dos sinais sonoros s\u00e3o fixadas em regulamento.\n5 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores sonoros especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n6 - N\u00e3o \u00e9 permitida em quaisquer outros ve\u00edculos a instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o dos avisadores referidos no n\u00famero anterior nem a emiss\u00e3o de sinais sonoros que se possam confundir com os emitidos por aqueles dispositivos.\n7 - Quem infringir o disposto nos n.os 1 e 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n8 - Quem infringir o disposto no n.\u00ba 6 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba."
+            },
+            {
+              "article_number": "Artigo 23.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-23o-sinais-luminosos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8366%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Quando os ve\u00edculos transitem fora das localidades com as luzes acesas por insufici\u00eancia de visibilidade, os sinais sonoros podem ser substitu\u00eddos por sinais luminosos, atrav\u00e9s da utiliza\u00e7\u00e3o alternada dos m\u00e1ximos com os m\u00e9dios, mas sempre sem provocar encandeamento.\n2 - Dentro das localidades, durante a noite, \u00e9 obrigat\u00f3ria a substitui\u00e7\u00e3o dos sinais sonoros pelos sinais luminosos utilizados nas condi\u00e7\u00f5es previstas no n\u00famero anterior.\n3 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n4 - Os ve\u00edculos a motor que, em raz\u00e3o do servi\u00e7o a que se destinam, devam parar na via p\u00fablica ou deslocar-se em marcha lenta, incluindo os tratores e m\u00e1quinas agr\u00edcolas ou florestais e as m\u00e1quinas industriais, devem estar equipados com avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento, devendo os seus condutores deles fazer uso.\n5 - N\u00e3o \u00e9 permitida:\na) A instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o de avisadores luminosos especiais em quaisquer outros ve\u00edculos para al\u00e9m dos referidos nos n\u00fameros anteriores;\nb) A utiliza\u00e7\u00e3o dos avisadores luminosos especiais em situa\u00e7\u00f5es em que n\u00e3o haja necessidade.\n6 - Quem infringir o disposto nos n.os 2 e 4 e na al\u00ednea b) do n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n7 - Quem infringir o disposto na al\u00ednea a) do n.\u00ba 5 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba .\n8 - O n\u00e3o funcionamento ou funcionamento defeituoso do avisador luminoso especial \u00e9 equiparado \u00e0 sua falta."
+            }
+          ]
+        },
+        "question": "Se quero sair na primeira sa\u00edda da rotunda, por onde devo circular?",
+        "reasoning": "Dependendo do contexto, a resposta pode variar. Mas, segundo o C\u00f3digo da Estrada, ao sair da rotunda na primeira sa\u00edda, o condutor deve ocupar a via da direita.",
+        "answer": "{\"answer\":\"A via da direita\",\"references\":[{\"article_title\":\"Rotundas\",\"url\":\"https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-a-rotundas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2108%23a-seccao-2284\",\"date\":\"1985-09-22\"}]}"
+      },
+      {
+        "context": {
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo I - Sec\u00e7ao I ": [
+            {
+              "article_number": " Artigo 11.\u00ba",
+              "date": "1985-03-14",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-12o-inicio-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2105%23a-seccao-2284",
+              "article_name": "Condu\u00e7\u00e3o de ve\u00edculos e animais",
+              "content": "1 - Todo o ve\u00edculo ou animal que circule na via p\u00fablica deve ter um condutor, salvo as exce\u00e7\u00f5es previstas neste C\u00f3digo.\n2 - Os condutores devem, durante a condu\u00e7\u00e3o, abster-se da pr\u00e1tica de quaisquer atos que sejam suscet\u00edveis de prejudicar o exerc\u00edcio da condu\u00e7\u00e3o com seguran\u00e7a.\n3 - O condutor de um ve\u00edculo n\u00e3o pode p\u00f4r em perigo os utilizadores vulner\u00e1veis.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "C\u00f3digo do Estrada - Artigo 12.\u00ba",
+              "date": " 1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-11o-conducao-de-veiculos-e-animais\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2104%23a-seccao-2284",
+              "article_name": "Inicio da Marcha",
+              "content": "1 - Os condutores n\u00e3o podem iniciar ou retomar a marcha sem assinalarem com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": " Artigo 13.\u00ba",
+              "date": "1991-09-08",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-13o-posicao-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2106%23a-seccao-2284",
+              "article_name": "Posi\u00e7\u00e3o de Marcha",
+              "content": "1 - A posi\u00e7\u00e3o de marcha dos ve\u00edculos deve fazer-se pelo lado direito da faixa de rodagem, conservando das bermas ou passeios uma dist\u00e2ncia suficiente que permita evitar acidentes.\n2 - Quando necess\u00e1rio, pode ser utilizado o lado esquerdo da faixa de rodagem para ultrapassar ou mudar de dire\u00e7\u00e3o.\n3 - Sempre que, no mesmo sentido, existam duas ou mais vias de tr\u00e2nsito, este deve fazer-se pela via mais \u00e0 direita, podendo, no entanto, utilizar-se outra se n\u00e3o houver lugar naquela e, bem assim, para ultrapassar ou mudar de dire\u00e7\u00e3o.\n4 - Quem infringir o disposto nos n.os 1 e 3 \u00e9 sancionado com coima de (euro) 60 a (euro) 300, salvo o disposto no n\u00famero seguinte.\n5 - Quem circular em sentido oposto ao estabelecido \u00e9 sancionado com coima de (euro) 250 a (euro) 1250."
+            },
+            {
+              "article_number": "Artigo 14.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-pluralidade-de-vias-de-transito-dentro-das-localidades\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2107%23a-seccao-2284",
+              "article_name": "Pluralidade de vias de tr\u00e2nsito dentro das localidades",
+              "content": "1 - (Revogado.)\n2 - Dentro das localidades, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino, s\u00f3 lhes sendo permitida a mudan\u00e7a para outra, depois de tomadas as devidas precau\u00e7\u00f5es, a fim de mudar de dire\u00e7\u00e3o, ultrapassar, parar ou estacionar.\n3 - (Revogado.)\n4 - Quem infringir o disposto no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300"
+            },
+            {
+              "article_number": "Artigo 14-A.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-a-rotundas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2108%23a-seccao-2284",
+              "article_name": "Rotundas",
+              "content": "1 - Nas rotundas, o condutor deve adotar o seguinte comportamento:\na) Entrar na rotunda ap\u00f3s ceder a passagem aos ve\u00edculos que nela circulam, qualquer que seja a via por onde o fa\u00e7am;\nb) Se pretender sair da rotunda na primeira via de sa\u00edda, deve ocupar a via da direita;\nc) Se pretender sair da rotunda por qualquer das outras vias de sa\u00edda, s\u00f3 deve ocupar a via de tr\u00e2nsito mais \u00e0 direita ap\u00f3s passar a via de sa\u00edda imediatamente anterior \u00e0quela por onde pretende sair, aproximando-se progressivamente desta e mudando de via depois de tomadas as devidas precau\u00e7\u00f5es;\nd) Sem preju\u00edzo do disposto nas al\u00edneas anteriores, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino.\n2 - Os condutores de ve\u00edculos de tra\u00e7\u00e3o animal ou de animais, de veloc\u00edpedes e de autom\u00f3veis pesados, podem ocupar a via de tr\u00e2nsito mais \u00e0 direita, sem preju\u00edzo do dever de facultar a sa\u00edda aos condutores que circulem nos termos da al\u00ednea c) do n.\u00ba 1.\n3 - Quem infringir o disposto nas al\u00edneas b), c) e d) do n.\u00ba 1 e no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 15.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-15o-transito-em-filas-paralelas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2109%23a-seccao-2284",
+              "article_name": "Tr\u00e2nsito em filas paralelas",
+              "content": "1 - Sempre que, existindo mais de uma via de tr\u00e2nsito no mesmo sentido, os ve\u00edculos, devido \u00e0 intensidade da circula\u00e7\u00e3o, ocupem toda a largura da faixa de rodagem destinada a esse sentido, estando a velocidade de cada um dependente da marcha dos que o precedem, os condutores n\u00e3o podem sair da respetiva fila para outra mais \u00e0 direita, salvo para mudar de dire\u00e7\u00e3o, parar ou estacionar.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 120 a (euro) 600."
+            },
+            {
+              "article_number": "Artigo 16.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-16o-placas-postes-ilheus-e-dispositivos-semelhantes\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2110%23a-seccao-2284",
+              "article_name": "Placas, postes, ilh\u00e9us e dispositivos semelhantes",
+              "content": "1 - Nos cruzamentos, entroncamentos e rotundas o tr\u00e2nsito faz-se por forma a dar a esquerda \u00e0 parte central dos mesmos ou \u00e0s placas, postes, ilh\u00e9us direcionais ou dispositivos semelhantes existentes, desde que se encontrem no eixo da faixa de rodagem de que procedem os ve\u00edculos.\n2 - Quando na faixa de rodagem exista algum dos dispositivos referidos no n.\u00ba 1, o tr\u00e2nsito, sem preju\u00edzo do disposto nos artigos 13.\u00ba e 14.\u00ba, faz-se por forma a dar-lhes a esquerda, salvo se se encontrarem numa via de sentido \u00fanico ou na parte da faixa de rodagem afeta a um s\u00f3 sentido, casos em que o tr\u00e2nsito se pode fazer pela esquerda ou pela direita, conforme for mais conveniente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 17.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-17o-bermas-e-passeios\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2111%23a-seccao-2284",
+              "article_name": "Bermas e passeios",
+              "content": "1 - Os ve\u00edculos s\u00f3 podem circular nas bermas ou nos passeios desde que o acesso aos pr\u00e9dios o exija, salvo as exce\u00e7\u00f5es previstas em regulamento local.\n2 - Sem preju\u00edzo do disposto no n\u00famero anterior, os veloc\u00edpedes podem circular nas bermas fora das situa\u00e7\u00f5es previstas, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es que nelas circulem.\n3 - Os veloc\u00edpedes conduzidos por crian\u00e7as at\u00e9 10 anos podem circular nos passeios, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es.\n4 - Quem infringir o disposto no n.\u00ba 1 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 18.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-18o-distancia-entre-veiculos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2112%23a-seccao-2284",
+              "article_name": "Dist\u00e2ncia entre ve\u00edculos",
+              "content": "1 - O condutor de um ve\u00edculo em marcha deve manter entre o seu ve\u00edculo e o que o precede a dist\u00e2ncia suficiente para evitar acidentes em caso de s\u00fabita paragem ou diminui\u00e7\u00e3o de velocidade deste, tendo em especial considera\u00e7\u00e3o os utilizadores vulner\u00e1veis.\n2 - O condutor de um ve\u00edculo em marcha deve manter dist\u00e2ncia lateral suficiente para evitar acidentes entre o seu ve\u00edculo e os ve\u00edculos que transitam na mesma faixa de rodagem, no mesmo sentido ou em sentido oposto.\n3 - O condutor de um ve\u00edculo motorizado deve manter entre o seu ve\u00edculo e um veloc\u00edpede que transite na mesma faixa de rodagem uma dist\u00e2ncia lateral de pelo menos 1,5 m, para evitar acidentes.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 19.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-19o-visibilidade-reduzida-ou-insuficiente\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2113%23a-seccao-2284",
+              "article_name": "Visibilidade reduzida ou insuficiente",
+              "content": "Para os efeitos deste C\u00f3digo e legisla\u00e7\u00e3o complementar, considera-se que a visibilidade \u00e9 reduzida ou insuficiente sempre que o condutor n\u00e3o possa avistar a faixa de rodagem em toda a sua largura numa extens\u00e3o de, pelo menos, 50 m."
+            },
+            {
+              "article_number": "Artigo 20.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-20o-veiculos-de-transporte-coletivo-de-passageiros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2114%23a-seccao-2284",
+              "article_name": "Ve\u00edculos de transporte coletivo de passageiros",
+              "content": "1 - Nas localidades, os condutores devem abrandar a sua marcha e, se necess\u00e1rio, parar, sempre que os ve\u00edculos de transporte coletivo de passageiros retomem a marcha \u00e0 sa\u00edda dos locais de paragem.\n2 - Os condutores de ve\u00edculos de transporte coletivo de passageiros n\u00e3o podem, no entanto, retomar a marcha sem assinalarem a sua inten\u00e7\u00e3o imediatamente antes de a retomarem e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            }
+          ],
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo II - Sec\u00e7\u00e3o II ": [
+            {
+              "article_number": "Artigo 21.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-21o-sinalizacao-de-manobras\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8364%23a-seccao-2295",
+              "article_name": "Sinaliza\u00e7\u00e3o de manobras",
+              "content": "1 - Quando o condutor pretender reduzir a velocidade, parar, estacionar, mudar de dire\u00e7\u00e3o ou de via de tr\u00e2nsito, iniciar uma ultrapassagem ou inverter o sentido de marcha, deve assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o.\n2 - O sinal deve manter-se enquanto se efetua a manobra e cessar logo que ela esteja conclu\u00edda.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 22.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-22o-sinais-sonoros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8365%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Os sinais sonoros devem ser breves.\n2 - S\u00f3 \u00e9 permitida a utiliza\u00e7\u00e3o de sinais sonoros:\na) Em caso de perigo iminente;\nb) Fora das localidades, para prevenir um condutor da inten\u00e7\u00e3o de o ultrapassar e, bem assim, nas curvas, cruzamentos, entroncamentos e lombas de visibilidade reduzida.\n3 - Excetuam-se do disposto nos n\u00fameros anteriores os sinais de ve\u00edculos de pol\u00edcia ou que transitem em presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico.\n4 - As caracter\u00edsticas dos dispositivos emissores dos sinais sonoros s\u00e3o fixadas em regulamento.\n5 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores sonoros especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n6 - N\u00e3o \u00e9 permitida em quaisquer outros ve\u00edculos a instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o dos avisadores referidos no n\u00famero anterior nem a emiss\u00e3o de sinais sonoros que se possam confundir com os emitidos por aqueles dispositivos.\n7 - Quem infringir o disposto nos n.os 1 e 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n8 - Quem infringir o disposto no n.\u00ba 6 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba."
+            },
+            {
+              "article_number": "Artigo 23.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-23o-sinais-luminosos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8366%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Quando os ve\u00edculos transitem fora das localidades com as luzes acesas por insufici\u00eancia de visibilidade, os sinais sonoros podem ser substitu\u00eddos por sinais luminosos, atrav\u00e9s da utiliza\u00e7\u00e3o alternada dos m\u00e1ximos com os m\u00e9dios, mas sempre sem provocar encandeamento.\n2 - Dentro das localidades, durante a noite, \u00e9 obrigat\u00f3ria a substitui\u00e7\u00e3o dos sinais sonoros pelos sinais luminosos utilizados nas condi\u00e7\u00f5es previstas no n\u00famero anterior.\n3 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n4 - Os ve\u00edculos a motor que, em raz\u00e3o do servi\u00e7o a que se destinam, devam parar na via p\u00fablica ou deslocar-se em marcha lenta, incluindo os tratores e m\u00e1quinas agr\u00edcolas ou florestais e as m\u00e1quinas industriais, devem estar equipados com avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento, devendo os seus condutores deles fazer uso.\n5 - N\u00e3o \u00e9 permitida:\na) A instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o de avisadores luminosos especiais em quaisquer outros ve\u00edculos para al\u00e9m dos referidos nos n\u00fameros anteriores;\nb) A utiliza\u00e7\u00e3o dos avisadores luminosos especiais em situa\u00e7\u00f5es em que n\u00e3o haja necessidade.\n6 - Quem infringir o disposto nos n.os 2 e 4 e na al\u00ednea b) do n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n7 - Quem infringir o disposto na al\u00ednea a) do n.\u00ba 5 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba .\n8 - O n\u00e3o funcionamento ou funcionamento defeituoso do avisador luminoso especial \u00e9 equiparado \u00e0 sua falta."
+            }
+          ]
+        },
+        "question": "tive um acidente porque n\u00e3o consegui ver bem a estrada, posso alegar visibilidade reduzida ou insuficente?",
+        "answer": "A visibilidade \u00e9 considerada reduzida ou insuficiente quando o condutor n\u00e3o consegue avistar a faixa de rodagem em toda a sua largura numa extens\u00e3o de pelo menos 50 metros. Se foi o seu caso, pode alegar isso, mas aconselho a procurar um especialista."
+      },
+      {
+        "context": {
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo I - Sec\u00e7ao I ": [
+            {
+              "article_number": " Artigo 11.\u00ba",
+              "date": "1985-03-14",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-12o-inicio-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2105%23a-seccao-2284",
+              "article_name": "Condu\u00e7\u00e3o de ve\u00edculos e animais",
+              "content": "1 - Todo o ve\u00edculo ou animal que circule na via p\u00fablica deve ter um condutor, salvo as exce\u00e7\u00f5es previstas neste C\u00f3digo.\n2 - Os condutores devem, durante a condu\u00e7\u00e3o, abster-se da pr\u00e1tica de quaisquer atos que sejam suscet\u00edveis de prejudicar o exerc\u00edcio da condu\u00e7\u00e3o com seguran\u00e7a.\n3 - O condutor de um ve\u00edculo n\u00e3o pode p\u00f4r em perigo os utilizadores vulner\u00e1veis.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "C\u00f3digo do Estrada - Artigo 12.\u00ba",
+              "date": " 1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-11o-conducao-de-veiculos-e-animais\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2104%23a-seccao-2284",
+              "article_name": "Inicio da Marcha",
+              "content": "1 - Os condutores n\u00e3o podem iniciar ou retomar a marcha sem assinalarem com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": " Artigo 13.\u00ba",
+              "date": "1991-09-08",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-13o-posicao-de-marcha\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2106%23a-seccao-2284",
+              "article_name": "Posi\u00e7\u00e3o de Marcha",
+              "content": "1 - A posi\u00e7\u00e3o de marcha dos ve\u00edculos deve fazer-se pelo lado direito da faixa de rodagem, conservando das bermas ou passeios uma dist\u00e2ncia suficiente que permita evitar acidentes.\n2 - Quando necess\u00e1rio, pode ser utilizado o lado esquerdo da faixa de rodagem para ultrapassar ou mudar de dire\u00e7\u00e3o.\n3 - Sempre que, no mesmo sentido, existam duas ou mais vias de tr\u00e2nsito, este deve fazer-se pela via mais \u00e0 direita, podendo, no entanto, utilizar-se outra se n\u00e3o houver lugar naquela e, bem assim, para ultrapassar ou mudar de dire\u00e7\u00e3o.\n4 - Quem infringir o disposto nos n.os 1 e 3 \u00e9 sancionado com coima de (euro) 60 a (euro) 300, salvo o disposto no n\u00famero seguinte.\n5 - Quem circular em sentido oposto ao estabelecido \u00e9 sancionado com coima de (euro) 250 a (euro) 1250."
+            },
+            {
+              "article_number": "Artigo 14.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-pluralidade-de-vias-de-transito-dentro-das-localidades\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2107%23a-seccao-2284",
+              "article_name": "Pluralidade de vias de tr\u00e2nsito dentro das localidades",
+              "content": "1 - (Revogado.)\n2 - Dentro das localidades, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino, s\u00f3 lhes sendo permitida a mudan\u00e7a para outra, depois de tomadas as devidas precau\u00e7\u00f5es, a fim de mudar de dire\u00e7\u00e3o, ultrapassar, parar ou estacionar.\n3 - (Revogado.)\n4 - Quem infringir o disposto no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300"
+            },
+            {
+              "article_number": "Artigo 14-A.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-14o-a-rotundas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2108%23a-seccao-2284",
+              "article_name": "Rotundas",
+              "content": "1 - Nas rotundas, o condutor deve adotar o seguinte comportamento:\na) Entrar na rotunda ap\u00f3s ceder a passagem aos ve\u00edculos que nela circulam, qualquer que seja a via por onde o fa\u00e7am;\nb) Se pretender sair da rotunda na primeira via de sa\u00edda, deve ocupar a via da direita;\nc) Se pretender sair da rotunda por qualquer das outras vias de sa\u00edda, s\u00f3 deve ocupar a via de tr\u00e2nsito mais \u00e0 direita ap\u00f3s passar a via de sa\u00edda imediatamente anterior \u00e0quela por onde pretende sair, aproximando-se progressivamente desta e mudando de via depois de tomadas as devidas precau\u00e7\u00f5es;\nd) Sem preju\u00edzo do disposto nas al\u00edneas anteriores, os condutores devem utilizar a via de tr\u00e2nsito mais conveniente ao seu destino.\n2 - Os condutores de ve\u00edculos de tra\u00e7\u00e3o animal ou de animais, de veloc\u00edpedes e de autom\u00f3veis pesados, podem ocupar a via de tr\u00e2nsito mais \u00e0 direita, sem preju\u00edzo do dever de facultar a sa\u00edda aos condutores que circulem nos termos da al\u00ednea c) do n.\u00ba 1.\n3 - Quem infringir o disposto nas al\u00edneas b), c) e d) do n.\u00ba 1 e no n.\u00ba 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 15.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-15o-transito-em-filas-paralelas\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2109%23a-seccao-2284",
+              "article_name": "Tr\u00e2nsito em filas paralelas",
+              "content": "1 - Sempre que, existindo mais de uma via de tr\u00e2nsito no mesmo sentido, os ve\u00edculos, devido \u00e0 intensidade da circula\u00e7\u00e3o, ocupem toda a largura da faixa de rodagem destinada a esse sentido, estando a velocidade de cada um dependente da marcha dos que o precedem, os condutores n\u00e3o podem sair da respetiva fila para outra mais \u00e0 direita, salvo para mudar de dire\u00e7\u00e3o, parar ou estacionar.\n2 - Quem infringir o disposto no n\u00famero anterior \u00e9 sancionado com coima de (euro) 120 a (euro) 600."
+            },
+            {
+              "article_number": "Artigo 16.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-16o-placas-postes-ilheus-e-dispositivos-semelhantes\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2110%23a-seccao-2284",
+              "article_name": "Placas, postes, ilh\u00e9us e dispositivos semelhantes",
+              "content": "1 - Nos cruzamentos, entroncamentos e rotundas o tr\u00e2nsito faz-se por forma a dar a esquerda \u00e0 parte central dos mesmos ou \u00e0s placas, postes, ilh\u00e9us direcionais ou dispositivos semelhantes existentes, desde que se encontrem no eixo da faixa de rodagem de que procedem os ve\u00edculos.\n2 - Quando na faixa de rodagem exista algum dos dispositivos referidos no n.\u00ba 1, o tr\u00e2nsito, sem preju\u00edzo do disposto nos artigos 13.\u00ba e 14.\u00ba, faz-se por forma a dar-lhes a esquerda, salvo se se encontrarem numa via de sentido \u00fanico ou na parte da faixa de rodagem afeta a um s\u00f3 sentido, casos em que o tr\u00e2nsito se pode fazer pela esquerda ou pela direita, conforme for mais conveniente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 17.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-17o-bermas-e-passeios\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2111%23a-seccao-2284",
+              "article_name": "Bermas e passeios",
+              "content": "1 - Os ve\u00edculos s\u00f3 podem circular nas bermas ou nos passeios desde que o acesso aos pr\u00e9dios o exija, salvo as exce\u00e7\u00f5es previstas em regulamento local.\n2 - Sem preju\u00edzo do disposto no n\u00famero anterior, os veloc\u00edpedes podem circular nas bermas fora das situa\u00e7\u00f5es previstas, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es que nelas circulem.\n3 - Os veloc\u00edpedes conduzidos por crian\u00e7as at\u00e9 10 anos podem circular nos passeios, desde que n\u00e3o ponham em perigo ou perturbem os pe\u00f5es.\n4 - Quem infringir o disposto no n.\u00ba 1 \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 18.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-18o-distancia-entre-veiculos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2112%23a-seccao-2284",
+              "article_name": "Dist\u00e2ncia entre ve\u00edculos",
+              "content": "1 - O condutor de um ve\u00edculo em marcha deve manter entre o seu ve\u00edculo e o que o precede a dist\u00e2ncia suficiente para evitar acidentes em caso de s\u00fabita paragem ou diminui\u00e7\u00e3o de velocidade deste, tendo em especial considera\u00e7\u00e3o os utilizadores vulner\u00e1veis.\n2 - O condutor de um ve\u00edculo em marcha deve manter dist\u00e2ncia lateral suficiente para evitar acidentes entre o seu ve\u00edculo e os ve\u00edculos que transitam na mesma faixa de rodagem, no mesmo sentido ou em sentido oposto.\n3 - O condutor de um ve\u00edculo motorizado deve manter entre o seu ve\u00edculo e um veloc\u00edpede que transite na mesma faixa de rodagem uma dist\u00e2ncia lateral de pelo menos 1,5 m, para evitar acidentes.\n4 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 19.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-19o-visibilidade-reduzida-ou-insuficiente\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2113%23a-seccao-2284",
+              "article_name": "Visibilidade reduzida ou insuficiente",
+              "content": "Para os efeitos deste C\u00f3digo e legisla\u00e7\u00e3o complementar, considera-se que a visibilidade \u00e9 reduzida ou insuficiente sempre que o condutor n\u00e3o possa avistar a faixa de rodagem em toda a sua largura numa extens\u00e3o de, pelo menos, 50 m."
+            },
+            {
+              "article_number": "Artigo 20.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-i-regras-gerais\/artigo-20o-veiculos-de-transporte-coletivo-de-passageiros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d2114%23a-seccao-2284",
+              "article_name": "Ve\u00edculos de transporte coletivo de passageiros",
+              "content": "1 - Nas localidades, os condutores devem abrandar a sua marcha e, se necess\u00e1rio, parar, sempre que os ve\u00edculos de transporte coletivo de passageiros retomem a marcha \u00e0 sa\u00edda dos locais de paragem.\n2 - Os condutores de ve\u00edculos de transporte coletivo de passageiros n\u00e3o podem, no entanto, retomar a marcha sem assinalarem a sua inten\u00e7\u00e3o imediatamente antes de a retomarem e sem adotarem as precau\u00e7\u00f5es necess\u00e1rias para evitar qualquer acidente.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            }
+          ],
+          "C\u00f3digo da Estrada - Titulo II - Cap\u00edtulo II - Sec\u00e7\u00e3o II ": [
+            {
+              "article_number": "Artigo 21.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-21o-sinalizacao-de-manobras\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8364%23a-seccao-2295",
+              "article_name": "Sinaliza\u00e7\u00e3o de manobras",
+              "content": "1 - Quando o condutor pretender reduzir a velocidade, parar, estacionar, mudar de dire\u00e7\u00e3o ou de via de tr\u00e2nsito, iniciar uma ultrapassagem ou inverter o sentido de marcha, deve assinalar com a necess\u00e1ria anteced\u00eancia a sua inten\u00e7\u00e3o.\n2 - O sinal deve manter-se enquanto se efetua a manobra e cessar logo que ela esteja conclu\u00edda.\n3 - Quem infringir o disposto nos n\u00fameros anteriores \u00e9 sancionado com coima de (euro) 60 a (euro) 300."
+            },
+            {
+              "article_number": "Artigo 22.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-22o-sinais-sonoros\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8365%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Os sinais sonoros devem ser breves.\n2 - S\u00f3 \u00e9 permitida a utiliza\u00e7\u00e3o de sinais sonoros:\na) Em caso de perigo iminente;\nb) Fora das localidades, para prevenir um condutor da inten\u00e7\u00e3o de o ultrapassar e, bem assim, nas curvas, cruzamentos, entroncamentos e lombas de visibilidade reduzida.\n3 - Excetuam-se do disposto nos n\u00fameros anteriores os sinais de ve\u00edculos de pol\u00edcia ou que transitem em presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico.\n4 - As caracter\u00edsticas dos dispositivos emissores dos sinais sonoros s\u00e3o fixadas em regulamento.\n5 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores sonoros especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n6 - N\u00e3o \u00e9 permitida em quaisquer outros ve\u00edculos a instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o dos avisadores referidos no n\u00famero anterior nem a emiss\u00e3o de sinais sonoros que se possam confundir com os emitidos por aqueles dispositivos.\n7 - Quem infringir o disposto nos n.os 1 e 2 \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n8 - Quem infringir o disposto no n.\u00ba 6 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba."
+            },
+            {
+              "article_number": "Artigo 23.\u00ba",
+              "date": "1985-09-22",
+              "url": "https:\/\/www.segurancarodoviaria.pt\/codigo-da-estrada\/titulo-ii-do-transito-de-veiculos-e-animais\/capitulo-i-disposic%C3%B5es-comuns\/sec%C3%A7%C3%A3o-ii-sinais-dos-condutores\/artigo-23o-sinais-luminosos\/?returnUrl=%2fcodigo-da-estrada%2f%3fshow%3d8366%23a-seccao-2295",
+              "article_name": "Sinais sonores",
+              "content": "1 - Quando os ve\u00edculos transitem fora das localidades com as luzes acesas por insufici\u00eancia de visibilidade, os sinais sonoros podem ser substitu\u00eddos por sinais luminosos, atrav\u00e9s da utiliza\u00e7\u00e3o alternada dos m\u00e1ximos com os m\u00e9dios, mas sempre sem provocar encandeamento.\n2 - Dentro das localidades, durante a noite, \u00e9 obrigat\u00f3ria a substitui\u00e7\u00e3o dos sinais sonoros pelos sinais luminosos utilizados nas condi\u00e7\u00f5es previstas no n\u00famero anterior.\n3 - Nos ve\u00edculos de pol\u00edcia e nos ve\u00edculos afetos \u00e0 presta\u00e7\u00e3o de socorro ou de servi\u00e7o urgente de interesse p\u00fablico, bem como nos ve\u00edculos utilizados na forma\u00e7\u00e3o espec\u00edfica dos respetivos condutores, podem ser utilizados avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento.\n4 - Os ve\u00edculos a motor que, em raz\u00e3o do servi\u00e7o a que se destinam, devam parar na via p\u00fablica ou deslocar-se em marcha lenta, incluindo os tratores e m\u00e1quinas agr\u00edcolas ou florestais e as m\u00e1quinas industriais, devem estar equipados com avisadores luminosos especiais, cujas caracter\u00edsticas e condi\u00e7\u00f5es de utiliza\u00e7\u00e3o s\u00e3o fixadas em regulamento, devendo os seus condutores deles fazer uso.\n5 - N\u00e3o \u00e9 permitida:\na) A instala\u00e7\u00e3o ou utiliza\u00e7\u00e3o de avisadores luminosos especiais em quaisquer outros ve\u00edculos para al\u00e9m dos referidos nos n\u00fameros anteriores;\nb) A utiliza\u00e7\u00e3o dos avisadores luminosos especiais em situa\u00e7\u00f5es em que n\u00e3o haja necessidade.\n6 - Quem infringir o disposto nos n.os 2 e 4 e na al\u00ednea b) do n\u00famero anterior \u00e9 sancionado com coima de (euro) 60 a (euro) 300.\n7 - Quem infringir o disposto na al\u00ednea a) do n.\u00ba 5 \u00e9 sancionado com coima de (euro) 500 a (euro) 2500 e com perda dos objetos, devendo o agente de fiscaliza\u00e7\u00e3o proceder \u00e0 sua imediata remo\u00e7\u00e3o e apreens\u00e3o ou, n\u00e3o sendo ela poss\u00edvel, apreender o documento de identifica\u00e7\u00e3o do ve\u00edculo at\u00e9 \u00e0 efetiva remo\u00e7\u00e3o e apreens\u00e3o daqueles objetos, sendo, neste caso, aplic\u00e1vel, com as necess\u00e1rias adapta\u00e7\u00f5es, o disposto no n.\u00ba 5 do artigo 161.\u00ba .\n8 - O n\u00e3o funcionamento ou funcionamento defeituoso do avisador luminoso especial \u00e9 equiparado \u00e0 sua falta."
+            }
+          ]
+        },
+        "question": "O que acontece se eu andar em contram\u00e3o?",
+        "answer": "Andar em contram\u00e3o \u00e9 grave! Al\u00e9m de desrespeitar o c\u00f3digo da estrada, pode colocar a sua vida e outras em riscos! Se vai conduzir, fa\u00e7a-o com cuidado. Al\u00e9m disso, Pode levar a uma multa entre 250 a 1250 euros"
+      }
+    ],
+    "signature": {
+      "instructions": "Sendo tu um especialista da legisla\u00e7\u00e3o portuguesa, responde \u00e0 quest\u00e3o baseado EXCLUSIVAMENTE no contexto fornecido. Foca-te em fornecer informac\u00f5es corretas e fundamenta com o contexto",
+      "fields": [
+        {
+          "prefix": "Context:",
+          "description": "Informa\u00e7\u00e3o importante para responder \u00e0 quest\u00e3o"
+        },
+        {
+          "prefix": "Question:",
+          "description": "${question}"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Answer:",
+          "description": "Uma resposta detalhada e a lista de referencias utilizadas para responder \u00e0 quest\u00e3o (t\u00edtulo do artigo, url e data)"
+        }
+      ]
+    },
+    "extended_signature": {
+      "instructions": "Sendo tu um especialista da legisla\u00e7\u00e3o portuguesa, responde \u00e0 quest\u00e3o baseado EXCLUSIVAMENTE no contexto fornecido. Foca-te em fornecer informac\u00f5es corretas e fundamenta com o contexto",
+      "fields": [
+        {
+          "prefix": "Context:",
+          "description": "Informa\u00e7\u00e3o importante para responder \u00e0 quest\u00e3o"
+        },
+        {
+          "prefix": "Question:",
+          "description": "${question}"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Answer:",
+          "description": "Uma resposta detalhada e a lista de referencias utilizadas para responder \u00e0 quest\u00e3o (t\u00edtulo do artigo, url e data)"
+        }
+      ]
+    }
+  }
+}

@@ -6,3 +6,4 @@ lime
 spacy==3.7.5
 setuptools 
 wheel
+langchain_community

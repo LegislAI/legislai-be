@@ -1,0 +1,40 @@
+================== RESULTS DSPy ====================
+
+7 examples (ESTRADA code)
+
+---- model:  together_ai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo ----
+
+1. without optimizer -> 4.27 / 4.77
+
+2. optimizer BootStrapFS (metric cos_similarity) -> 4.16 / 4.48
+	file compiled_estrada
+	
+3. optimizer BootStrapFS (metric RagJudge) -> 4.57
+	file 'estrada_compiled_ragjudge'
+	
+4. optimizer 3 + CoT w/ Hint -> 
+
+5. CoT w/ Hint -> 4.48
+	hint "intro ao codigo especifico "
+
+
+5. CoT w/ Hint -> 4.58
+	hint "palavras semelhantes, i.e, dicionario"
+	3.40 segundos media
+
+
+---- model:  together_ai/google/gemma-2-9b-it ----
+5. CoT w/ Hint -> 4.67
+	hint "palavras semelhantes, i.e, dicionario"
+	5.85 segundos media
+
+
+================== RESULTS Manual Prompt ====================
+nao printa nadaaaaaaa maior parte das vezes
+
+
+1. only Prompt -> 3.12
+
+2. prompt + 3 FS -> 3.45
+
+3. prompt + 3 FS + specialist -> 3.47
