@@ -202,7 +202,9 @@ def get_recent_conversations(user_id, offset: int = 0, limit: int = 10) -> List[
         for conv in paginated_conversations:
             conversation_id = conv["conversation_id"]["S"]
 
-            recent_messages = get_recent_messages(user_id, conversation_id, 16, 0)
+            recent_messages = get_recent_messages(
+                user_id, conversation_id, 16, 0
+            )
 
             conversation_with_messages = {
                 "conversation_id": conversation_id,
