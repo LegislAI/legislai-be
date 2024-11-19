@@ -1,11 +1,11 @@
 from typing import Any
 from typing import Dict
 
-from fastapi import HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials
-
 from conversation.utils.schemas import Attachment
 from conversation.utils.schemas import Message
+from fastapi import HTTPException
+from fastapi import status
+from fastapi.security import HTTPAuthorizationCredentials
 
 
 def format_messages(messages):
