@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - run: git fetch origin main --depth 1
+        shell: bash
+
       - name: Get Python Version
         id: get-python-version
         run: echo "VERSION=$(cat .python-version)" >> $GITHUB_OUTPUT

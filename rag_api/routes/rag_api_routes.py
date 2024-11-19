@@ -61,7 +61,7 @@ def query(
                 )
 
             elif payload.attachments and user.plan == "premium_plus":
-                # Implement auto rag
+                # TODO: Implement auto rag
                 pass
             else:
                 user_queries += 1
