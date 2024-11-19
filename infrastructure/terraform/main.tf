@@ -217,8 +217,8 @@ resource "aws_dynamodb_table" "conversations_table" {
     name = "updated_at"
     type = "S"
   }
-
-  # GSI for querying by user_id
+  
+    # GSI for querying by user_id
   global_secondary_index {
     name               = "UserIdAtIndex"
     hash_key           = "user_id"
