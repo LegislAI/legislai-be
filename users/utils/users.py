@@ -1,11 +1,13 @@
-from typing import Any, Optional
-
-from fastapi import HTTPException, Request
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import jwt
-from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from typing import Optional
 
 from config.settings import settings
+from fastapi import HTTPException
+from fastapi import Request
+from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer
+from jose import jwt
+from jwt.exceptions import ExpiredSignatureError
+from jwt.exceptions import InvalidTokenError
 from services.dynamo_services import token_blacklist
 from utils.exceptions import TokenRevokedException
 from utils.logging_config import logger

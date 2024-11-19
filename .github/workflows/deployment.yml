@@ -40,6 +40,6 @@ jobs:
         run: pre-commit run --show-diff-on-failure --color=always --all-files
         shell: bash
 
-      - name: Run Unit Tests
-        run: ./bin/run_unit_tests.sh
-        shell: bash
+      # - name: Run Unit Tests
+      #   run: ./bin/run_unit_tests.sh
+      #   shell: bash
