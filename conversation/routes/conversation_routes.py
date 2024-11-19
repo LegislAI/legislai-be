@@ -1,35 +1,41 @@
-from typing import List
 import uuid
+from typing import List
 
 from aiohttp import ClientError
-
+from authentication.utils.logging_config import logger
+from conversation.services.dynamo_services import add_messages_to_conversation
+from conversation.services.dynamo_services import add_messages_to_new_conversation
+from conversation.services.dynamo_services import check_conversation
 from conversation.services.dynamo_services import delete_all_conversations
 from conversation.services.dynamo_services import delete_conversation
 from conversation.services.dynamo_services import get_conversation
 from conversation.services.dynamo_services import get_recent_conversations
 from conversation.services.dynamo_services import get_recent_messages
-from conversation.services.dynamo_services import add_messages_to_conversation
-from conversation.services.dynamo_services import add_messages_to_new_conversation
-from conversation.services.dynamo_services import check_conversation
-from authentication.utils.logging_config import logger
-from conversation.utils.schemas import ConversationResponse
+from conversation.utils.auth_classes import JWTBearer
+from conversation.utils.exceptions import ConversationNotFound
 from conversation.utils.schemas import AddMessageRequest
+from conversation.utils.schemas import Conversation
+from conversation.utils.schemas import ConversationRequest
+from conversation.utils.schemas import ConversationResponse
+from conversation.utils.schemas import Message
 from conversation.utils.schemas import MessageResponse
 from conversation.utils.schemas import NewConversationRequest
-from conversation.utils.schemas import ConversationRequest
-from conversation.utils.schemas import Conversation
-from conversation.utils.schemas import Message
-from conversation.utils.auth_classes import JWTBearer
-from fastapi import APIRouter, HTTPException, Depends, Query, status
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import Query
+from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
-
-from conversation.utils.exceptions import ConversationNotFound
 
 
 route = APIRouter()
 
 
-@route.post("/new_conversation", response_model=ConversationResponse, dependencies=[Depends(JWTBearer())])
+@route.post(
+    "/new_conversation",
+    response_model=ConversationResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 def create_new_conversation_route(
     payload: NewConversationRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -52,7 +58,11 @@ def create_new_conversation_route(
     return ConversationResponse(conversation_id=conversation_id)
 
 
-@route.delete("/{conversation_id}/delete", response_model=ConversationResponse, dependencies=[Depends(JWTBearer())])
+@route.delete(
+    "/{conversation_id}/delete",
+    response_model=ConversationResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 def delete_conversation_route(
     payload: ConversationRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -64,7 +74,7 @@ def delete_conversation_route(
 
     try:
         if check_conversation(user_id, conversation_id):
-            delete_conversation(conversation_id,user_id)
+            delete_conversation(conversation_id, user_id)
         else:
             raise ConversationNotFound("Conversation not found")
 
@@ -87,7 +97,11 @@ def delete_conversation_route(
     )
 
 
-@route.get("/{conversation_id}", response_model=Conversation, dependencies=[Depends(JWTBearer())])
+@route.get(
+    "/{conversation_id}",
+    response_model=Conversation,
+    dependencies=[Depends(JWTBearer())],
+)
 def get_conversation_route(
     user_id: str,
     conversation_id: str,
@@ -117,9 +131,13 @@ def get_conversation_route(
         )
 
 
-@route.get("/load_last_conversations/", response_model=List[Conversation], dependencies=[Depends(JWTBearer())])
+@route.get(
+    "/load_last_conversations/",
+    response_model=List[Conversation],
+    dependencies=[Depends(JWTBearer())],
+)
 async def get_recent_conversations_route(
-    user_id: str, 
+    user_id: str,
     offset: int = Query(0),
     limit: int = Query(10),
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -139,10 +157,13 @@ async def get_recent_conversations_route(
         )
 
 
-@route.delete("/delete_all_conversations", response_model=MessageResponse, dependencies=[Depends(JWTBearer())])
+@route.delete(
+    "/delete_all_conversations",
+    response_model=MessageResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 async def delete_all_conversation_route(
-    user_id: str,
-    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())
+    user_id: str, credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())
 ):
     """
     Deletes all the conversations
@@ -159,7 +180,11 @@ async def delete_all_conversation_route(
         )
 
 
-@route.post("/{conversation_id}/add_messages", response_model=MessageResponse, dependencies=[Depends(JWTBearer())])
+@route.post(
+    "/{conversation_id}/add_messages",
+    response_model=MessageResponse,
+    dependencies=[Depends(JWTBearer())],
+)
 def add_messages_route(
     payload: AddMessageRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
@@ -192,7 +217,9 @@ def add_messages_route(
 
 
 @route.get(
-    "/{conversation_id}/messages/load_last_messages/", response_model=List[Message], dependencies=[Depends(JWTBearer())]
+    "/{conversation_id}/messages/load_last_messages/",
+    response_model=List[Message],
+    dependencies=[Depends(JWTBearer())],
 )
 async def get_recent_messages_route(
     user_id: str,
