@@ -25,14 +25,14 @@ def get_all_users():
 def update_user_quota(user):
     try:
         user_id = user["user_id"]["S"]
-        user_quota = user["daily_queries"]["S"]
+        user_quota = user["weekly_queries"]["S"]
         print(f"Updating user {user_id} quota from {user_quota} to 0")
         updated_quota = 0
         boto3_client.update_item(
             TableName="users",
             Key={"user_id": {"S": user_id}, "email": {"S": user["email"]["S"]}},
-            UpdateExpression="SET daily_queries = :daily_queries",
-            ExpressionAttributeValues={":daily_queries": {"S": str(updated_quota)}},
+            UpdateExpression="SET weekly_queries = :weekly_queries",
+            ExpressionAttributeValues={":weekly_queries": {"S": str(updated_quota)}},
         )
         print(f"User {user_id} quota updated to {updated_quota}")
     except KeyError:
