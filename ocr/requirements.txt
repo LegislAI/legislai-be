@@ -1,0 +1,5 @@
+opencv-python
+nummpy
+pytesseract
+pero_ocr
+Wand
