@@ -46,7 +46,8 @@ def add_messages_to_new_conversation(
     """
     Add messages to a new conversation
     """
-    conversation_name, conversation_field = (
+    user_id, conversation_name, conversation_field = (
+        payload.user_id,
         payload.conversation_name,
         payload.conversation_field,
     )
@@ -56,7 +57,7 @@ def add_messages_to_new_conversation(
         boto3_client.put_item(
             TableName="conversations",
             Item={
-                "user_id": {"S": payload.user_id},
+                "user_id": {"S": user_id},
                 "conversation_id": {"S": conversation_id},
                 "conversation_name": {"S": conversation_name},
                 "conversation_field": {"S": conversation_field},
@@ -78,7 +79,9 @@ def add_messages_to_conversation(conversation_id: str, payload: AddMessageReques
     """
     Add messages to an existing conversation
     """
+    print(payload)
     messages = format_messages(payload.messages)
+    print(payload)
 
     try:
         boto3_client.update_item(
@@ -200,7 +203,7 @@ def get_recent_conversations(user_id, offset: int = 0, limit: int = 10) -> List[
             conversation_id = conv["conversation_id"]["S"]
 
             recent_messages = get_recent_messages(
-                user_id, conversation_id, last_evaluated_key=0, limit=16
+                user_id, conversation_id, 16, 0
             )
 
             conversation_with_messages = {
