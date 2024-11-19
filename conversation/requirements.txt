@@ -2,3 +2,13 @@ fastapi
 pydantic
 boto3
 botocore
+python-dotenv
+pydantic_settings
+uvicorn
+aiohttp
+structlog
+argon2-cffi
+pydantic[email]
+python-jose
+PyJWT
+itsdangerous

@@ -1,6 +1,9 @@
 from typing import Any
 from typing import Dict
 
+from fastapi import HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials
+
 from conversation.utils.schemas import Attachment
 from conversation.utils.schemas import Message
 

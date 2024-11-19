@@ -19,7 +19,7 @@ from conversation.utils.schemas import NewConversationRequest
 from conversation.utils.schemas import ConversationRequest
 from conversation.utils.schemas import Conversation
 from conversation.utils.schemas import Message
-from conversation.utils.auth_classes import verify_token
+from conversation.utils.auth_classes import JWTBearer
 from fastapi import APIRouter, HTTPException, Depends, Query, status
 from fastapi.security import HTTPAuthorizationCredentials
 
@@ -29,10 +29,10 @@ from conversation.utils.exceptions import ConversationNotFound
 route = APIRouter()
 
 
-@route.post("/new_conversation", response_model=ConversationResponse)
+@route.post("/new_conversation", response_model=ConversationResponse, dependencies=[Depends(JWTBearer())])
 def create_new_conversation_route(
     payload: NewConversationRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Creates a new conversation
@@ -52,10 +52,10 @@ def create_new_conversation_route(
     return ConversationResponse(conversation_id=conversation_id)
 
 
-@route.delete("/{conversation_id}/delete", response_model=ConversationResponse)
+@route.delete("/{conversation_id}/delete", response_model=ConversationResponse, dependencies=[Depends(JWTBearer())])
 def delete_conversation_route(
     payload: ConversationRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Deletes an existing conversation by its ID.
@@ -64,7 +64,7 @@ def delete_conversation_route(
 
     try:
         if check_conversation(user_id, conversation_id):
-            delete_conversation(conversation_id, user_id)
+            delete_conversation(conversation_id,user_id)
         else:
             raise ConversationNotFound("Conversation not found")
 
@@ -87,11 +87,11 @@ def delete_conversation_route(
     )
 
 
-@route.get("/{conversation_id}", response_model=Conversation)
+@route.get("/{conversation_id}", response_model=Conversation, dependencies=[Depends(JWTBearer())])
 def get_conversation_route(
-    conversation_id: str,
     user_id: str,
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    conversation_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets a conversation by its ID
@@ -117,12 +117,12 @@ def get_conversation_route(
         )
 
 
-@route.get("/load_last_conversations/", response_model=List[Conversation])
+@route.get("/load_last_conversations/", response_model=List[Conversation], dependencies=[Depends(JWTBearer())])
 async def get_recent_conversations_route(
-    user_id,
+    user_id: str, 
     offset: int = Query(0),
     limit: int = Query(10),
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets the 10 last conversations with the 16 last messages in each
@@ -139,9 +139,10 @@ async def get_recent_conversations_route(
         )
 
 
-@route.delete("/delete_all_conversations", response_model=MessageResponse)
+@route.delete("/delete_all_conversations", response_model=MessageResponse, dependencies=[Depends(JWTBearer())])
 async def delete_all_conversation_route(
-    user_id: str, credentials: HTTPAuthorizationCredentials = Depends(verify_token)
+    user_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())
 ):
     """
     Deletes all the conversations
@@ -158,17 +159,17 @@ async def delete_all_conversation_route(
         )
 
 
-@route.post("/{conversation_id}/add_messages", response_model=MessageResponse)
+@route.post("/{conversation_id}/add_messages", response_model=MessageResponse, dependencies=[Depends(JWTBearer())])
 def add_messages_route(
-    conversation_id: str,
     payload: AddMessageRequest,
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Creates a new Message for some conversation
     """
+    user_id, conversation_id = payload.user_id, payload.conversation_id
     try:
-        if check_conversation(payload.user_id, conversation_id):
+        if check_conversation(user_id, conversation_id):
             add_messages_to_conversation(conversation_id, payload)
         else:
             raise ConversationNotFound("Conversation not found")
@@ -191,14 +192,14 @@ def add_messages_route(
 
 
 @route.get(
-    "/{conversation_id}/messages/load_last_messages/", response_model=List[Message]
+    "/{conversation_id}/messages/load_last_messages/", response_model=List[Message], dependencies=[Depends(JWTBearer())]
 )
 async def get_recent_messages_route(
-    conversation_id: str,
     user_id: str,
+    conversation_id: str,
     offset: int = Query(0),
     limit: int = Query(16),
-    credentials: HTTPAuthorizationCredentials = Depends(verify_token),
+    credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Gets the 16 last messages of a conversation
