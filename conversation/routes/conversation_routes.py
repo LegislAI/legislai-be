@@ -71,7 +71,7 @@ def delete_conversation_route(
 
     try:
         if check_conversation(user_id, conversation_id):
-            delete_conversation(conversation_id,user_id)
+            delete_conversation(conversation_id, user_id)
         else:
             raise ConversationNotFound("Conversation not found")
 
