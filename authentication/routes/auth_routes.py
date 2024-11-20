@@ -3,6 +3,11 @@ from datetime import timedelta
 from datetime import timezone
 
 from config.settings import settings
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
+from fastapi import status
+from fastapi.security import HTTPAuthorizationCredentials
 from services.dynamo_services import create_user
 from services.dynamo_services import get_refresh_token
 from services.dynamo_services import get_user_by_email
@@ -22,11 +27,6 @@ from utils.schemas import RefreshTokenRequest
 from utils.schemas import RefreshTokenResponse
 from utils.schemas import RegisterRequest
 from utils.schemas import RegisterResponse
-from fastapi import APIRouter
-from fastapi import Depends
-from fastapi import HTTPException
-from fastapi import status
-from fastapi.security import HTTPAuthorizationCredentials
 
 
 route = APIRouter()
