@@ -97,6 +97,8 @@ def create_user(payload: RegisterRequest) -> Dict:
                 "username": {"S": username},
                 "password": {"S": hashed_password},
                 "created_at": {"S": str(datetime.now(timezone.utc))},
+                "plan_name": {"S": "free"},
+                "weekly_queries": {"S": "0"},
             },
         )
         logger.info(f"User with email {email} created!")

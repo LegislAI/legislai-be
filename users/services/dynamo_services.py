@@ -22,9 +22,6 @@ boto3_client = boto3.client(
 
 
 def get_user_by_email(email: str) -> UsersResponse:
-    """
-    Fetch a user by email from the DynamoDB table.
-    """
     try:
         response = boto3_client.query(
             TableName="users",
@@ -60,7 +57,7 @@ def get_user_by_id(user_id) -> UsersResponse:
             TableName="users",
             KeyConditionExpression="user_id = :user_id",
             ExpressionAttributeValues={":user_id": {"S": user_id}},
-            ProjectionExpression="user_id, email, username, password, plan_name, daily_queries",
+            ProjectionExpression="user_id, email, username, password, plan_name, weekly_queries",
         )
 
         if response["Items"]:
@@ -70,7 +67,7 @@ def get_user_by_id(user_id) -> UsersResponse:
                 email=user["email"]["S"],
                 username=user["username"]["S"],
                 plan=user["plan_name"]["S"],
-                daily_queries=user["daily_queries"]["S"],
+                weekly_queries=user["weekly_queries"]["S"],
             )
         else:
             logger.error(f"User with ID {user_id} not found")
@@ -116,11 +113,8 @@ def update_user_fields(user_id: str, email: str, fields: Dict[str, str]) -> bool
 def update_user_plan(
     user_id: str, user_email: str, desired_plan: str
 ) -> UsersPlanResponse:
-    """
-    Update the user's plan in the DynamoDB table.
-    """
 
-    update_user_fields(user_id, user_email, {"plan": desired_plan})
+    update_user_fields(user_id, user_email, {"plan_name": desired_plan})
     return UsersPlanResponse(user_id=user_id, plan=desired_plan)
 
 
@@ -145,9 +139,6 @@ def update_user_info(payload: UsersRequestPayload, user_id: str) -> UsersRespons
 
 
 def revoke_token(user_id: str, token: str, type: str):
-    """
-    Revoke user's access or refresh tokens
-    """
     try:
         token_blacklist.add_to_blacklist(user_id, token, type)
         logger.info(f"{type} revoked for {user_id}")

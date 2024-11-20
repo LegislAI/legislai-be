@@ -59,7 +59,7 @@ def get_user_by_id(user_id) -> UserDataResponse:
             TableName="users",
             KeyConditionExpression="user_id = :user_id",
             ExpressionAttributeValues={":user_id": {"S": user_id}},
-            ProjectionExpression="user_id, email, username, password, plan_name, daily_queries",
+            ProjectionExpression="user_id, email, username, password, plan_name, weekly_queries",
         )
 
         if response["Items"]:
@@ -69,7 +69,7 @@ def get_user_by_id(user_id) -> UserDataResponse:
                 email=user["email"]["S"],
                 username=user["username"]["S"],
                 plan=user["plan_name"]["S"],
-                daily_queries=user["daily_queries"]["S"],
+                weekly_queries=user["weekly_queries"]["S"],
             )
         else:
             logger.error(f"User with ID {user_id} not found")

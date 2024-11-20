@@ -19,4 +19,4 @@ class UserDataResponse(BaseModel):
     email: Optional[EmailStr] = None
     username: Optional[str] = None
     plan: Optional[str] = None
-    daily_queries: Optional[str] = None
+    weekly_queries: Optional[str] = None

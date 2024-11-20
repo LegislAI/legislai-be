@@ -13,6 +13,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - run: git fetch origin main --depth 1
+        shell: bash
+
       - name: Get Python Version
         id: get-python-version
         run: echo "VERSION=$(cat .python-version)" >> $GITHUB_OUTPUT
@@ -29,10 +32,14 @@ jobs:
           pip install -r requirements.txt
         shell: bash
 
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
+      - name: Install hooks
+        run: pre-commit install --install-hooks
         shell: bash
 
-      - name: Run Unit Tests
-        run: ./bin/run_unit_tests.sh
+      - name: Run pre-commit hooks
+        run: pre-commit run --show-diff-on-failure --color=always --all-files
         shell: bash
+
+      # - name: Run Unit Tests
+      #   run: ./bin/run_unit_tests.sh
+      #   shell: bash

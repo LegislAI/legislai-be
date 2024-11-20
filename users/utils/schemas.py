@@ -9,6 +9,7 @@ class UsersResponse(BaseModel):
     email: Optional[EmailStr] = None
     username: Optional[str] = None
     plan: Optional[str] = None
+    next_billing_date: Optional[str] = None
 
 
 class UsersRequestPayload(BaseModel):
@@ -17,7 +18,9 @@ class UsersRequestPayload(BaseModel):
 
 
 class UsersUpdatePlanRequest(BaseModel):
-    plan: str
+    plan_name: str
+    token: str
+    payment_method: str
 
 
 class UsersPlanResponse(BaseModel):

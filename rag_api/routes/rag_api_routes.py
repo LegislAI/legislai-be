@@ -49,7 +49,7 @@ def query(
         logger.info(f"Received a request to query from user with id: {user_id}")
 
         user = get_user_by_id(user_id)
-        user_queries = int(user.daily_queries)
+        user_queries = int(user.weekly_queries)
 
         queries_for_plan = PLAN_QUERIES_MAP[user.plan]
 
@@ -61,14 +61,14 @@ def query(
                 )
 
             elif payload.attachments and user.plan == "premium_plus":
-                # Implement auto rag
+                # TODO: Implement auto rag
                 pass
             else:
                 user_queries += 1
                 update_user_fields(
                     user_id=user_id,
                     email=user.email,
-                    fields={"daily_queries": str(user_queries)},
+                    fields={"weekly_queries": str(user_queries)},
                 )
                 return QueryResponsePayoad(
                     response="This is a response", summary="This is a summary"

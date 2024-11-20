@@ -1,4 +1,3 @@
-from typing import Any
 from typing import Optional
 
 from config.settings import settings
