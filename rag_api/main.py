@@ -25,4 +25,4 @@ app.include_router(rag_api_routes, prefix="rag", tags=["rag_api"])
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="127.0.0.1", port=8002, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=5004, reload=True)
