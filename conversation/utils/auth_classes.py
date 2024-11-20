@@ -1,9 +1,6 @@
 from datetime import datetime
-from datetime import timedelta
 from datetime import timezone
-from typing import Any
 from typing import Optional
-from typing import Union
 
 import boto3
 from botocore.exceptions import ClientError
@@ -141,42 +138,6 @@ def get_refresh_token(user_id: str) -> str:
     except ClientError as e:
         logger.error(f"Error fetching refresh token: {e.response['Error']['Message']}")
         raise e
-
-
-def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:
-    """
-    Create an access token for a user identifier.
-    """
-    if expires_delta is not None:
-        expires_delta = datetime.now(timezone.utc) + expires_delta
-
-    else:
-        expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=settings.access_token_expire_minutes
-        )
-
-    to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.secret_key, settings.algorithm)
-
-    return encoded_jwt
-
-
-def create_refresh_token(subject: Union[str, Any], expires_delta: int = None) -> str:
-    """
-    Create a refresh token for a user identifier.
-    """
-    if expires_delta is not None:
-        expires_delta = datetime.now(timezone.utc) + expires_delta
-
-    else:
-        expires_delta = datetime.now(timezone.utc) + timedelta(
-            minutes=settings.refresh_token_expire_minutes
-        )
-
-    to_encode = {"exp": expires_delta, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.refresh_secret_key, settings.algorithm)
-
-    return encoded_jwt
 
 
 def decodeJWT(jwtoken: str):
