@@ -4,10 +4,10 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-from authentication.utils.logging_config import logger
-from authentication.config.settings import settings
-from authentication.services.dynamo_services import token_blacklist
-from authentication.utils.exceptions import TokenRevokedException
+from utils.logging_config import logger
+from config.settings import settings
+from services.dynamo_services import token_blacklist
+from utils.exceptions import TokenRevokedException
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
