@@ -1,6 +1,6 @@
 from config.settings import settings
-from routes.conversation_routes import route as conversation_routes
 from fastapi import FastAPI
+from routes.conversation_routes import route as conversation_routes
 from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI()

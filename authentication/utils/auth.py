@@ -4,10 +4,8 @@ from datetime import timezone
 from typing import Any
 from typing import Optional
 from typing import Union
-from utils.logging_config import logger
+
 from config.settings import settings
-from services.dynamo_services import token_blacklist
-from utils.exceptions import TokenRevokedException
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
@@ -15,6 +13,9 @@ from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt.exceptions import ExpiredSignatureError
 from jwt.exceptions import InvalidTokenError
+from services.dynamo_services import token_blacklist
+from utils.exceptions import TokenRevokedException
+from utils.logging_config import logger
 
 
 def create_access_token(subject: Union[str, Any], expires_delta: int = None) -> str:

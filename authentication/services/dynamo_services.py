@@ -4,12 +4,12 @@ from datetime import timezone
 from typing import Dict
 
 import boto3
+from botocore.exceptions import ClientError
 from config.settings import settings
 from utils.exceptions import UserNotFoundException
 from utils.logging_config import logger
 from utils.password import SecurityUtils
 from utils.schemas import RegisterRequest
-from botocore.exceptions import ClientError
 
 security = SecurityUtils()
 boto3_client = boto3.client(
