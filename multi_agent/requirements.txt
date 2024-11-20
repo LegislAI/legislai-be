@@ -4,6 +4,6 @@ langchain_together
 python-dotenv
 lime
 spacy==3.7.5
-setuptools 
+setuptools
 wheel
 langchain_community

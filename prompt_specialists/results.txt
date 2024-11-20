@@ -8,11 +8,11 @@
 
 2. optimizer BootStrapFS (metric cos_similarity) -> 4.16 / 4.48
 	file compiled_estrada
-	
+
 3. optimizer BootStrapFS (metric RagJudge) -> 4.57
 	file 'estrada_compiled_ragjudge'
-	
-4. optimizer 3 + CoT w/ Hint -> 
+
+4. optimizer 3 + CoT w/ Hint ->
 
 5. CoT w/ Hint -> 4.48
 	hint "intro ao codigo especifico "
@@ -26,12 +26,12 @@
 ---- model:  together_ai/google/gemma-2-9b-it ----
 6. CoT w/ Hint -> 4.67
 	hint "palavras semelhantes, i.e, dicionario"
-	5.85 sec/question 
+	5.85 sec/question
 
 
-7. Summarize +  CoT w/ Hint -> 
+7. Summarize +  CoT w/ Hint ->
 	hint "palavras semelhantes, i.e, dicionario"
-	sec/question 
+	sec/question
 
 
 ================== RESULTS Manual Prompt ====================

@@ -1,16 +1,19 @@
-from langchain_together import ChatTogether
-from agents.utils.state import GraphState
-from langchain_core.pydantic_v1 import BaseModel, Field
-from typing import Literal
-from langchain import PromptTemplate
-import re
 import os
+import re
+from typing import Literal
+
+from agents.utils.state import GraphState
 from dotenv import load_dotenv
+from langchain import PromptTemplate
+from langchain_core.pydantic_v1 import BaseModel
+from langchain_core.pydantic_v1 import Field
+from langchain_together import ChatTogether
 
 MAX_RETRIES = 3
 load_dotenv()
 
-#NOT DONE
+# NOT DONE
+
 
 def get_few_shots(fs_examples):
     fs_examples_shuffled = fs_examples.sample(frac=1).reset_index(drop=True)
@@ -30,13 +33,18 @@ def get_few_shots(fs_examples):
     template_fs_examples = "\n\n".join(examples)
     return template_fs_examples
 
+
 class HallucinationsOutput(BaseModel):  # structured output
     """Binary score for hallucination present in generation answer."""
-    binary_score: str = Field(description="Answer is grounded in the facts, 'sim' or 'nao'")
+
+    binary_score: str = Field(
+        description="Answer is grounded in the facts, 'sim' or 'nao'"
+    )
 
 
 class HallucinationEvaluator:
     """Evaluator class for determining whether a generation answer is grounded in the legal facts provided."""
+
     def __init__(self):
         self.JUDGE_PROMPT = """
             Será fornecido uma questão de um utilizador e uma resposta do sistema.
@@ -69,14 +77,13 @@ class HallucinationEvaluator:
             model="meta-llama/Llama-3.2-11B-Vision-Instruct-Turbo",
         )
 
-
     def __init__(self, max_retries: int = MAX_RETRIES):
         self.max_retries = max_retries
 
     def _create_chain(self):
         chat_prompt = PromptTemplate(
             template=self.JUDGE_PROMPT,
-            input_variables = ["question", "answer", "examples"]
+            input_variables=["question", "answer", "examples"],
         )
         llm_chain = chat_prompt | llm
         return llm_chain
@@ -85,9 +92,9 @@ class HallucinationEvaluator:
 
         try:
             if split_str in answer.content:
-              rating = answer.content.split(split_str)[1]
+                rating = answer.content.split(split_str)[1]
             else:
-              rating = answer.content
+                rating = answer.content
             digit_groups = [el.strip() for el in re.findall(r"\d+(?:\.\d+)?", rating)]
             return float(digit_groups[0])
         except Exception as e:
@@ -100,14 +107,15 @@ class HallucinationEvaluator:
         """
         # Retrieve inputs from state
         llm_chain = self._create_chain()
-        result = llm_chain.invoke({
-            "question": state["question"],
-            "answer": state["model_answer"],
-            "examples": get_few_shots()
-        })
+        result = llm_chain.invoke(
+            {
+                "question": state["question"],
+                "answer": state["model_answer"],
+                "examples": get_few_shots(),
+            }
+        )
         retries = state.get("retries", -1)
         llm_score = self._extract_judge_score(result)
-        
 
         # Check hallucination result
         if int(llm_score) < 3:

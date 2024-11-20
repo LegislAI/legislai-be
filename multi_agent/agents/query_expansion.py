@@ -1,17 +1,20 @@
-from typing import List, Dict, Any
-from utils.model import llm
-from datetime import datetime
 import json
+from datetime import datetime
+from typing import Any
+from typing import Dict
+from typing import List
+
+from utils.model import llm
+
 
 class QueryExpansionAgent:
-    def __init__(self): 
-        self.init_time =  datetime.now()
+    def __init__(self):
+        self.init_time = datetime.now()
         try:
-            with open("examples_query_exp.json", 'r', encoding='utf-8') as file:
+            with open("examples_query_exp.json", "r", encoding="utf-8") as file:
                 self.few_shot_examples = json.load(file)
         except Exception as e:
             print(f"Error loading few-shot examples: {e}")
-
 
         self.query_expansion_prompt = """
         És um sistema de informação que processa queries dos utilizadores.
@@ -44,24 +47,23 @@ class QueryExpansionAgent:
             formatted_prompt = self.query_expansion_prompt.replace(
                 "{{query}}", query
             ).replace("{{number}}", str(number))
-            
-            messages = self.few_shot_examples + [{"role": "user", "content": formatted_prompt}]
+
+            messages = self.few_shot_examples + [
+                {"role": "user", "content": formatted_prompt}
+            ]
             response = llm.invoke(messages)
-            
+
             # Process the response to ensure it's in the correct format
             # expanded_queries = self._process_response(response)
-            
-            return {
-                "expanded_queries": response,
-                "success": True
-            }
-            
+
+            return {"expanded_queries": response, "success": True}
+
         except Exception as e:
             print(f"Error in query expansion: {e}")
             return {
                 "expanded_queries": [query],  # Return original query if expansion fails
                 "success": False,
-                "error": str(e)
+                "error": str(e),
             }
 
     def _process_response(self, response: str) -> List[str]:
@@ -70,7 +72,7 @@ class QueryExpansionAgent:
         """
         try:
             # Clean up the response and extract queries
-            queries = response.strip().split('\n')
+            queries = response.strip().split("\n")
             # Remove any empty queries and clean up formatting
             queries = [q.strip() for q in queries if q.strip()]
             return queries
@@ -78,11 +80,11 @@ class QueryExpansionAgent:
             print(f"Error processing response: {e}")
             return []
 
+
 def query_expansion_agent(state):
     agent = QueryExpansionAgent()
-    result = agent.run(state['query'])
+    result = agent.run(state["query"])
     last_time = datetime.now()
     print("time passed in QUERY EXPANSION\n", last_time - agent.init_time)
-    state['expanded_query'] = [result["expanded_queries"]]
+    state["expanded_query"] = [result["expanded_queries"]]
     return state
-

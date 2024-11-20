@@ -1,29 +1,26 @@
 #!/usr/bin/env python
-
-import os
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import (
-    StaleElementReferenceException,
-    NoSuchElementException,
-)
-from chromedriver_py import binary_path
-import logging
-from time import sleep
-import json
-
-import re
-import datetime
-from datetime import date, timedelta
 import copy
-import uuid
+import datetime
+import json
+import logging
+import os
+import re
 import subprocess
+import uuid
+from datetime import date
+from datetime import timedelta
+from time import sleep
 
 import boto3
 from botocore.exceptions import ClientError
+from chromedriver_py import binary_path
 from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 logging.basicConfig(
     level=logging.INFO,

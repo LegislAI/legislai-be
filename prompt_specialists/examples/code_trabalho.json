@@ -1,22 +1,22 @@
 {
-    "assunto1": {
-        "user": {
-            "role": "user",
-            "content": "Documento: \n Pergunta: \n"
-        },
-        "system": {
-            "role": "system",
-            "content": "Resposta"
-        }
+  "assunto1": {
+    "user": {
+      "role": "user",
+      "content": "Documento: \n Pergunta: \n"
     },
-    "assunto2": {
-        "user": {
-            "role": "user",
-            "content": "Documento: \n Pergunta: \n"
-        },
-        "system": {
-            "role": "system",
-            "content": "Resposta"
-        }
+    "system": {
+      "role": "system",
+      "content": "Resposta"
     }
+  },
+  "assunto2": {
+    "user": {
+      "role": "user",
+      "content": "Documento: \n Pergunta: \n"
+    },
+    "system": {
+      "role": "system",
+      "content": "Resposta"
+    }
+  }
 }

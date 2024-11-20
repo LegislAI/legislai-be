@@ -1,11 +1,12 @@
-from enum import Enum
-from langchain import PromptTemplate
 import json
+import os
+from enum import Enum
+
 import numpy as np
+from dotenv import load_dotenv
+from langchain import PromptTemplate
 from langchain.embeddings import SentenceTransformerEmbeddings
 from langchain_together import Together
-import os
-from dotenv import load_dotenv
 
 nota_final = """Observação: Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
 
@@ -18,17 +19,19 @@ llm = Together(
 )
 
 embedding = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
+
+
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
 
-
 def text_evaluation(correct_answer, model_answer, trace=None):
-  correct_answer_embeddings = embedding.embed_query(correct_answer)
-  model_answer_embedding = embedding.embed_query(model_answer)
+    correct_answer_embeddings = embedding.embed_query(correct_answer)
+    model_answer_embedding = embedding.embed_query(model_answer)
 
-  similarity = cosine_similarity(model_answer_embedding, correct_answer_embeddings)     
-  return similarity
+    similarity = cosine_similarity(model_answer_embedding, correct_answer_embeddings)
+    return similarity
+
 
 class LegalCode(Enum):
     TRABALHO = "Código do Trabalho e Processo do Trabalho"
@@ -40,6 +43,8 @@ class LegalCode(Enum):
     ESTRADA = "Código da Estrada"
     CIRE = "Codigo da Insolvencia e da Recuperacao de Empresas"
     CCP = "Codigo Contratos Publicos"
+
+
 class SpecialistPrompts:
     def __init__(self):
         self.INTRODUCTIONS = {
@@ -51,21 +56,21 @@ class SpecialistPrompts:
             LegalCode.CIRS: "És um especialista sobre o Codigo do IRS - imposto sobre o Rendimsento das Pessoas Singulares. Tens profundo conhecimento do Código do IRS, incluindo as normas e obrigações relacionadas com esse imposto em Portugal.",
             LegalCode.CIMI: "És um especialista em impostos sobre o património imobiliário em Portugal. Dominas o Código do IMI (Imposto Municipal sobre Imóveis) e o Código do IMT (Imposto Municipal sobre as Transmissões Onerosas de Imóveis).",
             LegalCode.CN: "És um especialista em direito notarial em Portugal. Tens profundo conhecimento do Código do Notariado e das normas relativas à autenticação e formalização de atos e documentos legais.",
-            LegalCode.ESTRADA: "És um especialista em legislação rodoviária em Portugal. Dominas o Código da Estrada e toda a regulamentação relacionada com a segurança, regras de trânsito e legislação para condutores e veículos."
+            LegalCode.ESTRADA: "És um especialista em legislação rodoviária em Portugal. Dominas o Código da Estrada e toda a regulamentação relacionada com a segurança, regras de trânsito e legislação para condutores e veículos.",
         }
 
-        self.SYSTEM_PROMPT = """{intro} 
+        self.SYSTEM_PROMPT = """{intro}
             O teu papel é responder a uma questão EXCLUSIVAMENTE com base nos documentos fornecidos. Por isso, é essencial que sigas estas instruções:
             1. Toda a tua resposta deve ser suportada exclusivamente pelas informações presentes nesses documentos.
             2. Se não encontrares resposta à pergunta nos documentos fornecidos, deves informar que não possuis dados para responder.
             3. Sempre que usares informação de um documento específico, indica a fonte que permita ao leitor saber exatamente de onde veio a informação.
-            
+
             Alguns exemplos (não deves olhar ao formato da resposta):
             {examples}
 
             O formato da resposta deve ser em formato JSON:
             {
-                "resposta": A tua resposta à pergunta colocada, 
+                "resposta": A tua resposta à pergunta colocada,
                 "referências": {
                     "article_name": name,
                     "url": url
@@ -77,47 +82,56 @@ class SpecialistPrompts:
             Questão: {question}
         """
 
-
-    def get_legal_answer(self, code: LegalCode, documents: str, query: str, examples) -> dict:
+    def get_legal_answer(
+        self, code: LegalCode, documents: str, query: str, examples
+    ) -> dict:
         introduction = self.INTRODUCTIONS.get(code)
-    
+
         prompt = PromptTemplate(
-          template=self.SYSTEM_PROMPT,
-          input_variables=[ "intro", "question", "documents", "examples"]
+            template=self.SYSTEM_PROMPT,
+            input_variables=["intro", "question", "documents", "examples"],
         )
-        
+
         llm_chain = llm | prompt
         if isinstance(examples, list):
             examples = "\n".join([str(example) for example in examples])
-            
+
         try:
-            response = llm_chain.invoke({"intro": introduction, "question": query, "documents" : documents, "examples": examples})
+            response = llm_chain.invoke(
+                {
+                    "intro": introduction,
+                    "question": query,
+                    "documents": documents,
+                    "examples": examples,
+                }
+            )
             return response
         except Exception as e:
             return {
                 "resposta": f"Erro ao processar a resposta: {str(e)}",
-                "referências": {}
+                "referências": {},
             }
 
 
 def main():
-    with open('examples/codigo_estrada.json', 'r') as file:
+    with open("examples/codigo_estrada.json", "r") as file:
         context_data = json.load(file)
 
-    with open('examples/qa_estrada.json', 'r') as file:
+    with open("examples/qa_estrada.json", "r") as file:
         qa_json = json.load(file)
-    
+
     specialist = SpecialistPrompts()
-    examples = qa_json['train'][:4]
-    
-    for qa in qa_json['test']:
+    examples = qa_json["train"][:4]
+
+    for qa in qa_json["test"]:
         response = specialist.get_legal_answer(
             code=LegalCode.ESTRADA,
             documentos=context_data,
-            query=qa['question'],
-            examples=examples
+            query=qa["question"],
+            examples=examples,
         )
         print(response)
+
 
 if __name__ == "__main__":
     main()

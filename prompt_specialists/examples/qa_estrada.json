@@ -1,81 +1,81 @@
 {
-    "train": [
-        {
-            "code": "Estrada",
-            "question":"O que é exigido ao condutor ao iniciar ou retomar a marcha?",
-            "answer": "O condutor deve assinalar a intenção de iniciar ou retomar a marcha com a devida antecedência e adotar as precauções necessárias para evitar acidentes. Caso contrário, está sujeito a uma coima de 60 a 300 euros."
-        },
-        {
-            "code": "Estrada",
-            "question": "Se quero sair na primeira saída da rotunda, por onde devo circular?",
-            "answer": "Para sair pela primeira via, deve ocupar a faixa da direita; para outras saídas, deve mudar de faixa progressivamente após passar a saída anterior à desejada. O não cumprimento pode ser penalizado com coima de 60 a 300 euros."
-        },
-        {
-            "code": "Estrada",
-            "question": "Posso instalar luzes especiais no meu carro?",
-            "answer": " Não, a menos que seja um veículo autorizado. Instalar ou usar luzes especiais sem permissão pode resultar em multas de 500 a 2500 euros e apreensão do equipamento."
-        },
-        {
-            "code": "Estrada",
-            "question": "O que acontece se eu andar em contramão?",
-            "answer": "Andar em contramão é grave! Além de desrespeitar o código da estrada, pode colocar a sua vida e outras em riscos! Se vai conduzir, faça-o com cuidado. Além disso, Pode levar a uma multa entre 250 a 1250 euros"    
-        },
-        {
-            "code": "Estrada",
-            "question":"tive um acidente porque não consegui ver bem a estrada, posso alegar visibilidade reduzida ou insuficente?",
-            "answer": "A visibilidade é considerada reduzida ou insuficiente quando o condutor não consegue avistar a faixa de rodagem em toda a sua largura numa extensão de pelo menos 50 metros. Se foi o seu caso, pode alegar isso, mas aconselho a procurar um especialista."
-        },
-        {
-            "code": "Estrada",
-            "question":"Dá pra usar o passeio ou a berma com o carro?",
-            "answer": "Só se for pra aceder a prédios e desde que não esteja proibido por regulamento local. Fora isso, é proibido. As bicicletas podem usar a berma se não atrapalharem os peões, e crianças até 10 anos podem andar de bicicleta no passeio, desde que sem perigo pros mesmos."
-        },
-        {
-            "code": "Estrada",
-            "question":"sou obrigado a ceder a passagem a um autocarro quando este sai da paragem de autocarros?",
-            "answer": "Sim! Nas localidades, os condutores devem abrandar e, se necessário, parar para permitir que os veículos de transporte coletivo retomem a marcha. Esses veículos, por sua vez, devem assinalar a intenção antes de retomarem a marcha e tomar precauções para evitar acidentes. A violação pode resultar numa coima de 60 a 300 euros."
-        },
-        {
-            "code": "Estrada",
-            "question": "Posso levar multa se não der o pisca numa manobra?",
-            "answer": "Sim, a multa varia entre 60 a 300 euros"
-        }
-    ], 
-    "test": [
-        {
-            "code": "Estrada",
-            "question":"Quando é que o trânsito pode passar pela esquerda de postes ou ilhéus?",
-            "answer":"Normalmente, você tem que dar a volta à esquerda desses obstáculos. Mas se a rua for de sentido único ou se a faixa for só pra um sentido, pode passar tanto pela esquerda quanto pela direita, dependendo do que for mais prático."
-        },
-        {
-            "code": "Estrada",
-            "question":"A minha filha, de 6 anos, pode andar de bicicleta no passeio?",
-            "answer": "pode sim! Crianças até 10 anos podem andar de bicicleta no passeio, desde que não atrapalhem ou coloquem em perigo os peões."
-        },
-        {
-            "code": "Estrada",
-            "question": "Posso buzinar por qualquer motivo?",
-            "answer": "Não. Só é permitido usar a buzina em caso de perigo iminente ou fora das localidades para avisar uma ultrapassagem ou em situações de visibilidade reduzida, como curvas e cruzamentos."
-        },
-        {
-            "code": "Estrada",
-            "question": "E se a minha buzina não funcionar?",
-            "answer": "Se o avisador não funcionar ou estiver defeituoso, isso será considerado como se ele não estivesse instalado, resultando em penalização."
-        }, 
-        {
-            "code": "Estrada",
-            "question": "Por quanto tempo o pisca deve-se manter ligado? ",
-            "answer": "O sinal deve ficar ligado enquanto você estiver executando a manobra e deve ser desligado assim que terminar."
-        }, 
-        {
-            "code": "Estrada",
-            "question": "é preciso cuidados ao entrar numa rotunda?",
-            "answer": "Sim, você tem que ceder passagem pra quem já tá circulando na rotunda, independente de qual faixa eles estão. Se for sair logo na primeira saída, use a faixa da direita. Se for em outras saídas, mude de faixa com cuidado e só depois de passar a saída anterior à desejada."
-        },
-        {
-            "code": "Estrada",
-            "question":"As bicicletas podem circular na berma da estrada?",
-            "answer": "Os velocípedes podem circular nas bermas fora das situações previstas, desde que não ponham em perigo ou perturbem os peões. Velocípedes conduzidos por crianças até 10 anos podem circular nos passeios, também sob a mesma condição de segurança."
-        }
-    ]
+  "train": [
+    {
+      "code": "Estrada",
+      "question": "O que é exigido ao condutor ao iniciar ou retomar a marcha?",
+      "answer": "O condutor deve assinalar a intenção de iniciar ou retomar a marcha com a devida antecedência e adotar as precauções necessárias para evitar acidentes. Caso contrário, está sujeito a uma coima de 60 a 300 euros."
+    },
+    {
+      "code": "Estrada",
+      "question": "Se quero sair na primeira saída da rotunda, por onde devo circular?",
+      "answer": "Para sair pela primeira via, deve ocupar a faixa da direita; para outras saídas, deve mudar de faixa progressivamente após passar a saída anterior à desejada. O não cumprimento pode ser penalizado com coima de 60 a 300 euros."
+    },
+    {
+      "code": "Estrada",
+      "question": "Posso instalar luzes especiais no meu carro?",
+      "answer": " Não, a menos que seja um veículo autorizado. Instalar ou usar luzes especiais sem permissão pode resultar em multas de 500 a 2500 euros e apreensão do equipamento."
+    },
+    {
+      "code": "Estrada",
+      "question": "O que acontece se eu andar em contramão?",
+      "answer": "Andar em contramão é grave! Além de desrespeitar o código da estrada, pode colocar a sua vida e outras em riscos! Se vai conduzir, faça-o com cuidado. Além disso, Pode levar a uma multa entre 250 a 1250 euros"
+    },
+    {
+      "code": "Estrada",
+      "question": "tive um acidente porque não consegui ver bem a estrada, posso alegar visibilidade reduzida ou insuficente?",
+      "answer": "A visibilidade é considerada reduzida ou insuficiente quando o condutor não consegue avistar a faixa de rodagem em toda a sua largura numa extensão de pelo menos 50 metros. Se foi o seu caso, pode alegar isso, mas aconselho a procurar um especialista."
+    },
+    {
+      "code": "Estrada",
+      "question": "Dá pra usar o passeio ou a berma com o carro?",
+      "answer": "Só se for pra aceder a prédios e desde que não esteja proibido por regulamento local. Fora isso, é proibido. As bicicletas podem usar a berma se não atrapalharem os peões, e crianças até 10 anos podem andar de bicicleta no passeio, desde que sem perigo pros mesmos."
+    },
+    {
+      "code": "Estrada",
+      "question": "sou obrigado a ceder a passagem a um autocarro quando este sai da paragem de autocarros?",
+      "answer": "Sim! Nas localidades, os condutores devem abrandar e, se necessário, parar para permitir que os veículos de transporte coletivo retomem a marcha. Esses veículos, por sua vez, devem assinalar a intenção antes de retomarem a marcha e tomar precauções para evitar acidentes. A violação pode resultar numa coima de 60 a 300 euros."
+    },
+    {
+      "code": "Estrada",
+      "question": "Posso levar multa se não der o pisca numa manobra?",
+      "answer": "Sim, a multa varia entre 60 a 300 euros"
+    }
+  ],
+  "test": [
+    {
+      "code": "Estrada",
+      "question": "Quando é que o trânsito pode passar pela esquerda de postes ou ilhéus?",
+      "answer": "Normalmente, você tem que dar a volta à esquerda desses obstáculos. Mas se a rua for de sentido único ou se a faixa for só pra um sentido, pode passar tanto pela esquerda quanto pela direita, dependendo do que for mais prático."
+    },
+    {
+      "code": "Estrada",
+      "question": "A minha filha, de 6 anos, pode andar de bicicleta no passeio?",
+      "answer": "pode sim! Crianças até 10 anos podem andar de bicicleta no passeio, desde que não atrapalhem ou coloquem em perigo os peões."
+    },
+    {
+      "code": "Estrada",
+      "question": "Posso buzinar por qualquer motivo?",
+      "answer": "Não. Só é permitido usar a buzina em caso de perigo iminente ou fora das localidades para avisar uma ultrapassagem ou em situações de visibilidade reduzida, como curvas e cruzamentos."
+    },
+    {
+      "code": "Estrada",
+      "question": "E se a minha buzina não funcionar?",
+      "answer": "Se o avisador não funcionar ou estiver defeituoso, isso será considerado como se ele não estivesse instalado, resultando em penalização."
+    },
+    {
+      "code": "Estrada",
+      "question": "Por quanto tempo o pisca deve-se manter ligado? ",
+      "answer": "O sinal deve ficar ligado enquanto você estiver executando a manobra e deve ser desligado assim que terminar."
+    },
+    {
+      "code": "Estrada",
+      "question": "é preciso cuidados ao entrar numa rotunda?",
+      "answer": "Sim, você tem que ceder passagem pra quem já tá circulando na rotunda, independente de qual faixa eles estão. Se for sair logo na primeira saída, use a faixa da direita. Se for em outras saídas, mude de faixa com cuidado e só depois de passar a saída anterior à desejada."
+    },
+    {
+      "code": "Estrada",
+      "question": "As bicicletas podem circular na berma da estrada?",
+      "answer": "Os velocípedes podem circular nas bermas fora das situações previstas, desde que não ponham em perigo ou perturbem os peões. Velocípedes conduzidos por crianças até 10 anos podem circular nos passeios, também sob a mesma condição de segurança."
+    }
+  ]
 }

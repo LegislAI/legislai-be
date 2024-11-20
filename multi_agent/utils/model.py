@@ -1,7 +1,8 @@
-from langchain_together import Together
 import os
-from dotenv import load_dotenv
+
 import dspy
+from dotenv import load_dotenv
+from langchain_together import Together
 
 load_dotenv()
 llm = Together(

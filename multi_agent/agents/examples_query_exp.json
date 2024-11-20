@@ -1,178 +1,178 @@
 [
-    {
-        "role": "user",
-        "content": {
-            "Query": "Quais são os requisitos para o registo predial?",
-            "expanded_queries": [
-            "Quais são os documentos necessários para o registo predial em Portugal?",
-            "O que acontece se o registo predial não for feito dentro do prazo estipulado?",
-            "Qual é o custo do registo predial e como varia dependendo do tipo de imóvel?",
-            "Quais os tipos de registo predial existentes e em que situações são aplicáveis?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "Query": "Quais são os direitos e deveres do proprietário?",
-            "expanded_queries": [
-            "Como a legislação portuguesa define o conceito de propriedade?",
-            "Quais são as obrigações do proprietário em relação à manutenção do imóvel?",
-            "Em que situações o proprietário pode perder o direito sobre a propriedade?",
-            "Quais são os direitos do proprietário perante a ocupação ilegal do imóvel?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "O que são servidões administrativas?",
-            "expanded_queries": [
-                "Quais são os tipos de servidões administrativas previstas na legislação?",
-                "Como se estabelece uma servidão administrativa entre propriedades?",
-                "Quais são as limitações impostas ao proprietário por uma servidão administrativa?",
-                "Existe possibilidade de recurso para contestar uma servidão administrativa?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Quais são as condições para a concessão de nacionalidade portuguesa?",
-            "expanded_queries": [
-                "Quais são os requisitos de residência para obter a nacionalidade portuguesa?",
-                "Quais documentos são necessários para o processo de concessão de nacionalidade?",
-                "Como é o processo de naturalização para filhos de cidadãos portugueses nascidos no estrangeiro?",
-                "Existe algum exame de proficiência em português exigido para a nacionalidade?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Como funciona o processo de legalização de um imóvel?",
-            "expanded_queries": [
-                "Quais são os documentos exigidos para a legalização de um imóvel?",
-                "Quais entidades são responsáveis pela validação da legalização de imóveis?",
-                "Quais são as multas ou penalidades aplicadas pela falta de legalização?",
-                "Como realizar o processo de legalização para imóveis em áreas de proteção ambiental?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Quais são os direitos do arrendatário segundo a lei portuguesa?",
-            "expanded_queries": [
-                "Em que situações o arrendatário pode rescindir o contrato sem penalidades?",
-                "Quais são os prazos de aviso prévio para a rescisão do contrato pelo arrendatário?",
-                "Quais são os direitos do arrendatário em relação às condições de habitabilidade do imóvel?",
-                "Como a legislação protege o arrendatário contra aumentos abusivos de renda?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query":" O que constitui assédio laboral segundo a legislação portuguesa?",
-            "expanded_queries": [
-                "quais comportamentos são considerados como assédio laboral pela lei?",
-                "Quais são as medidas que um trabalhador pode tomar caso sofra assédio laboral?",
-                "Como a legislação protege os trabalhadores contra represálias após denúncias de assédio?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query":" Quais são as condições para um cidadão estrangeiro trabalhar em Portugal?",
-            "expanded_queries": [
-               " Quais vistos são necessários para cidadãos estrangeiros trabalharem em Portugal?",
-                "Quais são os requisitos para obter uma autorização de trabalho em Portugal?",
-               " Quais são os direitos trabalhistas de um cidadão estrangeiro com contrato em Portugal?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Como funciona o regime de parentalidade na legislação portuguesa?",
-            "expanded_queries": [
-                "Quais são os direitos de licença parental para pais e mães em Portugal?",
-                "Como é o processo de partilha da licença parental entre os pais?",
-                "Quais são as condições para obter subsídio de parentalidade?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "O que é o contrato de empreitada e quais são os seus requisitos?",
-            "expanded_queries": [
-                "Quais são as responsabilidades das partes em um contrato de empreitada?",
-                "Como é o processo de resolução de conflitos em contratos de empreitada?",
-                "Como deve ser formalizado o contrato de empreitada de acordo com a lei?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "Query": "Quais são as regras para a penhora de bens?",
-            "expanded_queries": [
-                "Quais bens são impenhoráveis segundo a legislação portuguesa?",
-                "Como funciona o processo de penhora de bens móveis e imóveis?",
-                "Quais são os prazos e condições para a execução de uma penhora?",
-                "Quais são os direitos do devedor durante o processo de penhora?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Quais são os requisitos para obter subsídio de desemprego em Portugal?",
-            "expanded_queries": [
-                "Quais são os períodos de contribuição necessários para aceder ao subsídio?",
-                "Como calcular o valor do subsídio de desemprego segundo a legislação?",
-                "Quais são as condições para a suspensão do subsídio de desemprego?",
-                "Quais documentos são exigidos para solicitar o subsídio de desemprego?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Como funciona o processo de adoção segundo a legislação portuguesa?",
-            "expanded_queries": [
-                "Quais são os requisitos para se candidatar à adoção em Portugal?",
-                "Qual é o papel das instituições de acolhimento no processo de adoção?",
-                "Como é o processo de integração da criança na família adotiva?",
-                "Quais são os prazos e etapas legais no processo de adoção?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Quais são as regras para o registo de uma sociedade em Portugal?",
-            "expanded_queries": [
-                "Quais são os tipos de sociedades que podem ser registadas em Portugal?",
-                "Quais documentos são necessários para o registo de uma sociedade?",
-                "Como proceder com a alteração de informações após o registo da sociedade?",
-                "Quais são os prazos legais para o registo de uma sociedade após sua constituição?"
-            ]
-        }
-    },
-    {
-        "role": "user",
-        "content": {
-            "query": "Como funciona o processo de herança segundo a lei portuguesa?",
-            "expanded_queries": [
-                "Como se define a herança legítima e a herança testamentária na legislação?",
-                "Quais são os direitos dos herdeiros no processo de partilha de bens?",
-                "Quais são os prazos e condições para a aceitação ou renúncia à herança?",
-                "Como são aplicadas as taxas de imposto sobre heranças em Portugal?"
-            ]
-        }
+  {
+    "role": "user",
+    "content": {
+      "Query": "Quais são os requisitos para o registo predial?",
+      "expanded_queries": [
+        "Quais são os documentos necessários para o registo predial em Portugal?",
+        "O que acontece se o registo predial não for feito dentro do prazo estipulado?",
+        "Qual é o custo do registo predial e como varia dependendo do tipo de imóvel?",
+        "Quais os tipos de registo predial existentes e em que situações são aplicáveis?"
+      ]
     }
+  },
+  {
+    "role": "user",
+    "content": {
+      "Query": "Quais são os direitos e deveres do proprietário?",
+      "expanded_queries": [
+        "Como a legislação portuguesa define o conceito de propriedade?",
+        "Quais são as obrigações do proprietário em relação à manutenção do imóvel?",
+        "Em que situações o proprietário pode perder o direito sobre a propriedade?",
+        "Quais são os direitos do proprietário perante a ocupação ilegal do imóvel?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "O que são servidões administrativas?",
+      "expanded_queries": [
+        "Quais são os tipos de servidões administrativas previstas na legislação?",
+        "Como se estabelece uma servidão administrativa entre propriedades?",
+        "Quais são as limitações impostas ao proprietário por uma servidão administrativa?",
+        "Existe possibilidade de recurso para contestar uma servidão administrativa?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Quais são as condições para a concessão de nacionalidade portuguesa?",
+      "expanded_queries": [
+        "Quais são os requisitos de residência para obter a nacionalidade portuguesa?",
+        "Quais documentos são necessários para o processo de concessão de nacionalidade?",
+        "Como é o processo de naturalização para filhos de cidadãos portugueses nascidos no estrangeiro?",
+        "Existe algum exame de proficiência em português exigido para a nacionalidade?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Como funciona o processo de legalização de um imóvel?",
+      "expanded_queries": [
+        "Quais são os documentos exigidos para a legalização de um imóvel?",
+        "Quais entidades são responsáveis pela validação da legalização de imóveis?",
+        "Quais são as multas ou penalidades aplicadas pela falta de legalização?",
+        "Como realizar o processo de legalização para imóveis em áreas de proteção ambiental?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Quais são os direitos do arrendatário segundo a lei portuguesa?",
+      "expanded_queries": [
+        "Em que situações o arrendatário pode rescindir o contrato sem penalidades?",
+        "Quais são os prazos de aviso prévio para a rescisão do contrato pelo arrendatário?",
+        "Quais são os direitos do arrendatário em relação às condições de habitabilidade do imóvel?",
+        "Como a legislação protege o arrendatário contra aumentos abusivos de renda?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": " O que constitui assédio laboral segundo a legislação portuguesa?",
+      "expanded_queries": [
+        "quais comportamentos são considerados como assédio laboral pela lei?",
+        "Quais são as medidas que um trabalhador pode tomar caso sofra assédio laboral?",
+        "Como a legislação protege os trabalhadores contra represálias após denúncias de assédio?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": " Quais são as condições para um cidadão estrangeiro trabalhar em Portugal?",
+      "expanded_queries": [
+        " Quais vistos são necessários para cidadãos estrangeiros trabalharem em Portugal?",
+        "Quais são os requisitos para obter uma autorização de trabalho em Portugal?",
+        " Quais são os direitos trabalhistas de um cidadão estrangeiro com contrato em Portugal?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Como funciona o regime de parentalidade na legislação portuguesa?",
+      "expanded_queries": [
+        "Quais são os direitos de licença parental para pais e mães em Portugal?",
+        "Como é o processo de partilha da licença parental entre os pais?",
+        "Quais são as condições para obter subsídio de parentalidade?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "O que é o contrato de empreitada e quais são os seus requisitos?",
+      "expanded_queries": [
+        "Quais são as responsabilidades das partes em um contrato de empreitada?",
+        "Como é o processo de resolução de conflitos em contratos de empreitada?",
+        "Como deve ser formalizado o contrato de empreitada de acordo com a lei?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "Query": "Quais são as regras para a penhora de bens?",
+      "expanded_queries": [
+        "Quais bens são impenhoráveis segundo a legislação portuguesa?",
+        "Como funciona o processo de penhora de bens móveis e imóveis?",
+        "Quais são os prazos e condições para a execução de uma penhora?",
+        "Quais são os direitos do devedor durante o processo de penhora?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Quais são os requisitos para obter subsídio de desemprego em Portugal?",
+      "expanded_queries": [
+        "Quais são os períodos de contribuição necessários para aceder ao subsídio?",
+        "Como calcular o valor do subsídio de desemprego segundo a legislação?",
+        "Quais são as condições para a suspensão do subsídio de desemprego?",
+        "Quais documentos são exigidos para solicitar o subsídio de desemprego?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Como funciona o processo de adoção segundo a legislação portuguesa?",
+      "expanded_queries": [
+        "Quais são os requisitos para se candidatar à adoção em Portugal?",
+        "Qual é o papel das instituições de acolhimento no processo de adoção?",
+        "Como é o processo de integração da criança na família adotiva?",
+        "Quais são os prazos e etapas legais no processo de adoção?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Quais são as regras para o registo de uma sociedade em Portugal?",
+      "expanded_queries": [
+        "Quais são os tipos de sociedades que podem ser registadas em Portugal?",
+        "Quais documentos são necessários para o registo de uma sociedade?",
+        "Como proceder com a alteração de informações após o registo da sociedade?",
+        "Quais são os prazos legais para o registo de uma sociedade após sua constituição?"
+      ]
+    }
+  },
+  {
+    "role": "user",
+    "content": {
+      "query": "Como funciona o processo de herança segundo a lei portuguesa?",
+      "expanded_queries": [
+        "Como se define a herança legítima e a herança testamentária na legislação?",
+        "Quais são os direitos dos herdeiros no processo de partilha de bens?",
+        "Quais são os prazos e condições para a aceitação ou renúncia à herança?",
+        "Como são aplicadas as taxas de imposto sobre heranças em Portugal?"
+      ]
+    }
+  }
 ]

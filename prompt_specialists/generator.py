@@ -1,7 +1,7 @@
-import dspy
-import pydantic
 from typing import List
 
+import dspy
+import pydantic
 
 
 class References(pydantic.BaseModel):
@@ -9,14 +9,19 @@ class References(pydantic.BaseModel):
     url: str
     date: str
 
+
 class StructuredAnswer(pydantic.BaseModel):
     answer: str
     references: List[References]
 
+
 class GenerateAnswer(dspy.Signature):
     context = dspy.InputField(desc="Informação importante para responder à questão")
     question = dspy.InputField()
-    answer : StructuredAnswer = dspy.OutputField(desc="Uma resposta detalhada e a lista de referencias utilizadas")
+    answer: StructuredAnswer = dspy.OutputField(
+        desc="Uma resposta detalhada e a lista de referencias utilizadas"
+    )
+
 
 class RAG(dspy.Module):
     def __init__(self):
@@ -24,7 +29,9 @@ class RAG(dspy.Module):
         self.generate_answer = dspy.ChainOfThoughtWithHint(GenerateAnswer)
 
     def forward(self, question, context, hint):
-        pred = self.generate_answer(context=context, question=question, hint=hint).answer
+        pred = self.generate_answer(
+            context=context, question=question, hint=hint
+        ).answer
         res = dspy.Prediction(context=context, answer=pred, question=question)
-        
+
         return res

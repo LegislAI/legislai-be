@@ -1,6 +1,8 @@
-from utils.state import GraphState
-from multi_agent.utils.graph import build_legal_rag_graph
 from datetime import datetime
+
+from multi_agent.utils.graph import build_legal_rag_graph
+from utils.state import GraphState
+
 
 def main():
     graph = build_legal_rag_graph()
@@ -11,9 +13,8 @@ def main():
         expanded_query=[],
         metadata=[],
         code=[],
-        uppercase_query = ""
+        uppercase_query="",
     )
-    
 
     init_time = datetime.now()
     final_state = graph.invoke(initial_state)
@@ -21,10 +22,11 @@ def main():
 
     print(f"Time passed: {final_time-init_time}\n")
     # results
-    print("\nExpanded Queries:", final_state['expanded_query'])
-    print("\nMetadata:", final_state['metadata'])
-    print("\nUppercase query:", final_state['uppercase_query'])
-    print("\nCode classifier:", final_state['code'])
+    print("\nExpanded Queries:", final_state["expanded_query"])
+    print("\nMetadata:", final_state["metadata"])
+    print("\nUppercase query:", final_state["uppercase_query"])
+    print("\nCode classifier:", final_state["code"])
+
 
 if __name__ == "__main__":
     main()

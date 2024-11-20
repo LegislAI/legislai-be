@@ -1,9 +1,12 @@
-
-from typing import Dict, Any
-from datetime import datetime
-from utils.model import llm
-import re
 import json
+import re
+from datetime import datetime
+from typing import Any
+from typing import Dict
+
+from utils.model import llm
+
+
 class MetadataExtractionAgent:
     def __init__(self):
         self.few_shot_examples = [
@@ -215,20 +218,20 @@ class MetadataExtractionAgent:
                 }
                 """,
             },
-    ]
+        ]
 
     def run(self, query: str) -> Dict[str, Any]:
         """
         Run the metadata extraction agent on a given query.
-        
+
         Args:
             query (str): The input query to extract metadata from
-            
+
         Returns:
             Dict[str, Any]: Extracted metadata
         """
         current_date = datetime.now().strftime("%d%m%Y")
-        
+
         user_query = f"""
         {query}\n\n Dá me apenas os metadados que tiraste desta query\n\n
         Se não for indicado um ano em concreto, deves assumir o ano atual como 'legislation_date'\n\n
@@ -243,9 +246,9 @@ class MetadataExtractionAgent:
         messages = self.few_shot_examples + [{"role": "user", "content": user_query2}]
 
         response = llm.invoke(messages)
-        
+
         # Extract and parse the metadata from the response
-        #metadata = self._parse_metadata(response.choices[0].message.content)
+        # metadata = self._parse_metadata(response.choices[0].message.content)
         metadata = self._parse_metadata(response)
         return metadata
 
@@ -266,12 +269,12 @@ class MetadataExtractionAgent:
 
             # Return the dictionary with the parsed data
             return {
-                'legislation_date': legislation_date,
-                'question_date': question_date,
-                'summary': summary,
-                'subject': subject
+                "legislation_date": legislation_date,
+                "question_date": question_date,
+                "summary": summary,
+                "subject": subject,
             }
-            
+
         except Exception as e:
             print(f"Error parsing metadata: {e}")
             return self._get_default_metadata()
@@ -281,20 +284,21 @@ class MetadataExtractionAgent:
         Return default metadata when parsing fails.
         """
         return {
-            'legislation_date': str(datetime.now().year),
-            'question_date': datetime.now().strftime("%d%m%Y"),
-            'summary': 'Error parsing metadata',
-            'subject': 'Unknown'
+            "legislation_date": str(datetime.now().year),
+            "question_date": datetime.now().strftime("%d%m%Y"),
+            "summary": "Error parsing metadata",
+            "subject": "Unknown",
         }
+
 
 def metadata_extraction_agent(state):
     """
     Agent function that can be used in the state graph.
-    
+
     """
     agent = MetadataExtractionAgent()
-    metadata = agent.run(state['query'])
-    
+    metadata = agent.run(state["query"])
+
     # Update the state with the extracted metadata
-    state['metadata'] = [metadata]
+    state["metadata"] = [metadata]
     return state

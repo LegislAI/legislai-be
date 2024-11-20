@@ -1,5 +1,7 @@
-from typing import Dict, Any
 from datetime import datetime
+from typing import Any
+from typing import Dict
+
 
 class UppercaseTransformationAgent:
     def run(self, query: str) -> Dict[str, Any]:
@@ -27,11 +29,12 @@ class UppercaseTransformationAgent:
         """
         return query
 
+
 def uppercase_transformation_agent(state: Dict[str, Any]) -> Dict[str, Any]:
 
     agent = UppercaseTransformationAgent()
-    transformation_result = agent.run(state['query'])
-    
+    transformation_result = agent.run(state["query"])
+
     # Update the state with the transformation results
-    state['uppercase_query'] = transformation_result
+    state["uppercase_query"] = transformation_result
     return state

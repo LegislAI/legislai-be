@@ -1,6 +1,6 @@
+import re
 from enum import Enum
 from typing import List
-import re
 
 
 class LegalCode(Enum):
@@ -13,6 +13,7 @@ class LegalCode(Enum):
     ESTRADA = "Código da Estrada"
     CIRE = "Codigo da Insolvencia e da Recuperacao de Empresas"
     CCP = "Codigo Contratos Publicos"
+
 
 class SpecialistPrompts:
     def __init__(self):
@@ -28,7 +29,7 @@ class SpecialistPrompts:
                 "velocípedes": "bicicletas",
                 "transito": "fila",
                 "veículo de transporte coletivo de passageiros": "autocarros",
-                "veículo de transporte coletivo de carga": "camião"
+                "veículo de transporte coletivo de carga": "camião",
             }
         }
 
@@ -42,20 +43,20 @@ class SpecialistPrompts:
             LegalCode.CIRS: "És um especialista sobre o Codigo do IRS...",
             LegalCode.CIMI: "És um especialista em impostos sobre o património...",
             LegalCode.CN: "És um especialista em direito notarial...",
-            LegalCode.ESTRADA: "És um especialista em legislação rodoviária..."
+            LegalCode.ESTRADA: "És um especialista em legislação rodoviária...",
         }
 
     def get_legal_code(self, input_string: str) -> LegalCode:
         patterns = {
-            LegalCode.TRABALHO: r'\b(trabalho|processo do trabalho)\b',
-            LegalCode.PREDIAL: r'\b(nrau|registo predial|predial)\b',
-            LegalCode.CDADC: r'\b(direitos de autor|cdadc)\b',
-            LegalCode.CIRS: r'\b(cirs|código irs)\b',
-            LegalCode.CIMI: r'\b(cimi|código do imi|imt)\b',
-            LegalCode.CN: r'\b(código do notariado|notariado|cn)\b',
-            LegalCode.ESTRADA: r'\b(código da estrada|estrada)\b',
-            LegalCode.CIRE: r'\b(cire|insolvência|recuperação de empresas)\b',
-            LegalCode.CCP: r'\b(ccp|código contratos públicos)\b',
+            LegalCode.TRABALHO: r"\b(trabalho|processo do trabalho)\b",
+            LegalCode.PREDIAL: r"\b(nrau|registo predial|predial)\b",
+            LegalCode.CDADC: r"\b(direitos de autor|cdadc)\b",
+            LegalCode.CIRS: r"\b(cirs|código irs)\b",
+            LegalCode.CIMI: r"\b(cimi|código do imi|imt)\b",
+            LegalCode.CN: r"\b(código do notariado|notariado|cn)\b",
+            LegalCode.ESTRADA: r"\b(código da estrada|estrada)\b",
+            LegalCode.CIRE: r"\b(cire|insolvência|recuperação de empresas)\b",
+            LegalCode.CCP: r"\b(ccp|código contratos públicos)\b",
         }
         for code, pattern in patterns.items():
             if re.search(pattern, input_string, re.IGNORECASE):
