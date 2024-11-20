@@ -1,4 +1,5 @@
 import stripe
+from config.settings import settings
 from fastapi import HTTPException
 from fastapi import status
 from utils.exceptions import DeclinedPaymentMethodException
@@ -38,8 +39,7 @@ PLANS = {
 
 class StripeServices:
     def __init__(self):
-        # stripe.api_key = settings.stripe_api_key
-        stripe.api_key = "sk_test_51QLrGmCDsmArD3lWBcjVz5eZ1mOi1t5gxr5MxQofAKd9VnnQioKybcPIW59eQ9XohLTawvMiN3YeuQqKdGMqP88d00yiIrOTut"
+        stripe.api_key = settings.stripe_api_key
         self.init_stripe()
 
     def init_stripe(self):
