@@ -14,21 +14,7 @@ PLANS = {
         "price": 0,
         "product_id": "id",
         "price_id": "id",
-    },
-    "premium": {
-        "name": "premium",
-        "description": "Premium plan",
-        "price": 1000,
-        "product_id": "id",
-        "price_id": "id",
-    },
-    "premium_plus": {
-        "name": "premium_plus",
-        "description": "Premium plus plan",
-        "price": 2000,
-        "product_id": "id",
-        "price_id": "id",
-    },
+    }
 }
 
 

@@ -10,7 +10,6 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int
     refresh_token_expire_minutes: int
     frontend_url: str
-    ses_sender_email: str
 
     google_client_id: str
     google_client_secret: str

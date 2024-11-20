@@ -22,14 +22,14 @@ PLANS = {
     "premium": {
         "name": "premium",
         "description": "Premium plan",
-        "price": 1000,
+        "price": 499,
         "product_id": "id",
         "price_id": "id",
     },
     "premium_plus": {
         "name": "premium_plus",
         "description": "Premium plus plan",
-        "price": 2000,
+        "price": 799,
         "product_id": "id",
         "price_id": "id",
     },
