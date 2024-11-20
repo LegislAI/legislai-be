@@ -24,17 +24,22 @@
 
 
 ---- model:  together_ai/google/gemma-2-9b-it ----
-5. CoT w/ Hint -> 4.67
+6. CoT w/ Hint -> 4.67
 	hint "palavras semelhantes, i.e, dicionario"
-	5.85 segundos media
+	5.85 sec/question 
+
+
+7. Summarize +  CoT w/ Hint -> 
+	hint "palavras semelhantes, i.e, dicionario"
+	sec/question 
 
 
 ================== RESULTS Manual Prompt ====================
-nao printa nadaaaaaaa maior parte das vezes
+Não respeita o formato , o que torna complicado ir buscar a informação para o user!
 
-
-1. only Prompt -> 3.12
-
-2. prompt + 3 FS -> 3.45
-
-3. prompt + 3 FS + specialist -> 3.47
+---- model:  together_ai/google/gemma-2-9b-it ----
+1. only Prompt + specialist-> 3.69
+	4.78 seconds/q
+	obs: não respondeu a 2!
+3. prompt + 3 FS + specialist -> 2.679
+	6.68 sec/q
