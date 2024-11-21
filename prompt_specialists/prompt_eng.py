@@ -130,7 +130,6 @@ def main():
             query=qa["question"],
             examples=examples,
         )
-        print(response)
 
 
 if __name__ == "__main__":

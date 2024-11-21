@@ -30,18 +30,15 @@ class SpecialistPrompts:
                 "transito": "fila",
                 "veículo de transporte coletivo de passageiros": "autocarros",
                 "veículo de transporte coletivo de carga": "camião",
-                "contra-ordenação" : "multa"
+                "contra-ordenação": "multa",
             },
             LegalCode.TRABALHO: {
                 "vencimento": "salário",
-                "baixa médica" : "prescrição médica",
-                "empregador" : ["funcionário", "empregado"],
-                "contra-ordenação" : "multa",
-                "falecimento" : "morte",
-
-                
-                
-            }
+                "baixa médica": "prescrição médica",
+                "empregador": ["funcionário", "empregado"],
+                "contra-ordenação": "multa",
+                "falecimento": "morte",
+            },
         }
 
     def _init_introductions(self):
@@ -54,8 +51,7 @@ class SpecialistPrompts:
             LegalCode.CIRS: "És um especialista sobre o Codigo do IRS - imposto sobre o Rendimsento das Pessoas Singulares. Tens profundo conhecimento do Código do IRS, incluindo as normas e obrigações relacionadas com esse imposto em Portugal.",
             LegalCode.CIMI: "És um especialista em impostos sobre o património imobiliário em Portugal. Dominas o Código do IMI (Imposto Municipal sobre Imóveis) e o Código do IMT (Imposto Municipal sobre as Transmissões Onerosas de Imóveis).",
             LegalCode.CN: "És um especialista em direito notarial em Portugal. Tens profundo conhecimento do Código do Notariado e das normas relativas à autenticação e formalização de atos e documentos legais.",
-            LegalCode.ESTRADA: "És um especialista em legislação rodoviária em Portugal. Dominas o Código da Estrada e toda a regulamentação relacionada com a segurança, regras de trânsito e legislação para condutores e veículos."
-        
+            LegalCode.ESTRADA: "És um especialista em legislação rodoviária em Portugal. Dominas o Código da Estrada e toda a regulamentação relacionada com a segurança, regras de trânsito e legislação para condutores e veículos.",
         }
 
     def get_legal_code(self, input_string: str) -> LegalCode:
