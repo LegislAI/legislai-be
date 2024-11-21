@@ -9,8 +9,8 @@ load_dotenv()
 class Config:
     def __init__(self):
         self.together_api_key = os.getenv("TOGETHER_API_KEY")
-        self.main_model = "together_ai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo"
-        self.metric_model = "together_ai/google/gemma-2-9b-it"
+        self.main_model = 'together_ai/google/gemma-2-9b-it'
+        self.metric_model = 'together_ai/google/gemma-2-9b-it'
         self.max_tokens = 1500
 
     def setup_models(self):
