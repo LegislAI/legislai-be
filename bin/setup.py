@@ -77,21 +77,16 @@ def setup_venv(envs: List[Tuple[Path, Path]]):
         else:
             LOG.info(f"Virtual environment {venv_name} already exists.")
 
+        env_path = Path(env_path).absolute()
         if (env_path.parent / "requirements.txt").exists():
-            LOG.info("Installing dependencies...")
-            print(env_path.parent)
-            print(venv_name)
+            LOG.info(
+                f'Installing dependencies from {env_path.parent / "requirements.txt"}...'
+            )
             subprocess.run(
-                [
-                    "pyenv",
-                    "exec",
-                    "pip",
-                    "install",
-                    "-r",
-                    env_path.parent / "requirements.txt",
-                ],
+                f"""export PYENV_VERSION={venv_name} && pyenv exec pip install -r {env_path.parent / "requirements.txt"}""",
+                capture_output=False,
+                shell=True,
                 check=True,
-                env={"PYENV_VERSION": venv_name},
             )
         else:
             LOG.info("No requirements.txt found.")
