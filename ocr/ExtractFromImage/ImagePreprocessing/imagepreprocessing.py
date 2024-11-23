@@ -6,25 +6,49 @@ import numpy as np
 
 
 class ImagePreprocessing:
-    def __init__(self, image):
-        # Image comes from the frontend as a base64 string, so we need to decode it into a numpy array
-        # We will automatically load the image as grayscale for the preprocessing
-        image = self.__load_image(image)
-        # We want to remove speckles (i.e dust) from the image without loosing text sharpness since this is what we want to extract
-        # We will enhance the image by binarizing it, enhance sharpness and then denoising it with a low pass filter
-        transformed_image = self.__deskew_image(image)
-        transformed_image = self.__binarize_image(transformed_image)
-        transformed_image = self.__enhance_image(transformed_image)
-        transformed_image = self.__deskew_image(transformed_image)
-        # TODO ROI, Edge detection
-        transformed_image = self.__adjust_contrast(transformed_image)
+    # Image comes from the frontend as a base64 string, so we need to decode it into a numpy array
+    # We will automatically load the image as grayscale for the preprocessing
+    # image = self.__load_image(image)
+    # We want to remove speckles (i.e dust) from the image without loosing text sharpness since this is what we want to extract
+    # We will enhance the image by binarizing it, enhance sharpness and then denoising it with a low pass filter
+    # transformed_image = self.__deskew_image(image)
+    # transformed_image = self.__binarize_image(transformed_image)
+    # transformed_image = self.__enhance_image(transformed_image)
+    # TODO ROI, Edge detection
+    # transformed_image = self.__adjust_contrast(transformed_image)
+    # resizing at the end. TODO alter for dynamic resizing based on original image size
+    # Minimum: 200x200
+    # Maximum: 4000x4000
 
-        # resizing at the end. TODO alter for dynamic resizing based on original image size
-        # Minimum: 200x200
-        # Maximum: 4000x4000
-        transformed_image = cv2.resize(transformed_image, (1000, 1000))
+    def pre_process(self, image, actions="all", plot=False) -> np.ndarray:
+        transforms = {
+            "deskew": self.__deskew_image,
+            "binarize": self.__binarize_image,
+            "enhance": self.__enhance_image,
+            "contrast": self.__adjust_contrast,
+            "resize": self.__resize_image,
+        }
 
-        self.__plot_image([image, transformed_image])
+        if actions == "all":
+            actions = transforms.keys()
+
+        transformed_image = self.__load_image(image)
+        for action in actions:
+            if action in transforms:
+                transformed_image = transforms[action](transformed_image)
+            else:
+                raise ValueError(f"Invalid action: {action}")
+
+        if plot:
+            self.__plot_image([image, transformed_image])
+
+        transformed_image = cv2.cvtColor(transformed_image, cv2.COLOR_GRAY2RGB)
+        transformed_image = np.uint8(transformed_image)
+
+        return transformed_image
+
+    def __resize_image(self, image, size=(800, 800)):
+        return cv2.resize(image, size)
 
     def __adjust_contrast(self, image):
         clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
@@ -81,6 +105,6 @@ class ImagePreprocessing:
         # We can receive multiple images to plot, divide the images into subplots of len(images)
         _, ax = plt.subplots(1, len(images))
         for i in range(len(images)):
-            ax[i].imshow(images[i], cmap="gray")
+            ax[i].imshow(images[i])
             ax[i].axis("off")
         plt.show()

@@ -1,5 +1,10 @@
+
+# image ocr
 opencv-python
-nummpy
-pytesseract
-pero_ocr
-Wand
+numpy
+torch
+torchvision
+python-doctr
+"python-doctr[torch, viz]"
+#pdf ocr
+pdf2image
