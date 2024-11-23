@@ -54,7 +54,6 @@ def analyze_file(file_path):
     return process_text(content)
 
 
-# Exemplo de utilização
 if __name__ == "__main__":
     test_file = "./teste.pdf"
     # base64_output_path = "./decoded_test.pdf"
@@ -65,7 +64,7 @@ if __name__ == "__main__":
         # print("Ficheiro em Base64 (primeiros 100 caracteres):")
         # print(base64_string[:100], "...")
 
-        # Decodificar Base64 para o formato original
+        # Base64 para o formato original
         # base64_to_file(base64_string, base64_output_path)
         # print(f"Ficheiro reconstruído salvo em: {base64_output_path}")
 
