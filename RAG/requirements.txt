@@ -1,8 +1,12 @@
 langchain-huggingface
 python-dotenv
-faiss-cpu
 langchain-community
 rank-bm25
 langchain_together
 together
+lime
+spacy
+pandas
+langchain_ollama
+nltk
 pinecone

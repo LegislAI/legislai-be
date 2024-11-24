@@ -1,10 +1,26 @@
 
 # image ocr
 opencv-python
-numpy
+numpy==1.26.4
 torch
 torchvision
 python-doctr
-"python-doctr[torch, viz]"
+python-doctr[torch, viz]
 #pdf ocr
 pdf2image
+
+#ocr
+together
+python-dotenv
+
+#RAG
+langchain-huggingface
+python-dotenv
+langchain-community
+rank-bm25
+together
+lime
+pandas
+langchain_ollama
+nltk
+pinecone
