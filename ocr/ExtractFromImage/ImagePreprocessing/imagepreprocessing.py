@@ -22,7 +22,7 @@ class ImagePreprocessing:
 
     def pre_process(self, image, actions="all", plot=False) -> np.ndarray:
         transforms = {
-            "deskew": self.__deskew_image,
+            # "deskew": self.__deskew_image,
             "binarize": self.__binarize_image,
             "enhance": self.__enhance_image,
             "contrast": self.__adjust_contrast,

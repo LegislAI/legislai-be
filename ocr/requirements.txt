@@ -1,7 +1,7 @@
 
 # image ocr
 opencv-python
-numpy==1.26.4
+numpy
 torch
 torchvision
 python-doctr
@@ -12,11 +12,11 @@ pdf2image
 #ocr
 together
 python-dotenv
+Markdown
 
 #RAG
 langchain-huggingface
 python-dotenv
-langchain-community
 rank-bm25
 together
 lime
