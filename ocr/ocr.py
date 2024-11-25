@@ -8,10 +8,10 @@ from typing import Any
 from typing import Dict
 from typing import List
 from typing import Optional
+from RAG.Retriever.retriever import Retriever
 
 import dspy
 from dotenv import load_dotenv
-from RAG.Retriever.retriever import Retriever
 
 
 class DecisionType(Enum):
@@ -81,6 +81,31 @@ class ProcessingStep:
     cross_references: List[DocumentReference] = field(default_factory=list)
     generated_query: Optional[str] = None
 
+
+class ProblemIdentification(dspy.Signature):
+    "Começa por compreender o documento na integra, e qual é o seu objetivo"
+
+    document = dspy.InputField(desc="Documento a analisar")
+
+    objetivo = dspy.OutputField(desc="Objetivo do documento")
+    core_arguments = dspy.OutputField(desc="Argumentos centrais presentes no documento")
+
+class IdentifyKnowledgeGaps(dspy.Signature):
+    "Com base na tua leitura inicial do documento e da questão do utilizador, parte extrai um conjunto de ações e possíveis questões a realizar de forma a compreender o excerto ou responder à questão do utilizador."
+
+    chunk = dspy.InputField(desc="Pedaço de documento a analisar")
+    query = dspy.InputField(desc="Questão do utilizador")
+
+    acoes:List[DecisionType] = dspy.OutputField(desc="Objetivo do documento")
+
+class Research(dspy.Signature):
+    "Com base na questão do utilizador e no excerto do documento, parte o mesmo num grupo de questões legais de forma a pesquisares numa biblioteca legal as mesmas."
+
+    chunk = dspy.InputField(desc="Pedaço de documento a analisar")
+    query = dspy.InputField(desc="Questão do utilizador")
+
+    queries:List[str] = dspy.OutputField(desc="Lista de questões a colocar")
+
 class QueryAnalyzer(dspy.Signature):
     """Analisa a questão do utilizador para determinar a estratégia de extração."""
 
@@ -127,12 +152,12 @@ class ThoughtGenerator(dspy.Signature):
 class ThoughtProcess:
     def __init__(self):
         self.thoughts: List[str] = []
-
+        
     def add_thought(self, thought: str) -> str:
         formatted_thought = f"### Pensamento {len(self.thoughts) + 1}\n{thought}\n"
         self.thoughts.append(formatted_thought)
         return formatted_thought
-
+    
     def get_formatted_thoughts(self) -> str:
         return "\n".join(self.thoughts)
 
@@ -226,7 +251,7 @@ class OCRagent:
             "extraction_strategy": analysis.extraction_strategy,
             "required_fields": analysis.required_fields,
         }
-
+    
     def query_law_database(self, query: str, top_k: int = 5):
             """Consulta a base de dados de leis portuguesas."""
             print("Query: ", query)
@@ -235,20 +260,20 @@ class OCRagent:
                 topk=top_k,
                 queue=None
             )
-
+            
             thought = self.thought_process.add_thought(
                 f"🔍 **Consultando a nossa base de dados legal**\n"
                 f"- Consulta: '{query}'\n"
                 f"- Encontrados {len(results)} resultados relevantes\n"
             )
-
+            
             yield {
                 "type": "thought_update",
                 "data": {"thought": thought}
             }
-
+            
             return results
-
+    
     async def integrate_law_knowledge(self, query_results: List[Dict]):
         """Integra o conhecimento legal recuperado."""
         for result in query_results:
@@ -259,14 +284,14 @@ class OCRagent:
                 source_ref_id=result['id'],
                 confidence=result['score']
             )
-
+            
             thought = self.thought_process.add_thought(
                 f"📚 **Integrando conhecimento legal**\n"
                 f"- Fonte: {result['law_name']}\n"
                 f"- Relevância: {result['score']:.2f}\n"
                 f"- Tema: {result['theme']}\n"
             )
-
+            
             yield {
                 "type": "thought_update",
                 "data": {"thought": thought}
@@ -422,7 +447,7 @@ class OCRagent:
 
         self.processing_steps.append(step)
         return step
-
+    
     async def analyse_document(self, document_text: Dict, query: str):
         # Analyze the query to determine the strategy
         query_strategy = self.analyze_query(query)
@@ -552,6 +577,7 @@ async def main():
             print("Update structure:", update)
 
 
+
 if __name__ == "__main__":
     import asyncio
 
@@ -677,13 +703,13 @@ if __name__ == "__main__":
 # class ThoughtProcess:
 #     def __init__(self):
 #         self.thoughts: List[str] = []
-
+        
 #     def add_thought(self, thought: str) -> str:
 #         """Adiciona um pensamento formatado em markdown."""
 #         formatted_thought = f"### Pensamento {len(self.thoughts) + 1}\n{thought}\n"
 #         self.thoughts.append(formatted_thought)
 #         return formatted_thought
-
+    
 #     def get_formatted_thoughts(self) -> str:
 #         """Retorna todos os pensamentos formatados."""
 #         return "\n".join(self.thoughts)
@@ -764,18 +790,18 @@ if __name__ == "__main__":
 #             topk=top_k,
 #             queue=None
 #         )
-
+        
 #         thought = self.thought_process.add_thought(
 #             f"🔍 **Consultando base de dados legal**\n"
 #             f"- Consulta: '{query}'\n"
 #             f"- Encontrados {len(results)} resultados relevantes\n"
 #         )
-
+        
 #         yield {
 #             "type": "thought_update",
 #             "data": {"thought": thought}
 #         }
-
+        
 #         return results
 
 #     async def integrate_law_knowledge(self, query_results: List[Dict]) -> None:
@@ -788,14 +814,14 @@ if __name__ == "__main__":
 #                 source_ref_id=result['id'],
 #                 confidence=result['score']
 #             )
-
+            
 #             thought = self.thought_process.add_thought(
 #                 f"📚 **Integrando conhecimento legal**\n"
 #                 f"- Fonte: {result['law_name']}\n"
 #                 f"- Relevância: {result['score']:.2f}\n"
 #                 f"- Tema: {result['theme']}\n"
 #             )
-
+            
 #             yield {
 #                 "type": "thought_update",
 #                 "data": {"thought": thought}
@@ -833,7 +859,7 @@ if __name__ == "__main__":
 #     ) -> ProcessingStep:
 #         """Processa um trecho do documento com suporte a consultas RAG."""
 #         cross_ref_analysis = await self.analyze_cross_references(chunk, query)
-
+        
 #         analysis = self.chunk_analyzer(
 #             context=self.current_context,
 #             chunk=chunk,
@@ -848,7 +874,7 @@ if __name__ == "__main__":
 #                 f"- Contexto atual: '{chunk[:100]}...'\n"
 #                 f"- Motivo: {analysis.rationale}\n"
 #             )
-
+            
 #             yield {
 #                 "type": "thought_update",
 #                 "data": {"thought": thought}
@@ -873,7 +899,7 @@ if __name__ == "__main__":
 #         if cross_ref_analysis["confidence"] > 0.7:
 #             related_refs = self.knowledge_base.find_related_references(chunk)
 #             cross_references.extend(related_refs)
-
+            
 #             if related_refs:
 #                 new_knowledge = self.thought_generator(
 #                     context=self.current_context,
