@@ -1,7 +1,14 @@
+import os
+from datetime import datetime
 from typing import List
+from typing import Optional
 
 import dspy
 import pydantic
+from dotenv import load_dotenv
+from utils.logging import logger
+
+NOTA_FINAL = """**Observação:** Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
 
 
 class References(pydantic.BaseModel):
@@ -33,19 +40,26 @@ class GenerateAnswer(dspy.Signature):
     context = dspy.InputField(desc="Informação importante para responder à questão")
     question = dspy.InputField()
     answer: StructuredAnswer = dspy.OutputField(
-        desc="Uma resposta detalhada com vocabulário simples e a lista de referencias utilizadas"
+        desc="Uma resposta detalhada e abrangente com vocabulário simples e a lista de referencias utilizadas"
     )
 
 
-class RAG(dspy.Module):
+class RAGPrompt(dspy.Module):
     def __init__(self):
         super().__init__()
         self.generate_answer = dspy.ChainOfThoughtWithHint(GenerateAnswer)
         self.markdown = dspy.Predict(AnswerMarkdown)
 
     def forward(self, question, context, hint):
+        init_time = datetime.now()
         pred = self.generate_answer(
             context=context, question=question, hint=hint
         ).answer
-        final_res = self.markdown(question=question, answer=pred).answer_markdown
+
+        ans_markdown = self.markdown(question=question, answer=pred.answer)
+        final_res = ans_markdown.answer_markdown
+        final_res = final_res + f"\n\n{NOTA_FINAL}"
+        final_time = datetime.now()
+        logger.info(f"Time passed in RAGPrompt: {final_time - init_time}")
+
         return dspy.Prediction(answer=final_res, references=pred.references)

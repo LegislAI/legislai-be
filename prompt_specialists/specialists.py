@@ -1,3 +1,4 @@
+import json
 import re
 from enum import Enum
 from typing import List
@@ -19,6 +20,17 @@ class SpecialistPrompts:
     def __init__(self):
         self._init_dictionaries()
         self._init_introductions()
+        self._init_principios()
+
+    def _init_principios(self):
+        try:
+            with open(
+                "prompt_specialists/principios.json", "r", encoding="utf-8"
+            ) as file:
+                self.PRINCIPIOS = json.load(file)
+        except FileNotFoundError:
+            print(f"Erro: Arquivo não encontrado.")
+            self.PRINCIPIOS = {}
 
     def _init_dictionaries(self):
         self.DICIONARIO = {
@@ -35,7 +47,7 @@ class SpecialistPrompts:
             LegalCode.TRABALHO: {
                 "vencimento": "salário",
                 "baixa médica": "prescrição médica",
-                "empregador": ["funcionário", "empregado"],
+                "empregador": ["patrão", "chefe"],
                 "contra-ordenação": "multa",
                 "falecimento": "morte",
             },
@@ -68,5 +80,12 @@ class SpecialistPrompts:
         }
         for code, pattern in patterns.items():
             if re.search(pattern, input_string, re.IGNORECASE):
+                print(f"code -> {code}")
                 return code
-            return "És um especialista na Legislação Portuguesa, dominas os assuntos legais portugueses. "
+
+    def get_principios(self, input_string: str):
+        legal_code = self.get_legal_code(input_string)
+        if legal_code and legal_code.value in self.PRINCIPIOS:
+            principios = self.PRINCIPIOS[legal_code.value]
+            return principios
+        return ""

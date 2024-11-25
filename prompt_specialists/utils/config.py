@@ -10,8 +10,7 @@ class Config:
     def __init__(self):
         self.together_api_key = os.getenv("TOGETHER_API_KEY")
         self.main_model = "together_ai/google/gemma-2-9b-it"
-        self.metric_model = "together_ai/google/gemma-2-9b-it"
-        self.max_tokens = 1500
+        self.max_tokens = 3000
 
     def setup_models(self):
         lm = dspy.LM(
@@ -19,9 +18,8 @@ class Config:
             api_key=self.together_api_key,
             cache=False,
             max_tokens=self.max_tokens,
+            async_mode=True,
+            streaming=True,
         )
         dspy.configure(lm=lm)
-        metric_lm = dspy.LM(
-            self.metric_model, cache=False, api_key=self.together_api_key
-        )
-        return lm, metric_lm
+        return lm
