@@ -2,6 +2,7 @@ from functools import lru_cache
 from queue import Queue
 from threading import Thread
 
+from prompt_specialists.streaming import stream_answer
 from QueryEnhancement.Preprocessing import Preprocessing
 from Retriever.retriever import Retriever
 
@@ -37,12 +38,31 @@ class RAG:
         while not queue.empty():
             queue_element = queue.get()
             results.update(queue_element)
-        # print(results)
-        # Retrieval
-        # results = self.retriever.query(query=query, topk=topk, metadata_filter=metadata_filter)
-        # print(results)
-        # return results
+
+        payload = {
+            "code": metadata_filter.get("theme", None),
+            "context_rag": [],
+            "question": query,
+        }
+
+        for result in results.keys():
+            documents = results.get(result)
+            for document in documents:
+                metadata = document.get("metadata", [])
+                payload["context_rag"].append(
+                    {
+                        "article_title": metadata["title"],
+                        "date": metadata_filter["data_legislacao"],
+                        "url": metadata["link"],
+                        "article_name": metadata["epigrafe"],
+                        "content": metadata["text"],
+                    }
+                )
+
+        response = stream_answer(
+            context_rag=payload.get("context_rag"), user_question=query, code_rag=None
+        )
 
 
 if __name__ == "__main__":
-    RAG().query("Como posso extinguir uma associação?", 5)
+    RAG().query("O trabalhador estudante tem direito a férias?", 5)

@@ -1,1 +1,4 @@
 2024-11-03 13:48:55,538 - ERROR - Please specify the type of run: 'daily', 'full' or 'theme'
+2024-11-25 21:34:57,963 - INFO - Pyenv is already installed.
+2024-11-25 21:34:58,606 - INFO - Virtual environment legislai-query-enhancement already exists.
+2024-11-25 21:34:58,607 - INFO - Installing dependencies...

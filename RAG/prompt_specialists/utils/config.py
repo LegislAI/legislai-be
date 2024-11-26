@@ -9,8 +9,8 @@ load_dotenv()
 class Config:
     def __init__(self):
         self.together_api_key = os.getenv("TOGETHER_API_KEY")
-        self.main_model = "together_ai/google/gemma-2-9b-it"
-        self.max_tokens = 3000
+        self.main_model = "together_ai/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo"
+        self.max_tokens = 8000
 
     def setup_models(self):
         lm = dspy.LM(

@@ -1,20 +1,20 @@
 import json
 import traceback
 
-from generator import RAGPrompt
-from specialists import SpecialistPrompts
-from utils.config import Config
-from utils.logging import logger
+from RAG.prompt_specialists.generator import RAGPrompt
+from RAG.prompt_specialists.specialists import SpecialistPrompts
+from RAG.prompt_specialists.utils.config import Config
+from RAG.prompt_specialists.utils.logging import logger
 
 
-def simulate_streaming(text, delay=0.2):
-    """Simulate streaming by yielding words with a delay"""
-    import time
+# def simulate_streaming(text, delay=0.1):
+#     """Simulate streaming by yielding words with a delay"""
+#     import time
 
-    words = text.split()
-    for word in words:
-        yield word
-        time.sleep(delay)
+#     words = text.split()
+#     for word in words:
+#         yield word
+#         time.sleep(delay)
 
 
 def stream_answer(context_rag, user_question, code_rag):
@@ -42,12 +42,13 @@ def stream_answer(context_rag, user_question, code_rag):
 
         response = rag(context=context_rag, question=user_question, hint=hint)
 
-        for chunk in simulate_streaming(response.answer):
-            print(chunk, end=" ", flush=True)
+        # for chunk in simulate_streaming(response.answer):
+        #     print(chunk, end=" ", flush=True)
 
-        print("\n\nReferences:")
-        for ref in response.references:
-            print(json.dumps(ref.dict(), indent=2))
+        # print("\n\nReferences:")
+        # for ref in response.references:
+        #     print(json.dumps(ref.dict(), indent=2))
+        return response
 
     except Exception as e:
         print(f"Error occurred: {e}")

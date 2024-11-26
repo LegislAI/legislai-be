@@ -7,7 +7,7 @@ from utils.logging import logger
 
 # HOW TO USE
 if __name__ == "__main__":
-    code_rag = "estrada"
+    code_rag = "trabalho"
     with open("prompt_specialists/testing/codigo_trabalho.json", "r") as file:
         context_json = json.load(file)
     context_rag = str(context_json)

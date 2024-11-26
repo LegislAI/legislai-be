@@ -8,6 +8,7 @@ from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
+from RAG import rag
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_fields
 from utils.exceptions import UserNotFoundException
@@ -21,6 +22,7 @@ from utils.utils import JWTBearer
 
 route = APIRouter()
 security = SecurityUtils()
+rag_service = rag.RAG()
 
 
 PLAN_QUERIES_MAP = {
@@ -70,6 +72,9 @@ def query(
                     email=user.email,
                     fields={"weekly_queries": str(user_queries)},
                 )
+
+                rag_service.query(query=payload.query)
+
                 return QueryResponsePayoad(
                     response="This is a response", summary="This is a summary"
                 )

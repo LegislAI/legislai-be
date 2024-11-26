@@ -6,7 +6,7 @@ from typing import Optional
 import dspy
 import pydantic
 from dotenv import load_dotenv
-from utils.logging import logger
+from RAG.prompt_specialists.utils.logging import logger
 
 NOTA_FINAL = """**Observação:** Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
 
