@@ -1,7 +1,6 @@
 from datetime import datetime
 from datetime import timezone
 
-from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
@@ -20,7 +19,6 @@ from utils.schemas import UsersRequestPayload
 from utils.schemas import UsersResponse
 from utils.schemas import UsersUpdatePlanRequest
 from utils.users import decodeJWT
-from utils.users import is_authenticated
 from utils.users import JWTBearer
 
 route = APIRouter()
@@ -32,12 +30,6 @@ stripe_services = StripeServices()
 def get_user_info(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
     init_time = datetime.now(timezone.utc)
     token = credentials.credentials
-
-    if not is_authenticated(token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
-        )
 
     try:
         user_id = decodeJWT(token)["sub"]
@@ -77,12 +69,6 @@ def update_user(
 ):
     token = credentials.credentials
 
-    if not is_authenticated(token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
-        )
-
     try:
         user_id = decodeJWT(token)["sub"]
         response = update_user_info(payload, user_id)
@@ -104,15 +90,8 @@ def update_user(
 def get_user_plan(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer())):
     token = credentials.credentials
 
-    if not is_authenticated(token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
-        )
-
-    user_id = decodeJWT(token)["sub"]
-
     try:
+        user_id = decodeJWT(token)["sub"]
         user = get_user_by_id(user_id)
         return UsersPlanResponse(user_id=user_id, plan=user.plan)
     except UserNotFoundException:
@@ -136,15 +115,8 @@ def update_user_plan(
     plans_name = ["free", "premium", "premium_plus"]
     token = credentials.credentials
 
-    if not is_authenticated(token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Unauthorized",
-        )
-
-    user_id = decodeJWT(token)["sub"]
-
     try:
+        user_id = decodeJWT(token)["sub"]
         user = get_user_by_id(user_id)
         stripe_user = stripe_services.get_customer(user_id)
 
@@ -172,7 +144,7 @@ def update_user_plan(
         response = service_update_plan(user_id, user.email, plan_request.plan_name)
         return response
 
-    except DeclinedPaymentMethodException as e:
+    except DeclinedPaymentMethodException:
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail="Payment method declined",

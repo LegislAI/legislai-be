@@ -1,4 +1,3 @@
-from typing import Any
 from typing import Optional
 
 from config.settings import settings
@@ -12,19 +11,6 @@ from jwt.exceptions import InvalidTokenError
 from services.dynamo_services import token_blacklist
 from utils.exceptions import TokenRevokedException
 from utils.logging_config import logger
-
-
-def is_authenticated(token: str) -> bool:
-    """
-    Check if the token is valid and not expired.
-    """
-    try:
-        payload = decodeJWT(token)
-        if not payload:
-            return False
-        return True
-    except Exception:
-        return False
 
 
 def decodeJWT(jwtoken: str):

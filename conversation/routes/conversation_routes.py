@@ -127,7 +127,7 @@ def get_conversation_route(
 
 
 @route.get(
-    "/load_last_conversations/",
+    "/load_last_conversations",
     response_model=List[Conversation],
     dependencies=[Depends(JWTBearer())],
 )
@@ -208,7 +208,7 @@ def add_messages_route(
 
 
 @route.get(
-    "/{conversation_id}/messages/load_last_messages/",
+    "/{conversation_id}/messages/load_last_messages",
     response_model=List[Message],
     dependencies=[Depends(JWTBearer())],
 )

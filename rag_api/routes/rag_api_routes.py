@@ -1,8 +1,5 @@
 import math
-from datetime import datetime
-from datetime import timezone
 
-from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
@@ -17,7 +14,6 @@ from utils.password import SecurityUtils
 from utils.schemas import QueryRequestPayload
 from utils.schemas import QueryResponsePayoad
 from utils.utils import decodeJWT
-from utils.utils import is_authenticated
 from utils.utils import JWTBearer
 
 route = APIRouter()
@@ -39,13 +35,6 @@ def query(
 ):
     try:
         token = credentials.credentials
-
-        if not is_authenticated(token):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unauthorized",
-            )
-
         user_id = decodeJWT(token)["sub"]
 
         logger.info(f"Received a request to query from user with id: {user_id}")

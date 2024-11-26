@@ -13,19 +13,6 @@ from utils.exceptions import TokenRevokedException
 from utils.logging_config import logger
 
 
-def is_authenticated(token: str) -> bool:
-    """
-    Check if the token is valid and not expired.
-    """
-    try:
-        payload = decodeJWT(token)
-        if not payload:
-            return False
-        return True
-    except Exception:
-        return False
-
-
 def decodeJWT(jwtoken: str):
     """
     Decode a JWT token and return the payload and verify if the token is valid.

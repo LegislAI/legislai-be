@@ -21,14 +21,8 @@ class LoginRequest(BaseModel):
 
 class LoginResponse(BaseModel):
     user_id: str
-    email: EmailStr
-    username: str
     access_token: str
     refresh_token: str
-
-
-class LogoutRequest(BaseModel):
-    email: EmailStr
 
 
 class LogoutResponse(BaseModel):
