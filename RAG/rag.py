@@ -2,7 +2,6 @@ from functools import lru_cache
 from queue import Queue
 from threading import Thread
 
-from prompt_specialists.pipeline import MultiHopRAG
 from prompt_specialists.streaming import stream_answer
 from QueryEnhancement.Preprocessing import Preprocessing
 from Retriever.retriever import Retriever
@@ -12,7 +11,6 @@ class RAG:
     def __init__(self):
         self.retriever = Retriever()
         self.preprocessing = Preprocessing()
-        self.hop_rag = MultiHopRAG()
 
     @lru_cache(maxsize=100)
     def query(self, query: str, topk: int) -> dict:
@@ -66,6 +64,8 @@ class RAG:
         # )
         response = self.hop_rag(payload.get("context_rag"), user_question=query)
 
+        print(response)
 
-if __name__ == "__main__":
-    RAG().query("O trabalhador estudante tem direito a férias?", 6)
+
+# if __name__ == "__main__":
+#     RAG().query("O trabalhador estudante tem direito a férias?", 5)

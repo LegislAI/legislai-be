@@ -27,3 +27,4 @@ langchain_ollama
 nltk
 pinecone
 spacy
+structlog

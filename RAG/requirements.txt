@@ -10,3 +10,4 @@ langchain_ollama
 nltk
 pinecone
 faiss-cpu
+structlog
