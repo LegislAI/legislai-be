@@ -251,10 +251,3 @@ class Retriever:
         else:
             LOG.warning("No function tag found in response.")
             return {}
-
-
-# if __name__ == "__main__":
-#     retriever = Retriever()
-#     results = retriever.query(query="Como posso extinguir uma associação?", topk=5, metadata_filter={
-#     })
-#     print(results)
