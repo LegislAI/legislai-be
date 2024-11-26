@@ -1,8 +1,8 @@
 from typing import Any
 from typing import Dict
 
-from utils.schemas import Attachment
-from utils.schemas import Message
+from conversation.utils.schemas import Attachment
+from conversation.utils.schemas import Message
 
 
 def format_messages(messages):

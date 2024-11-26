@@ -3,14 +3,14 @@ from typing import List
 
 import boto3
 from botocore.exceptions import ClientError
-from config.settings import settings
+from conversation.config.settings import settings
+from conversation.utils.aux_func import format_messages
+from conversation.utils.aux_func import parse_dynamodb_message
+from conversation.utils.logging_config import logger
+from conversation.utils.schemas import AddMessageRequest
+from conversation.utils.schemas import NewConversationRequest
 from fastapi import HTTPException
 from fastapi import status
-from utils.aux_func import format_messages
-from utils.aux_func import parse_dynamodb_message
-from utils.logging_config import logger
-from utils.schemas import AddMessageRequest
-from utils.schemas import NewConversationRequest
 
 
 boto3_client = boto3.client(
@@ -40,9 +40,7 @@ def check_conversation(user_id: str, conversation_id: str) -> bool:
     return True
 
 
-def add_messages_to_new_conversation(
-    conversation_id: str, payload: NewConversationRequest
-):
+def add_messages_to_new_conversation(payload: NewConversationRequest):
     """
     Add messages to a new conversation
     """
@@ -52,6 +50,8 @@ def add_messages_to_new_conversation(
         payload.conversation_field,
     )
     messages = format_messages(payload.messages)
+
+    conversation_id = payload.conversation_id
 
     try:
         boto3_client.put_item(

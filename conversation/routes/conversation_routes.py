@@ -40,7 +40,7 @@ def create_new_conversation_route(
     """
     Creates a new conversation
     """
-    conversation_id = str(uuid.uuid4())
+    conversation_id = payload.conversation_id
 
     try:
         add_messages_to_new_conversation(conversation_id, payload)

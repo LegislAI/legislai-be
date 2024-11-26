@@ -4,12 +4,12 @@ from datetime import timezone
 from typing import Dict
 
 import boto3
+from authentication.config.settings import settings
+from authentication.utils.exceptions import UserNotFoundException
+from authentication.utils.logging_config import logger
+from authentication.utils.password import SecurityUtils
+from authentication.utils.schemas import RegisterRequest
 from botocore.exceptions import ClientError
-from config.settings import settings
-from utils.exceptions import UserNotFoundException
-from utils.logging_config import logger
-from utils.password import SecurityUtils
-from utils.schemas import RegisterRequest
 
 security = SecurityUtils()
 boto3_client = boto3.client(
@@ -21,9 +21,6 @@ boto3_client = boto3.client(
 
 
 def get_user_by_email(email: str) -> Dict:
-    """
-    Fetch a user by email from the DynamoDB table.
-    """
     try:
         response = boto3_client.query(
             TableName="users",
@@ -35,7 +32,7 @@ def get_user_by_email(email: str) -> Dict:
 
         if not response["Items"]:
             logger.error(f"User with email {email} not found")
-            raise UserNotFoundException(f"User with email {email} not found")
+            return {}
 
         user = response["Items"][0]
         return {

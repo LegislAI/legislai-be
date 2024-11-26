@@ -31,6 +31,7 @@ class NewConversationRequest(BaseModel):
     messages: List[Message]
     conversation_name: str
     conversation_field: str
+    conversation_id: str
 
 
 class ConversationRequest(BaseModel):
