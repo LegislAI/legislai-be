@@ -1,20 +1,29 @@
-import os
+import base64
+import subprocess
+from typing import List
 
 import pytesseract
 from pdf2image import convert_from_path
 
+DEFAULT_TEMP_FILE_PATH = "./temp.pdf"
+
 
 class PDFProcessor:
-    @staticmethod
-    def extract_text_from_file(file_path: str) -> dict:
-        """
-        Converte páginas do PDF em imagens e extrai texto usando OCR, retornando formato json.
-        """
-        if not os.path.exists(file_path):
-            raise FileNotFoundError(f"O ficheiro {file_path} não existe.")
+    def __base64_to_file(base64_string, output_path):
+        with open(output_path, "wb") as file:
+            file.write(base64.b64decode(base64_string))
+
+    def extract_from_pdf(self, payload: str) -> dict:
+        # convert from base 64 to pdf file
+        # store in temporary path
+        # extract text from pdf file
+        # delete temp file
+        # return extracted text
+        encoded_data = payload.split(",")[1]
+        self.__base64_to_file(encoded_data, DEFAULT_TEMP_FILE_PATH)
 
         # Conversão de PDF para imagens (uma imagem por página)
-        images = convert_from_path(file_path)
+        images = convert_from_path(DEFAULT_TEMP_FILE_PATH)
         complete_document = {}
 
         page_num = 0
@@ -38,10 +47,6 @@ class PDFProcessor:
 
             page_num += 1
 
+        subprocess.run(f"rm {DEFAULT_TEMP_FILE_PATH}", shell=True)
+
         return complete_document
-
-
-test_file = "./teste.pdf"
-processor = PDFProcessor()
-result = processor.extract_text_from_file(test_file)
-print(result)

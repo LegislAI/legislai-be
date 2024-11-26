@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-class ImagePreprocessing:
+class Processor:
     # Image comes from the frontend as a base64 string, so we need to decode it into a numpy array
     # We will automatically load the image as grayscale for the preprocessing
     # image = self.__load_image(image)

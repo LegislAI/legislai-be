@@ -8,8 +8,10 @@ python-doctr
 python-doctr[torch, viz]
 #pdf ocr
 pdf2image
+pytesseract
 
 #ocr
+dspy
 together
 python-dotenv
 Markdown
@@ -24,3 +26,4 @@ pandas
 langchain_ollama
 nltk
 pinecone
+spacy
