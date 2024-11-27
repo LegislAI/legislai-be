@@ -18,8 +18,6 @@ class Config:
             api_key=self.together_api_key,
             cache=False,
             max_tokens=self.max_tokens,
-            async_mode=True,
-            streaming=True,
         )
         dspy.configure(lm=lm)
         return lm

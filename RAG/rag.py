@@ -1,10 +1,11 @@
 from functools import lru_cache
 from queue import Queue
 from threading import Thread
+from typing import Optional
 
-from prompt_specialists.streaming import stream_answer
-from QueryEnhancement.Preprocessing import Preprocessing
-from Retriever.retriever import Retriever
+from RAG.prompt_specialists.streaming import stream_answer
+from RAG.QueryEnhancement.Preprocessing import Preprocessing
+from RAG.Retriever.retriever import Retriever
 
 
 class RAG:
@@ -13,9 +14,13 @@ class RAG:
         self.preprocessing = Preprocessing()
 
     @lru_cache(maxsize=100)
-    def query(self, query: str, topk: int) -> dict:
+    def query(self, query: str, topk: Optional[int] = 3) -> dict:
         query_preprocessing = self.preprocessing.process_query(
-            query=query, method_names=("all",)
+            query=query,
+            method_names=(
+                "metadata_extraction",
+                "classify_query",
+            ),
         )
         expanded_queries = query_preprocessing.get("expanded_queries", [])
         metadata_filter = query_preprocessing.get("metadata_filter", {})
@@ -64,13 +69,10 @@ class RAG:
         # )
         response = self.hop_rag(payload.get("context_rag"), user_question=query)
 
-        print(response.answer)
-        print(response.references)
-        print(additional_data.get("resumo"))
         return {
             "answer": response.answer,
-            "references": response.references,
-            "summary": additional_data.get("resumo"),
+            "references": response.references[0].url,
+            "summary": additional_data.get("assunto"),
         }
 
 
