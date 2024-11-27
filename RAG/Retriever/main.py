@@ -10,8 +10,8 @@ from queue import Queue
 from threading import Thread
 from typing import Optional
 
-from Retriever.database.bin.utils import BM250RerankingModel
-from Retriever.database.DatabaseController import DatabaseController as dbc
+from rag.retriever.database.bin.utils import BM250RerankingModel
+from rag.retriever.database.DatabaseController import DatabaseController as dbc
 from together import Together
 
 logging.basicConfig(
@@ -56,9 +56,7 @@ class Retriever:
             else:
                 return results
 
-    # TODO: implement processing based on the metadata_filter
     def process_results(self, results, metadata_filter):
-        # Return the original results, just join its text by ""
         return {
             result["id"]: {
                 "id": result["id"],
@@ -78,7 +76,6 @@ class Retriever:
         documents = [result["text"] for result in results]
 
         rerankinkg_result = self.bm25_model.bm25_rerank(query, documents)
-        # sort the reraanked results by the bm25 score
         maped_id_result = []
         for result in rerankinkg_result:
             for result_id in results:
@@ -132,7 +129,6 @@ class Retriever:
         bm25_results = self.bm250_rerank(query, process_results.values())
         llm_reranking = self.llm_rerank(query, process_results.values())
 
-        # interpolate the rankings with 0.3 percent influence in every reranked result
         reranked_results = {
             "database_results": [
                 {"id": result["id"], "score": result["score"]} for result in results

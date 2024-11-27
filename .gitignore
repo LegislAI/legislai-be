@@ -10,4 +10,4 @@ __pycache__/
 .pytest_cache/
 .database/
 *.log
-RAG/QueryEnhancement/classifier/models/*
+rag/query_enhancement/classifier/models/*
