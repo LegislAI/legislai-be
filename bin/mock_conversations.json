@@ -5,13 +5,13 @@
     "conversation_field": "Direito Fiscal",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-11T08:23:45Z",
         "message": "Quais são os incentivos para compra de carros elétricos em 2024?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-11T08:25:12Z",
         "message": "Em 2024, os incentivos para a compra de veículos elétricos incluem um subsídio de até 4.000€ para particulares e 6.000€ para empresas. Adicionalmente, há isenção de ISV e IUC, assim como redução de IVA para viaturas com preço inferior a 62.500€.",
@@ -24,13 +24,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-11T08:26:32Z",
         "message": "E qual é o procedimento para solicitar esse subsídio?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-11T08:28:10Z",
         "message": "O procedimento envolve submeter a candidatura através do portal do Fundo Ambiental. Terás de anexar a fatura de compra, o comprovativo de matrícula do veículo e o documento fiscal da viatura. O prazo de submissão é de 90 dias após a compra.",
@@ -50,13 +50,13 @@
     "conversation_field": "Direito Laboral",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-09-30T14:17:50Z",
         "message": "Quais são as mudanças recentes no Código do Trabalho sobre o teletrabalho?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-09-30T14:19:05Z",
         "message": "A última alteração ao Código do Trabalho, através da Lei n.º 14/2024, reforça o direito ao teletrabalho em situações de assistência a familiares e em contexto de pandemia. Os custos relacionados com o teletrabalho, como eletricidade e internet, devem agora ser totalmente suportados pelo empregador.",
@@ -69,13 +69,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-09-30T14:20:22Z",
         "message": "Essas despesas têm de ser declaradas? Como funciona?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-09-30T14:22:00Z",
         "message": "Sim, as despesas devem ser apresentadas mensalmente pelo trabalhador, com base nos comprovativos de pagamento. O empregador tem a obrigação de reembolsar esses valores no mês seguinte à entrega dos comprovativos.",
@@ -88,13 +88,13 @@
         ]
       },
       {
-        "message_id": "4",
+        "message_index": "4",
         "sender": "user",
         "timestamp": "2024-09-30T14:23:15Z",
         "message": "E os trabalhadores independentes? Também estão cobertos por estas regras?"
       },
       {
-        "message_id": "5",
+        "message_index": "5",
         "sender": "ai",
         "timestamp": "2024-09-30T14:24:42Z",
         "message": "No caso dos trabalhadores independentes, o regime não se aplica diretamente, a menos que haja um contrato específico que preveja essas condições. Contudo, algumas plataformas podem adotar regras semelhantes de compensação.",
@@ -107,13 +107,13 @@
         ]
       },
       {
-        "message_id": "6",
+        "message_index": "6",
         "sender": "user",
         "timestamp": "2024-09-30T14:26:00Z",
         "message": "E se o empregador se recusar a reembolsar as despesas? Que medidas podem ser tomadas?"
       },
       {
-        "message_id": "7",
+        "message_index": "7",
         "sender": "ai",
         "timestamp": "2024-09-30T14:27:35Z",
         "message": "Nesse caso, o trabalhador pode recorrer à Autoridade para as Condições do Trabalho (ACT) para denunciar a situação. A ACT pode fiscalizar a empresa e aplicar coimas em caso de incumprimento das regras do teletrabalho.",
@@ -126,13 +126,13 @@
         ]
       },
       {
-        "message_id": "8",
+        "message_index": "8",
         "sender": "user",
         "timestamp": "2024-09-30T14:29:00Z",
         "message": "Obrigado pela informação. Vou verificar os meus direitos e falar com o meu empregador."
       },
       {
-        "message_id": "9",
+        "message_index": "9",
         "sender": "ai",
         "timestamp": "2024-09-30T14:30:20Z",
         "message": "Estamos aqui para ajudar. Se tiver mais alguma questão, não hesite em contactar-nos. Boa sorte!",
@@ -146,13 +146,13 @@
     "conversation_field": "Direito Civil",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-01T10:15:33Z",
         "message": "Quais são as novas regras para o alojamento local em 2024?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-01T10:17:04Z",
         "message": "As novas regras para o alojamento local incluem a obrigatoriedade de licença camarária, a limitação do número de alojamentos por freguesia e a criação de uma contribuição extraordinária sobre os rendimentos obtidos. A contribuição é de 10% sobre os lucros líquidos.",
@@ -165,13 +165,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-01T10:18:23Z",
         "message": "Essa contribuição é obrigatória em todo o país?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-01T10:19:55Z",
         "message": "A contribuição extraordinária aplica-se às zonas de maior pressão turística, como Lisboa, Porto e Algarve. As áreas rurais estão isentas desta contribuição.",
@@ -184,13 +184,13 @@
         ]
       },
       {
-        "message_id": "4",
+        "message_index": "4",
         "sender": "user",
         "timestamp": "2024-10-01T10:21:03Z",
         "message": "Existe alguma medida de apoio para quem já tem alojamento local e será afetado por estas regras?"
       },
       {
-        "message_id": "5",
+        "message_index": "5",
         "sender": "ai",
         "timestamp": "2024-10-01T10:22:47Z",
         "message": "Sim, existe um regime de transição até 2026 para quem já tem licença. Durante esse período, os proprietários podem ajustar as suas operações ou converter o alojamento para habitação permanente com benefícios fiscais.",
@@ -210,13 +210,13 @@
     "conversation_field": "Direito Fiscal",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-02T09:45:15Z",
         "message": "Quais os benefícios fiscais disponíveis para pequenas e médias empresas?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-02T09:47:22Z",
         "message": "As pequenas e médias empresas (PME) podem beneficiar de isenções de IRC até 10% no primeiro ano de atividade, e uma taxa reduzida de 17% sobre os primeiros 50.000€ de matéria coletável. Além disso, existem deduções fiscais em investimentos em inovação e transição digital.",
@@ -229,13 +229,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-02T09:48:35Z",
         "message": "Esses benefícios são automáticos ou precisam de ser solicitados?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-02T09:50:10Z",
         "message": "Alguns benefícios, como a taxa reduzida, são aplicados automaticamente se a empresa preencher os requisitos. No entanto, outros, como as deduções fiscais, precisam de ser solicitados através da submissão de candidaturas específicas junto da Autoridade Tributária.",
@@ -248,13 +248,13 @@
         ]
       },
       {
-        "message_id": "4",
+        "message_index": "4",
         "sender": "user",
         "timestamp": "2024-10-02T09:51:27Z",
         "message": "E há algum incentivo para contratar novos trabalhadores?"
       },
       {
-        "message_id": "5",
+        "message_index": "5",
         "sender": "ai",
         "timestamp": "2024-10-02T09:53:00Z",
         "message": "Sim, as PME podem beneficiar de uma isenção parcial da TSU durante os primeiros 12 meses ao contratar jovens à procura do primeiro emprego ou desempregados de longa duração.",
@@ -274,13 +274,13 @@
     "conversation_field": "Direito Laboral",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-10T13:12:56Z",
         "message": "Há novas leis relacionadas com a sustentabilidade ambiental?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-10T13:14:30Z",
         "message": "Sim, foi aprovado o Decreto-Lei n.º 76/2024 que estabelece metas obrigatórias de redução de emissões de CO2 para empresas e incentivos à utilização de energias renováveis. Também introduz um sistema de penalizações para empresas que excedam os limites de emissão permitidos.",
@@ -293,13 +293,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-10T13:15:45Z",
         "message": "Que incentivos estão previstos para a transição energética?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-10T13:17:10Z",
         "message": "Os incentivos incluem deduções fiscais para investimentos em painéis solares, baterias de armazenamento e veículos elétricos. Há também um subsídio de até 25% sobre o valor dos projetos de eficiência energética em empresas.",
@@ -312,13 +312,13 @@
         ]
       },
       {
-        "message_id": "4",
+        "message_index": "4",
         "sender": "user",
         "timestamp": "2024-10-10T13:18:30Z",
         "message": "Há penalizações pesadas se não atingirem as metas?"
       },
       {
-        "message_id": "5",
+        "message_index": "5",
         "sender": "ai",
         "timestamp": "2024-10-10T13:20:05Z",
         "message": "Sim, as empresas que não cumprirem as metas de redução de emissões podem enfrentar multas até 250.000€ por ano, dependendo do grau de incumprimento.",
@@ -338,13 +338,13 @@
     "conversation_field": "Direito do Trabalho",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-05T10:12:30Z",
         "message": "Existem apoios para a agricultura biológica?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-05T10:14:15Z",
         "message": "Sim, o Programa de Desenvolvimento Rural (PDR) 2024 oferece subsídios a agricultores que adotem práticas de agricultura biológica. Estes apoios cobrem até 60% dos custos de conversão para este tipo de agricultura, incluindo formação, certificação e aquisição de equipamentos.",
@@ -357,13 +357,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-05T10:16:05Z",
         "message": "Quais são os requisitos para se candidatar?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-05T10:18:40Z",
         "message": "Para se candidatar, o agricultor deve possuir uma exploração agrícola registada, estar em processo de certificação biológica e comprometer-se a manter as práticas durante um período mínimo de cinco anos.",
@@ -383,13 +383,13 @@
     "conversation_field": "Direito Civil",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-06T11:22:10Z",
         "message": "Como funciona o novo regime de arrendamento urbano?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-06T11:24:50Z",
         "message": "O novo regime de arrendamento urbano, estabelecido pelo Decreto-Lei n.º 60/2024, simplifica os processos de renovação de contratos, garantindo mais estabilidade aos inquilinos. Os contratos agora têm uma duração mínima de três anos, e o aumento das rendas está limitado ao coeficiente de inflação anual.",
@@ -402,13 +402,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-06T11:27:10Z",
         "message": "E quanto aos despejos? Houve mudanças?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-06T11:29:25Z",
         "message": "Sim, os despejos sem justa causa estão mais regulados. O senhorio agora só pode pedir o despejo em casos de incumprimento grave, como o não pagamento de rendas por mais de seis meses consecutivos. Os processos de despejo também passam a ter uma fase de mediação obrigatória.",
@@ -428,13 +428,13 @@
     "conversation_field": "Direito Comercial",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-09-25T09:43:30Z",
         "message": "O que mudou na Lei do Tabaco este ano?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-09-25T09:45:10Z",
         "message": "A nova Lei do Tabaco, aprovada em 2024, proíbe o fumo em todos os espaços fechados de acesso público, incluindo restaurantes, bares e discotecas. Além disso, a venda de produtos de tabaco passou a ser restrita a locais autorizados, e a publicidade foi totalmente proibida.",
@@ -447,13 +447,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-09-25T09:46:55Z",
         "message": "Há alguma penalização para quem violar estas regras?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-09-25T09:48:40Z",
         "message": "Sim, as penalizações para quem violar as novas regras incluem multas que podem variar entre 500€ e 5.000€, dependendo da gravidade da infração. Em caso de reincidência, o valor das multas pode ser duplicado.",
@@ -473,13 +473,13 @@
     "conversation_field": "Direito Registo e Notariado",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-07T14:05:50Z",
         "message": "Existe regulamentação para criptomoedas em Portugal?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-07T14:07:20Z",
         "message": "Sim, Portugal aprovou em 2024 o Regulamento n.º 56/2024, que define normas para a utilização de criptomoedas e outros ativos digitais. O regulamento exige que as plataformas de câmbio registadas em Portugal cumpram as regras de prevenção de branqueamento de capitais e KYC (Know Your Customer).",
@@ -492,13 +492,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-07T14:09:00Z",
         "message": "As criptomoedas são tributadas?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-07T14:10:40Z",
         "message": "Sim, desde 2024, os ganhos obtidos com a venda de criptomoedas são tributados como mais-valias à taxa de 28% para indivíduos e 21% para empresas. No entanto, existe uma isenção para ganhos inferiores a 500€ por ano.",
@@ -518,13 +518,13 @@
     "conversation_field": "Direito Civil",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-09-20T15:30:25Z",
         "message": "Há algum apoio disponível para jovens empreendedores?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-09-20T15:32:50Z",
         "message": "Sim, o programa 'StartUP Jovem 2024' oferece apoios a jovens entre os 18 e os 35 anos que queiram iniciar o seu próprio negócio. Este apoio inclui financiamento a fundo perdido até 30.000€ e benefícios fiscais nos primeiros três anos de atividade.",
@@ -537,13 +537,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-09-20T15:34:15Z",
         "message": "Há algum critério específico para se qualificar?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-09-20T15:36:10Z",
         "message": "Sim, para se qualificar, o empreendedor deve apresentar um plano de negócios sólido, estar desempregado ou à procura do primeiro emprego e não possuir dívidas fiscais ou à Segurança Social.",
@@ -563,13 +563,13 @@
     "conversation_field": "Direito Comercial",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-10-01T10:12:50Z",
         "message": "O que inclui a nova legislação para serviços digitais?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-10-01T10:15:10Z",
         "message": "A nova Diretiva de Serviços Digitais (DSD) 2024 estabelece obrigações para plataformas online em termos de moderação de conteúdos e proteção dos dados dos utilizadores. As empresas terão de implementar sistemas mais robustos para combater a desinformação e a venda de produtos ilegais.",
@@ -582,13 +582,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-10-01T10:17:30Z",
         "message": "Há penalizações se as plataformas não cumprirem as regras?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-10-01T10:19:00Z",
         "message": "Sim, as plataformas que não cumprirem as obrigações podem ser multadas em até 6% da sua faturação global anual, dependendo da gravidade da infração. Além disso, podem ser suspensas até que corrijam as práticas em violação.",
@@ -608,13 +608,13 @@
     "conversation_field": "Direito Registo e Notariado",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-09-15T16:22:30Z",
         "message": "É verdade que os jovens estão isentos de IMT na compra de casa?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-09-15T16:24:05Z",
         "message": "Sim, desde 2024, os jovens até 35 anos podem beneficiar de uma isenção de Imposto Municipal sobre Transmissões (IMT) na compra de habitação própria e permanente, desde que o imóvel tenha um valor até 250.000€. Esta medida faz parte do pacote de incentivos ao acesso à habitação jovem.",
@@ -627,13 +627,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-09-15T16:26:20Z",
         "message": "Quais são os requisitos para a isenção?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-09-15T16:28:50Z",
         "message": "Os requisitos incluem ter idade igual ou inferior a 35 anos, não ter casa própria em nome do beneficiário, e o imóvel ser para habitação própria e permanente. A isenção também se aplica apenas a imóveis com um valor máximo de 250.000€.",
@@ -653,13 +653,13 @@
     "conversation_field": "Direito Laboral",
     "messages": [
       {
-        "message_id": "0",
+        "message_index": "0",
         "sender": "user",
         "timestamp": "2024-09-27T14:52:40Z",
         "message": "Quais são as novas regras sobre o trabalho remoto?"
       },
       {
-        "message_id": "1",
+        "message_index": "1",
         "sender": "ai",
         "timestamp": "2024-09-27T14:54:30Z",
         "message": "O novo Decreto-Lei n.º 91/2024 introduz regras claras para o teletrabalho. Agora, o empregador é obrigado a fornecer os equipamentos necessários, e o trabalhador tem direito a receber um subsídio para despesas adicionais, como eletricidade e internet. O teletrabalho também pode ser solicitado por trabalhadores com filhos menores de 12 anos.",
@@ -672,13 +672,13 @@
         ]
       },
       {
-        "message_id": "2",
+        "message_index": "2",
         "sender": "user",
         "timestamp": "2024-09-27T14:56:10Z",
         "message": "É obrigatório o empregador aceitar o pedido de teletrabalho?"
       },
       {
-        "message_id": "3",
+        "message_index": "3",
         "sender": "ai",
         "timestamp": "2024-09-27T14:57:40Z",
         "message": "Depende do caso. Para trabalhadores com filhos menores de 12 anos ou com responsabilidades de cuidado, o empregador só pode recusar com uma justificação fundamentada. Fora desses casos, o teletrabalho deve ser negociado entre as partes.",

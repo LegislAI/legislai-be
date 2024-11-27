@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+import sys
+from pathlib import Path
+
+# Add the root project directory to sys.path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 import argparse
 import json
 import os
@@ -66,7 +72,7 @@ def generate_token(user_id):
     return create_access_token(user_id, timedelta(days=360))
 
 
-def mock_conversation(user_id, mock_file="./bin/mock_conversations.json"):
+def mock_conversation(user_id, mock_file="./mock_conversations.json"):
     mock_path = Path(mock_file)
     if not mock_path.exists():
         logger.error(f"Mock conversation file not found: {mock_file}")
@@ -82,7 +88,7 @@ def mock_conversation(user_id, mock_file="./bin/mock_conversations.json"):
                 conversation_field=message_mock["conversation_field"],
                 messages=[
                     Message(
-                        message_index=template_message["message_id"],
+                        message_index=template_message["message_index"],
                         sender=template_message["sender"],
                         timestamp=template_message["timestamp"],
                         message=template_message["message"],
@@ -94,7 +100,9 @@ def mock_conversation(user_id, mock_file="./bin/mock_conversations.json"):
             logger.info(
                 f"Adding messages to conversation {message_mock['conversation_name']}"
             )
-            add_messages_to_new_conversation(payload=conversation_request)
+            add_messages_to_new_conversation(
+                user_id=user_id, payload=conversation_request
+            )
 
 
 def main():
@@ -122,8 +130,8 @@ def main():
     parser.add_argument(
         "--mock-file",
         type=str,
-        default="./bin/mock_conversations.json",
-        help="Path to mock conversation JSON file (default: ./bin/mock_conversations.json).",
+        default="./mock_conversations.json",
+        help="Path to mock conversation JSON file (default: ./mock_conversations.json).",
     )
 
     args = parser.parse_args()

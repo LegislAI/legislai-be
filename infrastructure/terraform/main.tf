@@ -229,8 +229,9 @@ resource "aws_dynamodb_table" "conversations_table" {
 
   # GSI for querying by updated_at
   global_secondary_index {
-    name               = "UpdatedAtIndex"
-    hash_key           = "updated_at"
+    name               = "UserIdUpdatedAtIndex"
+    hash_key           = "user_id"
+    range_key          = "updated_at"
     projection_type    = "ALL"
     write_capacity     = 10
     read_capacity      = 10
