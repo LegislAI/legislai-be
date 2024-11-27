@@ -1,10 +1,11 @@
+import asyncio
 import json
 import traceback
 
-from RAG.prompt_specialists.generator import RAGPrompt
-from RAG.prompt_specialists.specialists import SpecialistPrompts
-from RAG.prompt_specialists.utils.config import Config
-from RAG.prompt_specialists.utils.logging import logger
+from generator import RAGPrompt
+from specialists import SpecialistPrompts
+from utils.config import Config
+from utils.logging import logger
 
 
 # def simulate_streaming(text, delay=0.1):
@@ -17,39 +18,41 @@ from RAG.prompt_specialists.utils.logging import logger
 #         time.sleep(delay)
 
 
-def stream_answer(context_rag, user_question, code_rag):
-    config = Config()
-    lm = config.setup_models()
+class StreamingRAG:
+    def __init__(self, rag_class):
+        self.rag_class = rag_class
 
-    specialist = SpecialistPrompts()
+    async def stream_answer(self, context_rag, user_question, code_rag):
+        config = Config()
+        lm = config.setup_models()
 
-    if code_rag is None:
-        hint = "És um especialista na Legislação Portuguesa e dominas os assuntos legais portugueses."
-    else:
-        legal_code = specialist.get_legal_code(code_rag)  # legalcode.
-        introduction = specialist.INTRODUCTIONS.get(legal_code)
-        dictionary = specialist.DICIONARIO.get(legal_code)
-        if dictionary:
-            hint = (
-                introduction
-                + " Aqui tens um dicionário de sinónimos com termos utilizados nesse Código: "
-                + str(dictionary)
-            )
+        specialist = SpecialistPrompts()
+
+        if code_rag is None:
+            hint = "És um especialista na Legislação Portuguesa e dominas os assuntos legais portugueses. Deves responder em vocabulário simples e sempre em português de Portugal"
         else:
-            hint = introduction  # no caso de não haver dicionário
-    try:
-        rag = RAGPrompt()
+            legal_code = specialist.get_legal_code(code_rag)  # legalcode.
+            introduction = specialist.INTRODUCTIONS.get(legal_code)
+            dictionary = specialist.DICIONARIO.get(legal_code)
+            if dictionary:
+                hint = (
+                    introduction
+                    + " Aqui tens um dicionário de sinónimos com termos utilizados nesse Código: "
+                    + str(dictionary)
+                )
+            else:
+                hint = introduction  # no caso de não haver dicionário
 
-        response = rag(context=context_rag, question=user_question, hint=hint)
+        model_answer = self.rag_class(
+            context=context_rag, question=user_question, hint=hint
+        )
 
-        # for chunk in simulate_streaming(response.answer):
-        #     print(chunk, end=" ", flush=True)
+        answer_chunks = model_answer.answer.split()
+        for chunk in answer_chunks:
+            yield {"type": "answer_chunk", "content": chunk + " "}
+            await asyncio.sleep(0.1)
 
-        # print("\n\nReferences:")
-        # for ref in response.references:
-        #     print(json.dumps(ref.dict(), indent=2))
-        return response
-
-    except Exception as e:
-        print(f"Error occurred: {e}")
-        traceback.print_exc()
+        yield {
+            "type": "references",
+            "content": json.dumps([ref.dict() for ref in model_answer.references]),
+        }

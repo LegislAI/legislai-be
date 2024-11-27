@@ -6,7 +6,7 @@ from typing import Optional
 import dspy
 import pydantic
 from dotenv import load_dotenv
-from RAG.prompt_specialists.utils.logging import logger
+from utils.logging import logger
 
 NOTA_FINAL = """**Observação:** Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
 
@@ -38,7 +38,7 @@ class GenerateAnswer(dspy.Signature):
     """
 
     context = dspy.InputField(desc="Informação importante para responder à questão")
-    question = dspy.InputField()
+    question = dspy.InputField(desc="Pedido que deves responder")
     answer: StructuredAnswer = dspy.OutputField(
         desc="Uma resposta detalhada e abrangente com vocabulário simples e a lista de referencias utilizadas"
     )
@@ -52,14 +52,11 @@ class RAGPrompt(dspy.Module):
 
     def forward(self, question, context, hint):
         init_time = datetime.now()
-        pred = self.generate_answer(
-            context=context, question=question, hint=hint
-        ).answer
-
-        ans_markdown = self.markdown(question=question, answer=pred.answer)
+        pred = self.generate_answer(context=context, question=question, hint=hint)
+        ans_markdown = self.markdown(question=question, answer=pred.answer.answer)
         final_res = ans_markdown.answer_markdown
         final_res = final_res + f"\n\n{NOTA_FINAL}"
         final_time = datetime.now()
         logger.info(f"Time passed in RAGPrompt: {final_time - init_time}")
 
-        return dspy.Prediction(answer=final_res, references=pred.references)
+        return dspy.Prediction(answer=final_res, references=pred.answer.references)

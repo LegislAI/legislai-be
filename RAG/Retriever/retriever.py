@@ -10,8 +10,8 @@ from queue import Queue
 from threading import Thread
 from typing import Optional
 
-from RAG.Retriever.database.bin.utils import BM250RerankingModel
-from RAG.Retriever.database.DatabaseController import DatabaseController as dbc
+from Retriever.database.bin.utils import BM250RerankingModel
+from Retriever.database.DatabaseController import DatabaseController as dbc
 from together import Together
 
 logging.basicConfig(
@@ -23,7 +23,7 @@ LOG = logging.getLogger("retriever")
 
 subprocess.run("export TOKENIZERS_PARALLELISM=false", shell=True)
 
-TOGETHER_API_KEY = os.getenv("ENHANCEMENT_API_KEY")
+TOGETHER_API_KEY = os.getenv("TOGETHER_AI_API_KEY")
 
 
 class Retriever:

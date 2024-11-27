@@ -29,7 +29,6 @@ class SpecialistPrompts:
             ) as file:
                 self.PRINCIPIOS = json.load(file)
         except FileNotFoundError:
-            print(f"Erro: Arquivo não encontrado.")
             self.PRINCIPIOS = {}
 
     def _init_dictionaries(self):
@@ -80,7 +79,6 @@ class SpecialistPrompts:
         }
         for code, pattern in patterns.items():
             if re.search(pattern, input_string, re.IGNORECASE):
-                print(f"code -> {code}")
                 return code
 
     def get_principios(self, input_string: str):
