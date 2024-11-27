@@ -26,3 +26,4 @@ langchain_huggingface
 rank_bm25
 nltk
 pinecone
+spacy

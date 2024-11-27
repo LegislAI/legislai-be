@@ -4,9 +4,9 @@ import logging
 from typing import List
 from typing import Optional
 
-from RAG.Retriever.database.bin.models import EmbeddingDocument
-from RAG.Retriever.database.bin.utils import EmbeddingModel
-from RAG.Retriever.database.models.PineconeDatabase import PineconeDatabase as Pinecone
+from rag.retriever.database.bin.models import EmbeddingDocument
+from rag.retriever.database.bin.utils import EmbeddingModel
+from rag.retriever.database.models.PineconeDatabase import PineconeDatabase as Pinecone
 
 logging.basicConfig(
     level=logging.INFO,

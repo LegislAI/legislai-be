@@ -18,7 +18,7 @@ LOG = logging.getLogger(__name__)
 
 load_dotenv()
 
-QUERY_ENHANCEMENT_PATH = Path("RAG/QueryEnhancement").resolve()
+QUERY_ENHANCEMENT_PATH = Path("rag/query_enhancement").resolve()
 
 ENHANCEMENT_API_KEY = os.getenv("ENHANCEMENT_API_KEY")
 EXTRACTION_API_KEY = os.getenv("EXTRACTION_API_KEY")
