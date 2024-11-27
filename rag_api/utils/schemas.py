@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from pydantic import EmailStr
 
 
-class QueryResponsePayoad(BaseModel):
+class QueryResponsePayload(BaseModel):
     response: Optional[str] = None
     summary: Optional[str] = None
     references: Optional[str] = None
