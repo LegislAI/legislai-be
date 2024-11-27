@@ -914,60 +914,61 @@ class ChunkAnalysis:
 
 
 class DocumentUnderstanding(dspy.Signature):
-    """Initial document comprehension."""
+    """
+    Com base na questão do utilizador, analisa o documento e identifica e compreende o problema e o seu objetivo.
+    Extrai também os pontos principais enunciados no documento.
+    """
 
-    content = dspy.InputField(desc="Document chunk to analyze")
-    query = dspy.InputField(desc="User's query about the document")
-    previous_context = dspy.InputField(desc="Previous document context")
+    content = dspy.InputField(desc="Documento a analisar")
+    query = dspy.InputField(desc="Questão do utilizador")
 
-    main_points = dspy.OutputField(desc="Key points identified")
-    relevance = dspy.OutputField(desc="Relevance to query (0-1)")
-    initial_thoughts = dspy.OutputField(desc="Initial analysis")
-    questions_raised = dspy.OutputField(desc="Questions that arise from content")
-    reasoning_chain = dspy.OutputField(desc="Step-by-step reasoning process")
-
-
-class DetailedAnalyzer(dspy.Signature):
-    """Deep analysis of content."""
-
-    content = dspy.InputField(desc="Content to analyze")
-    initial_understanding = dspy.InputField(desc="Initial comprehension")
-    context = dspy.InputField(desc="Accumulated context")
-    questions = dspy.InputField(desc="Questions to address")
-
-    analysis_steps = dspy.OutputField(
-        desc="List of analysis steps, each describing a specific insight or observation. "
-        "Should be a complete sentence or thought, not individual words."
+    main_points = dspy.OutputField(
+        desc="Pontos principais com base na questão do utilizador"
     )
-    knowledge_gaps = dspy.OutputField(desc="Identified knowledge gaps")
-    conclusions = dspy.OutputField(desc="Interim conclusions")
-    confidence = dspy.OutputField(desc="Confidence in analysis (0-1)")
-    rag_queries = dspy.OutputField(desc="Suggested RAG queries")
+    document_goal = dspy.OutputField(desc="Objetivo do documento")
 
 
-class CrossReferenceAnalyzer(dspy.Signature):
-    """Analyzes relationships between different parts."""
+# class DetailedAnalyzer(dspy.Signature):
+#     """Deep analysis of content."""
 
-    current_content = dspy.InputField(desc="Current content")
-    previous_analyses = dspy.InputField(desc="Previous chunk analyses")
-    context = dspy.InputField(desc="Overall context")
+#     content = dspy.InputField(desc="Content to analyze")
+#     initial_understanding = dspy.InputField(desc="Initial comprehension")
+#     context = dspy.InputField(desc="Accumulated context")
+#     questions = dspy.InputField(desc="Questions to address")
 
-    connections = dspy.OutputField(desc="Identified connections")
-    impact = dspy.OutputField(desc="Impact on understanding")
-    suggested_updates = dspy.OutputField(desc="Suggested updates to previous analyses")
+#     analysis_steps = dspy.OutputField(
+#         desc="List of analysis steps, each describing a specific insight or observation. "
+#         "Should be a complete sentence or thought, not individual words."
+#     )
+#     knowledge_gaps = dspy.OutputField(desc="Identified knowledge gaps")
+#     conclusions = dspy.OutputField(desc="Interim conclusions")
+#     confidence = dspy.OutputField(desc="Confidence in analysis (0-1)")
+#     rag_queries = dspy.OutputField(desc="Suggested RAG queries")
 
 
-class FinalSynthesizer(dspy.Signature):
-    """Creates final markdown output."""
+# class CrossReferenceAnalyzer(dspy.Signature):
+#     """Analyzes relationships between different parts."""
 
-    analyses = dspy.InputField(desc="All chunk analyses")
-    query = dspy.InputField(desc="Original query")
-    context = dspy.InputField(desc="Full context")
-    cross_references = dspy.InputField(desc="Cross-reference findings")
+#     current_content = dspy.InputField(desc="Current content")
+#     previous_analyses = dspy.InputField(desc="Previous chunk analyses")
+#     context = dspy.InputField(desc="Overall context")
 
-    markdown_output = dspy.OutputField(desc="Final markdown response")
-    key_findings = dspy.OutputField(desc="Main findings and conclusions")
-    confidence_assessment = dspy.OutputField(desc="Overall confidence assessment")
+#     connections = dspy.OutputField(desc="Identified connections")
+#     impact = dspy.OutputField(desc="Impact on understanding")
+#     suggested_updates = dspy.OutputField(desc="Suggested updates to previous analyses")
+
+
+# class FinalSynthesizer(dspy.Signature):
+#     """Creates final markdown output."""
+
+#     analyses = dspy.InputField(desc="All chunk analyses")
+#     query = dspy.InputField(desc="Original query")
+#     context = dspy.InputField(desc="Full context")
+#     cross_references = dspy.InputField(desc="Cross-reference findings")
+
+#     markdown_output = dspy.OutputField(desc="Final markdown response")
+#     key_findings = dspy.OutputField(desc="Main findings and conclusions")
+#     confidence_assessment = dspy.OutputField(desc="Overall confidence assessment")
 
 
 class CognitiveOCRAgent:
@@ -978,16 +979,14 @@ class CognitiveOCRAgent:
         dspy.configure(lm=self.llm)
 
         # Initialize cognitive modules
-        self.understanding = dspy.Predict(DocumentUnderstanding)
-        self.analyzer = dspy.Predict(DetailedAnalyzer)
-        self.cross_referencer = dspy.Predict(CrossReferenceAnalyzer)
-        self.synthesizer = dspy.Predict(FinalSynthesizer)
+        self.initial_undersanding = dspy.Predict(DocumentUnderstanding)
+        # self.analyzer = dspy.Predict(DetailedAnalyzer)
+        # self.cross_referencer = dspy.Predict(CrossReferenceAnalyzer)
+        # self.synthesizer = dspy.Predict(FinalSynthesizer)
 
-        # Initialize state
         self.reset_state()
 
     def reset_state(self):
-        """Reset agent's state for new document."""
         self.cognitive_state = {
             "context": "",
             "chunk_analyses": [],
@@ -997,286 +996,286 @@ class CognitiveOCRAgent:
         }
 
 
-class DetailedAnalyzer(dspy.Signature):
-    """Deep analysis of content."""
+# class DetailedAnalyzer(dspy.Signature):
+#     """Deep analysis of content."""
 
-    content = dspy.InputField(desc="Content to analyze")
-    initial_understanding = dspy.InputField(desc="Initial comprehension")
-    context = dspy.InputField(desc="Accumulated context")
-    questions = dspy.InputField(desc="Questions to address")
+#     content = dspy.InputField(desc="Content to analyze")
+#     initial_understanding = dspy.InputField(desc="Initial comprehension")
+#     context = dspy.InputField(desc="Accumulated context")
+#     questions = dspy.InputField(desc="Questions to address")
 
-    analysis_steps = dspy.OutputField(
-        desc="List of specific insights and observations about the content"
-    )
-    knowledge_gaps = dspy.OutputField(
-        desc="List of questions or areas needing clarification"
-    )
-    conclusions = dspy.OutputField(desc="Summary of key conclusions from the analysis")
-    confidence = dspy.OutputField(desc="Confidence score between 0 and 1")
-    rag_queries = dspy.OutputField(
-        desc="List of specific questions to query the RAG system"
-    )
+#     analysis_steps = dspy.OutputField(
+#         desc="List of specific insights and observations about the content"
+#     )
+#     knowledge_gaps = dspy.OutputField(
+#         desc="List of questions or areas needing clarification"
+#     )
+#     conclusions = dspy.OutputField(desc="Summary of key conclusions from the analysis")
+#     confidence = dspy.OutputField(desc="Confidence score between 0 and 1")
+#     rag_queries = dspy.OutputField(
+#         desc="List of specific questions to query the RAG system"
+#     )
 
 
-class CrossReferenceAnalyzer(dspy.Signature):
-    """Analyzes relationships between different parts."""
+# class CrossReferenceAnalyzer(dspy.Signature):
+#     """Analyzes relationships between different parts."""
 
-    current_content = dspy.InputField(desc="Current text chunk")
-    previous_analyses = dspy.InputField(
-        desc="List of previous chunk analyses in dict format"
-    )
-    context = dspy.InputField(desc="Overall accumulated context")
+#     current_content = dspy.InputField(desc="Current text chunk")
+#     previous_analyses = dspy.InputField(
+#         desc="List of previous chunk analyses in dict format"
+#     )
+#     context = dspy.InputField(desc="Overall accumulated context")
 
-    connections = dspy.OutputField(
-        desc="List of connections found with previous chunks"
-    )
-    impact = dspy.OutputField(
-        desc="Description of how these connections affect understanding"
-    )
-    suggested_updates = dspy.OutputField(
-        desc="List of suggested updates to previous analyses"
-    )
+#     connections = dspy.OutputField(
+#         desc="List of connections found with previous chunks"
+#     )
+#     impact = dspy.OutputField(
+#         desc="Description of how these connections affect understanding"
+#     )
+#     suggested_updates = dspy.OutputField(
+#         desc="List of suggested updates to previous analyses"
+#     )
 
-    async def analyze_chunk(
-        self, chunk: str, chunk_id: str, query: str
-    ) -> ChunkAnalysis:
-        """Perform detailed analysis of a single chunk."""
-        steps = []
+#     async def analyze_chunk(
+#         self, chunk: str, chunk_id: str, query: str
+#     ) -> ChunkAnalysis:
+#         """Perform detailed analysis of a single chunk."""
+#         steps = []
 
-        # Initial understanding
-        understanding = self.understanding(
-            content=chunk, query=query, previous_context=self.cognitive_state["context"]
-        )
+#         # Initial understanding
+#         understanding = self.understanding(
+#             content=chunk, query=query, previous_context=self.cognitive_state["context"]
+#         )
 
-        # Extract confidence from relevance score
-        try:
-            relevance_score_regex = re.search(
-                r"(\d*\.?\d+)", str(understanding.relevance)
-            )
-            confidence = (
-                float(relevance_score_regex.group(0)) if relevance_score_regex else 0.5
-            )
-        except (ValueError, AttributeError):
-            confidence = 0.5
+#         # Extract confidence from relevance score
+#         try:
+#             relevance_score_regex = re.search(
+#                 r"(\d*\.?\d+)", str(understanding.relevance)
+#             )
+#             confidence = (
+#                 float(relevance_score_regex.group(0)) if relevance_score_regex else 0.5
+#             )
+#         except (ValueError, AttributeError):
+#             confidence = 0.5
 
-        # Add initial understanding step
-        steps.append(
-            ReasoningStep(
-                action=CognitiveAction.UNDERSTAND_CONTEXT,
-                thought=understanding.initial_thoughts,
-                confidence=confidence,
-                supporting_evidence=[
-                    point for point in understanding.main_points if point
-                ],
-            )
-        )
+#         # Add initial understanding step
+#         steps.append(
+#             ReasoningStep(
+#                 action=CognitiveAction.UNDERSTAND_CONTEXT,
+#                 thought=understanding.initial_thoughts,
+#                 confidence=confidence,
+#                 supporting_evidence=[
+#                     point for point in understanding.main_points if point
+#                 ],
+#             )
+#         )
 
-        # Generate initial questions
-        if understanding.questions_raised:
-            steps.append(
-                ReasoningStep(
-                    action=CognitiveAction.IDENTIFY_KNOWLEDGE_GAP,
-                    thought="Identified areas requiring further investigation",
-                    confidence=confidence,
-                    queries_generated=understanding.questions_raised
-                    if isinstance(understanding.questions_raised, list)
-                    else [understanding.questions_raised],
-                )
-            )
+#         # Generate initial questions
+#         if understanding.questions_raised:
+#             steps.append(
+#                 ReasoningStep(
+#                     action=CognitiveAction.IDENTIFY_KNOWLEDGE_GAP,
+#                     thought="Identified areas requiring further investigation",
+#                     confidence=confidence,
+#                     queries_generated=understanding.questions_raised
+#                     if isinstance(understanding.questions_raised, list)
+#                     else [understanding.questions_raised],
+#                 )
+#             )
 
-        # Detailed analysis
-        analysis = self.analyzer(
-            content=chunk,
-            initial_understanding=understanding.initial_thoughts,
-            context=self.cognitive_state["context"],
-            questions=understanding.questions_raised,
-        )
+#         # Detailed analysis
+#         analysis = self.analyzer(
+#             content=chunk,
+#             initial_understanding=understanding.initial_thoughts,
+#             context=self.cognitive_state["context"],
+#             questions=understanding.questions_raised,
+#         )
 
-        # Process analysis steps
-        analysis_thoughts = []
-        if isinstance(analysis.analysis_steps, str):
-            # Split by periods and newlines
-            thoughts = re.split(r"[.\n]+", analysis.analysis_steps)
-            analysis_thoughts = [t.strip() for t in thoughts if t.strip()]
-        elif isinstance(analysis.analysis_steps, list):
-            analysis_thoughts = [t for t in analysis.analysis_steps if t]
+#         # Process analysis steps
+#         analysis_thoughts = []
+#         if isinstance(analysis.analysis_steps, str):
+#             # Split by periods and newlines
+#             thoughts = re.split(r"[.\n]+", analysis.analysis_steps)
+#             analysis_thoughts = [t.strip() for t in thoughts if t.strip()]
+#         elif isinstance(analysis.analysis_steps, list):
+#             analysis_thoughts = [t for t in analysis.analysis_steps if t]
 
-        # Extract analysis confidence
-        try:
-            analysis_confidence_regex = re.search(
-                r"(\d*\.?\d+)", str(analysis.confidence)
-            )
-            analysis_confidence = (
-                float(analysis_confidence_regex.group(0))
-                if analysis_confidence_regex
-                else confidence
-            )
-        except (ValueError, AttributeError):
-            analysis_confidence = confidence
+#         # Extract analysis confidence
+#         try:
+#             analysis_confidence_regex = re.search(
+#                 r"(\d*\.?\d+)", str(analysis.confidence)
+#             )
+#             analysis_confidence = (
+#                 float(analysis_confidence_regex.group(0))
+#                 if analysis_confidence_regex
+#                 else confidence
+#             )
+#         except (ValueError, AttributeError):
+#             analysis_confidence = confidence
 
-        # Add analysis steps
-        for thought in analysis_thoughts:
-            steps.append(
-                ReasoningStep(
-                    action=CognitiveAction.EVALUATE_ARGUMENTS,
-                    thought=thought,
-                    confidence=analysis_confidence,
-                    queries_generated=[],
-                )
-            )
+#         # Add analysis steps
+#         for thought in analysis_thoughts:
+#             steps.append(
+#                 ReasoningStep(
+#                     action=CognitiveAction.EVALUATE_ARGUMENTS,
+#                     thought=thought,
+#                     confidence=analysis_confidence,
+#                     queries_generated=[],
+#                 )
+#             )
 
-        # Process knowledge gaps
-        if analysis.knowledge_gaps:
-            gaps = (
-                analysis.knowledge_gaps
-                if isinstance(analysis.knowledge_gaps, list)
-                else [analysis.knowledge_gaps]
-            )
-            for gap in gaps:
-                steps.append(
-                    ReasoningStep(
-                        action=CognitiveAction.IDENTIFY_KNOWLEDGE_GAP,
-                        thought=f"Knowledge gap identified: {gap}",
-                        confidence=analysis_confidence,
-                        queries_generated=analysis.rag_queries
-                        if isinstance(analysis.rag_queries, list)
-                        else [analysis.rag_queries],
-                    )
-                )
+#         # Process knowledge gaps
+#         if analysis.knowledge_gaps:
+#             gaps = (
+#                 analysis.knowledge_gaps
+#                 if isinstance(analysis.knowledge_gaps, list)
+#                 else [analysis.knowledge_gaps]
+#             )
+#             for gap in gaps:
+#                 steps.append(
+#                     ReasoningStep(
+#                         action=CognitiveAction.IDENTIFY_KNOWLEDGE_GAP,
+#                         thought=f"Knowledge gap identified: {gap}",
+#                         confidence=analysis_confidence,
+#                         queries_generated=analysis.rag_queries
+#                         if isinstance(analysis.rag_queries, list)
+#                         else [analysis.rag_queries],
+#                     )
+#                 )
 
-        # Add RAG queries to global state
-        if analysis.rag_queries:
-            queries = (
-                analysis.rag_queries
-                if isinstance(analysis.rag_queries, list)
-                else [analysis.rag_queries]
-            )
-            self.cognitive_state["rag_queries"].update(queries)
+#         # Add RAG queries to global state
+#         if analysis.rag_queries:
+#             queries = (
+#                 analysis.rag_queries
+#                 if isinstance(analysis.rag_queries, list)
+#                 else [analysis.rag_queries]
+#             )
+#             self.cognitive_state["rag_queries"].update(queries)
 
-        return ChunkAnalysis(
-            chunk_id=chunk_id,
-            content=chunk,
-            steps=steps,
-            final_understanding=analysis.conclusions,
-            relevance_score=confidence,
-            knowledge_gaps=gaps if analysis.knowledge_gaps else [],
-        )
+#         return ChunkAnalysis(
+#             chunk_id=chunk_id,
+#             content=chunk,
+#             steps=steps,
+#             final_understanding=analysis.conclusions,
+#             relevance_score=confidence,
+#             knowledge_gaps=gaps if analysis.knowledge_gaps else [],
+#         )
 
-    async def process_cross_references(self):
-        """Analyze relationships between chunks."""
-        for idx, current_analysis in enumerate(self.cognitive_state["chunk_analyses"]):
-            if idx > 0:  # Only process if we have previous chunks
-                # Convert previous analyses to dictionary format
-                previous_analyses = [
-                    {
-                        "chunk_id": analysis.chunk_id,
-                        "content": analysis.content,
-                        "understanding": analysis.final_understanding,
-                    }
-                    for analysis in self.cognitive_state["chunk_analyses"][:idx]
-                ]
+#     async def process_cross_references(self):
+#         """Analyze relationships between chunks."""
+#         for idx, current_analysis in enumerate(self.cognitive_state["chunk_analyses"]):
+#             if idx > 0:  # Only process if we have previous chunks
+#                 # Convert previous analyses to dictionary format
+#                 previous_analyses = [
+#                     {
+#                         "chunk_id": analysis.chunk_id,
+#                         "content": analysis.content,
+#                         "understanding": analysis.final_understanding,
+#                     }
+#                     for analysis in self.cognitive_state["chunk_analyses"][:idx]
+#                 ]
 
-                cross_ref = self.cross_referencer(
-                    current_content=current_analysis.content,
-                    previous_analyses=previous_analyses,
-                    context=self.cognitive_state["context"],
-                )
+#                 cross_ref = self.cross_referencer(
+#                     current_content=current_analysis.content,
+#                     previous_analyses=previous_analyses,
+#                     context=self.cognitive_state["context"],
+#                 )
 
-                self.cognitive_state["cross_references"].append(
-                    {
-                        "source_chunk": current_analysis.chunk_id,
-                        "connections": cross_ref.connections,
-                        "impact": cross_ref.impact,
-                    }
-                )
+#                 self.cognitive_state["cross_references"].append(
+#                     {
+#                         "source_chunk": current_analysis.chunk_id,
+#                         "connections": cross_ref.connections,
+#                         "impact": cross_ref.impact,
+#                     }
+#                 )
 
-    def generate_markdown_response(self) -> str:
-        """Generate final markdown response."""
-        synthesis = self.synthesizer(
-            analyses=self.cognitive_state["chunk_analyses"],
-            query=self.current_query,
-            context=self.cognitive_state["context"],
-            cross_references=self.cognitive_state["cross_references"],
-        )
+#     def generate_markdown_response(self) -> str:
+#         """Generate final markdown response."""
+#         synthesis = self.synthesizer(
+#             analyses=self.cognitive_state["chunk_analyses"],
+#             query=self.current_query,
+#             context=self.cognitive_state["context"],
+#             cross_references=self.cognitive_state["cross_references"],
+#         )
 
-        # Format confidence metrics
-        confidence_stats = {
-            "overall": float(synthesis.confidence_assessment),
-            "by_section": [
-                {"section": analysis.chunk_id, "confidence": analysis.relevance_score}
-                for analysis in self.cognitive_state["chunk_analyses"]
-            ],
-        }
+#         # Format confidence metrics
+#         confidence_stats = {
+#             "overall": float(synthesis.confidence_assessment),
+#             "by_section": [
+#                 {"section": analysis.chunk_id, "confidence": analysis.relevance_score}
+#                 for analysis in self.cognitive_state["chunk_analyses"]
+#             ],
+#         }
 
-        # Build markdown structure
-        markdown_sections = [
-            "# Document Analysis Results\n",
-            f"## Query\n{self.current_query}\n",
-            "## Key Findings\n"
-            + "\n".join([f"- {finding}" for finding in synthesis.key_findings]),
-            "## Detailed Analysis\n" + synthesis.markdown_output,
-            "## Confidence Assessment\n"
-            + f"Overall confidence: {confidence_stats['overall']:.2f}",
-        ]
+#         # Build markdown structure
+#         markdown_sections = [
+#             "# Document Analysis Results\n",
+#             f"## Query\n{self.current_query}\n",
+#             "## Key Findings\n"
+#             + "\n".join([f"- {finding}" for finding in synthesis.key_findings]),
+#             "## Detailed Analysis\n" + synthesis.markdown_output,
+#             "## Confidence Assessment\n"
+#             + f"Overall confidence: {confidence_stats['overall']:.2f}",
+#         ]
 
-        return "\n\n".join(markdown_sections)
+#         return "\n\n".join(markdown_sections)
 
-    async def process_document(self, document_text: Dict, query: str):
-        """Process document with streaming updates."""
-        self.reset_state()
-        self.current_query = query
+#     async def process_document(self, document_text: Dict, query: str):
+#         """Process document with streaming updates."""
+#         self.reset_state()
+#         self.current_query = query
 
-        # Initial query analysis
-        yield {
-            "type": "process_start",
-            "data": {"query": query, "timestamp": datetime.now().isoformat()},
-        }
+#         # Initial query analysis
+#         yield {
+#             "type": "process_start",
+#             "data": {"query": query, "timestamp": datetime.now().isoformat()},
+#         }
 
-        # Process each chunk
-        for page_num, page in document_text.get("page", {}).items():
-            for para_num, paragraph in page.get("paragraph", {}).items():
-                chunk_id = f"p{page_num}_para{para_num}"
+#         # Process each chunk
+#         for page_num, page in document_text.get("page", {}).items():
+#             for para_num, paragraph in page.get("paragraph", {}).items():
+#                 chunk_id = f"p{page_num}_para{para_num}"
 
-                # Analyze chunk
-                analysis = await self.analyze_chunk(paragraph, chunk_id, query)
-                self.cognitive_state["chunk_analyses"].append(analysis)
-                self.cognitive_state["context"] += f"\n{paragraph}"
+#                 # Analyze chunk
+#                 analysis = await self.analyze_chunk(paragraph, chunk_id, query)
+#                 self.cognitive_state["chunk_analyses"].append(analysis)
+#                 self.cognitive_state["context"] += f"\n{paragraph}"
 
-                # Stream chunk analysis
-                yield {
-                    "type": "chunk_analysis",
-                    "data": {
-                        "chunk_id": chunk_id,
-                        "steps": [
-                            {
-                                "action": step.action.value,
-                                "thought": step.thought,
-                                "confidence": step.confidence,
-                                "timestamp": step.timestamp.isoformat(),
-                            }
-                            for step in analysis.steps
-                        ],
-                        "relevance": analysis.relevance_score,
-                    },
-                }
+#                 # Stream chunk analysis
+#                 yield {
+#                     "type": "chunk_analysis",
+#                     "data": {
+#                         "chunk_id": chunk_id,
+#                         "steps": [
+#                             {
+#                                 "action": step.action.value,
+#                                 "thought": step.thought,
+#                                 "confidence": step.confidence,
+#                                 "timestamp": step.timestamp.isoformat(),
+#                             }
+#                             for step in analysis.steps
+#                         ],
+#                         "relevance": analysis.relevance_score,
+#                     },
+#                 }
 
-        # Process cross-references
-        await self.process_cross_references()
+#         # Process cross-references
+#         await self.process_cross_references()
 
-        # Generate final response
-        markdown_response = self.generate_markdown_response()
+#         # Generate final response
+#         markdown_response = self.generate_markdown_response()
 
-        yield {
-            "type": "final_response",
-            "data": {
-                "markdown": markdown_response,
-                "metadata": {
-                    "chunks_processed": len(self.cognitive_state["chunk_analyses"]),
-                    "rag_queries": list(self.cognitive_state["rag_queries"]),
-                    "cross_references": self.cognitive_state["cross_references"],
-                },
-            },
-        }
+#         yield {
+#             "type": "final_response",
+#             "data": {
+#                 "markdown": markdown_response,
+#                 "metadata": {
+#                     "chunks_processed": len(self.cognitive_state["chunk_analyses"]),
+#                     "rag_queries": list(self.cognitive_state["rag_queries"]),
+#                     "cross_references": self.cognitive_state["cross_references"],
+#                 },
+#             },
+#         }
 
 
 async def process_rag_queries(self, queries: List[str]) -> Dict[str, str]:
