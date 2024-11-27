@@ -64,7 +64,14 @@ class RAG:
         # )
         response = self.hop_rag(payload.get("context_rag"), user_question=query)
 
-        print(response)
+        print(response.answer)
+        print(response.references)
+        print(additional_data.get("resumo"))
+        return {
+            "answer": response.answer,
+            "references": response.references,
+            "summary": additional_data.get("resumo"),
+        }
 
 
 # if __name__ == "__main__":

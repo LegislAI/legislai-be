@@ -5,6 +5,7 @@ from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
+from ocr.main import process_rag_queries
 from RAG import rag
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_fields
@@ -52,8 +53,9 @@ def query(
                 )
 
             elif payload.attachments and user.plan == "premium_plus":
-                # TODO: Implement auto rag
-                pass
+                # TODO: properly imlpement this, just for tests
+                response = process_rag_queries()
+
             else:
                 user_queries += 1
                 update_user_fields(
@@ -62,11 +64,13 @@ def query(
                     fields={"weekly_queries": str(user_queries)},
                 )
 
-                rag_service.query(query=payload.query)
+                response = rag_service.query(query=payload.query)
 
-                return QueryResponsePayoad(
-                    response="This is a response", summary="This is a summary"
-                )
+            return QueryResponsePayoad(
+                response=response.get("answer"),
+                summary=response.get("summary"),
+                references=response.get("references"),
+            )
 
         else:
             raise HTTPException(

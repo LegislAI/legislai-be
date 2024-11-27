@@ -7,6 +7,7 @@ from pydantic import EmailStr
 class QueryResponsePayoad(BaseModel):
     response: Optional[str] = None
     summary: Optional[str] = None
+    references: Optional[str] = None
 
 
 class QueryRequestPayload(BaseModel):
