@@ -292,7 +292,7 @@ class Scrape:
             return {"text": full_text, "url": url, "active_from": active_from}
 
         except Exception as e:
-            print(f"An error occurred while parsing the alteration section: {e}")
+            LOG.error(f"An error occurred while parsing the alteration section: {e}")
             return None
 
     def parse_alteration_page(self, driver, initial_date: str) -> list:
