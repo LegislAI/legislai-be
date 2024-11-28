@@ -3,7 +3,7 @@ import subprocess
 import cv2
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
-from ExtractFromImage.ImagePreprocessing.imagepreprocessing import Processor
+from ocr.ExtractFromImage.ImagePreprocessing.imagepreprocessing import Processor
 
 
 class ImageProcessor:

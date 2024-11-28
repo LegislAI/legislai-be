@@ -7,7 +7,6 @@ from fastapi import HTTPException
 from fastapi import status
 from fastapi.responses import StreamingResponse
 from fastapi.security import HTTPAuthorizationCredentials
-from ocr.main import process_rag_queries
 from rag import main as rag
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_fields
@@ -18,6 +17,8 @@ from utils.schemas import QueryRequestPayload
 from utils.schemas import QueryResponsePayload
 from utils.utils import decodeJWT
 from utils.utils import JWTBearer
+
+# from ocr.main import process_rag_queries
 
 route = APIRouter()
 security = SecurityUtils()
