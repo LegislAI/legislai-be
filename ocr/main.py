@@ -1161,12 +1161,11 @@ import dspy
 
 
 class CognitiveAction(Enum):
-    UNDERSTAND_PROBLEM = "understand_problem"
     IDENTIFY_GAPS = "identify_gaps"
     GATHER_INFORMATION = "gather_information"
+    SKIP_CHUNK = "skip_chunk"
     SYNTHESIZE_INFO = "synthesize_info"
     EVALUATE_ARGUMENTS = "evaluate_arguments"
-    ITERATE_RESEARCH = "iterate_research"
     DRAW_CONCLUSIONS = "draw_conclusions"
     COMMUNICATE_FINDINGS = "communicate_findings"
 
@@ -1215,6 +1214,48 @@ class CognitiveAnalysis:
     recommendations: List[str] = field(default_factory=list)
 
 
+@dataclass
+class KnowledgeDatabase:
+    pass
+
+
+# To implement a knowledge database (general and per step)
+
+
+class IdentifyKnowledgeGaps(dspy.Signature):
+    """
+    Com base na query do utilizador,
+    identifica que lacunas podes ter no teu conhecimento através da geração de perguntas, que aches pertinente veres respondidas de forma a prosseguires
+    """
+
+
+class ReasoningStep(dspy.Signature):
+    """
+    Com base na análise inicial do problema, no contexto que tens até à data e na questão do utilizador vais escolher que passo tomar.
+    """
+
+    query = dspy.InputField(desc="Questão do utilizador")
+    context = dspy.InputField(desc="Contexto do problema até à data")
+    initial_analysis = dspy.InputField(desc="Análise inicial")
+
+    action: CognitiveAction = dspy.OutputField(desc="Ação a tomar")
+
+
+# If action from reasoning step==identify_gaps => generate queries from the chunk,  query rag database with formulated queries and then synthesize the retrieved information and rank it relatively to the query
+
+# Skip chunk, chunk not relevant to answer the question
+
+# If action from reasoning step==gather_information=>generate queries, query rag database with formulated queries and then synthesize the retrieved information and rank it relatively to the query
+
+# If the action from reasoning step==synthesize_info=>(porbably choose what context to synthesize, current chunk/retrieved information or all(agnostic solution, just a step before) and then
+
+# If the action from reasoning step==Evaluate arguments => Reassesses the document facing the query with the additional knowledge, outputs a refined analysis with evidence from the local database
+
+# If the action from reasoning step==draw_conclusions => Wheights all the evidence in the database and then outputs a well informed conclusion
+
+# After the draw_conclusions, revalidate the answer relatively to the query and then streams the output in markdown
+
+
 class UnderstandProblem(dspy.Signature):
     """Compreende profundamente o documento e o seu contexto legal."""
 
@@ -1227,110 +1268,112 @@ class UnderstandProblem(dspy.Signature):
     initial_analysis = dspy.OutputField(desc="Análise inicial do problema")
 
 
-class IdentifyKnowledgeGaps(dspy.Signature):
-    """Identifica lacunas de conhecimento que precisam ser investigadas."""
+# class IdentifyKnowledgeGaps(dspy.Signature):
+#     """Identifica lacunas de conhecimento que precisam ser investigadas."""
 
-    initial_understanding = dspy.InputField()
-    legal_context = dspy.InputField()
+#     initial_understanding = dspy.InputField()
+#     legal_context = dspy.InputField()
 
-    knowledge_gaps: List[str] = dspy.OutputField(desc="Lista de lacunas identificadas")
-    research_questions: List[str] = dspy.OutputField(
-        desc="Perguntas específicas para pesquisa"
-    )
-    priority_areas: List[str] = dspy.OutputField(
-        desc="Áreas prioritárias para investigação"
-    )
-
-
-class ResearchGatherer(dspy.Signature):
-    """Pesquisa informações relevantes na base de dados."""
-
-    research_questions = dspy.InputField()
-    legal_context = dspy.InputField()
-
-    relevant_laws = dspy.OutputField(desc="Leis e regulamentos relevantes")
-    case_precedents = dspy.OutputField(desc="Precedentes legais")
-    supporting_evidence = dspy.OutputField(desc="Evidências de suporte")
+#     knowledge_gaps: List[str] = dspy.OutputField(desc="Lista de lacunas identificadas")
+#     research_questions: List[str] = dspy.OutputField(
+#         desc="Perguntas específicas para pesquisa"
+#     )
+#     priority_areas: List[str] = dspy.OutputField(
+#         desc="Áreas prioritárias para investigação"
+#     )
 
 
-class SynthesisEngine(dspy.Signature):
-    """Sintetiza as informações recolhidas em conclusões coerentes."""
+# class ResearchGatherer(dspy.Signature):
+#     """Pesquisa informações relevantes na base de dados."""
 
-    research_results = dspy.InputField()
-    initial_understanding = dspy.InputField()
+#     research_questions = dspy.InputField()
+#     legal_context = dspy.InputField()
 
-    synthesized_findings = dspy.OutputField(desc="Síntese das descobertas")
-    key_insights = dspy.OutputField(desc="Insights principais")
-    confidence_assessment = dspy.OutputField(desc="Avaliação de confiança")
-
-
-class ArgumentEvaluator(dspy.Signature):
-    """Avalia a força dos argumentos com base nas evidências."""
-
-    arguments = dspy.InputField()
-    legal_references = dspy.InputField()
-
-    evaluated_arguments = dspy.OutputField(desc="Argumentos avaliados")
-    strength_assessment = dspy.OutputField(desc="Avaliação da força dos argumentos")
-    counter_arguments = dspy.OutputField(desc="Contra-argumentos identificados")
+#     relevant_laws = dspy.OutputField(desc="Leis e regulamentos relevantes")
+#     case_precedents = dspy.OutputField(desc="Precedentes legais")
+#     supporting_evidence = dspy.OutputField(desc="Evidências de suporte")
 
 
-class ConclusionGenerator(dspy.Signature):
-    """Gera conclusões finais e recomendações."""
+# class SynthesisEngine(dspy.Signature):
+#     """Sintetiza as informações recolhidas em conclusões coerentes."""
 
-    evaluated_arguments = dspy.InputField()
-    synthesized_findings = dspy.InputField()
-    legal_context = dspy.InputField()
+#     research_results = dspy.InputField()
+#     initial_understanding = dspy.InputField()
 
-    conclusions = dspy.OutputField(desc="Conclusões finais")
-    recommendations = dspy.OutputField(desc="Recomendações")
-    confidence_score: float = dspy.OutputField(desc="Pontuação de confiança")
+#     synthesized_findings = dspy.OutputField(desc="Síntese das descobertas")
+#     key_insights = dspy.OutputField(desc="Insights principais")
+#     confidence_assessment = dspy.OutputField(desc="Avaliação de confiança")
 
 
-class ReportFormatter(dspy.Signature):
-    """Formata as conclusões em um relatório estruturado."""
+# class ArgumentEvaluator(dspy.Signature):
+#     """Avalia a força dos argumentos com base nas evidências."""
 
-    analysis = dspy.InputField()
+#     arguments = dspy.InputField()
+#     legal_references = dspy.InputField()
 
-    formatted_report = dspy.OutputField(desc="Relatório formatado")
-    executive_summary = dspy.OutputField(desc="Resumo executivo")
+#     evaluated_arguments = dspy.OutputField(desc="Argumentos avaliados")
+#     strength_assessment = dspy.OutputField(desc="Avaliação da força dos argumentos")
+#     counter_arguments = dspy.OutputField(desc="Contra-argumentos identificados")
+
+
+# class ConclusionGenerator(dspy.Signature):
+#     """Gera conclusões finais e recomendações."""
+
+#     evaluated_arguments = dspy.InputField()
+#     synthesized_findings = dspy.InputField()
+#     legal_context = dspy.InputField()
+
+#     conclusions = dspy.OutputField(desc="Conclusões finais")
+#     recommendations = dspy.OutputField(desc="Recomendações")
+#     confidence_score: float = dspy.OutputField(desc="Pontuação de confiança")
+
+
+# class ReportFormatter(dspy.Signature):
+#     """Formata as conclusões em um relatório estruturado."""
+
+#     analysis = dspy.InputField()
+
+#     formatted_report = dspy.OutputField(desc="Relatório formatado")
+#     executive_summary = dspy.OutputField(desc="Resumo executivo")
 
 
 class EnhancedCognitiveOCRAgent(dspy.Module):
     def __init__(self, retriever):
         super().__init__()
         self.retriever = retriever
-        self.understanding = dspy.ChainOfThought(UnderstandProblem)
-        self.gap_identifier = dspy.ChainOfThought(IdentifyKnowledgeGaps)
-        self.researcher = dspy.ChainOfThought(ResearchGatherer)
-        self.synthesizer = dspy.ChainOfThought(SynthesisEngine)
-        self.evaluator = dspy.ChainOfThought(ArgumentEvaluator)
-        self.conclusion_generator = dspy.ChainOfThought(ConclusionGenerator)
-        self.report_formatter = dspy.ChainOfThought(ReportFormatter)
+        self.understanding = dspy.Predict(UnderstandProblem)
+        self.gap_identifier = dspy.Predict(IdentifyKnowledgeGaps)
+        # self.researcher = dspy.Predict(ResearchGatherer)
+        # self.synthesizer = dspy.Predict(SynthesisEngine)
+        # self.evaluator = dspy.Predict(ArgumentEvaluator)
+        # self.conclusion_generator = dspy.Predict(ConclusionGenerator)
+        # self.report_formatter = dspy.Predict(ReportFormatter)
         self.current_analysis = None
 
-    def process_document(self, document: str, query: str) -> dict:
+    def process_document(self, document: dict, query: str) -> dict:
         """Processa o documento completo e retorna a análise."""
-        self.current_analysis = CognitiveAnalysis(
-            document_id=str(hash(document)), original_query=query
-        )
+        # self.current_analysis = CognitiveAnalysis(
+        #     document_id=str(hash(document)), original_query=query
+        # )
 
-        understanding = self._understand_problem(document, query)
+        initial_understanding = self.understanding()
 
-        gaps = self._identify_gaps(understanding)
+        # understanding = self._understand_problem(document, query)
 
-        research_results = self._gather_research(gaps)
+        # gaps = self._identify_gaps(understanding)
 
-        synthesis = self._synthesize_information(research_results, understanding)
-        print(synthesis)
+        # research_results = self._gather_research(gaps)
 
-        evaluated = self._evaluate_arguments(synthesis)
+        # synthesis = self._synthesize_information(research_results, understanding)
+        # print(synthesis)
 
-        conclusions = self._draw_conclusions(evaluated, synthesis)
+        # evaluated = self._evaluate_arguments(synthesis)
 
-        final_report = self._format_report()
+        # conclusions = self._draw_conclusions(evaluated, synthesis)
 
-        return final_report
+        # final_report = self._format_report()
+
+        # return final_report
 
     def _understand_problem(self, document: str, query: str) -> Dict[str, Any]:
         print("A analisar o documento")
@@ -1512,8 +1555,6 @@ def main():
         }
     }
 
-    document = "".join(mock_document["page"][0]["paragraph"].values())
-
     query = "Os jeovas declaram impostos?"
 
     # Setup the cognitive system
@@ -1526,7 +1567,7 @@ def main():
     # query = "What are the legal implications of this document?"
 
     # Process the document
-    result = agent.process_document(document=document, query=query)
+    result = agent.process_document(document=mock_document, query=query)
 
     # Print results
     print("\n=== Analysis Results ===")

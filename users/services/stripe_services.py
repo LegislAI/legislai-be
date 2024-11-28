@@ -1,8 +1,8 @@
 import stripe
-from config.settings import settings
 from fastapi import HTTPException
 from fastapi import status
-from utils.exceptions import DeclinedPaymentMethodException
+from users.config.settings import settings
+from users.utils.exceptions import DeclinedPaymentMethodException
 
 # from config.settings import settings
 

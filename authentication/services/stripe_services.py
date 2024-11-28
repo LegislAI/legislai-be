@@ -1,5 +1,5 @@
 import stripe
-from config.settings import settings
+from authentication.config.settings import settings
 
 PAYMENT_METHODS = {
     "card": {"name": "pm_card_visa", "id": "card_id"},

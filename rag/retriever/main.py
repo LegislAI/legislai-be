@@ -155,7 +155,7 @@ class Retriever:
             prompt = {"role": "user", "content": prompt}
 
             response = self.reranking_llm.chat.completions.create(
-                model="google/gemma-2-9b-it", messages=[prompt], temperature=0
+                model="meta-llama/Llama-Vision-Free", messages=[prompt], temperature=0
             )
             metadata = response.choices[0].message.content
 
