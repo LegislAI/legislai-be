@@ -1,4 +1,0 @@
-lime
-spacy
-pandas
-langchain_ollama

@@ -1,3 +1,0 @@
-dspy
-python-dotenv
-structlog
