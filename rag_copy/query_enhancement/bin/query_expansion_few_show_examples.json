@@ -1,0 +1,42 @@
+[
+  {
+    "role": "user",
+    "content": "Query: Quais são os requisitos para o registo predial?\nExpanded Queries: {\n    Quais são os documentos necessários para o registo predial em Portugal?,\n    O que acontece se o registo predial não for feito dentro do prazo estipulado?,\n    Qual é o custo do registo predial e como varia dependendo do tipo de imóvel?,\n    Quais os tipos de registo predial existentes e em que situações são aplicáveis?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Quais são os direitos e deveres do proprietário?\nExpanded Queries: {\n    Como a legislação portuguesa define o conceito de propriedade?,\n    Quais são as obrigações do proprietário em relação à manutenção do imóvel?,\n    Em que situações o proprietário pode perder o direito sobre a propriedade?,\n    Quais são os direitos do proprietário perante a ocupação ilegal do imóvel?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: O que são servidões administrativas?\nExpanded Queries: {\n    Quais são os tipos de servidões administrativas previstas na legislação?,\n    Como se estabelece uma servidão administrativa entre propriedades?,\n    Quais são as limitações impostas ao proprietário por uma servidão administrativa?,\n    Existe possibilidade de recurso para contestar uma servidão administrativa?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Quais são as condições para a concessão de nacionalidade portuguesa?\nExpanded Queries: {\n    Quais são os requisitos de residência para obter a nacionalidade portuguesa?,\n    Quais documentos são necessários para o processo de concessão de nacionalidade?,\n    Como é o processo de naturalização para filhos de cidadãos portugueses nascidos no estrangeiro?,\n    Existe algum exame de proficiência em português exigido para a nacionalidade?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Como funciona o processo de legalização de um imóvel?\nExpanded Queries: {\n    Quais são os documentos exigidos para a legalização de um imóvel?,\n    Quais entidades são responsáveis pela validação da legalização de imóveis?,\n    Quais são as multas ou penalidades aplicadas pela falta de legalização?,\n    Como realizar o processo de legalização para imóveis em áreas de proteção ambiental?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Quais são os direitos do arrendatário segundo a lei portuguesa?\nExpanded Queries: {\n    Em que situações o arrendatário pode rescindir o contrato sem penalidades?,\n    Quais são os prazos de aviso prévio para a rescisão do contrato pelo arrendatário?,\n    Quais são os direitos do arrendatário em relação às condições de habitabilidade do imóvel?,\n    Como a legislação protege o arrendatário contra aumentos abusivos de renda?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: O que constitui assédio laboral segundo a legislação portuguesa?\nExpanded Queries: {\n    Quais comportamentos são considerados como assédio laboral pela lei?,\n    Quais são as medidas que um trabalhador pode tomar caso sofra assédio laboral?,\n    Como a legislação protege os trabalhadores contra represálias após denúncias de assédio?,\n    Quais são as penalidades para empregadores condenados por assédio laboral?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Quais são as condições para um cidadão estrangeiro trabalhar em Portugal?\nExpanded Queries: {\n    Quais vistos são necessários para cidadãos estrangeiros trabalharem em Portugal?,\n    Quais são os requisitos para obter uma autorização de trabalho em Portugal?,\n    Existem setores de atividade com requisitos específicos para estrangeiros?,\n    Quais são os direitos trabalhistas de um cidadão estrangeiro com contrato em Portugal?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: Como funciona o regime de parentalidade na legislação portuguesa?\nExpanded Queries: {\n    Quais são os direitos de licença parental para pais e mães em Portugal?,\n    Como é o processo de partilha da licença parental entre os pais?,\n    Quais são as condições para obter subsídio de parentalidade?,\n    Quais são os direitos dos trabalhadores para acompanhar os filhos em consultas?\n}"
+  },
+  {
+    "role": "user",
+    "content": "Query: O que é o contrato de empreitada e quais são os seus requisitos?\nExpanded Queries: {\n    Quais são as responsabilidades das partes em um contrato de empreitada?,\n    Como é o processo de resolução de conflitos em contratos de empreitada?,\n    Quais são os prazos legais para a execução dos serviços acordados?,\n    Como deve ser formalizado o contrato de empreitada de acordo com a lei?\n}"
+  }
+]
