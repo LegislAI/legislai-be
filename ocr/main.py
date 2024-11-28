@@ -17,13 +17,6 @@ from ExtractFromImage.main import ImageProcessor
 from ExtractFromPDF.main import PDFProcessor
 
 # from RAG.Retriever.retriever import Retriever
-# class DecisionType(Enum):
-#     KEEP_CONTEXT = "manter_contexto"
-#     GENERATE_QUERY = "gerar_consulta"
-#     SKIP_CHUNK = "ignorar_excerto"
-#     ELABORATE_RATIONALE = "elaborar_fundamento"
-#     EXTRACT_INFORMATION = "extrair_informacao"
-#     CROSS_REFERENCE = "cruzar_referencia"
 # @dataclass
 # class DocumentReference:
 #     page: int
@@ -155,6 +148,7 @@ from ExtractFromPDF.main import PDFProcessor
 #         paragraph: int,
 #         content: str,
 #         extracted_info: Dict[str, Any],
+
 #         context: str,
 #     ) -> str:
 #         ref_id = f"p{page}_par{paragraph}"
@@ -878,133 +872,6 @@ text = ocr_agent.process_document(base64_encoded_document=test_image)
 #         }
 #         self.processing_steps.append(step)
 #         return step
-import re
-from dataclasses import dataclass
-from dataclasses import field
-from datetime import datetime
-from enum import Enum
-from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
-
-import dspy
-import markdown
-
-
-class CognitiveAction(Enum):
-    UNDERSTAND_CONTEXT = "understand_context"
-    IDENTIFY_KNOWLEDGE_GAP = "identify_knowledge_gap"
-    GATHER_INFORMATION = "gather_information"
-    SYNTHESIZE_INFORMATION = "synthesize_information"
-    EVALUATE_ARGUMENTS = "evaluate_arguments"
-    ITERATE_RESEARCH = "iterate_research"
-    DRAW_CONCLUSIONS = "draw_conclusions"
-    COMMUNICATE_FINDINGS = "communicate_findings"
-
-
-@dataclass
-class ReasoningStep:
-    action: CognitiveAction
-    thought: str
-    confidence: float
-    timestamp: datetime = field(default_factory=datetime.now)
-    supporting_evidence: List[str] = field(default_factory=list)
-    queries_generated: List[str] = field(default_factory=list)
-
-
-@dataclass
-class ChunkAnalysis:
-    chunk_id: str
-    content: str
-    steps: List[ReasoningStep]
-    final_understanding: str
-    relevance_score: float
-    knowledge_gaps: List[str]
-
-
-class DocumentUnderstanding(dspy.Signature):
-    """
-    Com base na questão do utilizador, analisa o documento e identifica e compreende o problema e o seu objetivo.
-    Extrai também os pontos principais enunciados no documento.
-    """
-
-    content = dspy.InputField(desc="Documento a analisar")
-    query = dspy.InputField(desc="Questão do utilizador")
-
-    main_points = dspy.OutputField(
-        desc="Pontos principais com base na questão do utilizador"
-    )
-    document_goal = dspy.OutputField(desc="Objetivo do documento")
-
-
-# class DetailedAnalyzer(dspy.Signature):
-#     """Deep analysis of content."""
-
-#     content = dspy.InputField(desc="Content to analyze")
-#     initial_understanding = dspy.InputField(desc="Initial comprehension")
-#     context = dspy.InputField(desc="Accumulated context")
-#     questions = dspy.InputField(desc="Questions to address")
-
-#     analysis_steps = dspy.OutputField(
-#         desc="List of analysis steps, each describing a specific insight or observation. "
-#         "Should be a complete sentence or thought, not individual words."
-#     )
-#     knowledge_gaps = dspy.OutputField(desc="Identified knowledge gaps")
-#     conclusions = dspy.OutputField(desc="Interim conclusions")
-#     confidence = dspy.OutputField(desc="Confidence in analysis (0-1)")
-#     rag_queries = dspy.OutputField(desc="Suggested RAG queries")
-
-
-# class CrossReferenceAnalyzer(dspy.Signature):
-#     """Analyzes relationships between different parts."""
-
-#     current_content = dspy.InputField(desc="Current content")
-#     previous_analyses = dspy.InputField(desc="Previous chunk analyses")
-#     context = dspy.InputField(desc="Overall context")
-
-#     connections = dspy.OutputField(desc="Identified connections")
-#     impact = dspy.OutputField(desc="Impact on understanding")
-#     suggested_updates = dspy.OutputField(desc="Suggested updates to previous analyses")
-
-
-# class FinalSynthesizer(dspy.Signature):
-#     """Creates final markdown output."""
-
-#     analyses = dspy.InputField(desc="All chunk analyses")
-#     query = dspy.InputField(desc="Original query")
-#     context = dspy.InputField(desc="Full context")
-#     cross_references = dspy.InputField(desc="Cross-reference findings")
-
-#     markdown_output = dspy.OutputField(desc="Final markdown response")
-#     key_findings = dspy.OutputField(desc="Main findings and conclusions")
-#     confidence_assessment = dspy.OutputField(desc="Overall confidence assessment")
-
-
-class CognitiveOCRAgent:
-    def __init__(self, api_key: str):
-        self.llm = dspy.LM(
-            "together_ai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", api_key=api_key
-        )
-        dspy.configure(lm=self.llm)
-
-        # Initialize cognitive modules
-        self.initial_undersanding = dspy.Predict(DocumentUnderstanding)
-        # self.analyzer = dspy.Predict(DetailedAnalyzer)
-        # self.cross_referencer = dspy.Predict(CrossReferenceAnalyzer)
-        # self.synthesizer = dspy.Predict(FinalSynthesizer)
-
-        self.reset_state()
-
-    def reset_state(self):
-        self.cognitive_state = {
-            "context": "",
-            "chunk_analyses": [],
-            "cross_references": [],
-            "rag_queries": set(),
-            "confidence_history": [],
-        }
-
 
 # class DetailedAnalyzer(dspy.Signature):
 #     """Deep analysis of content."""
@@ -1287,6 +1154,197 @@ class CognitiveOCRAgent:
 #             },
 #         }
 
+import re
+from dataclasses import dataclass
+from dataclasses import field
+from datetime import datetime
+from enum import Enum
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from rag.Retriever.main import Retriever
+import dspy
+# import markdown
+
+
+class CognitiveAction(Enum):
+    UNDERSTAND_CONTEXT = "understand_context"
+    IDENTIFY_KNOWLEDGE_GAP = "identify_knowledge_gap"
+    GATHER_INFORMATION = "gather_information"
+    SYNTHESIZE_INFORMATION = "synthesize_information"
+    EVALUATE_ARGUMENTS = "evaluate_arguments"
+    ITERATE_RESEARCH = "iterate_research"
+    DRAW_CONCLUSIONS = "draw_conclusions"
+    COMMUNICATE_FINDINGS = "communicate_findings"
+
+
+@dataclass
+class ReasoningStep:
+    action: CognitiveAction
+    thought: str
+    confidence: float
+    timestamp: datetime = field(default_factory=datetime.now)
+    supporting_evidence: List[str] = field(default_factory=list)
+    queries_generated: List[str] = field(default_factory=list)
+
+
+@dataclass
+class ChunkAnalysis:
+    chunk_id: str
+    content: str
+    steps: List[ReasoningStep]
+    final_understanding: str
+    relevance_score: float
+    knowledge_gaps: List[str]
+
+# class CrossReferenceAnalyzer(dspy.Signature):
+#     """Analyzes relationships between different parts."""
+
+#     current_content = dspy.InputField(desc="Current content")
+#     previous_analyses = dspy.InputField(desc="Previous chunk analyses")
+#     context = dspy.InputField(desc="Overall context")
+
+#     connections = dspy.OutputField(desc="Identified connections")
+#     impact = dspy.OutputField(desc="Impact on understanding")
+#     suggested_updates = dspy.OutputField(desc="Suggested updates to previous analyses")
+
+
+
+class ContextEvaluationSignature(dspy.Signature):
+    """Determina se o contexto é suficiente para responder à questão do utilizador."""
+    context = dspy.InputField(desc="Contexto do utilizador")
+    query = dspy.InputField(desc="Questão do utilizador")
+    is_sufficient : bool = dspy.OutputField(desc="True se consideras o contexto suficiente, False o contrário")
+    reasoning = dspy.OutputField(desc="Explicação da resposta")
+
+class ResearchQuestions(dspy.Signature):
+    """Determina algumas perguntas de pesquisa que sejam necessárias para procurar na base de dados para responder à questão do utilizador"""
+    original_context = dspy.InputField(desc="Contexto do utilizador")
+    query = dspy.InputField(desc="Questão do utilizador")
+    research_questions : List[str] = dspy.OutputField(desc="Lista de perguntas de pesquisa")
+
+class DocumentUnderstanding(dspy.Signature):
+    """
+    Com base na questão do utilizador, analisa o documento português e identifica e compreende o problema e o seu objetivo.
+    Extrai também os pontos principais enunciados no documento. Elabora a resposta em português de Portugal. 
+    """
+
+    content = dspy.InputField(desc="Documento a analisar")
+    query = dspy.InputField(desc="Pedido do utilizador")
+    main_points = dspy.OutputField(
+        desc="Pontos principais com base no pedido do utilizador"
+    )
+    document_goal = dspy.OutputField(desc="Objetivo do documento")
+
+
+
+class GetRelevantPassages(dspy.Signature):
+    """Faz uma analíse ao documento com base no objetivo do mesmo e no pedido do utilizador e retorna as partes mais relevantes com base na questão"""
+
+    content = dspy.InputField(desc="Documento a analisar")
+    document_goal = dspy.InputField(desc="Objetivo do documento")
+    query = dspy.InputField(desc="Pedido do utilizador")
+
+    relevant_passages = dspy.OutputField(desc="Lista de todas as partes relevantes do documento com base no pedido do utilizador ")
+    
+
+
+class FinalSynthesizer(dspy.Signature):
+    """Responde ao pedido do utilizador EXCLUSIVAMENTE com base no documento passado como input. 
+    Elabora uma resposta detalhada, informativa e em português de Portugal 
+    """
+    content = dspy.InputField(desc="Documento completo")
+    document_goal = dspy.InputField(desc="Objetivo do documento")
+    # relevant_passages = dspy.InputField(desc="Partes relevantes do documento que deves analisar")
+    query = dspy.InputField(desc="Pedido do utilizador")
+    answer = dspy.OutputField(desc="Resposta detalhada e com base no contexto, em português de Portugal")
+
+class AnswerMarkdown(dspy.Signature):
+    """A tua tarefa é transformar uma resposta fornecida pelo sistema em formato markdown.
+        Para isso, deves:
+            - Sublinhar os aspetos mais importantes da resposta, como **artigos mencionados** (usando **).
+            - Separar parágrafos com quebras de linha (\n).
+            - Organizar conteúdos relevantes em listas (com o símbolo -). """
+    query = dspy.InputField()
+    answer = dspy.InputField(desc="Resposta do sistema")
+    answer_markdown = dspy.OutputField(desc="Resposta com markdown")
+
+
+class CognitiveOCRAgent(dspy.Module):
+    def __init__(self):
+        super().__init__()
+        
+        self.context_evaluator = dspy.ChainOfThought(ContextEvaluationSignature)
+        self.context_questions = dspy.ChainOfThought(ResearchQuestions)
+        self.initial_undersanding = dspy.ChainOfThought(DocumentUnderstanding)
+        self.relevant_passages = dspy.ChainOfThought(GetRelevantPassages)
+        self.final_synthesizer = dspy.ChainOfThought(FinalSynthesizer)
+        self.answer_markdown = dspy.Predict(AnswerMarkdown)
+    
+    def final_answer_agent(self, document, query) :
+        goal = self.initial_undersanding(content=document, query=query).document_goal
+        print(f"Goal -> {goal}\n")
+        answer = self.final_synthesizer(content=document, document_goal=goal, query=query).answer
+        answer_markdown = self.answer_markdown(query=query, answer=answer).answer_markdown
+        return answer_markdown
+    
+    def forward(self, document: str, query: str) -> dict:
+        context_evaluation = self.context_evaluator(
+            context=document, 
+            query=query
+        )
+        
+        # If context is sufficient    
+        if context_evaluation.is_sufficient:
+           final_answer = self.final_answer_agent(document=document, query=query)
+        
+        else:
+            # If context is insufficient
+            research_questions = self.context_questions(
+                original_context=document, 
+                query=query
+            ).research_questions
+
+            # rag  
+            unique_context = set() # conjunto para nao haver duplicados 
+            for research_query in research_questions:
+                query_context = Retriever.query(query=research_query, topk=1)
+                unique_context.add(query_context)
+
+            additional_context = "\n".join(unique_context)
+            print(f"add context -> {additional_context}")
+            final_context = f"{document}\n\nAdditional Retrieved Context:\n{additional_context}"
+
+            final_answer =  self.final_answer_agent(document=final_context, query=query)
+        return final_answer
+    
+
+
+
+class CognitiveOCRConfig:
+    def __init__(self, api_key: str):
+        self.llm = dspy.LM(
+            "together_ai/meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo", api_key=api_key
+        )
+        dspy.configure(lm=self.llm)
+        self.reset_state()
+        
+    def get_lm(self):
+        return self.llm
+
+    def reset_state(self):
+        self.cognitive_state = {
+            "context": "",
+            "chunk_analyses": [],
+            "cross_references": [],
+            "rag_queries": set(),
+            "confidence_history": [],
+        }
+
+
+
+
 
 async def process_rag_queries(self, queries: List[str]) -> Dict[str, str]:
     """Process RAG queries and return results."""
@@ -1303,79 +1361,69 @@ import os
 from dotenv import load_dotenv
 
 
-async def main():
+def main():
     load_dotenv()
     api_key = os.getenv("TOGETHER_API_KEY")
 
-    agent = CognitiveOCRAgent(api_key=api_key)
-
+    config = CognitiveOCRConfig(api_key=api_key)
+    lm = config.get_lm()
+    agent = CognitiveOCRAgent()
     # Mock document with multiple pages and paragraphs
-    mock_document = {
-        "page": {
-            "1": {
-                "paragraph": {
-                    "1": """The study examines the impact of artificial intelligence on modern healthcare systems.
-                    Recent developments in machine learning have enabled more accurate diagnosis and treatment planning.""",
-                    "2": """Privacy concerns remain a significant challenge. Healthcare providers must balance the benefits
-                    of AI-driven analytics with patient data protection requirements.""",
-                }
-            },
-            "2": {
-                "paragraph": {
-                    "1": """Implementation costs present another barrier to adoption. Smaller healthcare facilities
-                    often struggle to invest in advanced AI systems despite their potential benefits.""",
-                    "2": """Despite these challenges, the potential benefits are substantial. Studies show AI can reduce
-                    diagnostic errors by up to 40% in certain specialties.""",
-                }
-            },
-        }
-    }
+    mock_document = {'page': {0: {'paragraph': {1: 'COMUNICADO A IMPRENSA', 2: 'ASSUNTO: PETEÇAO PUBLECA PEDE A EXTINÇAO DA "ASSOCIACAO DAS TESTEMUNHAS DE JEOVA" E o CANCELAMENTO po SEU - DE RELIGIAO RECONHECIOA PELO ESTADO', 3: 'PORTUGUÈS. usboà, 9 de Fevereiro de 2018', 4: ') dia 9 de Março de 2018 marca a passegem do 400 aniversério da publicaçso, emn Dlàrlo da Repiblica, L Série A, no 57/78, da Declaraçao Universal dos Direltos do Homemn; o dla 9 de Novembro de 2018 marca da passagem do 400 aniversario da entrada emn vigor na ordemn I portuguesa da Convençào Européla dos Direitos do Homem. Nestas convençbes estao consagrados vàrlos direltos fundamentals do ser humano, nos quais % incluern 0 direlto à liberdade de pensamento, de opiniko e de expressso, a tiberdade de ter uma religiko ou mudar de religiho ou de crenças @ de nao ser Inquietado, discriminedo ou prejudicado por isso. Em sintonla com estas convençbes 4 Constituiçho da Republica Portuguess consagra diversos direltos, laberdades e garantias pessoals, entre os quals se contam o dinelto à lberdade de conscièncla, de religiao e de culto, bem como o direito à liberdade de expressào, de assoctaçao, o direlto à integridade moral e fisica, o direito a nido sea tratado con crueldade ou desumanidade, o direito & bom nome 4 a no ser tratado com discriminaçào, entre outros. Acontece por vezes que o direlto à lberdade religlosa collde com outros direlkos fundamentals dos Individuos. Quais sao os limites da laberdade religlosa? Serà que a Nberdade de praticar uma rellglao permite atropelar outros direitos humanos fundementals? Pode-se permitir tudo a uma organizaçao religlosa E nome da liberdade religlosa consagrada na constituiçao? Eske à um Em causa està o tratamento dispensado pelas Testemunhas de 1 àquetes Individuos, adultos e menores, que por algum motivo deixaram de estar afiliados corn esta organtzaçao I As Testemunhas de Jeova êm uama pratica de excomunhso que Implica a completa ostracizaçao social dos ex-membros e 0 odlo &os dissidentes de 1 essa prética ensinada e - de forma Instiucional separa familas e amigos, causs danos psicotogicos profundos que podem, no limite, terminar 3o suicidio, coage oS Indlviduos, limita a auto-detemminacao da pessoa, destrol a sua auto-estime e agride a dignidade humana. Deve uma Igreja que advoga praticas cruéis, desumanas e que violarn a lel, a Constituiçao e os direltos humanos continuar à receber reconhecimente oficlal do Estado7 Pode e deve  Estado Fol colocada online uma petiçao so porlomento, -o sentido de pedir a extinçao de entidode colectiva religiosa que I as Testemunhas de Jeovà em Portugal e cancelar o su registo como I coletiva rellglosa, retirando-lhe assim 0 estatuto de rellglao I oficialmente pelo I Portuguès. até que esta prética de ostracizaçao I seja concelado definitivamente pelo grupo religioso e as suas vitimas allviadas do sofconfigrimento que por causa proscriçio ou 0 banimento desta religiso, nem de impedir 9 individuos que professam esta fé :a reunirem liveemente ou divuigarem n :uns crenças; entendemos que asses :so diraitos I que nao colidem com outros direitos individumis Esta petiçao visa apenas o estatuto da entidade religlosa colectiva que as representa, e, caso a violaçao dos direitos humanos e constituclonais cesse de forma satisfatéria e I entendemos que', 5: 'debate que a nossa I precisa fazer.', 6: 'intervir no sentido de regular este confito e proteger os cidadhos?', 7: 'dela passam. € muito importente destacar', 8: 'seguinte: Nso : trata de pedir', 9: 'as Testemunhas de Jeové I voltar a gozar de reconhecimento oficiab.', 10: 'A petiçao pode ser encontrada no seguinte endereço:', 11: 'http://peticaopublica.com/oview.aspx7pl-ExtRegistoAT)', 12: 'Agradecemos a atençao e divulgaçao da Iniciativa e a promoçao do debate deste kemo no sociedade. Para mais esclarecimentos podera obter 0s contactos de quern propde esta Iniciotiva', 13: 'enviando mensagem pare o correio electronico sdenone.Ziegmall.cem'}}}}
 
-    mock_query = "What are the main benefits and challenges of AI in healthcare according to the document?"
+    mock_query = "Os jeovas declaram impostos?"
 
     print("\n=== Starting Document Analysis ===\n")
     print(f"Query: {mock_query}\n")
 
-    async for update in agent.process_document(mock_document, mock_query):
-        try:
-            if update["type"] == "process_start":
-                print("🔍 Beginning Analysis...")
-                print("-" * 50)
 
-            elif update["type"] == "chunk_analysis":
-                print(f"\n📝 Processing Chunk {update['data']['chunk_id']}...")
-                print("\nReasoning Steps:")
-                for step in update["data"]["steps"]:
-                    print(f"\n🤔 {step['action']}:")
-                    print(f"   Thought: {step['thought']}")
-                    print(f"   Confidence: {step['confidence']:.2f}")
-                print(f"\nRelevance Score: {update['data']['relevance']:.2f}")
-                print("-" * 50)
+    res = agent(document=mock_document, query=mock_query)
 
-            elif update["type"] == "final_response":
-                print("\n✨ Final Analysis:")
-                print("\n" + update["data"]["markdown"])
-                print("\n📊 Metadata:")
-                print(
-                    f"- Chunks Processed: {update['data']['metadata']['chunks_processed']}"
-                )
-                print(
-                    f"- RAG Queries Generated: {len(update['data']['metadata']['rag_queries'])}"
-                )
-                print(
-                    f"- Cross References Found: {len(update['data']['metadata']['cross_references'])}"
-                )
+    print(f"Answer: {res}\n")
 
-            else:
-                print(f"\n⚠️ Unknown update type: {update['type']}")
+    print("-------------------")
+    # print(f"llm: {lm.inspect_history(n=1)}")
+    return res 
+    # async for update in agent.process_document(mock_document, mock_query):
+    #     try:
+    #         if update["type"] == "process_start":
+    #             print("🔍 Beginning Analysis...")
+    #             print("-" * 50)
 
-        except KeyError as e:
-            print(f"\n❌ Error processing update: {e}")
-            print("Update structure:", update)
+    #         elif update["type"] == "chunk_analysis":
+    #             print(f"\n📝 Processing Chunk {update['data']['chunk_id']}...")
+    #             print("\nReasoning Steps:")
+    #             for step in update["data"]["steps"]:
+    #                 print(f"\n🤔 {step['action']}:")
+    #                 print(f"   Thought: {step['thought']}")
+    #                 print(f"   Confidence: {step['confidence']:.2f}")
+    #             print(f"\nRelevance Score: {update['data']['relevance']:.2f}")
+    #             print("-" * 50)
 
-        except Exception as e:
-            print(f"\n❌ Unexpected error: {e}")
+    #         elif update["type"] == "final_response":
+    #             print("\n✨ Final Analysis:")
+    #             print("\n" + update["data"]["markdown"])
+    #             print("\n📊 Metadata:")
+    #             print(
+    #                 f"- Chunks Processed: {update['data']['metadata']['chunks_processed']}"
+    #             )
+    #             print(
+    #                 f"- RAG Queries Generated: {len(update['data']['metadata']['rag_queries'])}"
+    #             )
+    #             print(
+    #                 f"- Cross References Found: {len(update['data']['metadata']['cross_references'])}"
+    #             )
+
+    #         else:
+    #             print(f"\n⚠️ Unknown update type: {update['type']}")
+
+    #     except KeyError as e:
+    #         print(f"\n❌ Error processing update: {e}")
+    #         print("Update structure:", update)
+
+    #     except Exception as e:
+    #         print(f"\n❌ Unexpected error: {e}")
 
 
-# if __name__ == "__main__":
-#     asyncio.run(main())
+if __name__ == "__main__":
+    main()
