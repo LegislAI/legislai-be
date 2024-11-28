@@ -11,3 +11,4 @@ nltk
 pinecone
 faiss-cpu
 structlog
+numpy
