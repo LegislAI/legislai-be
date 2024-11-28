@@ -1,6 +1,10 @@
 # import asyncio
 # import os
 import re
+from typing import Optional
+
+from ExtractFromImage.main import ImageProcessor
+from ExtractFromPDF.main import PDFProcessor
 
 # from dataclasses import dataclass
 # from dataclasses import field
@@ -9,12 +13,8 @@ import re
 # from typing import Any
 # from typing import Dict
 # from typing import List
-from typing import Optional
-
 # import dspy
 # from dotenv import load_dotenv
-from ExtractFromImage.main import ImageProcessor
-from ExtractFromPDF.main import PDFProcessor
 
 # from RAG.Retriever.retriever import Retriever
 # @dataclass
@@ -1165,6 +1165,7 @@ from typing import List
 from typing import Optional
 from rag.Retriever.main import Retriever
 import dspy
+
 # import markdown
 
 
@@ -1198,6 +1199,7 @@ class ChunkAnalysis:
     relevance_score: float
     knowledge_gaps: List[str]
 
+
 # class CrossReferenceAnalyzer(dspy.Signature):
 #     """Analyzes relationships between different parts."""
 
@@ -1210,24 +1212,31 @@ class ChunkAnalysis:
 #     suggested_updates = dspy.OutputField(desc="Suggested updates to previous analyses")
 
 
-
 class ContextEvaluationSignature(dspy.Signature):
     """Determina se o contexto é suficiente para responder à questão do utilizador."""
+
     context = dspy.InputField(desc="Contexto do utilizador")
     query = dspy.InputField(desc="Questão do utilizador")
-    is_sufficient : bool = dspy.OutputField(desc="True se consideras o contexto suficiente, False o contrário")
+    is_sufficient: bool = dspy.OutputField(
+        desc="True se consideras o contexto suficiente, False o contrário"
+    )
     reasoning = dspy.OutputField(desc="Explicação da resposta")
+
 
 class ResearchQuestions(dspy.Signature):
     """Determina algumas perguntas de pesquisa que sejam necessárias para procurar na base de dados para responder à questão do utilizador"""
+
     original_context = dspy.InputField(desc="Contexto do utilizador")
     query = dspy.InputField(desc="Questão do utilizador")
-    research_questions : List[str] = dspy.OutputField(desc="Lista de perguntas de pesquisa")
+    research_questions: List[str] = dspy.OutputField(
+        desc="Lista de perguntas de pesquisa"
+    )
+
 
 class DocumentUnderstanding(dspy.Signature):
     """
     Com base na questão do utilizador, analisa o documento português e identifica e compreende o problema e o seu objetivo.
-    Extrai também os pontos principais enunciados no documento. Elabora a resposta em português de Portugal. 
+    Extrai também os pontos principais enunciados no documento. Elabora a resposta em português de Portugal.
     """
 
     content = dspy.InputField(desc="Documento a analisar")
@@ -1238,7 +1247,6 @@ class DocumentUnderstanding(dspy.Signature):
     document_goal = dspy.OutputField(desc="Objetivo do documento")
 
 
-
 class GetRelevantPassages(dspy.Signature):
     """Faz uma analíse ao documento com base no objetivo do mesmo e no pedido do utilizador e retorna as partes mais relevantes com base na questão"""
 
@@ -1246,26 +1254,32 @@ class GetRelevantPassages(dspy.Signature):
     document_goal = dspy.InputField(desc="Objetivo do documento")
     query = dspy.InputField(desc="Pedido do utilizador")
 
-    relevant_passages = dspy.OutputField(desc="Lista de todas as partes relevantes do documento com base no pedido do utilizador ")
-    
+    relevant_passages = dspy.OutputField(
+        desc="Lista de todas as partes relevantes do documento com base no pedido do utilizador "
+    )
 
 
 class FinalSynthesizer(dspy.Signature):
-    """Responde ao pedido do utilizador EXCLUSIVAMENTE com base no documento passado como input. 
-    Elabora uma resposta detalhada, informativa e em português de Portugal 
+    """Responde ao pedido do utilizador EXCLUSIVAMENTE com base no documento passado como input.
+    Elabora uma resposta detalhada, informativa e em português de Portugal
     """
+
     content = dspy.InputField(desc="Documento completo")
     document_goal = dspy.InputField(desc="Objetivo do documento")
     # relevant_passages = dspy.InputField(desc="Partes relevantes do documento que deves analisar")
     query = dspy.InputField(desc="Pedido do utilizador")
-    answer = dspy.OutputField(desc="Resposta detalhada e com base no contexto, em português de Portugal")
+    answer = dspy.OutputField(
+        desc="Resposta detalhada e com base no contexto, em português de Portugal"
+    )
+
 
 class AnswerMarkdown(dspy.Signature):
     """A tua tarefa é transformar uma resposta fornecida pelo sistema em formato markdown.
-        Para isso, deves:
-            - Sublinhar os aspetos mais importantes da resposta, como **artigos mencionados** (usando **).
-            - Separar parágrafos com quebras de linha (\n).
-            - Organizar conteúdos relevantes em listas (com o símbolo -). """
+    Para isso, deves:
+        - Sublinhar os aspetos mais importantes da resposta, como **artigos mencionados** (usando **).
+        - Separar parágrafos com quebras de linha (\n).
+        - Organizar conteúdos relevantes em listas (com o símbolo -)."""
+
     query = dspy.InputField()
     answer = dspy.InputField(desc="Resposta do sistema")
     answer_markdown = dspy.OutputField(desc="Resposta com markdown")
@@ -1274,52 +1288,52 @@ class AnswerMarkdown(dspy.Signature):
 class CognitiveOCRAgent(dspy.Module):
     def __init__(self):
         super().__init__()
-        
+
         self.context_evaluator = dspy.ChainOfThought(ContextEvaluationSignature)
         self.context_questions = dspy.ChainOfThought(ResearchQuestions)
         self.initial_undersanding = dspy.ChainOfThought(DocumentUnderstanding)
         self.relevant_passages = dspy.ChainOfThought(GetRelevantPassages)
         self.final_synthesizer = dspy.ChainOfThought(FinalSynthesizer)
         self.answer_markdown = dspy.Predict(AnswerMarkdown)
-    
-    def final_answer_agent(self, document, query) :
+
+    def final_answer_agent(self, document, query):
         goal = self.initial_undersanding(content=document, query=query).document_goal
         print(f"Goal -> {goal}\n")
-        answer = self.final_synthesizer(content=document, document_goal=goal, query=query).answer
-        answer_markdown = self.answer_markdown(query=query, answer=answer).answer_markdown
+        answer = self.final_synthesizer(
+            content=document, document_goal=goal, query=query
+        ).answer
+        answer_markdown = self.answer_markdown(
+            query=query, answer=answer
+        ).answer_markdown
         return answer_markdown
-    
+
     def forward(self, document: str, query: str) -> dict:
-        context_evaluation = self.context_evaluator(
-            context=document, 
-            query=query
-        )
-        
-        # If context is sufficient    
+        context_evaluation = self.context_evaluator(context=document, query=query)
+
+        # If context is sufficient
         if context_evaluation.is_sufficient:
-           final_answer = self.final_answer_agent(document=document, query=query)
-        
+            final_answer = self.final_answer_agent(document=document, query=query)
+
         else:
             # If context is insufficient
             research_questions = self.context_questions(
-                original_context=document, 
-                query=query
+                original_context=document, query=query
             ).research_questions
 
-            # rag  
-            unique_context = set() # conjunto para nao haver duplicados 
+            # rag
+            unique_context = set()  # conjunto para nao haver duplicados
             for research_query in research_questions:
                 query_context = Retriever.query(query=research_query, topk=1)
                 unique_context.add(query_context)
 
             additional_context = "\n".join(unique_context)
             print(f"add context -> {additional_context}")
-            final_context = f"{document}\n\nAdditional Retrieved Context:\n{additional_context}"
+            final_context = (
+                f"{document}\n\nAdditional Retrieved Context:\n{additional_context}"
+            )
 
-            final_answer =  self.final_answer_agent(document=final_context, query=query)
+            final_answer = self.final_answer_agent(document=final_context, query=query)
         return final_answer
-    
-
 
 
 class CognitiveOCRConfig:
@@ -1329,7 +1343,7 @@ class CognitiveOCRConfig:
         )
         dspy.configure(lm=self.llm)
         self.reset_state()
-        
+
     def get_lm(self):
         return self.llm
 
@@ -1341,9 +1355,6 @@ class CognitiveOCRConfig:
             "rag_queries": set(),
             "confidence_history": [],
         }
-
-
-
 
 
 async def process_rag_queries(self, queries: List[str]) -> Dict[str, str]:
@@ -1369,13 +1380,32 @@ def main():
     lm = config.get_lm()
     agent = CognitiveOCRAgent()
     # Mock document with multiple pages and paragraphs
-    mock_document = {'page': {0: {'paragraph': {1: 'COMUNICADO A IMPRENSA', 2: 'ASSUNTO: PETEÇAO PUBLECA PEDE A EXTINÇAO DA "ASSOCIACAO DAS TESTEMUNHAS DE JEOVA" E o CANCELAMENTO po SEU - DE RELIGIAO RECONHECIOA PELO ESTADO', 3: 'PORTUGUÈS. usboà, 9 de Fevereiro de 2018', 4: ') dia 9 de Março de 2018 marca a passegem do 400 aniversério da publicaçso, emn Dlàrlo da Repiblica, L Série A, no 57/78, da Declaraçao Universal dos Direltos do Homemn; o dla 9 de Novembro de 2018 marca da passagem do 400 aniversario da entrada emn vigor na ordemn I portuguesa da Convençào Européla dos Direitos do Homem. Nestas convençbes estao consagrados vàrlos direltos fundamentals do ser humano, nos quais % incluern 0 direlto à liberdade de pensamento, de opiniko e de expressso, a tiberdade de ter uma religiko ou mudar de religiho ou de crenças @ de nao ser Inquietado, discriminedo ou prejudicado por isso. Em sintonla com estas convençbes 4 Constituiçho da Republica Portuguess consagra diversos direltos, laberdades e garantias pessoals, entre os quals se contam o dinelto à lberdade de conscièncla, de religiao e de culto, bem como o direito à liberdade de expressào, de assoctaçao, o direlto à integridade moral e fisica, o direito a nido sea tratado con crueldade ou desumanidade, o direito & bom nome 4 a no ser tratado com discriminaçào, entre outros. Acontece por vezes que o direlto à lberdade religlosa collde com outros direlkos fundamentals dos Individuos. Quais sao os limites da laberdade religlosa? Serà que a Nberdade de praticar uma rellglao permite atropelar outros direitos humanos fundementals? Pode-se permitir tudo a uma organizaçao religlosa E nome da liberdade religlosa consagrada na constituiçao? Eske à um Em causa està o tratamento dispensado pelas Testemunhas de 1 àquetes Individuos, adultos e menores, que por algum motivo deixaram de estar afiliados corn esta organtzaçao I As Testemunhas de Jeova êm uama pratica de excomunhso que Implica a completa ostracizaçao social dos ex-membros e 0 odlo &os dissidentes de 1 essa prética ensinada e - de forma Instiucional separa familas e amigos, causs danos psicotogicos profundos que podem, no limite, terminar 3o suicidio, coage oS Indlviduos, limita a auto-detemminacao da pessoa, destrol a sua auto-estime e agride a dignidade humana. Deve uma Igreja que advoga praticas cruéis, desumanas e que violarn a lel, a Constituiçao e os direltos humanos continuar à receber reconhecimente oficlal do Estado7 Pode e deve  Estado Fol colocada online uma petiçao so porlomento, -o sentido de pedir a extinçao de entidode colectiva religiosa que I as Testemunhas de Jeovà em Portugal e cancelar o su registo como I coletiva rellglosa, retirando-lhe assim 0 estatuto de rellglao I oficialmente pelo I Portuguès. até que esta prética de ostracizaçao I seja concelado definitivamente pelo grupo religioso e as suas vitimas allviadas do sofconfigrimento que por causa proscriçio ou 0 banimento desta religiso, nem de impedir 9 individuos que professam esta fé :a reunirem liveemente ou divuigarem n :uns crenças; entendemos que asses :so diraitos I que nao colidem com outros direitos individumis Esta petiçao visa apenas o estatuto da entidade religlosa colectiva que as representa, e, caso a violaçao dos direitos humanos e constituclonais cesse de forma satisfatéria e I entendemos que', 5: 'debate que a nossa I precisa fazer.', 6: 'intervir no sentido de regular este confito e proteger os cidadhos?', 7: 'dela passam. € muito importente destacar', 8: 'seguinte: Nso : trata de pedir', 9: 'as Testemunhas de Jeové I voltar a gozar de reconhecimento oficiab.', 10: 'A petiçao pode ser encontrada no seguinte endereço:', 11: 'http://peticaopublica.com/oview.aspx7pl-ExtRegistoAT)', 12: 'Agradecemos a atençao e divulgaçao da Iniciativa e a promoçao do debate deste kemo no sociedade. Para mais esclarecimentos podera obter 0s contactos de quern propde esta Iniciotiva', 13: 'enviando mensagem pare o correio electronico sdenone.Ziegmall.cem'}}}}
+    mock_document = {
+        "page": {
+            0: {
+                "paragraph": {
+                    1: "COMUNICADO A IMPRENSA",
+                    2: 'ASSUNTO: PETEÇAO PUBLECA PEDE A EXTINÇAO DA "ASSOCIACAO DAS TESTEMUNHAS DE JEOVA" E o CANCELAMENTO po SEU - DE RELIGIAO RECONHECIOA PELO ESTADO',
+                    3: "PORTUGUÈS. usboà, 9 de Fevereiro de 2018",
+                    4: ") dia 9 de Março de 2018 marca a passegem do 400 aniversério da publicaçso, emn Dlàrlo da Repiblica, L Série A, no 57/78, da Declaraçao Universal dos Direltos do Homemn; o dla 9 de Novembro de 2018 marca da passagem do 400 aniversario da entrada emn vigor na ordemn I portuguesa da Convençào Européla dos Direitos do Homem. Nestas convençbes estao consagrados vàrlos direltos fundamentals do ser humano, nos quais % incluern 0 direlto à liberdade de pensamento, de opiniko e de expressso, a tiberdade de ter uma religiko ou mudar de religiho ou de crenças @ de nao ser Inquietado, discriminedo ou prejudicado por isso. Em sintonla com estas convençbes 4 Constituiçho da Republica Portuguess consagra diversos direltos, laberdades e garantias pessoals, entre os quals se contam o dinelto à lberdade de conscièncla, de religiao e de culto, bem como o direito à liberdade de expressào, de assoctaçao, o direlto à integridade moral e fisica, o direito a nido sea tratado con crueldade ou desumanidade, o direito & bom nome 4 a no ser tratado com discriminaçào, entre outros. Acontece por vezes que o direlto à lberdade religlosa collde com outros direlkos fundamentals dos Individuos. Quais sao os limites da laberdade religlosa? Serà que a Nberdade de praticar uma rellglao permite atropelar outros direitos humanos fundementals? Pode-se permitir tudo a uma organizaçao religlosa E nome da liberdade religlosa consagrada na constituiçao? Eske à um Em causa està o tratamento dispensado pelas Testemunhas de 1 àquetes Individuos, adultos e menores, que por algum motivo deixaram de estar afiliados corn esta organtzaçao I As Testemunhas de Jeova êm uama pratica de excomunhso que Implica a completa ostracizaçao social dos ex-membros e 0 odlo &os dissidentes de 1 essa prética ensinada e - de forma Instiucional separa familas e amigos, causs danos psicotogicos profundos que podem, no limite, terminar 3o suicidio, coage oS Indlviduos, limita a auto-detemminacao da pessoa, destrol a sua auto-estime e agride a dignidade humana. Deve uma Igreja que advoga praticas cruéis, desumanas e que violarn a lel, a Constituiçao e os direltos humanos continuar à receber reconhecimente oficlal do Estado7 Pode e deve  Estado Fol colocada online uma petiçao so porlomento, -o sentido de pedir a extinçao de entidode colectiva religiosa que I as Testemunhas de Jeovà em Portugal e cancelar o su registo como I coletiva rellglosa, retirando-lhe assim 0 estatuto de rellglao I oficialmente pelo I Portuguès. até que esta prética de ostracizaçao I seja concelado definitivamente pelo grupo religioso e as suas vitimas allviadas do sofconfigrimento que por causa proscriçio ou 0 banimento desta religiso, nem de impedir 9 individuos que professam esta fé :a reunirem liveemente ou divuigarem n :uns crenças; entendemos que asses :so diraitos I que nao colidem com outros direitos individumis Esta petiçao visa apenas o estatuto da entidade religlosa colectiva que as representa, e, caso a violaçao dos direitos humanos e constituclonais cesse de forma satisfatéria e I entendemos que",
+                    5: "debate que a nossa I precisa fazer.",
+                    6: "intervir no sentido de regular este confito e proteger os cidadhos?",
+                    7: "dela passam. € muito importente destacar",
+                    8: "seguinte: Nso : trata de pedir",
+                    9: "as Testemunhas de Jeové I voltar a gozar de reconhecimento oficiab.",
+                    10: "A petiçao pode ser encontrada no seguinte endereço:",
+                    11: "http://peticaopublica.com/oview.aspx7pl-ExtRegistoAT)",
+                    12: "Agradecemos a atençao e divulgaçao da Iniciativa e a promoçao do debate deste kemo no sociedade. Para mais esclarecimentos podera obter 0s contactos de quern propde esta Iniciotiva",
+                    13: "enviando mensagem pare o correio electronico sdenone.Ziegmall.cem",
+                }
+            }
+        }
+    }
 
     mock_query = "Os jeovas declaram impostos?"
 
     print("\n=== Starting Document Analysis ===\n")
     print(f"Query: {mock_query}\n")
-
 
     res = agent(document=mock_document, query=mock_query)
 
@@ -1383,7 +1413,7 @@ def main():
 
     print("-------------------")
     # print(f"llm: {lm.inspect_history(n=1)}")
-    return res 
+    return res
     # async for update in agent.process_document(mock_document, mock_query):
     #     try:
     #         if update["type"] == "process_start":

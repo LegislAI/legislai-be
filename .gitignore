@@ -11,3 +11,4 @@ __pycache__/
 .database/
 *.log
 rag/query_enhancement/classifier/models/*
+rag_copy/query_enhancement/classifier/models/*
