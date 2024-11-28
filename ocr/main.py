@@ -3,8 +3,8 @@
 import re
 from typing import Optional
 
-from ExtractFromImage.main import ImageProcessor
-from ExtractFromPDF.main import PDFProcessor
+from ocr.ExtractFromImage.main import ImageProcessor
+from ocr.ExtractFromPDF.main import PDFProcessor
 
 # from dataclasses import dataclass
 # from dataclasses import field

@@ -27,3 +27,9 @@ rank_bm25
 nltk
 pinecone
 spacy
+opencv-python
+python-doctr
+torchvision
+matplotlib
+pytesseract
+pdf2image

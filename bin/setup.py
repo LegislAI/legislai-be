@@ -135,8 +135,8 @@ def main():
 
     args = parser.parse_args()
 
-    install_pyenv()  # Ensure pyenv is installed
-    envs = find_environment_files()  # Find all relevant directories
+    install_pyenv()
+    envs = find_environment_files()
 
     if args.setup:
         setup_venv(envs)
