@@ -30,7 +30,6 @@ class StripeServices:
 
         for plan_name, plan_details in PLANS.items():
             if plan_name not in products_name:
-                print(f"Creating product: {plan_details['name']}")
                 product = self.create_product(
                     plan_details["name"], plan_details["description"]
                 )
@@ -60,7 +59,6 @@ class StripeServices:
         self, customer_id: str, plan_name: str, payment_method_id: str
     ) -> stripe.Subscription:
         price_id = PLANS.get(plan_name).get("price_id")
-        print(price_id)
         return stripe.Subscription.create(
             customer=customer_id,
             items=[{"price": price_id}],
