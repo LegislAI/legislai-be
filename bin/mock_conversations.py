@@ -15,6 +15,7 @@ import boto3
 from authentication.services.dynamo_services import create_user
 from authentication.services.dynamo_services import get_user_by_email
 from authentication.utils.auth import create_access_token
+from authentication.services.stripe_services import StripeServices
 from authentication.utils.logging_config import logger
 from authentication.utils.schemas import RegisterRequest
 from conversation.services.dynamo_services import add_messages_to_new_conversation
@@ -24,6 +25,7 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+stripe_services = StripeServices()
 
 AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
@@ -61,11 +63,19 @@ def register_user(email, username, password):
     if user:
         logger.info("User already exists, deleting user")
         delete_user(user["user_id"], email)
+
     logger.info("Registering new user.")
     register_user_request = RegisterRequest(
         email=email, username=username, password=password
     )
-    return create_user(register_user_request)
+
+    user = create_user(register_user_request)
+    stripe_user = stripe_services.create_customer(email, user["user_id"], username)
+
+    if user and stripe_user:
+        stripe_services.create_subscription(stripe_user.id, "free", None)
+        logger.info(f"User {email} created successfully")
+        return user
 
 
 def generate_token(user_id):
