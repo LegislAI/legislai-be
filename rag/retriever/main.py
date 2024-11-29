@@ -36,7 +36,7 @@ class Retriever:
         self,
         query: Optional[str],
         topk: Optional[int],
-        queue: Optional[Queue],
+        queue: Optional[Queue] = None,
         metadata_filter: Optional[dict] = {},
     ):
         try:
@@ -155,7 +155,9 @@ class Retriever:
             prompt = {"role": "user", "content": prompt}
 
             response = self.reranking_llm.chat.completions.create(
-                model="meta-llama/Llama-Vision-Free", messages=[prompt], temperature=0
+                model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+                messages=[prompt],
+                temperature=0,
             )
             metadata = response.choices[0].message.content
 

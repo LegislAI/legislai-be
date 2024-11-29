@@ -4,6 +4,8 @@ import re
 from collections import deque
 from dataclasses import dataclass
 from enum import Enum
+from queue import Queue
+from threading import Thread
 from typing import Any
 from typing import Dict
 from typing import List
@@ -15,290 +17,7 @@ import dspy
 import numpy as np
 from ocr.ExtractFromImage.main import ImageProcessor
 from ocr.ExtractFromPDF.main import PDFProcessor
-
-# from rag.retriever.main import Retriever
-# from dataclasses import dataclass
-# from dataclasses import field
-# from datetime import datetime
-# from enum import Enum
-# from typing import Any
-# from typing import Dict
-# from typing import List
-# import dspy
-# from dotenv import load_dotenv
-# from dataclasses import dataclass
-# from typing import List, Dict, Optional, Set, Tuple
-# from enum import Enum
-# import dspy
-# import numpy as np
-# from collections import deque
-# class CognitiveAction(Enum):
-#     IDENTIFY_GAPS = "identify_gaps"
-#     GATHER_INFORMATION = "gather_information"
-#     SKIP_CHUNK = "skip_chunk"
-#     SYNTHESIZE_INFO = "synthesize_info"
-#     EVALUATE_ARGUMENTS = "evaluate_arguments"
-#     DRAW_CONCLUSIONS = "draw_conclusions"
-#     COMMUNICATE_FINDINGS = "communicate_findings"
-# @dataclass
-# class MemoryTrace:
-#     """Represents a single memory item with activation and associations."""
-#     content: str
-#     activation: float = 1.0
-#     associations: Dict[str, float] = None
-#     timestamp: float = 0.0
-#     source: str = ""
-#     def __post_init__(self):
-#         self.associations = self.associations or {}
-# @dataclass
-# class AttentionFocus:
-#     """Tracks current focus of attention and relevance scores."""
-#     current_focus: str
-#     relevance_scores: Dict[str, float]
-#     attention_threshold: float = 0.5
-# class CognitiveState:
-#     """Manages the current cognitive state including working and long-term memory."""
-#     def __init__(self, working_memory_size: int = 5):
-#         self.working_memory = deque(maxlen=working_memory_size)
-#         self.long_term_memory: List[MemoryTrace] = []
-#         self.attention = AttentionFocus("", {})
-#         self.confidence_history: List[float] = []
-#         self.strategy_stack: List[str] = []
-#     def update_activation(self, decay_rate: float = 0.1):
-#         """Simulate memory decay over time."""
-#         for trace in self.long_term_memory:
-#             trace.activation *= (1 - decay_rate)
-# class MetaCognition(dspy.Signature):
-#     """Monitor and control cognitive processes."""
-#     current_state = dspy.InputField(desc="Current cognitive state")
-#     confidence = dspy.InputField(desc="Current confidence level")
-#     strategy = dspy.InputField(desc="Current strategy")
-#     should_adjust: bool = dspy.OutputField(desc="Whether to adjust strategy")
-#     new_strategy: Optional[str] = dspy.OutputField(desc="Proposed new strategy")
-#     metacognitive_notes: str = dspy.OutputField(desc="Reasoning about the process")
-# class PatternRecognition(dspy.Signature):
-#     """Identify patterns and analogies in the content."""
-#     current_content = dspy.InputField(desc="Current content being analyzed")
-#     memory_traces = dspy.InputField(desc="Previous memory traces")
-#     patterns: List[str] = dspy.OutputField(desc="Identified patterns")
-#     analogies: List[str] = dspy.OutputField(desc="Relevant analogies")
-#     similarity_scores: Dict[str, float] = dspy.OutputField(desc="Pattern similarity scores")
-# class IdentifyKnowledgeGaps(dspy.Signature):
-#     """
-#     Com base no excerto do documento e dos contextos até à data, identifica que lacunas podes ter no teu conhecimento para responder à questão do utilizador.
-#     Com estas, gera de perguntas, que aches pertinente veres respondidas de forma a prosseguires
-#     """
-#     query = dspy.InputField(desc="Questão do utilizador")
-#     chunk = dspy.InputField(desc="Excerto do documento")
-#     contexts = dspy.InputField(desc="Contexto até à data")
-#     queries : List[str] = dspy.OutputField(desc="Questões para eliminar lacunas")
-# class ReasoningStep(dspy.Signature):
-#     """
-#     Com base na análise inicial do problema, no contexto que tens até à data e no excerto de documento que tens, escolhe que passo tomar de forma a responder à questão do utilizador.
-#     Não escolhas o teu passo anterior
-#     """
-#     query = dspy.InputField(desc="Questão do utilizador")
-#     context = dspy.InputField(desc="Contexto do problema até à data")
-#     chunk = dspy.InputField(desc="Excerto do documento")
-#     initial_analysis = dspy.InputField(desc="Análise inicial")
-#     previous_choice : CognitiveAction| None = dspy.InputField(desc="Passo anterior")
-#     action: CognitiveAction = dspy.OutputField(desc="Ação a tomar")
-# # If action from reasoning step==identify_gaps => generate queries from the chunk,  query rag database with formulated queries and then synthesize the retrieved information and rank it relatively to the query
-# # Skip chunk, chunk not relevant to answer the question
-# # If action from reasoning step==gather_information=>generate queries, query rag database with formulated queries and then synthesize the retrieved information and rank it relatively to the query
-# # If the action from reasoning step==synthesize_info=>(porbably choose what context to synthesize, current chunk/retrieved information or all(agnostic solution, just a step before) and then
-# # If the action from reasoning step==Evaluate arguments => Reassesses the document facing the query with the additional knowledge, outputs a refined analysis with evidence from the local database
-# # If the action from reasoning step==draw_conclusions => Wheights all the evidence in the database and then outputs a well informed conclusion
-# # After the draw_conclusions, revalidate the answer relatively to the query and then streams the output in markdown
-# # agregate knowledge, merge with the previous context and retry if the chunk is not informative, or just discard
-# class UnderstandProblem(dspy.Signature):
-#     """Compreende profundamente o documento e o seu contexto legal."""
-#     content = dspy.InputField(desc="Conteúdo do documento")
-#     query = dspy.InputField(desc="Questão do utilizador")
-#     document_purpose : str = dspy.OutputField(desc="Objetivo principal do documento")
-#     main_claims : List[str] = dspy.OutputField(desc="Principais argumentos apresentados")
-#     initial_analysis : str = dspy.OutputField(desc="Análise inicial do problema")
-# @dataclass
-# class Context:
-#     text: str
-#     confidence: float
-#     source: str
-#     relevance_score: float = 0.0
-# @dataclass
-# class KnowledgeBase:
-#     step_number: int
-#     contexts: List[Context]
-#     conclusion: Optional[str] = None
-#     confidence_score: float = 0.0
-# class SynthesizeInformation(dspy.Signature):
-#     """Sintetiza a informação recolhida de forma coerente."""
-#     contexts = dspy.InputField(desc="List of relevant contexts")
-#     query = dspy.InputField(desc="Original query")
-#     synthesis: str = dspy.OutputField(desc="Synthesized information")
-#     confidence: float = dspy.OutputField(desc="Confidence in synthesis")
-# class EvaluateArguments(dspy.Signature):
-#     """Avalia os argumentos com base na evidência recolhida."""
-#     synthesis = dspy.InputField(desc="Synthesized information")
-#     query = dspy.InputField(desc="Original query")
-#     evidence = dspy.InputField(desc="Gathered evidence")
-#     evaluation: str = dspy.OutputField(desc="Evaluation of arguments")
-#     recommendations: List[str] = dspy.OutputField(desc="Recommendations based on evaluation")
-# class DrawConclusions(dspy.Signature):
-#     """Forma conclusões finais com base em toda a evidência disponível."""
-#     evaluation = dspy.InputField(desc="Evaluation of arguments")
-#     contexts = dspy.InputField(desc="All relevant contexts")
-#     query = dspy.InputField(desc="Original query")
-#     conclusion: str = dspy.OutputField(desc="Final conclusion")
-#     confidence: float = dspy.OutputField(desc="Confidence in conclusion")
-# class EnhancedCognitiveOCRAgent(dspy.Module):
-#     def __init__(self, retriever):
-#         super().__init__()
-#         self.retriever = retriever
-#         #Core components
-#         self.understanding = dspy.Predict(UnderstandProblem)
-#         self.gap_identifier = dspy.Predict(IdentifyKnowledgeGaps)
-#         self.reasoning = dspy.Predict(ReasoningStep)
-#         self.synthesizer = dspy.Predict(SynthesizeInformation)
-#         self.evaluator = dspy.Predict(EvaluateArguments)
-#         self.concluder = dspy.Predict(DrawConclusions)
-#         # Enhanced cognitive components
-#         self.metacognition = dspy.Predict(MetaCognition)
-#         self.patter
-#         # State
-#         self.knowledge_bases = []
-#         self.current_step = 0
-#         self.final_conclusion = None
-#     def process_document(self, document: dict, query: str) -> dict:
-#         """Process the complete document and return analysis."""
-#         merged_document = "".join(document["page"][0]["paragraph"].values())
-#         # Step 1: Initial Understanding
-#         initial_understanding = self.understanding(
-#             content=merged_document,
-#             query=query
-#         )
-#         # Initialize knowledge base
-#         initial_kb = KnowledgeBase(
-#             step_number=0,
-#             contexts=[Context(
-#                 text=initial_understanding.initial_analysis,
-#                 confidence=1.0,
-#                 source="initial_analysis"
-#             )]
-#         )
-#         self.knowledge_bases.append(initial_kb)
-#         # Process each chunk
-#         for page in document.get("page", []):
-#             for chunk in document["page"][page]["paragraph"].values():
-#                 self._process_chunk(chunk, query)
-#         # Final synthesis and conclusion
-#         return self._generate_final_response()
-#     def _process_chunk(self, chunk: str, query: str) -> None:
-#         """Process individual document chunk."""
-#         self.current_step += 1
-#         current_kb = KnowledgeBase(
-#             step_number=self.current_step,
-#             contexts=[]
-#         )
-#         depth_limit=0
-#         previous_choice=None
-#         action = self._determine_next_action(chunk, query, previous_choice)
-#         while action != CognitiveAction.DRAW_CONCLUSIONS and depth_limit<5:
-#             previous_choice=action
-#             print(f"Chosen action: {action} for step {self.current_step}")
-#             if action == CognitiveAction.IDENTIFY_GAPS:
-#                 gaps = self._identify_gaps(query, chunk, current_kb)
-#                 retrieved_info = self._gather_information(gaps)
-#                 current_kb.contexts.extend(retrieved_info)
-#             elif action == CognitiveAction.SYNTHESIZE_INFO:
-#                 synthesis = self._synthesize_information(current_kb, query)
-#                 current_kb.contexts.append(Context(
-#                     text=synthesis.synthesis,
-#                     confidence=synthesis.confidence,
-#                     source="synthesis"
-#                 ))
-#             elif action == CognitiveAction.EVALUATE_ARGUMENTS:
-#                 evaluation = self._evaluate_arguments(current_kb, query)
-#                 current_kb.contexts.append(Context(
-#                     text=evaluation.evaluation,
-#                     confidence=0.8,  # Arbitrary confidence for evaluation
-#                     source="evaluation"
-#                 ))
-#             action = self._determine_next_action(chunk, query, previous_choice)
-#             depth_limit+=1
-#         # Add final knowledge base for this chunk
-#         self.knowledge_bases.append(current_kb)
-#     def _determine_next_action(self, chunk: str, query: str, previous_step=CognitiveAction) -> CognitiveAction:
-#         """Determine the next cognitive action to take."""
-#         current_context = self._get_current_context()
-#         decision = self.reasoning(
-#             query=query,
-#             chunk=chunk,
-#             context=current_context,
-#             initial_analysis=self.knowledge_bases[0].contexts[0].text,
-#             previous_step=previous_step
-#         )
-#         return decision.action
-#     def _identify_gaps(self, query: str, chunk: str, kb: KnowledgeBase) -> List[str]:
-#         """Identify knowledge gaps and generate queries."""
-#         current_contexts = [c.text for c in kb.contexts]
-#         gaps = self.gap_identifier(
-#             query=query,
-#             chunk=chunk,
-#             contexts=current_contexts
-#         )
-#         return gaps.queries
-#     def _gather_information(self, queries: List[str]) -> List[Context]:
-#         """Gather information from the retriever."""
-#         contexts = []
-#         # for query in queries:
-#         #     results = self.retriever.search(query)
-#         #     for result in results:
-#         #         contexts.append(Context(
-#         #             text=result.text,
-#         #             confidence=result.score,
-#         #             source=result.source
-#         #         ))
-#         return contexts
-#     def _synthesize_information(self, kb: KnowledgeBase, query: str) -> Any:
-#         """Synthesize gathered information."""
-#         synthesis = self.synthesizer(
-#             contexts=[c.text for c in kb.contexts],
-#             query=query
-#         )
-#         return synthesis
-#     def _evaluate_arguments(self, kb: KnowledgeBase, query: str) -> Any:
-#         """Evaluate arguments with gathered evidence."""
-#         latest_synthesis = next(
-#             (c.text for c in reversed(kb.contexts) if c.source == "synthesis"),
-#             None
-#         )
-#         if not latest_synthesis:
-#             return None
-#         evaluation = self.evaluator(
-#             synthesis=latest_synthesis,
-#             query=query,
-#             evidence=[c.text for c in kb.contexts]
-#         )
-#         return evaluation
-#     def _get_current_context(self) -> str:
-#         """Get current context from all knowledge bases."""
-#         all_contexts = []
-#         for kb in self.knowledge_bases:
-#             all_contexts.extend(c.text for c in kb.contexts)
-#         return " ".join(all_contexts)
-#     def _generate_final_response(self) -> dict:
-#         """Generate final response with conclusions."""
-#         all_contexts = self._get_current_context()
-#         conclusion = self.concluder(
-#             evaluation=self.knowledge_bases[-1].contexts[-1].text,
-#             contexts=all_contexts,
-#             query=self.knowledge_bases[0].contexts[0].text
-#         )
-#         return {
-#             "conclusion": conclusion.conclusion,
-#             "confidence": conclusion.confidence,
-#             "supporting_context": all_contexts
-#         }
+from rag.retriever.main import Retriever
 
 
 class CognitiveAction(Enum):
@@ -312,6 +31,53 @@ class CognitiveAction(Enum):
 
 
 @dataclass
+class LegalMetadata:
+    """Metadata specific to legal documents and analysis."""
+
+    legislation_refs: List[str] = None
+    precedent_refs: List[str] = None
+    legal_principles: List[str] = None
+    jurisdiction: Optional[str] = None
+
+    def __post_init__(self):
+        self.legislation_refs = self.legislation_refs or []
+        self.precedent_refs = self.precedent_refs or []
+        self.legal_principles = self.legal_principles or []
+
+
+@dataclass
+class Context:
+    text: str
+    confidence: float
+    source: str
+    relevance_score: float = 0.0
+    emotional_valence: float = 0.0
+    legal_metadata: Optional[LegalMetadata] = None
+
+
+@dataclass
+class KnowledgeBase:
+    step_number: int
+    contexts: List[Context]
+    conclusion: Optional[str] = None
+    confidence_score: float = 0.0
+    patterns: List[str] = None
+    legal_framework: Dict[str, List[str]] = None
+
+    def __post_init__(self):
+        self.patterns = self.patterns or []
+        self.legal_framework = self.legal_framework or {}
+
+    def reset(self) -> None:
+        self.knowledge_bases = []
+        self.current_step = 0
+        self.final_conclusion = None
+        self.attention_history = []
+        self.pattern_memory = {}
+        self.cognitive_state = CognitiveState()
+
+
+@dataclass
 class MemoryTrace:
     """Represents a single memory item with activation and associations."""
 
@@ -321,9 +87,11 @@ class MemoryTrace:
     timestamp: float = 0.0
     source: str = ""
     relevance: float = 0.0
+    legal_metadata: Optional[LegalMetadata] = None
 
     def __post_init__(self):
         self.associations = self.associations or {}
+        self.legal_metadata = self.legal_metadata or LegalMetadata()
 
 
 @dataclass
@@ -334,9 +102,11 @@ class AttentionFocus:
     relevance_scores: Dict[str, float]
     attention_threshold: float = 0.5
     inhibited_items: List[str] = None
+    legal_focus_points: List[str] = None
 
     def __post_init__(self):
         self.inhibited_items = self.inhibited_items or []
+        self.legal_focus_points = self.legal_focus_points or []
 
 
 class CognitiveState:
@@ -350,6 +120,7 @@ class CognitiveState:
         self.strategy_stack: List[str] = []
         self.emotional_state: Dict[str, float] = {"valence": 0.0, "arousal": 0.0}
         self.metacognitive_log: List[Dict] = []
+        self.legal_context: Dict[str, Any] = {}
 
     def update_activation(self, decay_rate: float = 0.1):
         """Simulate memory decay over time."""
@@ -362,32 +133,8 @@ class CognitiveState:
         self.emotional_state["arousal"] = arousal
 
 
-@dataclass
-class Context:
-    text: str
-    confidence: float
-    source: str
-    relevance_score: float = 0.0
-    emotional_valence: float = 0.0
-
-
-@dataclass
-class KnowledgeBase:
-    step_number: int
-    contexts: List[Context]
-    conclusion: Optional[str] = None
-    confidence_score: float = 0.0
-    patterns: List[str] = None
-
-    def __post_init__(self):
-        self.patterns = self.patterns or []
-
-
 class UnderstandProblem(dspy.Signature):
-    """
-    Compreende profundamente o documento e o seu contexto legal.
-    Gera queries focadas em aspectos legais como legislação, jurisprudência, doutrina e precedentes.
-    """
+    """Compreende profundamente o documento e o seu contexto legal."""
 
     content = dspy.InputField(desc="Conteúdo do documento")
     query = dspy.InputField(desc="Questão do utilizador")
@@ -398,10 +145,32 @@ class UnderstandProblem(dspy.Signature):
     emotional_assessment: Dict[str, float] = dspy.OutputField(
         desc="Avaliação emocional inicial"
     )
+    legal_framework: Dict[str, List[str]] = dspy.OutputField(
+        desc="Enquadramento legal identificado"
+    )
+
+
+class IdentifyKnowledgeGaps(dspy.Signature):
+    """
+    Identifica lacunas no conhecimento legal necessário para responder à questão.
+    Gera no máximo duas questões para cada categoria de lacuna.
+    """
+
+    query = dspy.InputField(desc="Questão do utilizador")
+    chunk = dspy.InputField(desc="Excerto do documento")
+    contexts = dspy.InputField(desc="Contexto até à data")
+    emotional_state = dspy.InputField(desc="Estado emocional atual")
+
+    legal_queries: List[str] = dspy.OutputField(desc="Questões legais gerais")
+    legislative_queries: List[str] = dspy.OutputField(desc="Queries sobre legislação")
+    jurisprudence_queries: List[str] = dspy.OutputField(
+        desc="Queries sobre jurisprudência"
+    )
+    confidence: float = dspy.OutputField(desc="Confiança na identificação")
 
 
 class PatternRecognition(dspy.Signature):
-    """Identifica padrões legais, precedentes e analogias no conteúdo."""
+    """Identifica padrões e analogias legais no conteúdo."""
 
     current_content = dspy.InputField(desc="Current content being analyzed")
     memory_traces = dspy.InputField(desc="Previous memory traces")
@@ -415,44 +184,8 @@ class PatternRecognition(dspy.Signature):
     )
 
 
-class LegalUnderstandProblem(dspy.Signature):
-    """Compreende profundamente o documento e seu contexto jurídico."""
-
-    content = dspy.InputField(desc="Conteúdo do documento")
-    query = dspy.InputField(desc="Questão do utilizador")
-
-    document_purpose: str = dspy.OutputField(desc="Objetivo principal do documento")
-    legal_framework: Dict[str, List[str]] = dspy.OutputField(
-        desc="Enquadramento legal aplicável"
-    )
-    main_legal_claims: List[str] = dspy.OutputField(
-        desc="Principais argumentos jurídicos"
-    )
-    legal_analysis: str = dspy.OutputField(desc="Análise jurídica inicial")
-    emotional_assessment: Dict[str, float] = dspy.OutputField(
-        desc="Avaliação emocional inicial"
-    )
-
-
-class LegalEvaluateArguments(dspy.Signature):
-    """Evaluate legal arguments with gathered evidence."""
-
-    synthesis = dspy.InputField(desc="Synthesized information")
-    query = dspy.InputField(desc="Original query")
-    evidence = dspy.InputField(desc="Gathered evidence")
-    emotional_context = dspy.InputField(desc="Emotional context")
-    legal_framework = dspy.InputField(desc="Applicable legal framework")
-
-    legal_evaluation: str = dspy.OutputField(desc="Legal evaluation of arguments")
-    legal_recommendations: List[str] = dspy.OutputField(desc="Legal recommendations")
-    confidence: float = dspy.OutputField(desc="Confidence in evaluation")
-    cited_legislation: List[str] = dspy.OutputField(
-        desc="Cited legislation and precedents"
-    )
-
-
 class ReasoningStep(dspy.Signature):
-    """Determina o próximo passo cognitivo baseado no contexto atual."""
+    """Determina o próximo passo cognitivo baseado no contexto legal atual."""
 
     query = dspy.InputField(desc="Questão do utilizador")
     context = dspy.InputField(desc="Contexto do problema até à data")
@@ -466,7 +199,7 @@ class ReasoningStep(dspy.Signature):
 
 
 class MetaCognition(dspy.Signature):
-    """Monitor and control cognitive processes."""
+    """Minitoriza e controla os processos cognitivos com foco legal."""
 
     current_state = dspy.InputField(desc="Current cognitive state")
     confidence = dspy.InputField(desc="Current confidence level")
@@ -478,62 +211,74 @@ class MetaCognition(dspy.Signature):
     metacognitive_notes: str = dspy.OutputField(desc="Reasoning about the process")
 
 
-class PatternRecognition(dspy.Signature):
-    """Identify patterns and analogies in the content."""
-
-    current_content = dspy.InputField(desc="Current content being analyzed")
-    memory_traces = dspy.InputField(desc="Previous memory traces")
-    emotional_context = dspy.InputField(desc="Current emotional context")
-
-    patterns: List[str] = dspy.OutputField(desc="Identified patterns")
-    analogies: List[str] = dspy.OutputField(desc="Relevant analogies")
-    similarity_scores: Dict[str, float] = dspy.OutputField(
-        desc="Pattern similarity scores"
-    )
-
-
 class SynthesizeInformation(dspy.Signature):
-    """Synthesize gathered information into a coherent understanding."""
+    """Sumariza a informação legal relevante e identifica padrões."""
 
     contexts = dspy.InputField(desc="List of relevant contexts")
     query = dspy.InputField(desc="Original query")
     emotional_state = dspy.InputField(desc="Current emotional state")
     patterns = dspy.InputField(desc="Identified patterns")
+    legal_framework = dspy.InputField(desc="Current legal framework")
 
     synthesis: str = dspy.OutputField(desc="Synthesized information")
     confidence: float = dspy.OutputField(desc="Confidence in synthesis")
     emotional_valence: float = dspy.OutputField(desc="Emotional valence of synthesis")
+    legal_implications: List[str] = dspy.OutputField(
+        desc="Legal implications identified"
+    )
 
 
 class EvaluateArguments(dspy.Signature):
-    """Evaluate arguments with gathered evidence."""
+    """Avalia os argumentos legais com base na evidência recolhida."""
 
     synthesis = dspy.InputField(desc="Synthesized information")
     query = dspy.InputField(desc="Original query")
     evidence = dspy.InputField(desc="Gathered evidence")
     emotional_context = dspy.InputField(desc="Emotional context")
+    legal_framework = dspy.InputField(desc="Legal framework")
 
     evaluation: str = dspy.OutputField(desc="Evaluation of arguments")
-    recommendations: List[str] = dspy.OutputField(
-        desc="Recommendations based on evaluation"
-    )
+    recommendations: List[str] = dspy.OutputField(desc="Legal recommendations")
     confidence: float = dspy.OutputField(desc="Confidence in evaluation")
+    cited_legislation: List[str] = dspy.OutputField(
+        desc="Cited legislation and precedents"
+    )
+
+
+class ChunkRelevance(dspy.Signature):
+    """Avalia a relevância de um excerto do documento para a questão do utilizador."""
+
+    query = dspy.InputField(desc="Questão do utilizador")
+    chunk = dspy.InputField(desc="Excerto do documento")
+
+    is_relevant: bool = dspy.OutputField(desc="Se o excerto é relevante")
+    relevance_score: float = dspy.OutputField(desc="Pontuação de relevância (0-1)")
+    reasoning: str = dspy.OutputField(desc="Razão para a relevância atribuída")
 
 
 class DrawConclusions(dspy.Signature):
-    """Form final conclusions based on all available evidence."""
+    """
+    Sendo tu um especialista da legislação PORTUGUESA de PORTUGAL, formaliza uma conclusão final com base na evidência recolhida de forma a responder à questão do utilizador.
+    Por isso, é essencial que sigas estas instruções:
+    1. Toda a tua resposta deve ser suportada exclusivamente pelas informações presentes nesses documentos.
+    2. Se não encontrares resposta à pergunta nos documentos fornecidos, deves informar que não possuis dados para responder.
+    3. A tua resposta deve ser detalhada, informativa, bem estruturada e conter vocabulário simples.
+    Devolve a conclusão num formato markdown da mesma, ou seja, sublinhares os aspetos mais importantes da resposta como artigos citados (com **), parágrafos (\n), e listas (-).
+    """
 
     evaluation = dspy.InputField(desc="Evaluation of arguments")
     contexts = dspy.InputField(desc="All relevant contexts")
     query = dspy.InputField(desc="Original query")
     emotional_state = dspy.InputField(desc="Final emotional state")
     patterns = dspy.InputField(desc="Identified patterns")
+    legal_framework = dspy.InputField(desc="Complete legal framework")
 
     conclusion: str = dspy.OutputField(desc="Final conclusion")
     confidence: float = dspy.OutputField(desc="Confidence in conclusion")
     emotional_impact: Dict[str, float] = dspy.OutputField(
         desc="Emotional impact of conclusion"
     )
+    legal_opinion: str = dspy.OutputField(desc="Formal legal opinion")
 
 
 class EnhancedCognitiveOCRAgent(dspy.Module):
@@ -549,6 +294,7 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         self.synthesizer = dspy.Predict(SynthesizeInformation)
         self.evaluator = dspy.Predict(EvaluateArguments)
         self.concluder = dspy.Predict(DrawConclusions)
+        self.chunk_relevance = dspy.Predict(ChunkRelevance)
 
         # Enhanced cognitive components
         self.metacognition = dspy.Predict(MetaCognition)
@@ -560,21 +306,273 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         self.final_conclusion = None
         self.attention_history = []
         self.pattern_memory = {}
+        self.legal_context_history = []
+
+    def _prioritize_legal_queries(
+        self, queries: List[str], original_query: str
+    ) -> List[str]:
+        """Prioritize legal queries based on relevance and importance."""
+        priority_categories = {
+            "high": {
+                "weight": 3.0,
+                "terms": [
+                    "constituição",
+                    "constitution",
+                    "lei",
+                    "law",
+                    "statute",
+                    "decreto-lei",
+                    "decree-law",
+                    "jurisprudência",
+                    "jurisprudence",
+                    "acórdão",
+                    "ruling",
+                    "tribunal",
+                    "court",
+                ],
+            },
+            "medium": {
+                "weight": 2.0,
+                "terms": [
+                    "doutrina",
+                    "doctrine",
+                    "interpretação",
+                    "interpretation",
+                    "princípio",
+                    "principle",
+                    "regulamento",
+                    "regulation",
+                    "normativo",
+                    "normative",
+                    "precedente",
+                    "precedent",
+                ],
+            },
+            "low": {
+                "weight": 1.0,
+                "terms": [
+                    "contexto",
+                    "context",
+                    "história",
+                    "history",
+                    "background",
+                    "antecedente",
+                    "procedimento",
+                    "procedure",
+                ],
+            },
+        }
+
+        scored_queries = []
+        for query in queries:
+            query_lower = query.lower()
+            score = 0.0
+
+            for category, data in priority_categories.items():
+                for term in data["terms"]:
+                    if term in query_lower:
+                        score += data["weight"]
+
+            score += self._calculate_legal_relevance(query)
+            score += self._calculate_specificity(query)
+            score += self._calculate_query_completeness(query)
+
+            scored_queries.append((score, query))
+        return [q[1] for q in sorted(scored_queries, reverse=True)]
+
+    def _calculate_legal_relevance(self, query: str) -> float:
+        legal_terms_count = sum(
+            1 for term in self._get_legal_terms() if term in query.lower()
+        )
+        return min(legal_terms_count * 0.5, 2.0)
+
+    def _calculate_specificity(self, query: str) -> float:
+        specificity_score = 0.0
+
+        if any(
+            ref in query.lower() for ref in ["artigo", "article", "número", "number"]
+        ):
+            specificity_score += 1.0
+
+        if any(term in query.lower() for term in ["data", "date", "ano", "year"]):
+            specificity_score += 0.5
+
+        if any(
+            term in query.lower()
+            for term in ["tribunal", "court", "jurisdição", "jurisdiction"]
+        ):
+            specificity_score += 0.5
+
+        return specificity_score
+
+    def _calculate_query_completeness(self, query: str) -> float:
+        completeness_score = 0.0
+
+        if any(
+            q in query.lower()
+            for q in ["quem", "what", "quando", "when", "onde", "where", "como", "how"]
+        ):
+            completeness_score += 0.5
+
+        if any(
+            action in query.lower()
+            for action in [
+                "aplicar",
+                "apply",
+                "interpretar",
+                "interpret",
+                "analisar",
+                "analyze",
+            ]
+        ):
+            completeness_score += 0.5
+
+        words = query.split()
+        completeness_score += min(len(words) / 10, 1.0)
+
+        return completeness_score
+
+    def _get_current_context(self) -> str:
+        active_contexts = []
+        activation_threshold = 0.3
+
+        for memory_trace in self.cognitive_state.working_memory:
+            active_contexts.append(memory_trace.content)
+
+        for kb in self.knowledge_bases:
+            for context in kb.contexts:
+                if isinstance(context, MemoryTrace):
+                    if context.activation > activation_threshold:
+                        active_contexts.append(context.text)
+                else:
+                    if context.relevance_score > activation_threshold:
+                        active_contexts.append(context.text)
+
+        seen = set()
+        unique_contexts = [x for x in active_contexts if not (x in seen or seen.add(x))]
+
+        return " ".join(unique_contexts)
+
+    def _get_legal_terms(self) -> Set[str]:
+        return {
+            "lei",
+            "law",
+            "legal",
+            "jurídico",
+            "judicial",
+            "tribunal",
+            "court",
+            "processo",
+            "process",
+            "direito",
+            "right",
+            "obrigação",
+            "obligation",
+            "contrato",
+            "contract",
+            "jurisdição",
+            "jurisdiction",
+            "legislação",
+            "legislation",
+        }
+
+    def _extract_legal_metadata(self, text: str) -> LegalMetadata:
+        metadata = LegalMetadata()
+
+        metadata.legislation_refs = self._extract_legislation_references(text)
+
+        metadata.precedent_refs = self._extract_precedent_references(text)
+
+        metadata.legal_principles = self._extract_legal_principles(text)
+
+        metadata.jurisdiction = self._determine_jurisdiction(text)
+
+        return metadata
+
+    def _extract_legislation_references(self, text: str) -> List[str]:
+        """Extract references to legislation from text."""
+        legislation_refs = []
+
+        patterns = [
+            r"Lei n[.º°]\s*\d+[/-]\d+",
+            r"Decreto-Lei n[.º°]\s*\d+[/-]\d+",
+            r"artigo \d+[.º°]",
+            r"art\.\s*\d+[.º°]",
+        ]
+
+        for pattern in patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            legislation_refs.extend(matches)
+
+        return list(set(legislation_refs))
+
+    def _extract_precedent_references(self, text: str) -> List[str]:
+        """Extract references to legal precedents from text."""
+        precedent_refs = []
+
+        # Common precedent patterns
+        patterns = [
+            r"Acórdão\s+\d+[/-]\d+",  # Acórdão 123/2023
+            r"Processo\s+\d+[/-]\d+",  # Processo 123/2023
+            r"STJ\s+\d+[/-]\d+",  # STJ 123/2023
+            r"TC\s+\d+[/-]\d+",  # TC 123/2023
+        ]
+
+        # Add found references
+        for pattern in patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            precedent_refs.extend(matches)
+
+        return list(set(precedent_refs))
+
+    def _extract_legal_principles(self, text: str) -> List[str]:
+        """Extract references to legal principles from text."""
+        principles = []
+
+        # Common principle patterns
+        patterns = [
+            r"princípio d[aoe]\s+\w+",  # princípio da legalidade
+            r"princípio\s+\w+",  # princípio constitucional
+        ]
+
+        # Add found principles
+        for pattern in patterns:
+            matches = re.findall(pattern, text, re.IGNORECASE)
+            principles.extend(matches)
+
+        return list(set(principles))
+
+    def _determine_jurisdiction(self, text: str) -> Optional[str]:
+        jurisdiction_indicators = {
+            "portugal": [
+                "tribunal constitucional",
+                "supremo tribunal de justiça",
+                "STJ",
+            ],
+            "european_union": [
+                "tribunal de justiça da união europeia",
+                "TJUE",
+                "direito comunitário",
+            ],
+            "international": ["tribunal internacional", "direito internacional"],
+        }
+
+        text_lower = text.lower()
+        for jurisdiction, indicators in jurisdiction_indicators.items():
+            if any(indicator.lower() in text_lower for indicator in indicators):
+                return jurisdiction
+
+        return None
 
     def process_document(self, document: dict, query: str) -> dict:
-        """Process the complete document and return analysis."""
         merged_document = self._merge_document(document)
 
-        # Initial understanding with emotional and pattern recognition
         initial_understanding = self._initial_processing(merged_document, query)
-        print(f"Initial understanding: {initial_understanding}")
-        # Initialize knowledge base
+
         self._initialize_knowledge_base(initial_understanding)
 
-        # Process document chunks
         self._process_document_chunks(document, query)
 
-        # Generate final response
         return self._generate_final_response()
 
     def _merge_document(self, document: dict) -> str:
@@ -589,12 +587,22 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             emotional_context=self.cognitive_state.emotional_state,
         )
 
-        self.pattern_memory["initial"] = patterns.patterns
+        self.pattern_memory["initial"] = patterns.legal_patterns
+        self.legal_context_history.append(
+            {
+                "step": 0,
+                "legal_principles": patterns.legal_principles,
+                "precedents": patterns.precedents,
+            }
+        )
 
         return initial_understanding
 
     def _initialize_knowledge_base(self, initial_understanding: Any) -> None:
-        """Initialize the knowledge base with initial understanding."""
+        legal_metadata = self._extract_legal_metadata(
+            initial_understanding.initial_analysis
+        )
+
         initial_kb = KnowledgeBase(
             step_number=0,
             contexts=[
@@ -603,170 +611,28 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
                     confidence=1.0,
                     source="initial_analysis",
                     emotional_valence=0.0,
+                    legal_metadata=legal_metadata,
                 )
             ],
             patterns=self.pattern_memory.get("initial", []),
+            legal_framework=initial_understanding.legal_framework,
         )
         self.knowledge_bases.append(initial_kb)
 
-    def _process_document_chunks(self, document: dict, query: str) -> None:
-        """Process each chunk of the document."""
-        for page in document.get("page", []):
-            for chunk in document["page"][page]["paragraph"].values():
-                self._process_chunk(chunk, query)
-
-    def _process_chunk(self, chunk: str, query: str) -> None:
-        """Process individual document chunk with enhanced cognitive capabilities."""
-        self.current_step += 1
-        current_kb = KnowledgeBase(
-            step_number=self.current_step, contexts=[], patterns=[]
-        )
-
-        patterns = self._recognize_patterns(chunk)
-        current_kb.patterns.extend(patterns.patterns)
-
-        depth_limit = 0
-        previous_choice = None
-        action = self._determine_next_action(chunk, query, previous_choice)
-
-        while action != CognitiveAction.DRAW_CONCLUSIONS and depth_limit < 5:
-            previous_choice = action
-            print(f"Chosen action: {action} for step {self.current_step}")
-
-            # Execute cognitive action with metacognitive monitoring
-            success_metrics = self._execute_cognitive_action(
-                action, chunk, query, current_kb
-            )
-
-            print(f"Success metrics: {success_metrics}")
-
-            # Update metacognitive state
-            self._update_metacognitive_state(action, success_metrics)
-
-            # Update attention focus
-            self._update_attention_focus(chunk, success_metrics)
-
-            action = self._determine_next_action(chunk, query, previous_choice)
-            depth_limit += 1
-
-        self.knowledge_bases.append(current_kb)
-
-    def _recognize_patterns(self, content: str) -> Any:
-        """Recognize patterns in content."""
-        return self.pattern_recognition(
-            current_content=content,
-            memory_traces=[
-                trace.content for trace in self.cognitive_state.long_term_memory
-            ],
-            emotional_context=self.cognitive_state.emotional_state,
-        )
-
-    def _execute_cognitive_action(
-        self, action: CognitiveAction, chunk: str, query: str, kb: KnowledgeBase
-    ) -> Dict[str, float]:
-        success_metrics = {"confidence": 0.0, "relevance": 0.0}
-
-        if action == CognitiveAction.IDENTIFY_GAPS:
-            success_metrics = self._handle_gap_identification(chunk, query, kb)
-        elif action == CognitiveAction.SYNTHESIZE_INFO:
-            success_metrics = self._handle_synthesis(kb, query)
-        elif action == CognitiveAction.EVALUATE_ARGUMENTS:
-            success_metrics = self._handle_evaluation(kb, query)
-
-        return success_metrics
-
-    def _handle_gap_identification(
-        self, chunk: str, query: str, kb: KnowledgeBase
-    ) -> Dict[str, float]:
-        """Handle gap identification process."""
-        gaps = self._identify_gaps(query, chunk, kb)
-        retrieved_info = self._gather_information(gaps)
-        kb.contexts.extend(retrieved_info)
-
-        confidence = self._calculate_gap_resolution_confidence(gaps, retrieved_info)
-        return {"confidence": confidence, "relevance": confidence}
-
-    def _handle_synthesis(self, kb: KnowledgeBase, query: str) -> Dict[str, float]:
-        """Handle information synthesis process."""
-        synthesis = self._synthesize_information(kb, query)
-        kb.contexts.append(
-            Context(
-                text=synthesis.synthesis,
-                confidence=synthesis.confidence,
-                source="synthesis",
-                emotional_valence=synthesis.emotional_valence,
-            )
-        )
-
-        return {"confidence": synthesis.confidence, "relevance": 0.8}
-
-    def _handle_evaluation(self, kb: KnowledgeBase, query: str) -> Dict[str, float]:
-        """Handle argument evaluation process."""
-        evaluation = self._evaluate_arguments(kb, query)
-        if evaluation:
-            kb.contexts.append(
-                Context(
-                    text=evaluation.evaluation,
-                    confidence=evaluation.confidence,
-                    source="evaluation",
-                )
-            )
-            return {"confidence": evaluation.confidence, "relevance": 0.7}
-        return {"confidence": 0.0, "relevance": 0.0}
-
-    def _update_metacognitive_state(
-        self, action: CognitiveAction, success_metrics: Dict[str, float]
-    ) -> None:
-        """Update metacognitive state based on action results."""
-        metacognitive_assessment = self.metacognition(
-            current_state=self._get_current_context(),
-            confidence=success_metrics["confidence"],
-            strategy=str(action),
-            emotional_state=self.cognitive_state.emotional_state,
-        )
-
-        self.cognitive_state.metacognitive_log.append(
-            {
-                "action": action,
-                "confidence": success_metrics["confidence"],
-                "should_adjust": metacognitive_assessment.should_adjust,
-                "notes": metacognitive_assessment.metacognitive_notes,
-            }
-        )
-
-    def _update_attention_focus(self, content: str, metrics: Dict[str, float]) -> None:
-        """Update attention focus based on content relevance."""
-        relevance_threshold = 0.5
-        if metrics["relevance"] > relevance_threshold:
-            self.cognitive_state.attention.current_focus = content
-            self.cognitive_state.attention.relevance_scores[content] = metrics[
-                "relevance"
-            ]
-
-        self.attention_history.append(
-            {
-                "focus": self.cognitive_state.attention.current_focus,
-                "relevance": metrics["relevance"],
-                "timestamp": self.current_step,
-            }
-        )
-
-    def _determine_next_action(
-        self, chunk: str, query: str, previous_step: Optional[CognitiveAction]
-    ) -> CognitiveAction:
-        """Determine next cognitive action with emotional context."""
-        current_context = self._get_current_context()
-        decision = self.reasoning(
-            query=query,
-            chunk=chunk,
-            context=current_context,
-            initial_analysis=self.knowledge_bases[0].contexts[0].text,
-            previous_choice=previous_step,
-            emotional_state=self.cognitive_state.emotional_state,
-        )
-        return decision.action
-
     def _identify_gaps(self, query: str, chunk: str, kb: KnowledgeBase) -> List[str]:
+        """Identify knowledge gaps with stricter relevance filtering."""
+        # First check if chunk is relevant enough to warrant queries
+        relevance_check = self.chunk_relevance(query=query, chunk=chunk)
+
+        print(f"Chunk relevance analysis: {relevance_check.reasoning}")
+
+        # If not relevant enough, skip query generation
+        if not relevance_check.is_relevant or relevance_check.relevance_score < 0.7:
+            print(
+                f"Skipping chunk - relevance score: {relevance_check.relevance_score}"
+            )
+            return []
+
         current_contexts = [c.text for c in kb.contexts]
         gaps = self.gap_identifier(
             query=query,
@@ -775,90 +641,66 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             emotional_state=self.cognitive_state.emotional_state,
         )
 
-        # Combine different types of legal queries
+        # Combine and filter queries
         all_queries = []
-        all_queries.extend(gaps.legal_queries)
-        all_queries.extend(gaps.legislative_queries)
-        all_queries.extend(gaps.jurisprudence_queries)
+        if gaps.legal_queries:
+            # Take only top 2 most relevant legal queries
+            filtered_legal = self._filter_top_queries(gaps.legal_queries, query, 2)
+            all_queries.extend(filtered_legal)
 
-        # Prioritize legal queries by relevance
+        # Prioritize and further filter queries
         prioritized_queries = self._prioritize_legal_queries(all_queries, query)
 
-        print(f"Legal knowledge gaps identified:")
-        print(f"Legislative queries: {gaps.legislative_queries}")
-        print(f"Jurisprudence queries: {gaps.jurisprudence_queries}")
-        print(f"General legal queries: {gaps.legal_queries}")
+        # Take only top N most relevant queries overall
+        return prioritized_queries[:3]  # Stricter limit
 
-        return prioritized_queries
-
-    def _gather_information(self, queries: List[str]) -> List[Context]:
-        """Gather information from retriever with relevance scoring."""
-        contexts = []
+    def _filter_top_queries(
+        self, queries: List[str], original_query: str, top_n: int
+    ) -> List[str]:
+        """Filter queries to keep only the most relevant ones."""
+        scored_queries = []
         for query in queries:
-            if self.retriever:
-                results = self.retriever.search(query)
-                for result in results:
-                    contexts.append(
-                        Context(
-                            text=result.text,
-                            confidence=result.score,
-                            source=f"retrieval_{query}",
-                            relevance_score=result.score,
-                        )
-                    )
-        return contexts
+            relevance_score = self._calculate_query_relevance(query, original_query)
+            specificity_score = self._calculate_specificity(query)
+            legal_score = self._calculate_legal_relevance(query)
 
-    def _synthesize_information(self, kb: KnowledgeBase, query: str) -> Any:
-        """Synthesize information with pattern awareness."""
-        synthesis = self.synthesizer(
-            contexts=[c.text for c in kb.contexts],
-            query=query,
-            emotional_state=self.cognitive_state.emotional_state,
-            patterns=kb.patterns,
-        )
-        return synthesis
+            total_score = (
+                relevance_score * 0.4 + specificity_score * 0.3 + legal_score * 0.3
+            )
 
-    def _evaluate_arguments(self, kb: KnowledgeBase, query: str) -> Any:
-        """Evaluate arguments with emotional context."""
-        latest_synthesis = next(
-            (c.text for c in reversed(kb.contexts) if c.source == "synthesis"), None
-        )
-        if not latest_synthesis:
-            return None
+            scored_queries.append((total_score, query))
 
-        return self.evaluator(
-            synthesis=latest_synthesis,
-            query=query,
-            evidence=[c.text for c in kb.contexts],
-            emotional_context=self.cognitive_state.emotional_state,
-        )
+        return [q[1] for q in sorted(scored_queries, reverse=True)[:top_n]]
 
-    def _get_current_context(self) -> str:
-        active_contexts = []
-        activation_threshold = 0.3
+    def _calculate_query_relevance(self, query: str, original_query: str) -> float:
+        """Calculate how relevant a generated query is to the original question."""
+        query_terms = set(query.lower().split())
+        original_terms = set(original_query.lower().split())
 
-        for kb in self.knowledge_bases:
-            for context in kb.contexts:
-                if isinstance(context, MemoryTrace):
-                    if context.activation > activation_threshold:
-                        active_contexts.append(context.text)
-                else:
-                    active_contexts.append(context.text)
+        # Calculate term overlap
+        overlap = len(query_terms.intersection(original_terms))
+        overlap_score = overlap / max(len(original_terms), 1)
 
-        return " ".join(active_contexts)
+        # Consider query structure
+        structure_score = 0.0
+        if any(
+            q in query.lower()
+            for q in ["como", "what", "quando", "where", "porquê", "why"]
+        ):
+            structure_score += 0.3
+        if any(
+            term in query.lower()
+            for term in ["lei", "law", "legal", "direito", "right"]
+        ):
+            structure_score += 0.4
 
-    def _calculate_gap_resolution_confidence(
-        self, gaps: List[str], retrieved_info: List[Context]
-    ) -> float:
-        if not gaps:
-            return 1.0
-        resolved_gaps = sum(
-            1 for info in retrieved_info if any(gap in info.text for gap in gaps)
-        )
-        return resolved_gaps / len(gaps)
+        return overlap_score * 0.6 + structure_score * 0.4
 
     def _generate_final_response(self) -> dict:
         all_contexts = self._get_current_context()
+
+        all_legal_metadata = self._aggregate_legal_metadata()
+
         conclusion = self.concluder(
             evaluation=self.knowledge_bases[-1].contexts[-1].text
             if self.knowledge_bases[-1].contexts
@@ -867,10 +709,12 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             query=self.knowledge_bases[0].contexts[0].text,
             emotional_state=self.cognitive_state.emotional_state,
             patterns=list(set([p for kb in self.knowledge_bases for p in kb.patterns])),
+            legal_framework=all_legal_metadata,
         )
 
         return {
             "conclusion": conclusion.conclusion,
+            "legal_opinion": conclusion.legal_opinion,
             "confidence": conclusion.confidence,
             "supporting_context": all_contexts,
             "emotional_impact": conclusion.emotional_impact,
@@ -879,8 +723,722 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
                 "metacognitive_log": self.cognitive_state.metacognitive_log,
                 "identified_patterns": self.pattern_memory,
                 "emotional_state": self.cognitive_state.emotional_state,
+                "legal_context": self.legal_context_history,
+            },
+            "legal_metadata": {
+                "legislation_refs": all_legal_metadata.get("legislation_refs", []),
+                "precedent_refs": all_legal_metadata.get("precedent_refs", []),
+                "legal_principles": all_legal_metadata.get("legal_principles", []),
+                "jurisdiction": all_legal_metadata.get("jurisdiction"),
             },
         }
+
+    def _aggregate_legal_metadata(self) -> Dict[str, Any]:
+        aggregated = {
+            "legislation_refs": set(),
+            "precedent_refs": set(),
+            "legal_principles": set(),
+            "jurisdictions": set(),
+        }
+
+        for kb in self.knowledge_bases:
+            for context in kb.contexts:
+                if context.legal_metadata:
+                    aggregated["legislation_refs"].update(
+                        context.legal_metadata.legislation_refs
+                    )
+                    aggregated["precedent_refs"].update(
+                        context.legal_metadata.precedent_refs
+                    )
+                    aggregated["legal_principles"].update(
+                        context.legal_metadata.legal_principles
+                    )
+                    if context.legal_metadata.jurisdiction:
+                        aggregated["jurisdictions"].add(
+                            context.legal_metadata.jurisdiction
+                        )
+
+        return {
+            "legislation_refs": sorted(aggregated["legislation_refs"]),
+            "precedent_refs": sorted(aggregated["precedent_refs"]),
+            "legal_principles": sorted(aggregated["legal_principles"]),
+            "jurisdictions": sorted(aggregated["jurisdictions"]),
+            "summary": {
+                "total_legislation": len(aggregated["legislation_refs"]),
+                "total_precedents": len(aggregated["precedent_refs"]),
+                "total_principles": len(aggregated["legal_principles"]),
+                "jurisdictions_count": len(aggregated["jurisdictions"]),
+            },
+        }
+
+    def _recognize_patterns(self, content: str) -> Any:
+        memory_traces = [
+            trace.content for trace in self.cognitive_state.long_term_memory
+        ]
+
+        recognized_patterns = self.pattern_recognition(
+            current_content=content,
+            memory_traces=memory_traces,
+            emotional_context=self.cognitive_state.emotional_state,
+        )
+
+        self.cognitive_state.metacognitive_log.append(
+            {
+                "action": "pattern_recognition",
+                "identified_patterns": recognized_patterns.legal_patterns,
+                "identified_principles": recognized_patterns.legal_principles,
+                "identified_precedents": recognized_patterns.precedents,
+                "similarity_scores": recognized_patterns.similarity_scores,
+            }
+        )
+
+        return recognized_patterns
+
+    # def _process_chunk(self, chunk: str, query: str) -> None:
+    #     self.current_step += 1
+    #     current_kb = KnowledgeBase(
+    #         step_number=self.current_step,
+    #         contexts=[],
+    #         patterns=[],
+    #         legal_framework={}
+    #     )
+
+    #     patterns = self._recognize_patterns(chunk)
+    #     current_kb.patterns.extend(patterns.legal_patterns)
+
+    #     legal_metadata = self._extract_legal_metadata(chunk)
+
+    #     depth_limit = 0
+    #     previous_choice = None
+    #     action = self._determine_next_action(chunk, query, previous_choice)
+
+    #     while action != CognitiveAction.DRAW_CONCLUSIONS and depth_limit < 5:
+    #         previous_choice = action
+    #         print(f"Chosen action: {action} for step {self.current_step}")
+
+    #         success_metrics = self._execute_cognitive_action(
+    #             action, chunk, query, current_kb, legal_metadata
+    #         )
+
+    #         self._update_metacognitive_state(action, success_metrics)
+
+    #         self._update_attention_focus(chunk, success_metrics, legal_metadata)
+
+    #         action = self._determine_next_action(chunk, query, previous_choice)
+    #         depth_limit += 1
+
+    #     self.knowledge_bases.append(current_kb)
+    def _process_chunk(self, chunk: str, query: str) -> None:
+        """Process chunk with enhanced progression tracking."""
+        self.current_step += 1
+        current_kb = KnowledgeBase(
+            step_number=self.current_step, contexts=[], patterns=[], legal_framework={}
+        )
+
+        # Initial legal analysis
+        patterns = self._recognize_patterns(chunk)
+        current_kb.patterns.extend(patterns.legal_patterns)
+        legal_metadata = self._extract_legal_metadata(chunk)
+
+        # Track processing state
+        processing_state = {
+            "identified_gaps": False,
+            "performed_synthesis": False,
+            "evaluated_arguments": False,
+            "draw_conclusions": False,
+        }
+
+        depth_limit = 0
+        previous_choice = None
+
+        while depth_limit < 5:
+            action = self._determine_next_action(chunk, query, previous_choice)
+            print(f"Chosen action: {action} for step {self.current_step}")
+
+            # Update processing state
+            if action == CognitiveAction.IDENTIFY_GAPS:
+                if processing_state["identified_gaps"]:
+                    # Skip redundant gap identification
+                    action = CognitiveAction.SYNTHESIZE_INFO
+                processing_state["identified_gaps"] = True
+            elif action == CognitiveAction.SYNTHESIZE_INFO:
+                processing_state["performed_synthesis"] = True
+            elif action == CognitiveAction.EVALUATE_ARGUMENTS:
+                processing_state["evaluated_arguments"] = True
+            elif action == CognitiveAction.DRAW_CONCLUSIONS:
+                processing_state["draw_conclusions"] = True
+                break
+
+            success_metrics = self._execute_cognitive_action(
+                action, chunk, query, current_kb, legal_metadata
+            )
+
+            self._update_metacognitive_state(action, success_metrics)
+            self._update_attention_focus(chunk, success_metrics, legal_metadata)
+
+            # Force progression if stuck
+            if depth_limit >= 3 and not processing_state["performed_synthesis"]:
+                action = CognitiveAction.SYNTHESIZE_INFO
+
+            previous_choice = action
+            depth_limit += 1
+
+        self.knowledge_bases.append(current_kb)
+
+    def _gather_information(self, queries: List[str]) -> List[Context]:
+        contexts = []
+        queue = Queue()
+        thread_pool = []
+
+        def query_worker(query):
+            try:
+                if self.retriever:
+                    results = self.retriever.query(query, 3)
+                    queue.put((query, results))
+            except Exception as e:
+                print(f"Error querying for {query}: {e}")
+
+        queries = list(set(queries))
+
+        for query in queries:
+            print(f"Querying for: {query}")
+            t = Thread(target=query_worker, args=(query,))
+            thread_pool.append(t)
+            t.start()
+
+        for thread in thread_pool:
+            thread.join()
+
+        while not queue.empty():
+            query, results = queue.get()
+            for result in results:
+                legal_metadata = self._extract_legal_metadata(result["text"])
+                context = Context(
+                    text=result["text"],
+                    confidence=result["score"],
+                    source=f"retrieval_{query}",
+                    relevance_score=result["score"],
+                    legal_metadata=legal_metadata,
+                )
+                contexts.append(context)
+
+                self.cognitive_state.metacognitive_log.append(
+                    {
+                        "action": "information_retrieval",
+                        "query": query,
+                        "relevance_score": result["score"],
+                        "legal_metadata_found": bool(legal_metadata),
+                    }
+                )
+
+        return contexts
+
+    def _update_metacognitive_state(
+        self, action: CognitiveAction, success_metrics: Dict[str, float]
+    ) -> None:
+        metacognitive_assessment = self.metacognition(
+            current_state=self._get_current_context(),
+            confidence=success_metrics.get("confidence", 0.0),
+            strategy=str(action),
+            emotional_state=self.cognitive_state.emotional_state,
+        )
+
+        if metacognitive_assessment.should_adjust:
+            self.cognitive_state.strategy_stack.append(
+                metacognitive_assessment.new_strategy
+            )
+
+        self.cognitive_state.confidence_history.append(
+            success_metrics.get("confidence", 0.0)
+        )
+
+        self.cognitive_state.metacognitive_log.append(
+            {
+                "action": action,
+                "confidence": success_metrics.get("confidence", 0.0),
+                "relevance": success_metrics.get("relevance", 0.0),
+                "should_adjust_strategy": metacognitive_assessment.should_adjust,
+                "new_strategy": metacognitive_assessment.new_strategy,
+                "metacognitive_notes": metacognitive_assessment.metacognitive_notes,
+                "step_number": self.current_step,
+            }
+        )
+
+    # def _determine_next_action(self, chunk: str, query: str,
+    #                          previous_step: Optional[CognitiveAction]) -> CognitiveAction:
+    #     current_context = self._get_current_context()
+
+    #     initial_analysis = (self.knowledge_bases[0].contexts[0].text
+    #                       if self.knowledge_bases and self.knowledge_bases[0].contexts
+    #                       else "")
+
+    #     decision = self.reasoning(
+    #         query=query,
+    #         chunk=chunk,
+    #         context=current_context,
+    #         initial_analysis=initial_analysis,
+    #         previous_choice=previous_step,
+    #         emotional_state=self.cognitive_state.emotional_state
+    #     )
+
+    #     self.cognitive_state.metacognitive_log.append({
+    #         'action': 'action_decision',
+    #         'chosen_action': decision.action,
+    #         'confidence': decision.confidence,
+    #         'previous_action': previous_step,
+    #         'step_number': self.current_step
+    #     })
+
+    #     return decision.action
+    def _determine_next_action(
+        self, chunk: str, query: str, previous_step: Optional[CognitiveAction]
+    ) -> CognitiveAction:
+        """Determine next cognitive action with enhanced progression logic."""
+        current_context = self._get_current_context()
+        initial_analysis = (
+            self.knowledge_bases[0].contexts[0].text
+            if self.knowledge_bases and self.knowledge_bases[0].contexts
+            else ""
+        )
+
+        # Track consecutive gap identifications to prevent loops
+        consecutive_gaps = sum(
+            1
+            for log in self.cognitive_state.metacognitive_log[-3:]
+            if log.get("action") == CognitiveAction.IDENTIFY_GAPS
+        )
+
+        # Force progression if stuck in identification loop
+        if consecutive_gaps >= 2:
+            if any(
+                ctx.source == "retrieval"
+                for kb in self.knowledge_bases
+                for ctx in kb.contexts
+            ):
+                return CognitiveAction.SYNTHESIZE_INFO
+            else:
+                return CognitiveAction.SKIP_CHUNK
+
+        # Get base decision
+        decision = self.reasoning(
+            query=query,
+            chunk=chunk,
+            context=current_context,
+            initial_analysis=initial_analysis,
+            previous_choice=previous_step,
+            emotional_state=self.cognitive_state.emotional_state,
+        )
+
+        # Enhance decision based on state
+        if previous_step == CognitiveAction.SYNTHESIZE_INFO:
+            return CognitiveAction.EVALUATE_ARGUMENTS
+        elif previous_step == CognitiveAction.EVALUATE_ARGUMENTS:
+            if self._should_draw_conclusions():
+                return CognitiveAction.DRAW_CONCLUSIONS
+
+        return decision.action
+
+    def _should_draw_conclusions(self) -> bool:
+        """Determine if enough analysis has been done to draw conclusions."""
+        if not self.knowledge_bases:
+            return False
+
+        # Check for sufficient context gathering
+        has_synthesis = any(
+            ctx.source == "synthesis"
+            for kb in self.knowledge_bases
+            for ctx in kb.contexts
+        )
+        has_evaluation = any(
+            ctx.source == "evaluation"
+            for kb in self.knowledge_bases
+            for ctx in kb.contexts
+        )
+
+        # Check confidence levels
+        recent_confidence = [
+            log.get("confidence", 0.0)
+            for log in self.cognitive_state.metacognitive_log[-3:]
+        ]
+        high_confidence = sum(conf > 0.7 for conf in recent_confidence) >= 2
+
+        return has_synthesis and has_evaluation and high_confidence
+
+    def _process_document_chunks(self, document: dict, query: str) -> None:
+        for page_num, page in document.get("page", {}).items():
+            print(f"Processing page {page_num}")
+
+            sorted_paragraphs = sorted(
+                page["paragraph"].items(), key=lambda x: int(x[0])
+            )
+
+            for para_num, chunk in sorted_paragraphs:
+                print(f"Processing paragraph {para_num}")
+
+                if not chunk.strip():
+                    continue
+
+                self._process_chunk(chunk, query)
+
+        self.cognitive_state.update_activation()
+
+        self.cognitive_state.metacognitive_log.append(
+            {
+                "action": "document_processing_complete",
+                "total_chunks_processed": sum(
+                    len(page["paragraph"]) for page in document.get("page", {}).values()
+                ),
+                "knowledge_bases_created": len(self.knowledge_bases),
+                "final_memory_trace_count": len(self.cognitive_state.long_term_memory),
+            }
+        )
+
+    def _execute_cognitive_action(
+        self,
+        action: CognitiveAction,
+        chunk: str,
+        query: str,
+        kb: KnowledgeBase,
+        legal_metadata: LegalMetadata,
+    ) -> Dict[str, float]:
+        success_metrics = {"confidence": 0.0, "relevance": 0.0}
+
+        if action == CognitiveAction.IDENTIFY_GAPS:
+            success_metrics = self._handle_gap_identification(
+                chunk, query, kb, legal_metadata
+            )
+        elif action == CognitiveAction.SYNTHESIZE_INFO:
+            success_metrics = self._handle_synthesis(kb, query, legal_metadata)
+        elif action == CognitiveAction.EVALUATE_ARGUMENTS:
+            success_metrics = self._handle_evaluation(kb, query, legal_metadata)
+
+        return success_metrics
+
+    def _synthesize_information(self, kb: KnowledgeBase, query: str) -> Any:
+        # Get all relevant contexts
+        contexts = [c.text for c in kb.contexts]
+
+        # Only proceed with synthesis if we have contexts
+        if not contexts:
+            return None
+
+        # Perform synthesis with legal context
+        synthesis = self.synthesizer(
+            contexts=contexts,
+            query=query,
+            emotional_state=self.cognitive_state.emotional_state,
+            patterns=kb.patterns,
+            legal_framework=kb.legal_framework,
+        )
+
+        # Log synthesis in metacognitive state
+        self.cognitive_state.metacognitive_log.append(
+            {
+                "action": "synthesis",
+                "patterns_used": kb.patterns,
+                "contexts_synthesized": len(contexts),
+                "confidence": synthesis.confidence,
+                "legal_implications_identified": synthesis.legal_implications,
+            }
+        )
+
+        if synthesis.confidence > 0.7:
+            self.cognitive_state.working_memory.append(
+                MemoryTrace(
+                    content=synthesis.synthesis,
+                    activation=1.0,
+                    source="synthesis",
+                    relevance=synthesis.confidence,
+                )
+            )
+
+        return synthesis
+
+    def _handle_synthesis(
+        self, kb: KnowledgeBase, query: str, legal_metadata: LegalMetadata
+    ) -> Dict[str, float]:
+        synthesis = self._synthesize_information(kb, query)
+
+        kb.contexts.append(
+            Context(
+                text=synthesis.synthesis,
+                confidence=synthesis.confidence,
+                source="synthesis",
+                emotional_valence=synthesis.emotional_valence,
+                legal_metadata=legal_metadata,
+            )
+        )
+
+        legal_alignment = self._calculate_legal_alignment(
+            synthesis.synthesis, synthesis.legal_implications, legal_metadata
+        )
+
+        return {
+            "confidence": synthesis.confidence,
+            "relevance": 0.8,
+            "legal_alignment": legal_alignment,
+            "emotional_valence": synthesis.emotional_valence,
+        }
+
+    def _handle_evaluation(
+        self, kb: KnowledgeBase, query: str, legal_metadata: LegalMetadata
+    ) -> Dict[str, float]:
+        latest_synthesis = next(
+            (c.text for c in reversed(kb.contexts) if c.source == "synthesis"), None
+        )
+
+        if not latest_synthesis:
+            return {"confidence": 0.0, "relevance": 0.0}
+
+        evaluation = self.evaluator(
+            synthesis=latest_synthesis,
+            query=query,
+            evidence=[c.text for c in kb.contexts],
+            emotional_context=self.cognitive_state.emotional_state,
+            legal_framework=kb.legal_framework,
+        )
+
+        kb.contexts.append(
+            Context(
+                text=evaluation.evaluation,
+                confidence=evaluation.confidence,
+                source="evaluation",
+                legal_metadata=legal_metadata,
+            )
+        )
+
+        legal_soundness = self._calculate_legal_soundness(
+            evaluation.evaluation, evaluation.cited_legislation, legal_metadata
+        )
+
+        return {
+            "confidence": evaluation.confidence,
+            "relevance": 0.7,
+            "legal_soundness": legal_soundness,
+            "recommendation_strength": len(evaluation.recommendations) / 5.0,
+        }
+
+    def _calculate_legal_alignment(
+        self,
+        synthesis: str,
+        legal_implications: List[str],
+        legal_metadata: LegalMetadata,
+    ) -> float:
+        alignment_score = 0.0
+
+        if legal_metadata.legislation_refs:
+            if any(ref in synthesis for ref in legal_metadata.legislation_refs):
+                alignment_score += 0.3
+
+        if legal_metadata.legal_principles:
+            if any(
+                principle in synthesis for principle in legal_metadata.legal_principles
+            ):
+                alignment_score += 0.3
+
+        if legal_metadata.precedent_refs:
+            if any(
+                precedent in synthesis for precedent in legal_metadata.precedent_refs
+            ):
+                alignment_score += 0.2
+
+        if legal_implications:
+            alignment_score += min(len(legal_implications) * 0.1, 0.2)
+
+        return min(alignment_score, 1.0)
+
+    def _calculate_legal_soundness(
+        self,
+        evaluation: str,
+        cited_legislation: List[str],
+        legal_metadata: LegalMetadata,
+    ) -> float:
+        soundness_score = 0.0
+
+        if cited_legislation:
+            citation_coverage = len(
+                set(cited_legislation).intersection(legal_metadata.legislation_refs)
+            ) / max(len(legal_metadata.legislation_refs), 1)
+            soundness_score += citation_coverage * 0.4
+
+        if legal_metadata.legal_principles:
+            principle_coverage = sum(
+                1
+                for principle in legal_metadata.legal_principles
+                if principle in evaluation
+            )
+            soundness_score += (
+                principle_coverage / max(len(legal_metadata.legal_principles)),
+                1,
+            ) * 0.3
+
+        if legal_metadata.precedent_refs:
+            precedent_coverage = sum(
+                1
+                for precedent in legal_metadata.precedent_refs
+                if precedent in evaluation
+            )
+            soundness_score += (
+                precedent_coverage / max(len(legal_metadata.precedent_refs)),
+                1,
+            ) * 0.3
+
+        return min(soundness_score, 1.0)
+
+    def _handle_gap_identification(
+        self, chunk: str, query: str, kb: KnowledgeBase, legal_metadata: LegalMetadata
+    ) -> Dict[str, float]:
+        gaps = self._identify_gaps(query, chunk, kb)
+        retrieved_info = self._gather_information(gaps)
+
+        # Add legal metadata to retrieved information
+        for info in retrieved_info:
+            info.legal_metadata = self._extract_legal_metadata(info.text)
+
+        kb.contexts.extend(retrieved_info)
+
+        confidence = self._calculate_gap_resolution_confidence(gaps, retrieved_info)
+        legal_relevance = self._calculate_legal_relevance_score(
+            retrieved_info, legal_metadata
+        )
+
+        return {
+            "confidence": confidence,
+            "relevance": legal_relevance,
+            "legal_coverage": self._calculate_legal_coverage(retrieved_info),
+        }
+
+    def _calculate_gap_resolution_confidence(
+        self, gaps: List[str], retrieved_info: List[Context]
+    ) -> float:
+        if not gaps:
+            return 1.0
+
+        gap_resolution_scores = []
+
+        for gap in gaps:
+            gap_score = 0.0
+            relevant_contexts = 0
+
+            for info in retrieved_info:
+                relevance = self._calculate_gap_context_relevance(gap, info)
+                if relevance > 0:
+                    gap_score += relevance
+                    relevant_contexts += 1
+
+            if relevant_contexts > 0:
+                gap_resolution_scores.append(gap_score / relevant_contexts)
+            else:
+                gap_resolution_scores.append(0.0)
+
+        if gap_resolution_scores:
+            return sum(gap_resolution_scores) / len(gap_resolution_scores)
+        return 0.0
+
+    def _calculate_gap_context_relevance(self, gap: str, context: Context) -> float:
+        relevance_score = 0.0
+
+        relevance_score += context.relevance_score * 0.3
+
+        if context.legal_metadata:
+            if any(
+                ref in gap.lower() for ref in context.legal_metadata.legislation_refs
+            ):
+                relevance_score += 0.3
+
+            if any(
+                principle in gap.lower()
+                for principle in context.legal_metadata.legal_principles
+            ):
+                relevance_score += 0.2
+
+            if any(
+                precedent in gap.lower()
+                for precedent in context.legal_metadata.precedent_refs
+            ):
+                relevance_score += 0.2
+
+        return min(1.0, relevance_score)
+
+    def _calculate_legal_coverage(self, contexts: List[Context]) -> float:
+        coverage_metrics = {"legislation": 0.0, "precedents": 0.0, "principles": 0.0}
+
+        for context in contexts:
+            if context.legal_metadata:
+                if context.legal_metadata.legislation_refs:
+                    coverage_metrics["legislation"] += 0.3
+                if context.legal_metadata.precedent_refs:
+                    coverage_metrics["precedents"] += 0.3
+                if context.legal_metadata.legal_principles:
+                    coverage_metrics["principles"] += 0.4
+
+        return min(1.0, sum(coverage_metrics.values()))
+
+    def _calculate_legal_relevance_score(
+        self, contexts: List[Context], legal_metadata: LegalMetadata
+    ) -> float:
+        relevance_score = 0.0
+
+        for context in contexts:
+            if context.legal_metadata:
+                matching_legislation = len(
+                    set(context.legal_metadata.legislation_refs).intersection(
+                        legal_metadata.legislation_refs
+                    )
+                )
+                relevance_score += matching_legislation * 0.2
+
+                matching_precedents = len(
+                    set(context.legal_metadata.precedent_refs).intersection(
+                        legal_metadata.precedent_refs
+                    )
+                )
+                relevance_score += matching_precedents * 0.2
+
+                matching_principles = len(
+                    set(context.legal_metadata.legal_principles).intersection(
+                        legal_metadata.legal_principles
+                    )
+                )
+                relevance_score += matching_principles * 0.2
+
+                if (
+                    context.legal_metadata.jurisdiction
+                    and context.legal_metadata.jurisdiction
+                    == legal_metadata.jurisdiction
+                ):
+                    relevance_score += 0.2
+
+        return min(1.0, relevance_score)
+
+    def _update_attention_focus(
+        self, content: str, metrics: Dict[str, float], legal_metadata: LegalMetadata
+    ) -> None:
+        relevance_threshold = 0.5
+        if metrics["relevance"] > relevance_threshold:
+            self.cognitive_state.attention.current_focus = content
+            self.cognitive_state.attention.relevance_scores[content] = metrics[
+                "relevance"
+            ]
+
+            # Track legal focus points
+            if legal_metadata:
+                self.cognitive_state.attention.legal_focus_points.extend(
+                    [
+                        *legal_metadata.legislation_refs,
+                        *legal_metadata.precedent_refs,
+                        *legal_metadata.legal_principles,
+                    ]
+                )
+
+        self.attention_history.append(
+            {
+                "focus": self.cognitive_state.attention.current_focus,
+                "relevance": metrics["relevance"],
+                "legal_focus_points": self.cognitive_state.attention.legal_focus_points,
+                "timestamp": self.current_step,
+            }
+        )
 
     def reset(self) -> None:
         self.knowledge_bases = []
@@ -889,6 +1447,7 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         self.attention_history = []
         self.pattern_memory = {}
         self.cognitive_state = CognitiveState()
+        self.legal_context_history = []
 
 
 class CognitiveOCRConfig:
@@ -924,8 +1483,7 @@ def main():
     )
     dspy.configure(lm=llm)
 
-    # Initialize your retriever here
-    # retriever = Retriever()  # Replace with your actual retriever
+    retriever = Retriever()
 
     mock_document = {
         "page": {
@@ -951,18 +1509,34 @@ def main():
 
     query = "O seguinte documento é válido de forma a extinguir a associação das testemunhas de jeová?"
 
-    # Setup the cognitive system
-    agent = EnhancedCognitiveOCRAgent(retriever=None)
+    agent = EnhancedCognitiveOCRAgent(retriever=retriever)
 
-    # Example document and query
-    # document = """
-    # [Your document content here]
-    # """
-    # query = "What are the legal implications of this document?"
-
-    # Process the document
     result = agent.process_document(document=mock_document, query=query)
     print(result)
+    print(result.get("conclusion"))
+    print(result.get("confidence"))
+    print(result.get("legal_opinion"))
+
+    # return {
+    #         "conclusion": conclusion.conclusion,
+    #         "legal_opinion": conclusion.legal_opinion,
+    #         "confidence": conclusion.confidence,
+    #         "supporting_context": all_contexts,
+    #         "emotional_impact": conclusion.emotional_impact,
+    #         "cognitive_state": {
+    #             "attention_history": self.attention_history,
+    #             "metacognitive_log": self.cognitive_state.metacognitive_log,
+    #             "identified_patterns": self.pattern_memory,
+    #             "emotional_state": self.cognitive_state.emotional_state,
+    #             "legal_context": self.legal_context_history
+    #         },
+    #         "legal_metadata": {
+    #             "legislation_refs": all_legal_metadata.get("legislation_refs", []),
+    #             "precedent_refs": all_legal_metadata.get("precedent_refs", []),
+    #             "legal_principles": all_legal_metadata.get("legal_principles", []),
+    #             "jurisdiction": all_legal_metadata.get("jurisdiction")
+    #         }
+    #     }
 
 
 if __name__ == "__main__":

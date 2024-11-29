@@ -79,7 +79,8 @@ async def query(
                     {
                         "response": chunk.get("answer"),
                         "summary": chunk.get("summary"),
-                        "references": chunk.get("references"),
+                        "reference": chunk.get("references"),
+                        "field": "Direito do Trabalho",
                     },
                     ensure_ascii=False,
                 )
