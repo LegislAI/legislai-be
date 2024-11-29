@@ -5,8 +5,6 @@
 - **Main Goal**: Create a virtual assistant that simplifies search and enhances understanding of Portuguese legislation, making it accessible and understandable via a unique website
 - **Problem Statement**: Accessibility and searchability within the Portuguese legal system are complex, often requiring specialized knowledge. This system addresses these challenges by offering an intuitive and efficient way to access legal information to all the people interested on it.
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/cf84e6f3-ed53-4526-b8f8-8f8efa65e835/image.png)
-
 ## 2. Context and Background
 
 Portuguese legislation is dense and difficult to navigate for the average person. Many individuals are unaware of their rights due to the lack of accessible information. By automating search and contextualizing results, the virtual assistant empowers users to understand and apply legal information effectively.
@@ -32,7 +30,6 @@ LegislAI offers a centralized, user-friendly, AI-powered legal database, designe
     - **Query Expansion**: Techniques are applied to enrich user queries with context for improved retrieval.
     - **Metadata Extraction**: Key details (legislation date, question date, summary, subject and region) are extracted to refine the search.
     
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/5fceabf8-7cb0-456e-b381-8d598e247006/image.png)
     
 - **Response Generation**:
     
@@ -52,14 +49,10 @@ LegislAI offers a centralized, user-friendly, AI-powered legal database, designe
         
     - For prompt engineering, we use *DSPy*. It is a framework for algorithmically optimizing the prompts and weights of a Large Language Model, where we can use prompt techniques, like *ChainOfThought*, based on the query provided by the user. This framework is particularly effective for creating complex pipelines that involve multiple interactions with the LLM.
     
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/65fee8cc-db90-44ea-b4b0-778ff2e36893/image.png)
-    
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/c38782d6-f82e-401c-bbbd-36008489865a/image.png)
     
 - **Output**: The processed query and relevant legal response are returned to the user, with adequate links that shows where the information given comes from, validating that is real and true.
 - **OCR**: LegislAI has the capability to accepts documents in PDF or image format. In the PDF processing module, each page is converted into an image, and text is extracted using OCR (via Tesseract). For image processing, the team developed algorithms to process skewing in images , contrast enhancement, and noise reduction to improve text readability. Both processes output the extracted text in a standardized JSON format, organized by pages and paragraphs, ensuring seamless integration with the chatbot.
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/1aabbbec-a584-47b5-95ec-7ad609138225/image.png)
 
 - **Front end:** The front end was developed using Next.js due to its efficient approach to building web applications. For managing global authentication state, we implemented React Redux, while Framer Motion was utilized for animations within the application.
 
@@ -83,7 +76,6 @@ If the user only submits a query, it is processed by the Query Enhancement Modul
 
 If the user provides both a query and a document, the OCR Module is activated. This module processes the uploaded file, applies prompt techniques and returns the answer to the user.
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/73854a32-2914-4147-9efe-dce6bddb5b61/image.png)
 
 The diagram represents the various interactions that users can have with the LegisAI system. All users are able to authenticate themselves, and all users can input queries. However, only advanced users (*Utilizador Avançado*) can input files to the system to be analyzed.
 
@@ -96,7 +88,6 @@ The system itself also interacts with various components:
 
 The diagram provides a visual representation of these interactions and the various components involved in the LegisAI system.
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/decc2bcd-dc95-4228-b080-c53cd952f940/3972516a-f52a-4af4-9538-73f0980e12ad/image.png)
 
 ## 5. Challenges and Limitations
 
