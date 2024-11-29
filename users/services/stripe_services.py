@@ -79,6 +79,7 @@ class StripeServices:
     def get_customer(self, user_id: str) -> stripe.Customer:
         customers = stripe.Customer.list()
         for customer in customers.data:
+            print(customer.metadata)
             if customer.metadata.get("user_id") == user_id:
                 return customer
         return None

@@ -38,6 +38,7 @@ def get_user_info(credentials: HTTPAuthorizationCredentials = Depends(JWTBearer(
         )
         user = get_user_by_id(user_id)
         stripe_customer = stripe_services.get_customer(user_id)
+        print(stripe_customer)
         user_plan = stripe_services.get_customer_plan(stripe_customer.id)
         current_period_end = user_plan.current_period_end
         user.next_billing_date = datetime.fromtimestamp(
