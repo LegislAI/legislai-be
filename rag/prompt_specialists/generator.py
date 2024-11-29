@@ -8,7 +8,8 @@ import pydantic
 from dotenv import load_dotenv
 from rag.prompt_specialists.utils.logging import logger
 
-NOTA_FINAL = """**Observação:** Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
+# NOTA_FINAL = """**Observação:** Esta análise é meramente informativa e não substitui o aconselhamento jurídico de um profissional."""
+NOTA_FINAL = """"""
 
 
 class References(pydantic.BaseModel):
