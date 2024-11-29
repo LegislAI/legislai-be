@@ -139,8 +139,8 @@ class RAG:
             }
             await asyncio.sleep(0.1)
 
-        yield {
-            "answer": response.answer,
-            "references": response.references[0].url,
-            "summary": additional_data.get("assunto"),
-        }
+        # yield {
+        #     "answer": response.answer,
+        #     "references": response.references[0].url,
+        #     "summary": additional_data.get("assunto"),
+        # }
