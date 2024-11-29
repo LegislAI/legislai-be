@@ -16,13 +16,13 @@ from services.dynamo_services import update_user_fields
 from services.stripe_services import StripeServices
 from utils.auth import create_access_token
 from utils.auth import create_refresh_token
+from utils.auth import decodeJWT
 from utils.auth import JWTBearer
 from utils.exceptions import UserNotFoundException
 from utils.logging_config import logger
 from utils.password import SecurityUtils
 from utils.schemas import LoginRequest
 from utils.schemas import LoginResponse
-from utils.schemas import LogoutRequest
 from utils.schemas import LogoutResponse
 from utils.schemas import RefreshTokenRequest
 from utils.schemas import RefreshTokenResponse
@@ -150,8 +150,6 @@ def login_user(payload: LoginRequest):
     logger.info(f"User logged in: {user['email']}")
     return LoginResponse(
         user_id=user["user_id"],
-        email=user["email"],
-        username=user["username"],
         access_token=access_token,
         refresh_token=refresh_token,
     )
@@ -159,33 +157,26 @@ def login_user(payload: LoginRequest):
 
 @route.post("/logout", response_model=LogoutResponse)
 async def logout_user(
-    payload: LogoutRequest,
     credentials: HTTPAuthorizationCredentials = Depends(JWTBearer()),
 ):
     """
     Logout user based on email and revoke tokens
     """
-    email = payload.email
     access_token = credentials.credentials
 
     try:
-        user = get_user_by_email(email)
-    except UserNotFoundException as e:
-        logger.error(f"User not found: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-        )
+        user_id = decodeJWT(access_token)["sub"]
     except Exception as e:
         logger.error(f"Failed to fetch user: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed login attempt",
+            detail="Failed to logout",
         )
 
     try:
-        refresh_token = get_refresh_token(user["user_id"])
-        revoke_token(user["user_id"], refresh_token, "refresh_token")
-        revoke_token(user["user_id"], access_token, "access_token")
+        refresh_token = get_refresh_token(user_id)
+        revoke_token(user_id, refresh_token, "refresh_token")
+        revoke_token(user_id, access_token, "access_token")
     except Exception as e:
         logger.error(f"Failed to logout user: {str(e)}")
         raise HTTPException(
@@ -193,7 +184,7 @@ async def logout_user(
             detail="Failed to logout user",
         )
 
-    logger.info(f"User {email} logged out successfully")
+    logger.info(f"User with id {user_id} logged out successfully")
     return LogoutResponse(message="Successfully logged out")
 
 

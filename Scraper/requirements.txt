@@ -1,0 +1,7 @@
+beautifulsoup4
+requests
+selenium
+chromedriver-py
+awscli
+boto3
+python-dotenv

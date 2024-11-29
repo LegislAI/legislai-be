@@ -1,0 +1,9 @@
+langchain
+langgraph
+langchain_together
+python-dotenv
+lime
+spacy==3.7.5
+setuptools
+wheel
+langchain_community

@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     algorithm: str
     access_token_expire_minutes: int
     refresh_token_expire_minutes: int
+    frontend_url: str
 
     aws_access_key_id: str
     aws_secret_access_key: str

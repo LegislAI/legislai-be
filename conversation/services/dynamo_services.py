@@ -1,16 +1,17 @@
+from datetime import datetime
 from typing import Dict
 from typing import List
 
 import boto3
 from botocore.exceptions import ClientError
-from config.settings import settings
+from conversation.config.settings import settings
+from conversation.utils.aux_func import format_messages
+from conversation.utils.aux_func import parse_dynamodb_message
+from conversation.utils.logging_config import logger
+from conversation.utils.schemas import Message
+from conversation.utils.schemas import NewConversationRequest
 from fastapi import HTTPException
 from fastapi import status
-from utils.aux_func import format_messages
-from utils.aux_func import parse_dynamodb_message
-from utils.logging_config import logger
-from utils.schemas import AddMessageRequest
-from utils.schemas import NewConversationRequest
 
 
 boto3_client = boto3.client(
@@ -40,18 +41,17 @@ def check_conversation(user_id: str, conversation_id: str) -> bool:
     return True
 
 
-def add_messages_to_new_conversation(
-    conversation_id: str, payload: NewConversationRequest
-):
+def add_messages_to_new_conversation(user_id: str, payload: NewConversationRequest):
     """
     Add messages to a new conversation
     """
-    user_id, conversation_name, conversation_field = (
-        payload.user_id,
+    conversation_name, conversation_field = (
         payload.conversation_name,
         payload.conversation_field,
     )
     messages = format_messages(payload.messages)
+
+    conversation_id = payload.conversation_id
 
     try:
         boto3_client.put_item(
@@ -75,20 +75,20 @@ def add_messages_to_new_conversation(
         )
 
 
-def add_messages_to_conversation(conversation_id: str, payload: AddMessageRequest):
+def add_messages_to_conversation(
+    user_id: str, conversation_id: str, messages: List[Message]
+):
     """
     Add messages to an existing conversation
     """
-    print(payload)
-    messages = format_messages(payload.messages)
-    print(payload)
+    messages = format_messages(messages)
 
     try:
         boto3_client.update_item(
             TableName="conversations",
             Key={
                 "conversation_id": {"S": conversation_id},
-                "user_id": {"S": payload.user_id},
+                "user_id": {"S": user_id},
             },
             UpdateExpression="SET messages = list_append(messages, :messages), updated_at = :updated_at",
             ExpressionAttributeValues={
@@ -176,33 +176,34 @@ def get_conversation(conversation_id: str, user_id: str) -> Dict:
         )
 
 
-def get_recent_conversations(user_id, offset: int = 0, limit: int = 10) -> List[Dict]:
+def get_recent_conversations(
+    user_id: str, offset: int = 0, limit: int = 10
+) -> List[Dict]:
     """
     Get recent conversations with their recent messages
     """
     try:
         response = boto3_client.query(
             TableName="conversations",
-            IndexName="UserIdAtIndex",
+            IndexName="UserIdUpdatedAtIndex",
             KeyConditionExpression="user_id = :user_id",
             ExpressionAttributeValues={":user_id": {"S": user_id}},
-            ProjectionExpression="conversation_id, conversation_name,conversation_field, updated_at",
+            ScanIndexForward=False,  # Ordenar do mais recente para o mais antigo
             Limit=offset + limit,
+            ProjectionExpression="conversation_id, conversation_name, conversation_field, updated_at",
         )
 
-        # Order conversations by `updated_at` in descending order
-        conversations = sorted(
-            response.get("Items", []), key=lambda x: x["updated_at"]["S"], reverse=True
-        )
+        conversations = response.get("Items", [])
 
-        # Return only the range between `offset` and `offset + limit`
         paginated_conversations = conversations[offset : offset + limit]
 
         conversations_with_messages = []
         for conv in paginated_conversations:
             conversation_id = conv["conversation_id"]["S"]
 
-            recent_messages = get_recent_messages(user_id, conversation_id, 16, 0)
+            recent_messages = get_recent_messages(
+                user_id, conversation_id, limit, offset
+            )
 
             conversation_with_messages = {
                 "conversation_id": conversation_id,
@@ -212,8 +213,6 @@ def get_recent_conversations(user_id, offset: int = 0, limit: int = 10) -> List[
                 "messages": recent_messages["messages"],
             }
             conversations_with_messages.append(conversation_with_messages)
-
-        print(conversation_with_messages)
 
         logger.info(f"Fetched {len(conversations_with_messages)} conversations")
         return conversations_with_messages

@@ -27,25 +27,14 @@ class Conversation(BaseModel):
 
 
 class NewConversationRequest(BaseModel):
-    user_id: str
     messages: List[Message]
     conversation_name: str
     conversation_field: str
-
-
-class ConversationRequest(BaseModel):
-    user_id: str
     conversation_id: str
 
 
 class ConversationResponse(BaseModel):
-    conversation_id: str
-
-
-class AddMessageRequest(BaseModel):
-    user_id: str
-    conversation_id: str
-    messages: List[Message]
+    message: str
 
 
 class MessageResponse(BaseModel):

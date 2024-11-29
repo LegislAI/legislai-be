@@ -1,13 +1,11 @@
 import math
-from datetime import datetime
-from datetime import timezone
 
-from config.settings import settings
 from fastapi import APIRouter
 from fastapi import Depends
 from fastapi import HTTPException
 from fastapi import status
 from fastapi.security import HTTPAuthorizationCredentials
+from RAG import rag
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_fields
 from utils.exceptions import UserNotFoundException
@@ -16,11 +14,11 @@ from utils.password import SecurityUtils
 from utils.schemas import QueryRequestPayload
 from utils.schemas import QueryResponsePayoad
 from utils.utils import decodeJWT
-from utils.utils import is_authenticated
 from utils.utils import JWTBearer
 
 route = APIRouter()
 security = SecurityUtils()
+rag_service = rag.RAG()
 
 
 PLAN_QUERIES_MAP = {
@@ -37,13 +35,6 @@ def query(
 ):
     try:
         token = credentials.credentials
-
-        if not is_authenticated(token):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Unauthorized",
-            )
-
         user_id = decodeJWT(token)["sub"]
 
         logger.info(f"Received a request to query from user with id: {user_id}")
@@ -70,6 +61,9 @@ def query(
                     email=user.email,
                     fields={"weekly_queries": str(user_queries)},
                 )
+
+                rag_service.query(query=payload.query)
+
                 return QueryResponsePayoad(
                     response="This is a response", summary="This is a summary"
                 )

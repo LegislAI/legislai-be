@@ -4,7 +4,9 @@ from typing import Optional
 
 import boto3
 from botocore.exceptions import ClientError
-from config.settings import settings
+from conversation.config.settings import settings
+from conversation.utils.exceptions import TokenRevokedException
+from conversation.utils.logging_config import logger
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.security import HTTPAuthorizationCredentials
@@ -12,8 +14,6 @@ from fastapi.security import HTTPBearer
 from jose import jwt
 from jwt.exceptions import ExpiredSignatureError
 from jwt.exceptions import InvalidTokenError
-from utils.exceptions import TokenRevokedException
-from utils.logging_config import logger
 
 
 boto3_client = boto3.client(

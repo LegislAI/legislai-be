@@ -7,6 +7,7 @@ import subprocess
 import time
 from datetime import datetime
 from queue import Queue
+from threading import Thread
 from typing import Optional
 
 from Retriever.database.bin.utils import BM250RerankingModel
@@ -22,7 +23,7 @@ LOG = logging.getLogger("retriever")
 
 subprocess.run("export TOKENIZERS_PARALLELISM=false", shell=True)
 
-TOGETHER_API_KEY = os.getenv("ENHANCEMENT_API_KEY")
+TOGETHER_API_KEY = os.getenv("TOGETHER_AI_API_KEY")
 
 
 class Retriever:
@@ -153,80 +154,83 @@ class Retriever:
             reranked_results.append(process_result)
         return reranked_results
 
-    def llm_rerank(self, query, results):
-        LOG.info(f"Reranking documents using an llm for query: {query}")
-        documents_json = ", ".join(
-            [
-                f'{{"id": "{result["id"]}", "text": "{result["text"]}"}}'
-                for result in results
-            ]
-        )
-        prompt = f"""
-           Tens acesso a uma função que baseada numa query atribui relevância a diversos documentos de suporte.
-           Baseado no contexto da seguinte questão {query}, qual do texto presente dos documentos abaixo é mais relevante?
-            Documentos:
-                {documents_json}
-
-            ###
-
-           Para atribuir a relevância dos documentos à questão, usa a seguinte estrutura:
-
-            <function=rerank>
-            {{
-                "query": "{query}",
-                "results": {{
-                    "documents": [ "id" : "document_id", "score" : "similarity_score" ]
-                }}
-            }}
-            </function>
-
-            Lembra-te:
-            - Responde apenas no formato JSON mostrado.
-            - Começa com <function=rerank> e termina com </function>.
-            - Se não tiveres certeza, utiliza a ordenação original.
-            - Atribui um valor "score" entre 0 e 100 para cada documento que represente a relevância do documento para a questão.
-            - Na resposta devolve apenas os ids dos documentos por ordem de relevância.
-            - Usa vírgulas para separar os elementos.
-            - Todos os documentos que tenhas menos de 70% de certeza que são relevantes, deves descartar.
-            - Usa chavetas para agrupar os elementos.
-            """
-
-        #   Lembra-te:
-        # - Responde apenas no formato JSON mostrado.
-        # - Começa com <function=rerank> e termina com </function>.
-        # - Se não tiveres certeza, utiliza a ordenação original.
-        # - Nas entradas multilinha, retira os caracteres \\n e coloca tudo na mesma linha de forma a respeitar os critérios da estrutura json.
-        # - Usa aspas duplas para frases.
-        # - Na resposta devolve apenas os ids dos documentos por ordem de relevância.
-        # - Os documentos no resultado devem ser mantidos com a mesma estrutura dos originais.
-        # - Mantém a estrutura dos resultados iguais aos originais
-        # - Usa vírgulas para separar os elementos.
-        # - Todos os documentos que tenhas menos de 80% de certeza que são relevantes, deves descartar.
-        # - Usa chavetas para agrupar os elementos.
+    def _rerank(self, prompt, queue: Queue):
         try:
-
             prompt = {"role": "user", "content": prompt}
 
-            init_time = datetime.now()
-
             response = self.reranking_llm.chat.completions.create(
-                model="meta-llama/Llama-Vision-Free", messages=[prompt], temperature=0
+                model="google/gemma-2-9b-it", messages=[prompt], temperature=0
             )
-            final_time = datetime.now()
-            LOG.info(f"LLM reranking took {final_time - init_time} seconds")
             metadata = response.choices[0].message.content
+
             result = self.parse_tool_response(metadata)
 
-        except json.JSONDecodeError:
-            LOG.error("Failed to decode JSON response for the llm reranking.")
+        except json.JSONDecodeError as e:
+            LOG.error("Failed to decode JSON response for LLM reranking.")
+            LOG.debug(f"Error details: {e}")
             result = {}
         except Exception as e:
-            LOG.error(
-                f"Error reranking documents using an llm, for query: {query}, error: {e}"
-            )
+            LOG.error(f"Unexpected error during LLM reranking: {e}")
             result = {}
         finally:
-            return result
+            queue.put(result)
+
+    def llm_rerank(self, query, results):
+        LOG.info(f"Reranking documents using an LLM for query: {query}")
+        answer_queue = Queue()
+        threads = []
+        init_time = datetime.now()
+
+        # Create threads for reranking
+        for document in results:
+            document_json = json.dumps({"id": document["id"], "text": document["text"]})
+            prompt = f"""
+            Tens acesso a uma função que baseada numa query atribui relevância entre um documento e a questão do utilizador.
+            Baseado no contexto da seguinte questão {query}, qual a relevância do texto seguinte?
+                Documento:
+                    {document_json}
+
+                ###
+
+            Para atribuir a relevância dos documentos à questão, usa a seguinte estrutura:
+
+                <function=rerank>
+                {{
+                    "query": "{query}",
+                    "results": {{
+                        "documents": [{{ "id": "document_id", "score": similarity_score }}]
+                    }}
+                }}
+                </function>
+
+                Lembra-te:
+                - Responde apenas no formato JSON mostrado.
+                - Começa com <function=rerank> e termina com </function>.
+                - Se não tiveres certeza, atribui o score de 80.
+                - Atribui um valor "score" entre 0 e 100 para cada documento que represente a relevância do documento para a questão.
+                - Na resposta devolve apenas os ids dos documentos por ordem de relevância.
+                - Usa vírgulas para separar os elementos.
+                - Todos os documentos que tenhas menos de 70% de certeza que são relevantes, deves descartar.
+                - Usa chavetas para agrupar os elementos.
+                """
+
+            t = Thread(target=self._rerank, args=(prompt, answer_queue))
+            threads.append(t)
+            t.start()
+
+        for t in threads:
+            t.join()
+
+        aggregated_results = []
+        while not answer_queue.empty():
+            element = answer_queue.get()
+            if isinstance(element, list):
+                aggregated_results.extend(element)
+
+        final_time = datetime.now()
+        LOG.info(f"LLM reranking completed in {final_time - init_time}.")
+        LOG.debug(f"Final aggregated results: {aggregated_results}")
+        return aggregated_results
 
     def parse_tool_response(self, response: str) -> dict:
         function_regex = r"<function=(\w+)>(.*?)</function>"
