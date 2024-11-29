@@ -11,10 +11,10 @@ from rag import main as rag
 from services.dynamo_services import get_user_by_id
 from services.dynamo_services import update_user_fields
 from utils.exceptions import UserNotFoundException
+from utils.exceptions import LimitExceededException
 from utils.logging_config import logger
 from utils.password import SecurityUtils
 from utils.schemas import QueryRequestPayload
-from utils.schemas import QueryResponsePayload
 from utils.utils import decodeJWT
 from utils.utils import JWTBearer
 
@@ -52,10 +52,7 @@ async def query(
         )
 
         if user_queries >= queries_for_plan:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Query limit exceeded",
-            )
+            raise LimitExceededException("Query limit exceeded")
 
         if payload.attachments and user.plan != "premium_plus":
             raise HTTPException(
@@ -93,6 +90,13 @@ async def query(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"User not found with id: {user_id}",
         )
+
+    except LimitExceededException:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Query limit exceeded",
+        )
+
     except Exception as e:
         logger.error(f"An unexpected error occurred: {str(e)}")
         raise HTTPException(
