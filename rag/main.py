@@ -24,7 +24,8 @@ class RAG:
                 "classify_query",
             ),
         )
-        expanded_queries = query_preprocessing.get("expanded_queries", [])
+        # expanded_queries = query_preprocessing.get("expanded_queries", [])
+        expanded_queries = []
         metadata_filter = query_preprocessing.get("metadata_filter", {})
         additional_data = query_preprocessing.get("additional_data", {})
         queue = Queue()
@@ -79,12 +80,10 @@ class RAG:
     async def stream_answer(self, query: str, topk: Optional[int] = 3):
         query_preprocessing = self.preprocessing.process_query(
             query=query,
-            method_names=(
-                "metadata_extraction",
-                "classify_query",
-            ),
+            method_names=("all",),
         )
-        expanded_queries = query_preprocessing.get("expanded_queries", [])
+        # expanded_queries = query_preprocessing.get("expanded_queries", [])
+        expanded_queries = []
         metadata_filter = query_preprocessing.get("metadata_filter", {})
         additional_data = query_preprocessing.get("additional_data", {})
         queue = Queue()
@@ -112,6 +111,7 @@ class RAG:
             "question": query,
         }
 
+        retrieved_document_ids = []
         for result in results.keys():
             documents = results.get(result)
             for document in documents:
@@ -125,6 +125,9 @@ class RAG:
                         "content": metadata["text"],
                     }
                 )
+                retrieved_document_ids.append(metadata["epigrafe"])
+
+        print("Retrieved: ", retrieved_document_ids)
 
         response = self.streaming_rag.stream_answer(
             context_rag=payload.get("context_rag"), user_question=query, code_rag=None
@@ -138,9 +141,3 @@ class RAG:
                 "summary": additional_data.get("assunto"),
             }
             await asyncio.sleep(0.1)
-
-        # yield {
-        #     "answer": response.answer,
-        #     "references": response.references[0].url,
-        #     "summary": additional_data.get("assunto"),
-        # }

@@ -187,10 +187,10 @@ class Preprocessing:
         metadata = results.get("metadata", {})
         data_legislacao = metadata.get("data_legislacao", None)
         theme = results.get("theme", None)
-        # expanded_queries = results.get("queries_expanded", [])
-        # "expanded_queries": expanded_queries.get("queries_expandidas", []),
+        expanded_queries = results.get("queries_expanded", [])
         payload = {
             "metadata_filter": {
+                "expanded_queries": expanded_queries.get("queries_expandidas", []),
                 "data_legislacao": data_legislacao,
                 "theme": theme[0] if theme[1] > 0.8 else None,
             },

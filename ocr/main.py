@@ -17,6 +17,8 @@ import dspy
 import numpy as np
 from ocr.ExtractFromImage.main import ImageProcessor
 from ocr.ExtractFromPDF.main import PDFProcessor
+from rag.retriever.database.bin.utils import DenseEmbeddingModel
+from rag.retriever.database.bin.utils import SparseEmbeddingModel
 from rag.retriever.main import Retriever
 
 
@@ -256,14 +258,29 @@ class ChunkRelevance(dspy.Signature):
     reasoning: str = dspy.OutputField(desc="Razão para a relevância atribuída")
 
 
+class AnswerSectionType(Enum):
+    INTRODUCTION = "Introducao"
+    DEVELOPMENT = "Desenvolvimento"
+    CONCLUSION = "Conclusao"
+
+
+class AnswerStructure:
+    section: AnswerSectionType
+    content: str
+
+
 class DrawConclusions(dspy.Signature):
-    """
-    Sendo tu um especialista da legislação PORTUGUESA de PORTUGAL, formaliza uma conclusão final com base na evidência recolhida de forma a responder à questão do utilizador.
-    Por isso, é essencial que sigas estas instruções:
-    1. Toda a tua resposta deve ser suportada exclusivamente pelas informações presentes nesses documentos.
-    2. Se não encontrares resposta à pergunta nos documentos fornecidos, deves informar que não possuis dados para responder.
-    3. A tua resposta deve ser detalhada, informativa, bem estruturada e conter vocabulário simples.
-    Devolve a conclusão num formato markdown da mesma, ou seja, sublinhares os aspetos mais importantes da resposta como artigos citados (com **), parágrafos (\n), e listas (-).
+    """Sendo tu um especialista da legislação portuguesa, responde à questão baseado EXCLUSIVAMENTE no contexto fornecido. Por isso, é essencial que sigas estas instruções:
+    1. Baseia a tua resposta unica e excluisivamente na informação fornecida no contexto. Não incluas interpretações pessoais, assumções ou informação que não esteja presente no contexto.
+    2. Se o contexto nã contiver informação suficiente para responder à questão, deves responder com "Não é possível responder à questão com a informação fornecida". Evita fornecer informações especulativas ou respostas genéricas.
+    3. A tua resposta deve estar no formato abaixo:
+    - Introdução
+        Dá um breve resumo da questão e do que vais abordar na resposta.
+    - Desenvolvimento
+        Responde à questão de forma detalhada e abrangente, utilizando vocabulário simples e claro.
+        Caso a resposta seja complexa ou não objetiva, deves utilizar listas para enumerar os diversos pontos.
+    - Conclusão
+        Faz um resumo da resposta e conclui a questão.
     """
 
     evaluation = dspy.InputField(desc="Evaluation of arguments")
@@ -273,7 +290,7 @@ class DrawConclusions(dspy.Signature):
     patterns = dspy.InputField(desc="Identified patterns")
     legal_framework = dspy.InputField(desc="Complete legal framework")
 
-    conclusion: str = dspy.OutputField(desc="Final conclusion")
+    answer: List[AnswerStructure] = dspy.OutputField(desc="Final conclusion")
     confidence: float = dspy.OutputField(desc="Confidence in conclusion")
     emotional_impact: Dict[str, float] = dspy.OutputField(
         desc="Emotional impact of conclusion"
@@ -286,6 +303,7 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         super().__init__()
         self.retriever = retriever
         self.cognitive_state = CognitiveState(working_memory_size)
+        self.query_relevance = QueryRelevanceCalculator()
 
         # Core cognitive components
         self.understanding = dspy.Predict(UnderstandProblem)
@@ -308,130 +326,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         self.pattern_memory = {}
         self.legal_context_history = []
 
-    def _prioritize_legal_queries(
-        self, queries: List[str], original_query: str
-    ) -> List[str]:
-        """Prioritize legal queries based on relevance and importance."""
-        priority_categories = {
-            "high": {
-                "weight": 3.0,
-                "terms": [
-                    "constituição",
-                    "constitution",
-                    "lei",
-                    "law",
-                    "statute",
-                    "decreto-lei",
-                    "decree-law",
-                    "jurisprudência",
-                    "jurisprudence",
-                    "acórdão",
-                    "ruling",
-                    "tribunal",
-                    "court",
-                ],
-            },
-            "medium": {
-                "weight": 2.0,
-                "terms": [
-                    "doutrina",
-                    "doctrine",
-                    "interpretação",
-                    "interpretation",
-                    "princípio",
-                    "principle",
-                    "regulamento",
-                    "regulation",
-                    "normativo",
-                    "normative",
-                    "precedente",
-                    "precedent",
-                ],
-            },
-            "low": {
-                "weight": 1.0,
-                "terms": [
-                    "contexto",
-                    "context",
-                    "história",
-                    "history",
-                    "background",
-                    "antecedente",
-                    "procedimento",
-                    "procedure",
-                ],
-            },
-        }
-
-        scored_queries = []
-        for query in queries:
-            query_lower = query.lower()
-            score = 0.0
-
-            for category, data in priority_categories.items():
-                for term in data["terms"]:
-                    if term in query_lower:
-                        score += data["weight"]
-
-            score += self._calculate_legal_relevance(query)
-            score += self._calculate_specificity(query)
-            score += self._calculate_query_completeness(query)
-
-            scored_queries.append((score, query))
-        return [q[1] for q in sorted(scored_queries, reverse=True)]
-
-    def _calculate_legal_relevance(self, query: str) -> float:
-        legal_terms_count = sum(
-            1 for term in self._get_legal_terms() if term in query.lower()
-        )
-        return min(legal_terms_count * 0.5, 2.0)
-
-    def _calculate_specificity(self, query: str) -> float:
-        specificity_score = 0.0
-
-        if any(
-            ref in query.lower() for ref in ["artigo", "article", "número", "number"]
-        ):
-            specificity_score += 1.0
-
-        if any(term in query.lower() for term in ["data", "date", "ano", "year"]):
-            specificity_score += 0.5
-
-        if any(
-            term in query.lower()
-            for term in ["tribunal", "court", "jurisdição", "jurisdiction"]
-        ):
-            specificity_score += 0.5
-
-        return specificity_score
-
-    def _calculate_query_completeness(self, query: str) -> float:
-        completeness_score = 0.0
-
-        if any(
-            q in query.lower()
-            for q in ["quem", "what", "quando", "when", "onde", "where", "como", "how"]
-        ):
-            completeness_score += 0.5
-
-        if any(
-            action in query.lower()
-            for action in [
-                "aplicar",
-                "apply",
-                "interpretar",
-                "interpret",
-                "analisar",
-                "analyze",
-            ]
-        ):
-            completeness_score += 0.5
-
-        words = query.split()
-        completeness_score += min(len(words) / 10, 1.0)
-
-        return completeness_score
-
     def _get_current_context(self) -> str:
         active_contexts = []
         activation_threshold = 0.3
@@ -453,29 +347,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
 
         return " ".join(unique_contexts)
 
-    def _get_legal_terms(self) -> Set[str]:
-        return {
-            "lei",
-            "law",
-            "legal",
-            "jurídico",
-            "judicial",
-            "tribunal",
-            "court",
-            "processo",
-            "process",
-            "direito",
-            "right",
-            "obrigação",
-            "obligation",
-            "contrato",
-            "contract",
-            "jurisdição",
-            "jurisdiction",
-            "legislação",
-            "legislation",
-        }
-
     def _extract_legal_metadata(self, text: str) -> LegalMetadata:
         metadata = LegalMetadata()
 
@@ -485,7 +356,7 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
 
         metadata.legal_principles = self._extract_legal_principles(text)
 
-        metadata.jurisdiction = self._determine_jurisdiction(text)
+        metadata.jurisdiction = None
 
         return metadata
 
@@ -542,28 +413,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
 
         return list(set(principles))
 
-    def _determine_jurisdiction(self, text: str) -> Optional[str]:
-        jurisdiction_indicators = {
-            "portugal": [
-                "tribunal constitucional",
-                "supremo tribunal de justiça",
-                "STJ",
-            ],
-            "european_union": [
-                "tribunal de justiça da união europeia",
-                "TJUE",
-                "direito comunitário",
-            ],
-            "international": ["tribunal internacional", "direito internacional"],
-        }
-
-        text_lower = text.lower()
-        for jurisdiction, indicators in jurisdiction_indicators.items():
-            if any(indicator.lower() in text_lower for indicator in indicators):
-                return jurisdiction
-
-        return None
-
     def process_document(self, document: dict, query: str) -> dict:
         merged_document = self._merge_document(document)
 
@@ -619,7 +468,9 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         )
         self.knowledge_bases.append(initial_kb)
 
-    def _identify_gaps(self, query: str, chunk: str, kb: KnowledgeBase) -> List[str]:
+    async def _identify_gaps(
+        self, query: str, chunk: str, kb: KnowledgeBase
+    ) -> List[str]:
         """Identify knowledge gaps with stricter relevance filtering."""
         # First check if chunk is relevant enough to warrant queries
         relevance_check = self.chunk_relevance(query=query, chunk=chunk)
@@ -645,7 +496,9 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         all_queries = []
         if gaps.legal_queries:
             # Take only top 2 most relevant legal queries
-            filtered_legal = self._filter_top_queries(gaps.legal_queries, query, 2)
+            filtered_legal = await self._filter_top_queries(
+                gaps.legal_queries, query, 2
+            )
             all_queries.extend(filtered_legal)
 
         # Prioritize and further filter queries
@@ -654,13 +507,15 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
         # Take only top N most relevant queries overall
         return prioritized_queries[:3]  # Stricter limit
 
-    def _filter_top_queries(
+    async def _filter_top_queries(
         self, queries: List[str], original_query: str, top_n: int
     ) -> List[str]:
         """Filter queries to keep only the most relevant ones."""
         scored_queries = []
         for query in queries:
-            relevance_score = self._calculate_query_relevance(query, original_query)
+            relevance_score = await self.query_relevance.calculate_query_relevance(
+                query, original_query
+            )
             specificity_score = self._calculate_specificity(query)
             legal_score = self._calculate_legal_relevance(query)
 
@@ -671,30 +526,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             scored_queries.append((total_score, query))
 
         return [q[1] for q in sorted(scored_queries, reverse=True)[:top_n]]
-
-    def _calculate_query_relevance(self, query: str, original_query: str) -> float:
-        """Calculate how relevant a generated query is to the original question."""
-        query_terms = set(query.lower().split())
-        original_terms = set(original_query.lower().split())
-
-        # Calculate term overlap
-        overlap = len(query_terms.intersection(original_terms))
-        overlap_score = overlap / max(len(original_terms), 1)
-
-        # Consider query structure
-        structure_score = 0.0
-        if any(
-            q in query.lower()
-            for q in ["como", "what", "quando", "where", "porquê", "why"]
-        ):
-            structure_score += 0.3
-        if any(
-            term in query.lower()
-            for term in ["lei", "law", "legal", "direito", "right"]
-        ):
-            structure_score += 0.4
-
-        return overlap_score * 0.6 + structure_score * 0.4
 
     def _generate_final_response(self) -> dict:
         all_contexts = self._get_current_context()
@@ -794,40 +625,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
 
         return recognized_patterns
 
-    # def _process_chunk(self, chunk: str, query: str) -> None:
-    #     self.current_step += 1
-    #     current_kb = KnowledgeBase(
-    #         step_number=self.current_step,
-    #         contexts=[],
-    #         patterns=[],
-    #         legal_framework={}
-    #     )
-
-    #     patterns = self._recognize_patterns(chunk)
-    #     current_kb.patterns.extend(patterns.legal_patterns)
-
-    #     legal_metadata = self._extract_legal_metadata(chunk)
-
-    #     depth_limit = 0
-    #     previous_choice = None
-    #     action = self._determine_next_action(chunk, query, previous_choice)
-
-    #     while action != CognitiveAction.DRAW_CONCLUSIONS and depth_limit < 5:
-    #         previous_choice = action
-    #         print(f"Chosen action: {action} for step {self.current_step}")
-
-    #         success_metrics = self._execute_cognitive_action(
-    #             action, chunk, query, current_kb, legal_metadata
-    #         )
-
-    #         self._update_metacognitive_state(action, success_metrics)
-
-    #         self._update_attention_focus(chunk, success_metrics, legal_metadata)
-
-    #         action = self._determine_next_action(chunk, query, previous_choice)
-    #         depth_limit += 1
-
-    #     self.knowledge_bases.append(current_kb)
     def _process_chunk(self, chunk: str, query: str) -> None:
         """Process chunk with enhanced progression tracking."""
         self.current_step += 1
@@ -964,32 +761,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             }
         )
 
-    # def _determine_next_action(self, chunk: str, query: str,
-    #                          previous_step: Optional[CognitiveAction]) -> CognitiveAction:
-    #     current_context = self._get_current_context()
-
-    #     initial_analysis = (self.knowledge_bases[0].contexts[0].text
-    #                       if self.knowledge_bases and self.knowledge_bases[0].contexts
-    #                       else "")
-
-    #     decision = self.reasoning(
-    #         query=query,
-    #         chunk=chunk,
-    #         context=current_context,
-    #         initial_analysis=initial_analysis,
-    #         previous_choice=previous_step,
-    #         emotional_state=self.cognitive_state.emotional_state
-    #     )
-
-    #     self.cognitive_state.metacognitive_log.append({
-    #         'action': 'action_decision',
-    #         'chosen_action': decision.action,
-    #         'confidence': decision.confidence,
-    #         'previous_action': previous_step,
-    #         'step_number': self.current_step
-    #     })
-
-    #     return decision.action
     def _determine_next_action(
         self, chunk: str, query: str, previous_step: Optional[CognitiveAction]
     ) -> CognitiveAction:
@@ -1001,14 +772,12 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             else ""
         )
 
-        # Track consecutive gap identifications to prevent loops
         consecutive_gaps = sum(
             1
             for log in self.cognitive_state.metacognitive_log[-3:]
             if log.get("action") == CognitiveAction.IDENTIFY_GAPS
         )
 
-        # Force progression if stuck in identification loop
         if consecutive_gaps >= 2:
             if any(
                 ctx.source == "retrieval"
@@ -1019,7 +788,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             else:
                 return CognitiveAction.SKIP_CHUNK
 
-        # Get base decision
         decision = self.reasoning(
             query=query,
             chunk=chunk,
@@ -1029,7 +797,6 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             emotional_state=self.cognitive_state.emotional_state,
         )
 
-        # Enhance decision based on state
         if previous_step == CognitiveAction.SYNTHESIZE_INFO:
             return CognitiveAction.EVALUATE_ARGUMENTS
         elif previous_step == CognitiveAction.EVALUATE_ARGUMENTS:
@@ -1169,14 +936,9 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             )
         )
 
-        legal_alignment = self._calculate_legal_alignment(
-            synthesis.synthesis, synthesis.legal_implications, legal_metadata
-        )
-
         return {
             "confidence": synthesis.confidence,
             "relevance": 0.8,
-            "legal_alignment": legal_alignment,
             "emotional_valence": synthesis.emotional_valence,
         }
 
@@ -1207,83 +969,11 @@ class EnhancedCognitiveOCRAgent(dspy.Module):
             )
         )
 
-        legal_soundness = self._calculate_legal_soundness(
-            evaluation.evaluation, evaluation.cited_legislation, legal_metadata
-        )
-
         return {
             "confidence": evaluation.confidence,
             "relevance": 0.7,
-            "legal_soundness": legal_soundness,
             "recommendation_strength": len(evaluation.recommendations) / 5.0,
         }
-
-    def _calculate_legal_alignment(
-        self,
-        synthesis: str,
-        legal_implications: List[str],
-        legal_metadata: LegalMetadata,
-    ) -> float:
-        alignment_score = 0.0
-
-        if legal_metadata.legislation_refs:
-            if any(ref in synthesis for ref in legal_metadata.legislation_refs):
-                alignment_score += 0.3
-
-        if legal_metadata.legal_principles:
-            if any(
-                principle in synthesis for principle in legal_metadata.legal_principles
-            ):
-                alignment_score += 0.3
-
-        if legal_metadata.precedent_refs:
-            if any(
-                precedent in synthesis for precedent in legal_metadata.precedent_refs
-            ):
-                alignment_score += 0.2
-
-        if legal_implications:
-            alignment_score += min(len(legal_implications) * 0.1, 0.2)
-
-        return min(alignment_score, 1.0)
-
-    def _calculate_legal_soundness(
-        self,
-        evaluation: str,
-        cited_legislation: List[str],
-        legal_metadata: LegalMetadata,
-    ) -> float:
-        soundness_score = 0.0
-
-        if cited_legislation:
-            citation_coverage = len(
-                set(cited_legislation).intersection(legal_metadata.legislation_refs)
-            ) / max(len(legal_metadata.legislation_refs), 1)
-            soundness_score += citation_coverage * 0.4
-
-        if legal_metadata.legal_principles:
-            principle_coverage = sum(
-                1
-                for principle in legal_metadata.legal_principles
-                if principle in evaluation
-            )
-            soundness_score += (
-                principle_coverage / max(len(legal_metadata.legal_principles)),
-                1,
-            ) * 0.3
-
-        if legal_metadata.precedent_refs:
-            precedent_coverage = sum(
-                1
-                for precedent in legal_metadata.precedent_refs
-                if precedent in evaluation
-            )
-            soundness_score += (
-                precedent_coverage / max(len(legal_metadata.precedent_refs)),
-                1,
-            ) * 0.3
-
-        return min(soundness_score, 1.0)
 
     def _handle_gap_identification(
         self, chunk: str, query: str, kb: KnowledgeBase, legal_metadata: LegalMetadata
@@ -1537,6 +1227,93 @@ def main():
     #             "jurisdiction": all_legal_metadata.get("jurisdiction")
     #         }
     #     }
+
+
+import torch
+from torch.nn.functional import cosine_similarity
+
+
+class QueryRelevanceCalculator:
+    def __init__(self, cache_dir: str = ".cache"):
+        # Initialize embedding models
+        self.dense_model = DenseEmbeddingModel(cache_dir=cache_dir)
+        self.sparse_model = SparseEmbeddingModel(cache_dir=cache_dir)
+
+    async def calculate_dense_similarity(self, query1: str, query2: str) -> float:
+        """Calculate similarity using dense embeddings."""
+        # Get embeddings for both queries
+        emb1 = await self.dense_model.aembed_query(query1)
+        emb2 = await self.dense_model.aembed_query(query2)
+
+        # Convert to tensors
+        emb1_tensor = torch.tensor(emb1)
+        emb2_tensor = torch.tensor(emb2)
+
+        # Calculate cosine similarity
+        similarity = cosine_similarity(
+            emb1_tensor.unsqueeze(0), emb2_tensor.unsqueeze(0)
+        ).item()
+        return float(similarity)
+
+    async def calculate_sparse_similarity(self, query1: str, query2: str) -> float:
+        """Calculate similarity using sparse embeddings."""
+        # Get sparse embeddings
+        sparse_vec1 = await self.sparse_model.aembed_query(query1)
+        sparse_vec2 = await self.sparse_model.aembed_query(query2)
+
+        # Convert sparse dictionaries to sets for overlap calculation
+        keys1 = set(sparse_vec1.keys())
+        keys2 = set(sparse_vec2.keys())
+
+        # Calculate Jaccard similarity for token overlap
+        intersection = len(keys1.intersection(keys2))
+        union = len(keys1.union(keys2))
+
+        if union == 0:
+            return 0.0
+
+        # Calculate weighted similarity considering token frequencies
+        weighted_similarity = 0.0
+        for key in keys1.intersection(keys2):
+            weighted_similarity += min(sparse_vec1[key], sparse_vec2[key])
+
+        total_weights = sum(sparse_vec1.values()) + sum(sparse_vec2.values())
+        if total_weights > 0:
+            weighted_similarity = 2 * weighted_similarity / total_weights
+
+        # Combine Jaccard and weighted similarities
+        similarity = 0.5 * (intersection / union) + 0.5 * weighted_similarity
+        return float(similarity)
+
+    async def calculate_query_relevance(self, query: str, original_query: str) -> float:
+        """Calculate hybrid similarity score combining dense and sparse embeddings."""
+        # Get both similarity scores
+        dense_score = await self.calculate_dense_similarity(query, original_query)
+        sparse_score = await self.calculate_sparse_similarity(query, original_query)
+
+        # Combine scores with weights
+        # Give more weight to dense embeddings for semantic understanding
+        # but maintain significant weight for sparse to catch specific terms
+        final_score = (dense_score * 0.7) + (sparse_score * 0.3)
+
+        return final_score
+
+    async def get_most_relevant_queries(
+        self,
+        candidate_queries: List[str],
+        original_query: str,
+        top_k: int = 3,
+        threshold: float = 0.5,
+    ) -> List[Tuple[str, float]]:
+        """Get the most relevant queries from a list of candidates."""
+        scores = []
+        for query in candidate_queries:
+            score = await self.calculate_query_relevance(query, original_query)
+            if score >= threshold:
+                scores.append((query, score))
+
+        # Sort by score and return top k
+        return sorted(scores, key=lambda x: x[1], reverse=True)[:top_k]
 
 
 if __name__ == "__main__":
